@@ -1,33 +1,147 @@
-/* Reset */
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#0f0f11;color:#fff;line-height:1.6}
-a{color:#00c2ff;text-decoration:none}
-a:hover{text-decoration:underline}
-
-/* Hero */
-.hero{
-  background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.55)),url('/backgrounds/hero.jpg') center/cover;
-  height:45vh;display:flex;align-items:center;justify-content:center;text-align:center;
+/* ---------- RESET & BASE ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.hero h1{font-size:2.8rem;margin-bottom:.5rem}
-.hero p{font-size:1.2rem;margin-bottom:1.5rem}
-.cta{background:#00c2ff;color:#000;padding:.8rem 1.5rem;border-radius:30px;font-weight:600}
-.cta:hover{background:#fff}
 
-/* Layout */
-section{padding:3rem 1rem;max-width:900px;margin:auto}
-#demo{background:#1a1a1d;border-radius:15px;margin-top:-2rem;position:relative;z-index:2}
-.preview{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
-video,canvas{border-radius:12px;max-width:100%}
-#controls{margin-top:1rem}
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background: #f5f7fa;          /* airy light background */
+  color: #0f0f11;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
 
-/* Ad */
-.ad-slot{margin:1rem auto;width:300px;height:250px}
+/* ---------- HERO SECTION ---------- */
+.hero {
+  background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.85) 0%,
+                rgba(240, 245, 250, 0.85) 100%
+              ),
+              url('/backgrounds/hero.jpg') center/cover;
+  height: 46vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+}
 
-/* Gallery grid */
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;padding:1rem 0}
-.grid img{width:100%;border-radius:8px;transition:.3s}
-.grid img:hover{transform:scale(1.05)}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: #0f0f11;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
 
-/* Footer */
-footer{background:#111;padding:2rem;text-align:center;font-size:.9rem}
+.hero p {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 1.25rem;
+}
+
+.cta {
+  background: linear-gradient(135deg, #00c2ff, #0078ff);
+  color: #fff;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 194, 255, 0.35);
+}
+
+/* ---------- SECTIONS ---------- */
+section {
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+#demo {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+}
+
+.preview {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+video, canvas {
+  border-radius: 14px;
+  max-width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+#controls {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+button, select {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #e3e8f0;
+  color: #0f0f11;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover, select:hover {
+  background: #d0d9e6;
+}
+
+/* ---------- AD SLOT ---------- */
+.ad-slot {
+  width: 300px;
+  height: 250px;
+  margin: 1.5rem auto;
+}
+
+/* ---------- GALLERY ---------- */
+#gallery {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.grid img {
+  width: 100%;
+  border-radius: 12px;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.grid img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  background: #ffffff;
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #555;
+}
