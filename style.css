@@ -4,7 +4,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   background: #f5f7fa;
@@ -28,7 +27,6 @@ body {
   text-align: center;
   padding: 1rem;
 }
-
 .hero h1 {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
@@ -36,13 +34,11 @@ body {
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
 }
-
 .hero p {
   font-size: 1.1rem;
   color: #444;
   margin-bottom: 1.25rem;
 }
-
 .cta {
   background: linear-gradient(135deg, #00c2ff, #0078ff);
   color: #fff;
@@ -51,54 +47,42 @@ body {
   font-weight: 600;
   transition: transform 0.2s, box-shadow 0.2s;
 }
-
 .cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 194, 255, 0.35);
 }
 
 /* ---------- SECTIONS ---------- */
-section {
-  max-width: 960px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
+section { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
 
-/* ---- tight gap under hero ---- */
+/* ---- gallery cards ---- */
 #gallery {
-  margin-top: -1.5rem;
+  margin-top: 0;                 /* no gap */
   background: #ffffff;
   border-radius: 20px;
   padding: 2rem;
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
 }
-
-/* ---- larger gallery cards ---- */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* bigger */
+  gap: 1.5rem;
 }
-
 .grid a {
   position: relative;
   display: block;
   text-decoration: none;
 }
-
 .grid img {
   width: 100%;
   border-radius: 12px;
   transition: transform 0.25s, box-shadow 0.25s;
   display: block;
 }
-
 .grid img:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
-
-/* ---- download button overlay ---- */
 .download-btn {
   position: absolute;
   bottom: 12px;
@@ -124,7 +108,6 @@ footer {
   background: #ffffff;
   text-align: center;
   padding: 2rem 1rem;
-  margin-top: 2rem;
   font-size: 0.9rem;
   color: #555;
 }
