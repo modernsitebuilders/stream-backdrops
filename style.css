@@ -1,18 +1,12 @@
 /* ---------- RESET & BASE ---------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-  background: #f5f7fa;
-  color: #0f0f11;
-  line-height: 1.6;
+  background: #f5f7fa; color: #0f0f11; line-height: 1.6;
   scroll-behavior: smooth;
 }
 
-/* ---------- HERO SECTION ---------- */
+/* ---------- HERO ---------- */
 .hero {
   background: linear-gradient(
                 135deg,
@@ -21,94 +15,32 @@ body {
               ),
               url('https://raw.githubusercontent.com/davidmilesphilly/stream-backdrops/main/backgrounds/hero.jpg') center/cover;
   height: 46vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 1rem;
 }
-.hero h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
-  color: #0f0f11;
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.02em;
-}
-.hero p {
-  font-size: 1.1rem;
-  color: #444;
-  margin-bottom: 1.25rem;
-}
+.hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; margin-bottom: 0.5rem; }
+.hero p  { font-size: 1.1rem; color: #444; margin-bottom: 1.25rem; }
 .cta {
   background: linear-gradient(135deg, #00c2ff, #0078ff);
-  color: #fff;
-  padding: 0.75rem 1.75rem;
-  border-radius: 50px;
-  font-weight: 600;
-  transition: transform 0.2s, box-shadow 0.2s;
+  color: #fff; padding: 0.75rem 1.75rem; border-radius: 50px;
+  font-weight: 600; transition: transform 0.2s, box-shadow 0.2s;
 }
-.cta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 194, 255, 0.35);
-}
+.cta:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 194, 255, 0.35); }
 
-/* ---------- GALLERY (NO WHITE BOX) ---------- */
+/* ---------- GALLERY ---------- */
 section { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
-
-#gallery {
-  margin-top: 0;
-  padding: 1rem 0;
-  background: none;
-}
-
-#gallery h2 {
-  margin: 0 auto 1.5rem;
-  font-size: 2rem;
-  color: #0f0f11;
-  text-align: center;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-  gap: 2.5rem;
-}
-
-.grid img {
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s;
-}
-
-.grid img:hover {
-  transform: scale(1.03);
-}
+#gallery { margin-top: 0; padding: 1rem 0; background: none; }
+#gallery h2 { text-align: center; font-size: 2rem; margin-bottom: 1.5rem; }
+.grid { display: grid; gap: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); }
+.grid img { width: 100%; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); transition: transform 0.25s; }
+.grid img:hover { transform: scale(1.03); }
 
 .download-btn {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  background: #0078ff;
-  color: #fff;
-  padding: 0.75rem 1rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border-radius: 6px;
+  position: absolute; bottom: 1rem; right: 1rem;
+  background: #0078ff; color: #fff; padding: 0.75rem 1rem;
+  font-size: 0.9rem; font-weight: 600; border-radius: 6px;
 }
 
-/* ---------- AD SLOT ---------- */
-.ad-slot {
-  width: 300px;
-  height: 250px;
-  margin: 0 auto 1rem;
-}
-
-/* ---------- FOOTER ---------- */
-footer {
-  background: #ffffff;
-  text-align: center;
-  padding: 2rem 1rem;
-  font-size: 0.9rem;
-  color: #555;
-}
+/* ---------- AD & FOOTER ---------- */
+.ad-slot { width: 300px; height: 250px; margin: 0 auto 1rem; }
+footer { background: #fff; text-align: center; padding: 2rem 1rem; font-size: 0.9rem; color: #555; }
