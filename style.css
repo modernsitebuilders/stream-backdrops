@@ -58,7 +58,7 @@ body {
 section { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
 
 /* ---- tight gap under hero ---- */
-#gallery { margin-top: -1.5rem !important; }
+#gallery { margin-top: -2.5rem !important; }
 
 /* ---------- GALLERY JUMBO CARDS ---------- */
 #gallery {
