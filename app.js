@@ -2,9 +2,6 @@
  *  STREAM BACKDROPS – backgrounds.js
  ***********************************************************************/
 
-const USE_WORKER = true;
-const CF_WORKER  = 'https://dl.streambackdrops.workers.dev';
-
 const bgSelect = document.getElementById('bgSelect');
 const webcam   = document.getElementById('webcam');
 const canvas   = document.getElementById('canvas');
@@ -19,9 +16,7 @@ const Images = [
 
 Images.forEach(name => {
   const opt = document.createElement('option');
-  opt.value = USE_WORKER
-    ? `${CF_WORKER}/${name}`
-    : `https://raw.githubusercontent.com/davidmilesphilly/stream-backdrops/main/backgrounds/${name}`;
+  opt.value = `https://raw.githubusercontent.com/davidmilesphilly/stream-backdrops/main/backgrounds/${name}`;
   opt.textContent = name.split('.')[0].replace(/[-_]/g, ' ');
   bgSelect.appendChild(opt);
 });
@@ -97,7 +92,7 @@ fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/b
       img.onclick = () => window.open(f.download_url, '_blank');
 
       const btn = document.createElement('a');
-      btn.href = `https://raw.githubusercontent.com/davidmilesphilly/stream-backdrops/main/backgrounds/${f.name}`;
+      btn.href        = f.download_url;
       btn.download    = f.name;
       btn.textContent = 'Download';
       btn.className   = 'download-btn';
