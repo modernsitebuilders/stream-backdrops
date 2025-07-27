@@ -55,7 +55,7 @@
         // wrapper
         const card = document.createElement('div');
         card.style.position = 'relative';
-        card.style.cursor = 'zoom-in';
+        card.style.cursor = 'pointer';
 
         // image
         const img = document.createElement('img');
@@ -66,14 +66,12 @@
         img.style.borderRadius = '12px';
         img.style.transition = 'transform .3s';
         img.style.transformOrigin = 'center center';
-        img.onclick = () => {
-          img.style.transform = img.style.transform === 'scale(1.8)' ? 'scale(1)' : 'scale(1.8)';
-        };
+        img.onclick = () => window.open(f.download_url, '_blank');
 
         // download button
         const btn = document.createElement('a');
         btn.href = f.download_url;
-        btn.download = f.name;          // forces download
+        btn.download = f.name;
         btn.className = 'download-btn';
         btn.textContent = 'Download';
         btn.style.position = 'absolute';
