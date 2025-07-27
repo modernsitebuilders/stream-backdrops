@@ -72,6 +72,7 @@
         const btn = document.createElement('a');
         btn.href = f.download_url;
         btn.download = f.name;
+        btn.setAttribute('download', f.name);
         btn.className = 'download-btn';
         btn.textContent = 'Download';
         btn.style.cssText = `
