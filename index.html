@@ -70,7 +70,9 @@
 
         // download button
         const btn = document.createElement('a');
-        btn.href = `https://dl.streambackdrops.workers.dev/${f.name}`;
+        btn.href = f.download_url;
+        btn.download = f.name;
+        btn.setAttribute('download', f.name);
         btn.download = f.name;
         btn.className = 'download-btn';
         btn.textContent = 'Download';
