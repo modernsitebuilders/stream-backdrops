@@ -97,7 +97,7 @@ fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/b
       img.onclick = () => window.open(f.download_url, '_blank');
 
       const btn = document.createElement('a');
-      btn.href = `${CF_WORKER}/${f.name}`;
+      btn.href = `https://raw.githubusercontent.com/davidmilesphilly/stream-backdrops/main/backgrounds/${f.name}`;
       btn.download    = f.name;
       btn.textContent = 'Download';
       btn.className   = 'download-btn';
