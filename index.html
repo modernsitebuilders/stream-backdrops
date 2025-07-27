@@ -9,13 +9,8 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-  <!-- HERO (unchanged) -->
-  <header class="hero" style="background:url('/backgrounds/digital-architecture-visualization.jpg') center/cover;">
-=======
   <!-- HERO -->
-  <header class="hero">
->>>>>>> e11f494 (Update site files with new gallery & demo)
+  <header class="hero" style="background:url('backgrounds/digital-architecture-visualization.jpg') center/cover;">
     <div>
       <h1>Instant Professional Backgrounds</h1>
       <p>Look great on every Zoom, Teams, or Meet call</p>
@@ -50,13 +45,7 @@
   <!-- AUTO-GALLERY -->
   <section id="gallery">
     <h2>Free Backgrounds</h2>
-<<<<<<< HEAD
-    <div id="gallery-grid" class="grid">
-      <!-- injected automatically -->
-    </div>
-=======
     <div id="gallery-grid" class="grid"></div>
->>>>>>> e11f494 (Update site files with new gallery & demo)
   </section>
 
   <footer>
@@ -66,24 +55,45 @@
   </footer>
 
   <!-- Scripts -->
-<<<<<<< HEAD
   <script>
-fetch('https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/backgrounds')
-  .then(r => r.json())
-  .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
-  .then(files => {
-    const grid = document.getElementById('gallery-grid');
-    files.forEach(f => {
-      const img = document.createElement('img');
-      img.src = f.download_url;
-      img.alt = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
-      img.loading = 'lazy';
-      grid.appendChild(img);
+    /* 1. Populate <select> with backgrounds */
+    const bgSelect = document.getElementById('bgSelect');
+    fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/backgrounds')
+      .then(r => r.json())
+      .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
+      .then(files => {
+        /* populate <select> for demo */
+        files.forEach(f => {
+          const opt = document.createElement('option');
+          opt.value = f.download_url;
+          opt.textContent = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
+          bgSelect.appendChild(opt);
+        });
+        /* populate gallery grid */
+        const grid = document.getElementById('gallery-grid');
+        files.forEach(f => {
+          const img = document.createElement('img');
+          img.src = f.download_url;
+          img.alt = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
+          img.loading = 'lazy';
+          grid.appendChild(img);
+        });
+      });
+
+    /* 2. Webcam + Selfie Segmentation Demo (kept minimal) */
+    const webcam = document.getElementById('webcam');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => { webcam.srcObject = stream; });
+
+    /* 3. Download snapshot */
+    document.getElementById('snapBtn').addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'backdrop.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
     });
-  });
-</script>
-=======
-  <script src="app.js"></script>
->>>>>>> e11f494 (Update site files with new gallery & demo)
+  </script>
 </body>
 </html>
