@@ -45,28 +45,23 @@ fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/b
   .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
   .then(files => {
     const grid = document.getElementById('gallery-grid');
-    /* enlarge cards */
-    grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(320px, 1fr))';
+    grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(340px, 1fr))';
     grid.style.gap = '2rem';
-
     files.forEach(f => {
       const a   = document.createElement('a');
       a.href  = f.download_url;
       a.download = f.name;
       a.style.textDecoration = 'none';
-      a.style.display = 'block';
 
       const img = document.createElement('img');
       img.src = f.download_url;
       img.alt = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
-      img.style.width = '100%';
-      img.style.borderRadius = '12px';
-      img.style.boxShadow = '0 4px 12px rgba(0,0,0,.08)';
-      img.style.transition = 'transform .25s';
-      img.onmouseover = () => img.style.transform = 'scale(1.03)';
-      img.onmouseout  = () => img.style.transform = 'scale(1)';
 
-      a.appendChild(img);
+      const btn = document.createElement('span');
+      btn.className = 'download-btn';
+      btn.textContent = 'Download';
+
+      a.append(img, btn);
       grid.appendChild(a);
     });
   });
