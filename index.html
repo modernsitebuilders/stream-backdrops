@@ -9,8 +9,13 @@
 </head>
 
 <body>
+<<<<<<< HEAD
   <!-- HERO (unchanged) -->
   <header class="hero" style="background:url('/backgrounds/digital-architecture-visualization.jpg') center/cover;">
+=======
+  <!-- HERO -->
+  <header class="hero">
+>>>>>>> e11f494 (Update site files with new gallery & demo)
     <div>
       <h1>Instant Professional Backgrounds</h1>
       <p>Look great on every Zoom, Teams, or Meet call</p>
@@ -20,7 +25,8 @@
 
   <!-- AD SLOT -->
   <div class="ad-slot">
-    <ins class="adsbygoogle" style="display:block"
+    <ins class="adsbygoogle"
+         style="display:block"
          data-ad-client="ca-pub-XXXXXXXXXXXX"
          data-ad-slot="1234567890"
          data-ad-format="auto"></ins>
@@ -34,7 +40,9 @@
       <canvas id="canvas"></canvas>
     </div>
     <div id="controls">
-      <select id="bgSelect"><option value="">Choose backdrop…</option></select>
+      <select id="bgSelect">
+        <option value="">Choose backdrop…</option>
+      </select>
       <button id="snapBtn">Download HD</button>
     </div>
   </section>
@@ -42,9 +50,13 @@
   <!-- AUTO-GALLERY -->
   <section id="gallery">
     <h2>Free Backgrounds</h2>
+<<<<<<< HEAD
     <div id="gallery-grid" class="grid">
       <!-- injected automatically -->
     </div>
+=======
+    <div id="gallery-grid" class="grid"></div>
+>>>>>>> e11f494 (Update site files with new gallery & demo)
   </section>
 
   <footer>
@@ -54,6 +66,7 @@
   </footer>
 
   <!-- Scripts -->
+<<<<<<< HEAD
   <script>
 fetch('https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/backgrounds')
   .then(r => r.json())
@@ -69,5 +82,8 @@ fetch('https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/contents/backgrounds
     });
   });
 </script>
+=======
+  <script src="app.js"></script>
+>>>>>>> e11f494 (Update site files with new gallery & demo)
 </body>
 </html>
