@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="style.css"/>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </head>
-<body>
 
-  <!-- Hero using digital-architecture-visualization -->
+<body>
+  <!-- HERO (unchanged) -->
   <header class="hero" style="background:url('/backgrounds/digital-architecture-visualization.jpg') center/cover;">
     <div>
       <h1>Instant Professional Backgrounds</h1>
@@ -18,7 +18,7 @@
     </div>
   </header>
 
-  <!-- Ad slot -->
+  <!-- AD SLOT -->
   <div class="ad-slot">
     <ins class="adsbygoogle" style="display:block"
          data-ad-client="ca-pub-XXXXXXXXXXXX"
@@ -26,7 +26,7 @@
          data-ad-format="auto"></ins>
   </div>
 
-  <!-- Live Demo -->
+  <!-- LIVE DEMO -->
   <section id="demo">
     <h2>Try it now</h2>
     <div class="preview">
@@ -39,18 +39,11 @@
     </div>
   </section>
 
-  <!-- Image Gallery -->
+  <!-- AUTO-GALLERY -->
   <section id="gallery">
     <h2>Free Backgrounds</h2>
-    <div class="grid">
-<<<<<<< HEAD
-      <img src="modern-home-office-setup.jpg" 
-           alt="A modern home office setup featuring a laptop, camera, and plant on a white desk." />
-      <img src="art-gallery-exhibition-interior.jpg" 
-           alt="A spacious art gallery showcasing various framed artworks on the walls"/>
-      <img src="pexels-heyho-6794934.jpg" 
-           alt="a nice cubicle"/>
-=======
+    <div id="gallery-grid" class="grid">
+      <!-- injected automatically -->
     </div>
   </section>
 
@@ -60,7 +53,33 @@
     </p>
   </footer>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/selfie_segmentation.js"></script>
   <script src="app.js"></script>
+
+  <!-- 🚀 Auto-gallery loader -->
+  <script>
+  /* Pull every JPG/PNG from /backgrounds/ */
+  fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/backgrounds')
+    .then(r => r.json())
+    .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
+    .then(files => {
+      const grid = document.getElementById('gallery-grid');
+      files.forEach(f => {
+        const img = document.createElement('img');
+        img.src = f.download_url;
+        img.alt = f.name.replace(/[-_]/g, ' ').replace(/\.\w+$/, '');
+        img.loading = 'lazy';
+        grid.appendChild(img);
+
+        /* Also add to the demo <select> */
+        const opt = document.createElement('option');
+        opt.value = f.download_url;
+        opt.textContent = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
+        document.getElementById('bgSelect').appendChild(opt);
+      });
+    })
+    .catch(console.error);
+  </script>
 </body>
 </html>
