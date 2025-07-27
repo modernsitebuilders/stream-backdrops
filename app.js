@@ -1,10 +1,16 @@
-// 1. Populate <select> with the four faux images
+// 1. Populate <select> with the four images
 const bgSelect = document.getElementById('bgSelect');
-const fauxImages = ['art_gallery_interior.jpg', 'art_gallery_interior_black_and_white.jpg', 'contemporary-office-layout.jpg', 'digital-architecture-visualization.jpg'];
-fauxImages.forEach(name => {
+const Images = [
+  'art_gallery_interior.jpg',
+  'art_gallery_interior_black_and_white.jpg',
+  'contemporary-office-layout.jpg',
+  'digital-architecture-visualization.jpg'
+];
+
+Images.forEach(name => {
   const opt = document.createElement('option');
-  opt.value = `backgrounds/${name}`;
-  opt.textContent = name.split('.')[0];
+  opt.value = `https://raw.githubusercontent.com/davidmilesphilly/stream-backdrops/main/backgrounds/${name}`;
+  opt.textContent = name.split('.')[0].replace(/[-_]/g, ' ');
   bgSelect.appendChild(opt);
 });
 
@@ -17,9 +23,9 @@ navigator.mediaDevices.getUserMedia({ video: true })
   .then(stream => { webcam.srcObject = stream; });
 
 // 3. MediaPipe Selfie Segmentation
-import 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/selfie_segmentation.js';
-const selfieSegmentation = new SelfieSegmentation({ locateFile: f =>
-  `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${f}` });
+const selfieSegmentation = new SelfieSegmentation({
+  locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${file}`
+});
 selfieSegmentation.setOptions({ modelSelection: 1 });
 selfieSegmentation.onResults(onResults);
 
