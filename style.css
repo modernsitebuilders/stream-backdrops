@@ -60,8 +60,9 @@ section { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
 /* ---- tight gap under hero ---- */
 #gallery { margin-top: -1.5rem !important; }
 
-/* ---- big gallery cards ---- */
+/* ---------- GALLERY JUMBO CARDS ---------- */
 #gallery {
+  margin-top: 0;
   background: #fff;
   border-radius: 20px;
   padding: 2rem;
@@ -69,8 +70,8 @@ section { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); /* 🚀 jumbo */
+  gap: 2.5rem;
 }
 .grid a {
   position: relative;
@@ -81,11 +82,22 @@ section { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
   width: 100%;
   border-radius: 12px;
   transition: transform 0.25s, box-shadow 0.25s;
-  display: block;
 }
 .grid img:hover {
   transform: scale(1.03);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+.download-btn {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: #0078ff;
+  color: #fff;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  pointer-events: none;
 }
 
 /* ---- download overlay ---- */
