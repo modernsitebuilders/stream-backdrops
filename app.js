@@ -1,27 +1,15 @@
 /***********************************************************************
  *  STREAM BACKDROPS – backgrounds.js
- *  ----------------------------------------------------------
- *  1. Populates <select> with the real image list
- *  2. Starts webcam + MediaPipe Selfie-Segmentation
- *  3. Lets user download snapshots
- *  4. Auto-loads the gallery from GitHub
- *  5. Forces “Download” buttons to save (Safari-proof)
  ***********************************************************************/
 
-/***********************************************************************
- *  CONFIG
- ***********************************************************************/
-const USE_WORKER = true;                                // <-- flip to false if you skip the Worker
-const CF_WORKER  = 'https://dl.streambackdrops.workers.dev'; // <-- change to your Worker URL
+const USE_WORKER = true;
+const CF_WORKER  = 'https://dl.streambackdrops.workers.dev';
 
 const bgSelect = document.getElementById('bgSelect');
 const webcam   = document.getElementById('webcam');
 const canvas   = document.getElementById('canvas');
 const ctx      = canvas.getContext('2d');
 
-/***********************************************************************
- *  1. Populate <select> with the real images
- ***********************************************************************/
 const Images = [
   'art_gallery_interior.jpg',
   'art_gallery_interior_black_and_white.jpg',
@@ -38,15 +26,9 @@ Images.forEach(name => {
   bgSelect.appendChild(opt);
 });
 
-/***********************************************************************
- *  2. Webcam start
- ***********************************************************************/
 navigator.mediaDevices.getUserMedia({ video: true })
   .then(stream => { webcam.srcObject = stream; });
 
-/***********************************************************************
- *  3. MediaPipe Selfie-Segmentation
- ***********************************************************************/
 const selfieSegmentation = new SelfieSegmentation({
   locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${file}`
 });
@@ -64,9 +46,6 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-/***********************************************************************
- *  4. Background swapping
- ***********************************************************************/
 let bgImg = new Image();
 bgSelect.addEventListener('change', e => {
   bgImg.src = e.target.value;
@@ -88,9 +67,6 @@ function onResults(results) {
   ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
 }
 
-/***********************************************************************
- *  5. Download snapshot
- ***********************************************************************/
 document.getElementById('snapBtn')?.addEventListener('click', () => {
   const link = document.createElement('a');
   link.download = 'backdrop.png';
@@ -98,32 +74,28 @@ document.getElementById('snapBtn')?.addEventListener('click', () => {
   link.click();
 });
 
-/***********************************************************************
- *  6. Auto-populate gallery from GitHub
- ***********************************************************************/
 fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/backgrounds')
   .then(r => r.json())
   .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
   .then(files => {
     const grid = document.getElementById('gallery-grid');
+    if (!grid) return;
     grid.style.display = 'grid';
     grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(200px, 1fr))';
     grid.style.gap = '1rem';
 
     files.forEach(f => {
-      // wrapper
       const card = document.createElement('div');
       card.style.position = 'relative';
 
-      // preview image
       const img = document.createElement('img');
       img.src = f.download_url;
       img.alt = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
       img.loading = 'lazy';
       img.style.width = '100%';
       img.style.borderRadius = '8px';
+      img.onclick = () => window.open(f.download_url, '_blank');
 
-      // download button
       const btn = document.createElement('a');
       btn.href        = USE_WORKER
         ? `${CF_WORKER}/${f.name}`
