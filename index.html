@@ -43,6 +43,17 @@
   </footer>
 
   <script>
+/* Lightbox + download */
+const lightbox = document.createElement('div');
+lightbox.style.cssText = `
+  position:fixed; inset:0; background:rgba(0,0,0,.8); display:none;
+  align-items:center; justify-content:center; z-index:9999; cursor:pointer`;
+const bigImg = document.createElement('img');
+bigImg.style.cssText = 'max-width:90%; max-height:90%; border-radius:12px';
+lightbox.appendChild(bigImg);
+document.body.appendChild(lightbox);
+lightbox.onclick = () => lightbox.style.display = 'none';
+
 fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/backgrounds')
   .then(r => r.json())
   .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
@@ -50,44 +61,32 @@ fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/b
     const grid = document.getElementById('gallery-grid');
     grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(420px, 1fr))';
     grid.style.gap = '2.5rem';
-
     files.forEach(f => {
-      // wrapper
+      // card
       const card = document.createElement('div');
       card.style.position = 'relative';
-      card.style.cursor = 'zoom-in';
 
-      // image
-      const img = document.createElement('img');
-      img.src = f.download_url;
-      img.alt = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
-      img.style.width = '100%';
-      img.style.borderRadius = '12px';
-      img.style.transition = 'transform .3s';
-      img.style.transformOrigin = 'center center';
-      img.onclick = () => {
-        img.style.transform = img.style.transform === 'scale(1.8)' ? 'scale(1)' : 'scale(1.8)';
+      // thumb
+      const thumb = document.createElement('img');
+      thumb.src = f.download_url;
+      thumb.style.cssText = 'width:100%; border-radius:12px; cursor:zoom-in';
+      thumb.onclick = () => {
+        bigImg.src = f.download_url;
+        lightbox.style.display = 'flex';
       };
 
-      // download button (separate link)
+      // download button
       const btn = document.createElement('a');
       btn.href = f.download_url;
       btn.download = f.name;
       btn.className = 'download-btn';
       btn.textContent = 'Download';
-      btn.style.position = 'absolute';
-      btn.style.bottom = '12px';
-      btn.style.right = '12px';
-      btn.style.background = '#0078ff';
-      btn.style.color = '#fff';
-      btn.style.padding = '8px 12px';
-      btn.style.borderRadius = '4px';
-      btn.style.fontSize = '.8rem';
-      btn.style.fontWeight = '600';
-      btn.style.textDecoration = 'none';
-      btn.style.pointerEvents = 'auto'; // keep button clickable
+      btn.style.cssText = `
+        position:absolute; bottom:12px; right:12px; background:#0078ff;
+        color:#fff; padding:8px 12px; border-radius:4px; font-size:.8rem;
+        font-weight:600; text-decoration:none`;
 
-      card.append(img, btn);
+      card.append(thumb, btn);
       grid.appendChild(card);
     });
   });
