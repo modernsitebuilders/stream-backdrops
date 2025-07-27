@@ -39,21 +39,27 @@
     </p>
   </footer>
 
-  <!-- Gallery loader only -->
-  <script>
-    fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/backgrounds')
-      .then(r => r.json())
-      .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
-      .then(files => {
-        const grid = document.getElementById('gallery-grid');
-        files.forEach(f => {
-          const img = document.createElement('img');
-          img.src   = f.download_url;
-          img.alt   = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
-          img.loading = 'lazy';
-          grid.appendChild(img);
-        });
+ <script>
+  fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/backgrounds')
+    .then(r => r.json())
+    .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
+    .then(files => {
+      const grid = document.getElementById('gallery-grid');
+      files.forEach(f => {
+        const a   = document.createElement('a');
+        a.href  = f.download_url;
+        a.download = f.name;
+        a.style.textDecoration = 'none';
+
+        const img = document.createElement('img');
+        img.src   = f.download_url;
+        img.alt   = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
+        img.loading = 'lazy';
+
+        a.appendChild(img);
+        grid.appendChild(a);
       });
-  </script>
+    });
+</script>
 </body>
 </html>
