@@ -68,11 +68,10 @@
         img.style.transition = 'transform .3s';
         img.onclick = () => window.open(f.download_url, '_blank');
 
-        // download button
+        // download button — forces save dialog
         const btn = document.createElement('a');
         btn.href = f.download_url;
-        btn.download = f.name;
-        btn.setAttribute('download', f.name);
+        btn.download = f.name;                // magic: triggers download
         btn.className = 'download-btn';
         btn.textContent = 'Download';
         btn.style.cssText = `
@@ -86,7 +85,7 @@
         grid.appendChild(card);
       });
     });
-  </script>
+</script>
 
 </body>
 </html>
