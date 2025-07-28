@@ -43,6 +43,8 @@ function loop() {
 
 let bgImg = new Image();
 bgSelect.addEventListener('change', e => {
+  bgImg.crossOrigin = "Anonymous"; // Add this line to fix CORS issues 
+  if (e.target.value) {
   bgImg.src = e.target.value;
 });
 
