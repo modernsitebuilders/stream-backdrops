@@ -36,9 +36,11 @@ async function listBackgrounds() {
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const urls = await listBackgrounds();
+    console.log('Loaded backgrounds:', urls); // Debug log
     buildUI(urls);
     await initCamera();
   } catch (err) {
+    console.error('Error:', err); // More detailed error
     showError('Cannot load backgrounds: ' + err.message);
   }
 });
