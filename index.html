@@ -5,7 +5,116 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Office HD Backdrops - Full Screen Preview</title>
   <style>
-    /* ... (previous CSS remains the same) ... */
+    /* ---------- RESET & BASE ---------- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      background: #f5f7fa; color: #0f0f11; line-height: 1.6;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      background: linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.85) 0%,
+                    rgba(240, 245, 250, 0.85) 100%
+                  ),
+                  url('https://raw.githubusercontent.com/davidmilesphilly/stream-backdrops/main/backgrounds/hero.jpg') center/cover;
+      min-height: 60vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 1rem;
+    }
+    .hero h1 { 
+      font-size: clamp(1.8rem, 5vw, 3rem); 
+      font-weight: 700; 
+      margin-bottom: 0.5rem; 
+      line-height: 1.2;
+      max-width: 800px;
+    }
+    .hero p  { 
+      font-size: clamp(1rem, 2vw, 1.1rem); 
+      color: #444; 
+      margin-bottom: 1.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta {
+      background: linear-gradient(135deg, #00c2ff, #0078ff);
+      color: #fff; 
+      padding: 0.9rem 2rem; 
+      border-radius: 50px;
+      font-weight: 600; 
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      text-decoration: none;
+    }
+    .cta:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 4px 12px rgba(0, 194, 255, 0.35); 
+    }
+
+    /* ---------- GALLERY ---------- */
+    section { 
+      max-width: 1200px; 
+      margin: 3rem auto; 
+      padding: 0 1rem; 
+    }
+    #gallery h2 { 
+      text-align: center; 
+      font-size: clamp(1.8rem, 4vw, 2.5rem); 
+      margin-bottom: 2rem;
+      color: #222;
+    }
+    .grid { 
+      display: grid; 
+      gap: 2rem; 
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+    }
+    .card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+    .grid img { 
+      width: 100%; 
+      height: 250px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .card:hover img {
+      transform: scale(1.03);
+    }
+
+    .download-btn {
+      position: absolute; 
+      bottom: 16px; 
+      right: 16px;
+      background: #0078ff; 
+      color: #fff; 
+      padding: 0.7rem 1.2rem;
+      border-radius: 6px; 
+      font-size: 0.9rem; 
+      font-weight: 600;
+      text-decoration: none; 
+      transition: background 0.2s;
+      z-index: 10;
+      cursor: pointer;
+    }
+    .download-btn:hover {
+      background: #0060cc;
+    }
 
     /* ---------- FULLSCREEN PREVIEW ---------- */
     #fullscreen-preview {
@@ -47,8 +156,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      cursor: pointer; /* FIXED: Ensure pointer cursor */
-      border: none; /* Remove default button border */
+      cursor: pointer;
     }
     
     .preview-btn:hover {
@@ -56,14 +164,263 @@
       transform: translateY(-2px);
     }
     
-    /* ... (rest of CSS remains the same) ... */
+    .close-preview {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      color: white;
+      font-size: 2.5rem;
+      cursor: pointer;
+      background: rgba(0,0,0,0.5);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    
+    .close-preview:hover {
+      background: rgba(255,255,255,0.2);
+      transform: rotate(90deg);
+    }
+
+    /* ---------- AD & FOOTER ---------- */
+    .ad-slot { 
+      max-width: 728px;
+      height: 90px; 
+      margin: 2rem auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    footer { 
+      background: #fff; 
+      text-align: center; 
+      padding: 3rem 1rem; 
+      font-size: 1rem; 
+      color: #555;
+      margin-top: 3rem;
+      border-top: 1px solid #eee;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .hero {
+        min-height: 50vh;
+        padding: 2rem 1rem;
+      }
+      .grid {
+        gap: 1.5rem;
+      }
+      .grid img {
+        height: 200px;
+      }
+      
+      .preview-controls {
+        bottom: 15px;
+        flex-direction: column;
+        width: 80%;
+      }
+      
+      .preview-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .close-preview {
+        top: 15px;
+        right: 15px;
+      }
+    }
   </style>
 </head>
 <body>
-  <!-- ... (HTML remains the same) ... -->
+  <!-- HERO -->
+  <header class="hero">
+    <div>
+      <h1>Office-Ready Camera-Sharp HD Backdrops for Any Workspace</h1>
+      <p>HD Zoom & Teams backgrounds for professionals—no messy room, no judgment.</p>
+      <a href="#gallery" class="cta">Browse Office Backgrounds</a>
+    </div>
+  </header>
+
+  <!-- AD SLOT -->
+  <div class="ad-slot">
+    <!-- AdSense placeholder -->
+    <div style="width: 728px; height: 90px; background: #eaeaea; display: flex; align-items: center; justify-content: center; border-radius: 8px; color: #777;">
+      Advertisement (728x90)
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <h2>Professional Office Backgrounds (Free Download)</h2>
+    <div id="gallery-grid" class="grid"></div>
+  </section>
+
+  <!-- FULLSCREEN PREVIEW -->
+  <div id="fullscreen-preview">
+    <div class="close-preview">&times;</div>
+    <img id="preview-image" alt="Fullscreen Preview">
+    <div class="preview-controls">
+      <a id="download-btn" class="preview-btn">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+        </svg>
+        Download Full Size
+      </a>
+      <a id="newtab-btn" class="preview-btn" target="_blank">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
+          <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
+        </svg>
+        Open in New Tab
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Made for remote professionals, freelancers & executives who want to look sharp on camera.</p>
+  </footer>
 
   <script>
-    // ... (JavaScript remains the same) ... 
+    // Gallery rendering with fullscreen preview
+    fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/backgrounds')
+      .then(r => r.json())
+      .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
+      .then(files => {
+        const grid = document.getElementById('gallery-grid');
+        
+        files.forEach(f => {
+          const card = document.createElement('div');
+          card.className = 'card';
+
+          const img = document.createElement('img');
+          img.src = f.download_url;
+          img.alt = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
+          img.loading = 'lazy';
+          
+          // Add click handler for fullscreen preview
+          img.addEventListener('click', () => {
+            openFullscreenPreview(f.download_url, f.name);
+          });
+
+          const btn = document.createElement('a');
+          btn.textContent = 'Download';
+          btn.className = 'download-btn';
+          
+          // Download functionality
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation(); // Prevent triggering the image click
+            downloadImage(f.download_url, f.name, btn);
+          });
+
+          card.append(img, btn);
+          grid.appendChild(card);
+        });
+      });
+      
+    // Image download function
+    async function downloadImage(url, filename, btn = null) {
+      const originalText = btn ? btn.textContent : 'Download';
+      
+      try {
+        if(btn) {
+          btn.textContent = 'Downloading...';
+          btn.style.pointerEvents = 'none';
+        }
+        
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        
+        const tempLink = document.createElement('a');
+        tempLink.href = blobUrl;
+        tempLink.download = filename;
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+        
+        URL.revokeObjectURL(blobUrl);
+      } catch (error) {
+        console.error('Download failed:', error);
+        if(btn) btn.textContent = 'Error! Retry';
+      } finally {
+        if(btn) {
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.pointerEvents = 'auto';
+          }, 2000);
+        }
+      }
+    }
+    
+    // Fullscreen preview functions
+    function openFullscreenPreview(url, filename) {
+      const preview = document.getElementById('fullscreen-preview');
+      const previewImg = document.getElementById('preview-image');
+      const downloadBtn = document.getElementById('download-btn');
+      const newTabBtn = document.getElementById('newtab-btn');
+      
+      // Update image and buttons
+      previewImg.src = url;
+      newTabBtn.href = url;
+      
+      // Set up download button
+      downloadBtn.onclick = (e) => {
+        e.preventDefault();
+        downloadImage(url, filename);
+      };
+      
+      // Show preview
+      preview.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      
+      // Update URL without reloading
+      history.pushState({preview: true}, '', url);
+    }
+    
+    function closeFullscreenPreview() {
+      const preview = document.getElementById('fullscreen-preview');
+      preview.style.display = 'none';
+      document.body.style.overflow = 'auto';
+      
+      // Restore original URL
+      history.pushState(null, '', window.location.pathname);
+    }
+    
+    // Close preview when close button is clicked
+    document.querySelector('.close-preview').addEventListener('click', closeFullscreenPreview);
+    
+    // Close preview when pressing ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeFullscreenPreview();
+      }
+    });
+    
+    // Handle browser back button
+    window.addEventListener('popstate', (e) => {
+      if (!e.state || !e.state.preview) {
+        closeFullscreenPreview();
+      }
+    });
+    
+    // Close preview when clicking outside image
+    document.getElementById('fullscreen-preview').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('fullscreen-preview')) {
+        closeFullscreenPreview();
+      }
+    });
+    
+    // Initialize AdSense
+    (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
 </body>
 </html>
