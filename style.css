@@ -101,6 +101,7 @@ section {
   text-decoration: none; 
   transition: background 0.2s;
   z-index: 10;
+  cursor: pointer;
 }
 .download-btn:hover {
   background: #0060cc;
