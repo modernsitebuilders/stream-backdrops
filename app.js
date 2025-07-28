@@ -213,3 +213,48 @@ window.addEventListener('beforeunload', () => {
 bgSelect.addEventListener('change', e => {
   bgImg.src = e.target.value;
 });
+/* ---------- 10. VIDEO CONFERENCE BACKGROUND ---------- */
+function applyVirtualBackground() {
+  // Create a new canvas for the virtual background stream
+  const virtualCanvas = document.createElement('canvas');
+  virtualCanvas.width = canvas.width;
+  virtualCanvas.height = canvas.height;
+  const virtualCtx = virtualCanvas.getContext('2d');
+  
+  // Draw the composition (same as our preview)
+  virtualCtx.drawImage(bgImg, 0, 0, virtualCanvas.width, virtualCanvas.height);
+  virtualCtx.globalCompositeOperation = 'source-in';
+  virtualCtx.drawImage(canvas, 0, 0);
+  
+  // Convert to video stream
+  return virtualCanvas.captureStream();
+}
+
+/* ---------- 11. DROPDOWN INTEGRATION ---------- */
+bgSelect.addEventListener('change', e => {
+  bgImg.src = e.target.value;
+  
+  // Optional: Auto-apply to video conference when background changes
+  if (currentStream) {
+    updateVirtualBackgroundStream();
+  }
+});
+
+let virtualStream = null;
+
+function updateVirtualBackgroundStream() {
+  if (virtualStream) {
+    virtualStream.getTracks().forEach(track => track.stop());
+  }
+  virtualStream = applyVirtualBackground();
+  
+  // Here you would replace your video conference stream
+  console.log('New virtual background stream ready:', virtualStream);
+  // videoConference.updateStream(virtualStream);
+}
+
+/* ---------- 12. EXPORT FUNCTION ---------- */
+// Add this to your global scope
+window.getVirtualBackgroundStream = () => {
+  return virtualStream || applyVirtualBackground();
+};
