@@ -201,7 +201,7 @@ canvas { z-index: 2; }
 .card {
   position: relative;
   border-radius: var(--border-radius);
-  overflow: hidden;
+  overflow: visible;
   box-shadow: var(--shadow);
   transition: var(--transition);
   background: white;
@@ -213,12 +213,13 @@ canvas { z-index: 2; }
   object-fit: cover;
   display: block;
   transition: var(--transition);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 .card:hover img { transform: scale(1.03); }
 .download-btn {
   position: absolute;
-  bottom: 16px;
-  right: 16px;
+  bottom: -40px;
+  right: 0;
   background: var(--primary);
   color: #fff;
   padding: 0.7rem 1.2rem;
@@ -227,6 +228,8 @@ canvas { z-index: 2; }
   text-decoration: none;
   transition: var(--transition);
   z-index: 10;
+  border: none;
+  cursor: pointer;
 }
 .download-btn:hover { background: var(--primary-dark); }
 
@@ -266,6 +269,11 @@ canvas { z-index: 2; }
   transition: var(--transition);
 }
 .close-preview:hover { transform: rotate(90deg); }
+.preview-controls {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
 
 /* ---------- FOOTER ---------- */
 footer {
@@ -292,4 +300,9 @@ footer {
   .section { padding: 3rem 0; }
   .grid { gap: 1.5rem; }
   .grid img { height: 200px; }
+  .download-btn {
+    bottom: -35px;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
 }
