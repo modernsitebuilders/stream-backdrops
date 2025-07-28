@@ -198,31 +198,30 @@ function showError(msg) {
 /* ---------- 6. DOWNLOAD (works with GitHub URLs) ---------- */
 async function downloadImage(url) {
   try {
-    // Create a temporary anchor tag
+    // Fetch the image as a blob first
+    const response = await fetch(url, { mode: 'cors' });
+    if (!response.ok) throw new Error('Failed to fetch image');
+    
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+    
     const a = document.createElement('a');
-    
-    // For GitHub raw URLs, we can use them directly with download attribute
-    a.href = url;
-    a.download = url.split('/').pop(); // Extract filename from URL
-    a.rel = 'noopener noreferrer'; // Security best practice
-    a.target = '_blank'; // Open in new tab as fallback
-    
-    // Trigger download
+    a.href = blobUrl;
+    a.download = url.split('/').pop();
     document.body.appendChild(a);
     a.click();
     
-    // Clean up
+    // Cleanup
     setTimeout(() => {
       document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
+      window.URL.revokeObjectURL(blobUrl);
     }, 100);
   } catch (err) {
     console.error('Download failed:', err);
-    // Fallback: Open in new tab if download fails
+    // Fallback to opening in new tab
     window.open(url, '_blank');
   }
 }
-
 /* ---------- 7. FULLSCREEN PREVIEW ---------- */
 function previewImage(src) {
   previewImg.src = src;
