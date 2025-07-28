@@ -28,6 +28,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (urls.length) {
     initUI(urls);
     initCamera();
+    
+    // Setup fullscreen preview download button
+    document.getElementById('download-btn').addEventListener('click', async (e) => {
+      e.preventDefault();
+      await downloadImage(previewImg.src);
+    });
+    
+    // Setup new tab button
+    document.getElementById('newtab-btn').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.open(previewImg.src, '_blank');
+    });
   } else {
     showError('No backgrounds found.');
   }
@@ -154,16 +166,6 @@ fullscreen.addEventListener('click', e => {
 });
 
 // ---------- HELPERS ----------
-function formatName(url) {
-  return url.split('/').pop()
-            .replace(/\.(png|jpe?g|webp)$/i, '')
-            .replace(/[-_]/g, ' ')
-            .replace(/\b\w/g, c => c.toUpperCase());
-}
-function updateCameraStatus(cls, msg) {
-  cameraStatus.textContent = msg;
-  cameraStatus.className = 'camera-status ' + cls;
-}
 async function downloadImage(href, name) {
   try {
     // Handle data URLs (snapshots)
@@ -199,11 +201,24 @@ async function downloadImage(href, name) {
     window.open(href, '_blank');
   }
 }
+
+function formatName(url) {
+  return url.split('/').pop()
+            .replace(/\.(png|jpe?g|webp)$/i, '')
+            .replace(/[-_]/g, ' ')
+            .replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function updateCameraStatus(cls, msg) {
+  cameraStatus.textContent = msg;
+  cameraStatus.className = 'camera-status ' + cls;
+}
+
 function previewImage(src) {
   previewImg.src = src;
-  // Remove href assignments and use event listeners instead
   fullscreen.style.display = 'flex';
 }
+
 function showError(msg) {
   const div = document.createElement('div');
   div.className = 'error';
