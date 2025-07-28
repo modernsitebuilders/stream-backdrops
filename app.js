@@ -1,79 +1,77 @@
 /***********************************************************************
- *  STREAM BACKDROPS – app.js
+ *  StreamBackdrops – 100 % front-end version
  ***********************************************************************/
 
-// DOM Elements
-const bgSelect       = document.getElementById('bgSelect');
-const webcam         = document.getElementById('webcam');
-const canvas         = document.getElementById('canvas');
-const ctx            = canvas.getContext('2d');
-const cameraStatus   = document.getElementById('cameraStatus');
-const snapBtn        = document.getElementById('snapBtn');
-const galleryGrid    = document.getElementById('gallery-grid');
-const fullscreen     = document.getElementById('fullscreen-preview');
-const previewImg     = document.getElementById('preview-image');
-const closePreview   = document.querySelector('.close-preview');
+// ---------- CONFIGURATION ----------
+// 1. Put your images in /backgrounds/  (root of repo)
+// 2. List their exact filenames below (same order you want them shown)
+//    → NO leading slashes, NO full URLs needed if they’re in the repo.
+const BACKGROUND_FILES = [
+  'office1.jpg',
+  'office2.jpg',
+  'office3.jpg',
+  'office4.png'
+];
 
-// Globals
-let bgImg       = new Image();
+// Build absolute URLs for GitHub Pages (auto-detect origin)
+const ORIGIN = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
+const BACKGROUND_URLS = BACKGROUND_FILES.map(f => `${ORIGIN}/backgrounds/${f}`);
+
+// ---------- DOM ----------
+const bgSelect    = document.getElementById('bgSelect');
+const webcam      = document.getElementById('webcam');
+const canvas      = document.getElementById('canvas');
+const ctx         = canvas.getContext('2d');
+const cameraStatus= document.getElementById('cameraStatus');
+const snapBtn     = document.getElementById('snapBtn');
+const galleryGrid = document.getElementById('gallery-grid');
+const fullscreen  = document.getElementById('fullscreen-preview');
+const previewImg  = document.getElementById('preview-image');
+const closeBtn    = document.querySelector('.close-preview');
+
+let bgImg = new Image();
 let currentStream = null;
 
-// --- INITIALIZE ---
-document.addEventListener('DOMContentLoaded', async () => {
-  const bgs = await fetchBackgrounds();
-  if (bgs.length) {
-    initUI(bgs);
-    initCamera();
-  } else {
-    showError('No backgrounds found. Add images to /backgrounds/ folder.');
-  }
+// ---------- INITIALISE ----------
+document.addEventListener('DOMContentLoaded', () => {
+  initUI(BACKGROUND_URLS);
+  initCamera();
 });
 
-// --- BACKGROUND LOADER ---
-async function fetchBackgrounds() {
-  try {
-    const res = await fetch('/get_backgrounds.php');
-    if (!res.ok) throw new Error(res.statusText);
-    const files = await res.json();
-    return files.filter(f => /(jpg|jpeg|png|webp)$/i.test(f));
-  } catch (e) {
-    console.error('Background fetch failed:', e);
-    showError('Could not load backgrounds.');
-    return [];
-  }
-}
-
-function initUI(backgrounds) {
+// ---------- UI ----------
+function initUI(urls) {
   // Dropdown
   bgSelect.innerHTML = '<option value="" disabled selected>Select background...</option>';
-  backgrounds.forEach(p => {
+  urls.forEach(url => {
     const opt = document.createElement('option');
-    opt.value = p;
-    opt.textContent = formatName(p);
+    opt.value = url;
+    opt.textContent = formatName(url);
     bgSelect.appendChild(opt);
   });
 
   // Gallery
   galleryGrid.innerHTML = '';
-  backgrounds.forEach(p => {
+  urls.forEach(url => {
     const card = document.createElement('div');
     card.className = 'card';
+
     const img = new Image();
-    img.src = p;
-    img.alt = formatName(p);
+    img.src = url;
+    img.alt = formatName(url);
     img.loading = 'lazy';
-    img.onerror = () => (img.style.display = 'none');
-    const dl = document.createElement('button');
-    dl.className = 'download-btn';
-    dl.textContent = 'Download';
-    dl.onclick = e => { e.stopPropagation(); downloadImage(p); };
-    card.onclick = () => previewImage(p);
-    card.append(img, dl);
+
+    const dlBtn = document.createElement('button');
+    dlBtn.className = 'download-btn';
+    dlBtn.textContent = 'Download';
+    dlBtn.onclick = e => { e.stopPropagation(); downloadImage(url); };
+
+    card.onclick = () => previewImage(url);
+    card.append(img, dlBtn);
     galleryGrid.appendChild(card);
   });
 }
 
-// --- CAMERA ---
+// ---------- CAMERA ----------
 function initCamera() {
   navigator.mediaDevices
     .getUserMedia({ video: { facingMode: 'user' } })
@@ -82,6 +80,7 @@ function initCamera() {
       webcam.srcObject = stream;
       updateCameraStatus('active', 'Camera active');
       snapBtn.disabled = false;
+
       webcam.onloadedmetadata = () => {
         canvas.width  = webcam.videoWidth;
         canvas.height = webcam.videoHeight;
@@ -89,12 +88,12 @@ function initCamera() {
       };
     })
     .catch(err => {
-      console.error('Camera error:', err);
+      console.error(err);
       updateCameraStatus('error', 'Camera error: ' + err.message);
     });
 }
 
-// --- SEGMENTATION ---
+// ---------- SEGMENTATION ----------
 function startSegmentation() {
   const selfie = new SelfieSegmentation({
     locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${file}`
@@ -130,7 +129,7 @@ function onResults(results) {
   ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
 }
 
-// --- EVENTS ---
+// ---------- EVENTS ----------
 bgSelect.addEventListener('change', e => {
   if (e.target.value) {
     bgImg = new Image();
@@ -144,16 +143,16 @@ snapBtn.addEventListener('click', () => {
 });
 
 fullscreen.addEventListener('click', e => {
-  if (e.target === fullscreen || e.target === closePreview)
+  if (e.target === fullscreen || e.target === closeBtn)
     fullscreen.style.display = 'none';
 });
 
-// --- HELPERS ---
-function formatName(path) {
-  return path.split('/').pop()
-             .replace(/\.(jpg|jpeg|png|webp)$/i, '')
-             .replace(/[-_]/g, ' ')
-             .replace(/\b\w/g, c => c.toUpperCase());
+// ---------- HELPERS ----------
+function formatName(url) {
+  return url.split('/').pop()
+            .replace(/\.(jpg|jpeg|png|webp)$/i, '')
+            .replace(/[-_]/g, ' ')
+            .replace(/\b\w/g, c => c.toUpperCase());
 }
 function updateCameraStatus(cls, msg) {
   cameraStatus.textContent = msg;
@@ -170,10 +169,4 @@ function previewImage(src) {
   document.getElementById('download-btn').href = src;
   document.getElementById('newtab-btn').href = src;
   fullscreen.style.display = 'flex';
-}
-function showError(msg) {
-  const div = document.createElement('div');
-  div.className = 'error';
-  div.textContent = msg;
-  galleryGrid.parentNode.insertBefore(div, galleryGrid);
 }
