@@ -20,10 +20,18 @@ let bgImg     = new Image();
 let currentStream = null;
 let segmentationActive = false;
 
-/* ---------- 1.  LIST BACKGROUNDS (same-origin directory listing) ---------- */
+/* ---------- 1.  LIST BACKGROUNDS (same-origin) ---------- */
 async function listBackgrounds() {
-  const list = await (await fetch('/backgrounds/index.json')).json();
-  return list.map(name => `/backgrounds/${name}`);
+  // Vercel/Netlify serve /backgrounds/ as a directory without index.json
+  // We therefore fetch the GitHub API (public repo) as a fallback
+  const repo = 'davidmilesphilly/stream-backdrops';
+  const api  = `https://api.github.com/repos/   ${repo}/contents/backgrounds`;
+  const res  = await fetch(api);
+  if (!res.ok) throw new Error('Unable to load backgrounds');
+  const files = await res.json();
+  return files
+    .filter(f => /\.(png|jpe?g|webp)$/i.test(f.name))
+    .map(f => `https://raw.githubusercontent.com/ GitHub · Build and ship software on a single, collaborative platform GitHub · Build and ship software on a single, collaborative platform  ${repo}/main/backgrounds/${encodeURIComponent(f.name)}`);
 }
 
 /* ---------- 2.  INIT ---------- */
