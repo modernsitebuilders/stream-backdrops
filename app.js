@@ -112,16 +112,35 @@ function startSegmentation() {
   const selfie = new SelfieSegmentation({
     locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${f}`
   });
+  
   selfie.setOptions({ modelSelection: 1, selfieMode: true });
   selfie.onResults(onSegment);
 
   segmentationActive = true;
-  (function loop() {
-    if (segmentationActive && webcam.readyState >= 2) {
-      selfie.send({ image: webcam }).catch(() => {});
+  
+  let lastFrameTime = 0;
+  const targetFPS = 30;
+  const frameDelay = 1000 / targetFPS;
+
+  async function processFrame() {
+    if (!segmentationActive) return;
+
+    const now = Date.now();
+    const elapsed = now - lastFrameTime;
+
+    if (elapsed >= frameDelay && webcam.readyState >= 2) {
+      try {
+        await selfie.send({ image: webcam });
+        lastFrameTime = now;
+      } catch (err) {
+        console.error('Segmentation error:', err);
+      }
     }
-    requestAnimationFrame(loop);
-  })();
+
+    requestAnimationFrame(processFrame);
+  }
+
+  processFrame();
 }
 
 function onSegment({ segmentationMask, image }) {
