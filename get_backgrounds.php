@@ -3,11 +3,13 @@ header('Content-Type: application/json');
 
 $backgrounds = [];
 $dir = 'backgrounds/';
+$allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
 
 if (is_dir($dir)) {
     foreach (scandir($dir) as $file) {
-        if ($file !== '.' && $file !== '..' && !is_dir($dir.$file)) {
-            $backgrounds[] = $dir.$file;
+        $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+        if (!in_array($file, ['.', '..']) && in_array($ext, $allowedExtensions)) {
+            $backgrounds[] = $dir . $file;
         }
     }
 }
