@@ -155,17 +155,22 @@ body {
 
 @media (min-width: 992px) {
   .preview-wrapper {
-    grid-template-columns: 2fr 1fr;
+    display: grid;
+    grid-template-columns: 1fr 350px; /* Fixed width for controls */
+    gap: 2rem;
+    align-items: start; /* Align items at top */
   }
 }
 
 .camera-preview {
   position: relative;
+  height: 0;
   background: #333;
   border-radius: var(--border-radius);
   overflow: hidden;
   aspect-ratio: 16/9;
   z-index: 1;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
 }
 
 .preview-header {
@@ -204,7 +209,7 @@ body {
 }
 
 video, canvas {
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
