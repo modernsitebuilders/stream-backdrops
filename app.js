@@ -22,12 +22,8 @@ let segmentationActive = false;
 
 /* ---------- 1.  LIST BACKGROUNDS (same-origin directory listing) ---------- */
 async function listBackgrounds() {
-  const html = await (await fetch('/backgrounds/')).text();
-  const repo = 'davidmilesphilly/stream-backdrops';
-  const dom  = new DOMParser().parseFromString(html, 'text/html');
-  const relative = [...dom.querySelectorAll('a[href$=".png"], a[href$=".jpg"], a[href$=".webp"]')]
-                     .map(a => '/backgrounds/' + a.getAttribute('href'));
-  return relative;
+  const list = await (await fetch('/backgrounds/index.json')).json();
+  return list.map(name => `/backgrounds/${name}`);
 }
 
 /* ---------- 2.  INIT ---------- */
