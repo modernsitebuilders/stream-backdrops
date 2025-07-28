@@ -1,162 +1,140 @@
 /***********************************************************************
  *  STREAM BACKDROPS – app.js
- *  Pure dynamic background loading version
  ***********************************************************************/
 
 // DOM Elements
-const bgSelect = document.getElementById('bgSelect');
-const webcam = document.getElementById('webcam');
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-const cameraStatus = document.getElementById('cameraStatus');
-const snapBtn = document.getElementById('snapBtn');
-const galleryGrid = document.getElementById('gallery-grid');
+const bgSelect       = document.getElementById('bgSelect');
+const webcam         = document.getElementById('webcam');
+const canvas         = document.getElementById('canvas');
+const ctx            = canvas.getContext('2d');
+const cameraStatus   = document.getElementById('cameraStatus');
+const snapBtn        = document.getElementById('snapBtn');
+const galleryGrid    = document.getElementById('gallery-grid');
+const fullscreen     = document.getElementById('fullscreen-preview');
+const previewImg     = document.getElementById('preview-image');
+const closePreview   = document.querySelector('.close-preview');
 
-// Background image handling
-let bgImg = new Image();
+// Globals
+let bgImg       = new Image();
 let currentStream = null;
 
-// Initialize when DOM is loaded
+// --- INITIALIZE ---
 document.addEventListener('DOMContentLoaded', async () => {
-  const backgrounds = await fetchBackgrounds();
-  if (backgrounds.length > 0) {
-    initUI(backgrounds);
+  const bgs = await fetchBackgrounds();
+  if (bgs.length) {
+    initUI(bgs);
     initCamera();
   } else {
-    showError("No backgrounds found. Please upload images to /backgrounds/ folder.");
+    showError('No backgrounds found. Add images to /backgrounds/ folder.');
   }
 });
 
-// Fetch backgrounds from server
+// --- BACKGROUND LOADER ---
 async function fetchBackgrounds() {
   try {
-    const response = await fetch('/get_backgrounds.php');
-    if (!response.ok) throw new Error('Server error: ' + response.status);
-    
-    const backgrounds = await response.json();
-    if (!Array.isArray(backgrounds)) throw new Error('Invalid response format');
-    
-    return backgrounds.filter(bg => 
-      bg.endsWith('.jpg') || 
-      bg.endsWith('.jpeg') || 
-      bg.endsWith('.png') ||
-      bg.endsWith('.webp')
-    );
-  } catch (error) {
-    console.error("Background loading failed:", error);
-    showError("Couldn't load backgrounds. Please check console for details.");
+    const res = await fetch('/get_backgrounds.php');
+    if (!res.ok) throw new Error(res.statusText);
+    const files = await res.json();
+    return files.filter(f => /(jpg|jpeg|png|webp)$/i.test(f));
+  } catch (e) {
+    console.error('Background fetch failed:', e);
+    showError('Could not load backgrounds.');
     return [];
   }
 }
 
-// Initialize UI with backgrounds
 function initUI(backgrounds) {
-  // Populate dropdown
+  // Dropdown
   bgSelect.innerHTML = '<option value="" disabled selected>Select background...</option>';
-  backgrounds.forEach(path => {
+  backgrounds.forEach(p => {
     const opt = document.createElement('option');
-    opt.value = path;
-    opt.textContent = formatName(path);
+    opt.value = p;
+    opt.textContent = formatName(p);
     bgSelect.appendChild(opt);
   });
 
-  // Populate gallery
+  // Gallery
   galleryGrid.innerHTML = '';
-  backgrounds.forEach(path => {
+  backgrounds.forEach(p => {
     const card = document.createElement('div');
     card.className = 'card';
-    
     const img = new Image();
-    img.src = path;
-    img.alt = formatName(path);
+    img.src = p;
+    img.alt = formatName(p);
     img.loading = 'lazy';
-    img.onerror = () => { img.style.display = 'none'; };
-    
-    const downloadBtn = document.createElement('button');
-    downloadBtn.className = 'download-btn';
-    downloadBtn.textContent = 'Download';
-    downloadBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      downloadImage(path);
-    });
-    
-    card.addEventListener('click', () => previewImage(path));
-    card.appendChild(img);
-    card.appendChild(downloadBtn);
+    img.onerror = () => (img.style.display = 'none');
+    const dl = document.createElement('button');
+    dl.className = 'download-btn';
+    dl.textContent = 'Download';
+    dl.onclick = e => { e.stopPropagation(); downloadImage(p); };
+    card.onclick = () => previewImage(p);
+    card.append(img, dl);
     galleryGrid.appendChild(card);
   });
 }
 
-// Format display names
-function formatName(path) {
-  return path.split('/').pop()
-    .split('.')[0]
-    .replace(/[-_]/g, ' ')
-    .replace(/\b\w/g, l => l.toUpperCase());
-}
-
-// Initialize camera
+// --- CAMERA ---
 function initCamera() {
-  navigator.mediaDevices.getUserMedia({ video: true })
+  navigator.mediaDevices
+    .getUserMedia({ video: { facingMode: 'user' } })
     .then(stream => {
       currentStream = stream;
       webcam.srcObject = stream;
       updateCameraStatus('active', 'Camera active');
       snapBtn.disabled = false;
-      
       webcam.onloadedmetadata = () => {
-        canvas.width = webcam.videoWidth;
+        canvas.width  = webcam.videoWidth;
         canvas.height = webcam.videoHeight;
         startSegmentation();
       };
     })
     .catch(err => {
-      console.error("Camera error:", err);
+      console.error('Camera error:', err);
       updateCameraStatus('error', 'Camera error: ' + err.message);
     });
 }
 
-// MediaPipe segmentation
+// --- SEGMENTATION ---
 function startSegmentation() {
-  const selfieSegmentation = new SelfieSegmentation({
+  const selfie = new SelfieSegmentation({
     locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${file}`
   });
-  
-  selfieSegmentation.setOptions({ modelSelection: 1 });
-  selfieSegmentation.onResults(onResults);
-  
-  function processFrame() {
-    if (webcam.readyState >= webcam.HAVE_ENOUGH_DATA) {
-      selfieSegmentation.send({ image: webcam });
-    }
-    requestAnimationFrame(processFrame);
+  selfie.setOptions({ modelSelection: 1 });
+  selfie.onResults(onResults);
+
+  function loop() {
+    if (webcam.readyState >= webcam.HAVE_ENOUGH_DATA)
+      selfie.send({ image: webcam });
+    requestAnimationFrame(loop);
   }
-  processFrame();
+  loop();
 }
 
-// Handle segmentation results
 function onResults(results) {
-  ctx.globalCompositeOperation = 'source-over';
-  
-  if (bgImg.src && bgImg.complete) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Background
+  if (bgImg.src && bgImg.complete)
     ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
-  } else {
+  else {
     ctx.fillStyle = '#333';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
-  
+
+  // Mask
   ctx.globalCompositeOperation = 'source-in';
   ctx.drawImage(results.segmentationMask, 0, 0, canvas.width, canvas.height);
-  
+
+  // Webcam overlay
   ctx.globalCompositeOperation = 'source-over';
   ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
 }
 
-// Event handlers
-bgSelect.addEventListener('change', (e) => {
+// --- EVENTS ---
+bgSelect.addEventListener('change', e => {
   if (e.target.value) {
     bgImg = new Image();
-    bgImg.crossOrigin = 'Anonymous';
+    bgImg.crossOrigin = 'anonymous';
     bgImg.src = e.target.value;
   }
 });
@@ -165,31 +143,37 @@ snapBtn.addEventListener('click', () => {
   downloadImage(canvas.toDataURL('image/png'), 'backdrop.png');
 });
 
-// Helper functions
-function updateCameraStatus(status, message) {
-  cameraStatus.textContent = message;
-  cameraStatus.className = 'camera-status ' + status;
-}
+fullscreen.addEventListener('click', e => {
+  if (e.target === fullscreen || e.target === closePreview)
+    fullscreen.style.display = 'none';
+});
 
-function downloadImage(url, filename = null) {
-  const link = document.createElement('a');
-  link.download = filename || url.split('/').pop();
-  link.href = url;
-  link.click();
+// --- HELPERS ---
+function formatName(path) {
+  return path.split('/').pop()
+             .replace(/\.(jpg|jpeg|png|webp)$/i, '')
+             .replace(/[-_]/g, ' ')
+             .replace(/\b\w/g, c => c.toUpperCase());
 }
-
-function previewImage(url) {
-  const preview = document.getElementById('fullscreen-preview');
-  const img = document.getElementById('preview-image');
-  img.src = url;
-  document.getElementById('download-btn').href = url;
-  document.getElementById('newtab-btn').href = url;
-  preview.style.display = 'flex';
+function updateCameraStatus(cls, msg) {
+  cameraStatus.textContent = msg;
+  cameraStatus.className = 'camera-status ' + cls;
 }
-
-function showError(message) {
-  const errorDiv = document.createElement('div');
-  errorDiv.className = 'error';
-  errorDiv.textContent = message;
-  galleryGrid.parentNode.insertBefore(errorDiv, galleryGrid);
+function downloadImage(href, name = null) {
+  const a = document.createElement('a');
+  a.href = href;
+  a.download = name || href.split('/').pop();
+  a.click();
+}
+function previewImage(src) {
+  previewImg.src = src;
+  document.getElementById('download-btn').href = src;
+  document.getElementById('newtab-btn').href = src;
+  fullscreen.style.display = 'flex';
+}
+function showError(msg) {
+  const div = document.createElement('div');
+  div.className = 'error';
+  div.textContent = msg;
+  galleryGrid.parentNode.insertBefore(div, galleryGrid);
 }
