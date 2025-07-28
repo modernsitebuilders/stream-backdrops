@@ -3,7 +3,7 @@
  *  Auto-lists PNG/JPG/WEBP in /backgrounds
  *  Download buttons actually download the file
  ***********************************************************************/
-
+const SelfieSegmentation = window.SelfieSegmentation || {};
 const bgSelect   = document.getElementById('bgSelect');
 const webcam     = document.getElementById('webcam');
 const canvas     = document.getElementById('canvas');
