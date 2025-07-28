@@ -44,7 +44,7 @@
   </footer>
 
   <script>
-  // Single gallery rendering script
+  // Fixed gallery rendering with proper download functionality
   fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/backgrounds')
     .then(r => r.json())
     .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
@@ -61,10 +61,44 @@
         img.loading = 'lazy';
 
         const btn = document.createElement('a');
-        btn.href = f.download_url;
-        btn.download = f.name;
         btn.textContent = 'Download';
         btn.className = 'download-btn';
+        
+        // Fixed download functionality
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          
+          // Show downloading state
+          const originalText = btn.textContent;
+          btn.textContent = 'Downloading...';
+          btn.style.pointerEvents = 'none';
+          
+          try {
+            // Fetch image as blob
+            const response = await fetch(f.download_url);
+            const blob = await response.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            
+            // Create temporary download link
+            const tempLink = document.createElement('a');
+            tempLink.href = blobUrl;
+            tempLink.download = f.name;
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            document.body.removeChild(tempLink);
+            
+            // Clean up
+            URL.revokeObjectURL(blobUrl);
+          } catch (error) {
+            console.error('Download failed:', error);
+            btn.textContent = 'Error! Retry';
+          } finally {
+            setTimeout(() => {
+              btn.textContent = originalText;
+              btn.style.pointerEvents = 'auto';
+            }, 2000);
+          }
+        });
 
         card.append(img, btn);
         grid.appendChild(card);
