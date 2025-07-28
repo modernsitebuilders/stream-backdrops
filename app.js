@@ -237,6 +237,16 @@ function previewImage(src) {
   fullscreen.style.display = 'flex';
 }
 /* ---------- 8.  CLEAN-UP ---------- */
+    document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    segmentationActive = false;
+  } else {
+    segmentationActive = true;
+    if (webcam.srcObject) {
+      startSegmentation();
+    }
+  }
+});
 window.addEventListener('beforeunload', () => {
   currentStream?.getTracks().forEach(t => t.stop());
   segmentationActive = false;
