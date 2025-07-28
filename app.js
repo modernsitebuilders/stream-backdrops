@@ -159,20 +159,31 @@ function showError(msg) {
   document.querySelector('.container').prepend(div);
 }
 
-/* ---------- 6.  DOWNLOAD (same-origin or CORS-enabled) ---------- */
+/* ---------- 6. DOWNLOAD (works with GitHub URLs) ---------- */
 async function downloadImage(url) {
   try {
-    const res  = await fetch(url);
-    const blob = await res.blob();
-    const a    = document.createElement('a');
-    a.href     = URL.createObjectURL(blob);
-    a.download = url.split('/').pop();
+    // Create a temporary anchor tag
+    const a = document.createElement('a');
+    
+    // For GitHub raw URLs, we can use them directly with download attribute
+    a.href = url;
+    a.download = url.split('/').pop(); // Extract filename from URL
+    a.rel = 'noopener noreferrer'; // Security best practice
+    a.target = '_blank'; // Open in new tab as fallback
+    
+    // Trigger download
     document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(a.href);
+    
+    // Clean up
+    setTimeout(() => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 100);
   } catch (err) {
-    alert('Download failed: ' + err.message);
+    console.error('Download failed:', err);
+    // Fallback: Open in new tab if download fails
+    window.open(url, '_blank');
   }
 }
 
