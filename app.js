@@ -91,20 +91,34 @@ function buildUI(urls) {
 /* ---------- 4.  CAMERA & SEGMENTATION ---------- */
 async function initCamera() {
   try {
+    // Stop any existing stream first
+    if (currentStream) {
+      currentStream.getTracks().forEach(track => track.stop());
+    }
+
     const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'user', width: 1280, height: 720 }
+      video: { 
+        facingMode: 'user', 
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
+        frameRate: { ideal: 30 }
+      }
     });
+    
     webcam.srcObject = stream;
     currentStream = stream;
+    
     webcam.onloadedmetadata = () => {
-      canvas.width  = webcam.videoWidth;
+      canvas.width = webcam.videoWidth;
       canvas.height = webcam.videoHeight;
       startSegmentation();
     };
+    
     updateStatus('active', 'Camera active');
     snapBtn.disabled = false;
   } catch (err) {
     updateStatus('error', `Camera error: ${err.message}`);
+    console.error('Camera initialization error:', err);
   }
 }
 
