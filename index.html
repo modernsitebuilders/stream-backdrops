@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Professional HD Backdrops for Video Calls | StreamBackdrops</title>
-  <meta name="description" content="Free HD Zoom & Teams backgrounds for professionals. Look sharp on camera with our office-ready virtual backdrops.">
+  <title>Professional HD Backdrops | StreamBackdrops</title>
+  <meta name="description" content="Free HD Zoom & Teams backgrounds for professionals.">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/selfie_segmentation.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
   <!-- HERO -->
   <header class="hero">
     <div class="hero-content">
       <h1>Professional HD Backdrops for Video Calls</h1>
-      <p>Look sharp on camera with our office-ready virtual backgrounds. No messy room, no judgment.</p>
+      <p>Look sharp on camera with our office-ready virtual backdrops.</p>
       <div class="hero-buttons">
         <a href="#gallery" class="cta">Browse Backgrounds</a>
         <a href="#live-preview" class="cta secondary">Try Live Preview</a>
@@ -26,7 +27,6 @@
     <div class="container">
       <h2>Try It Live</h2>
       <p class="section-subtitle">Preview how backgrounds look with your camera</p>
-      
       <div class="preview-container">
         <div class="preview-wrapper">
           <div class="camera-preview">
@@ -37,30 +37,21 @@
             <video id="webcam" autoplay playsinline muted></video>
             <canvas id="canvas"></canvas>
           </div>
-          
+
           <div class="preview-controls">
             <div class="form-group">
               <label for="bgSelect">Choose a background:</label>
               <select id="bgSelect" class="form-control">
                 <option value="" disabled selected>Select background...</option>
-                <!-- Options will be populated by JavaScript -->
               </select>
             </div>
-            
+
             <div class="preview-buttons">
               <button id="snapBtn" class="preview-btn" disabled>
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M9 5C7.343 5 5 6.343 5 8a4 4 0 0 0 8 0c0-1.657-1.343-3-3-3z"/>
-                  <path d="M14 4a2 2 0 0 1-2 2h-1.5l-.5 1-1-1H6l-1 1-1-1H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2z"/>
-                </svg>
-                Take Snapshot
+                📸 Take Snapshot
               </button>
-              
               <button id="toggleCameraBtn" class="preview-btn secondary">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M0 6a2 2 0 0 1 2-2h7.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 4.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5 12H2a2 2 0 0 1-2-2V6z"/>
-                </svg>
-                Toggle Camera
+                📹 Toggle Camera
               </button>
             </div>
           </div>
@@ -74,44 +65,29 @@
     <div class="container">
       <h2>Professional Background Collection</h2>
       <p class="section-subtitle">Free downloads for Zoom, Teams, and more</p>
-      
-      <div id="gallery-grid" class="grid">
-        <!-- Gallery items will be populated by JavaScript -->
-      </div>
+      <div id="gallery-grid" class="grid"></div>
     </div>
   </section>
 
   <!-- FULLSCREEN PREVIEW -->
   <div id="fullscreen-preview">
-    <div class="close-preview">&times;</div>
+    <span class="close-preview">&times;</span>
     <img id="preview-image" alt="Fullscreen Preview">
     <div class="preview-controls">
-      <a id="download-btn" class="preview-btn">
-        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-        </svg>
-        Download Full Size
-      </a>
-      <a id="newtab-btn" class="preview-btn" target="_blank">
-        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-          <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
-        </svg>
-        Open in New Tab
-      </a>
+      <a id="download-btn" class="preview-btn">⬇ Download</a>
+      <a id="newtab-btn" class="preview-btn" target="_blank">↗ New Tab</a>
     </div>
   </div>
 
   <footer>
     <div class="container">
-      <p>Made for remote professionals, freelancers & executives who want to look sharp on camera.</p>
+      <p>Made for remote professionals who want to look sharp on camera.</p>
       <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Use</a>
-        <a href="mailto:contact@streambackdrops.com">Contact Us</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="mailto:contact@streambackdrops.com">Contact</a>
       </div>
-      <p class="copyright">&copy; 2023 StreamBackdrops. All rights reserved.</p>
+      <p class="copyright">&copy; 2023 StreamBackdrops</p>
     </div>
   </footer>
 
