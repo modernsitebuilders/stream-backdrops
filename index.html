@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Professional HD Backdrops | StreamBackdrops</title>
-  <meta name="description" content="Free HD Zoom & Teams backgrounds for professionals.">
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Free HD Zoom & Teams backgrounds for professionals." />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- HERO -->
+  <!-- HERO ----------------------------------------------------------->
   <header class="hero">
     <div class="hero-content">
       <h1>Professional HD Backdrops for Video Calls</h1>
@@ -20,21 +20,24 @@
     </div>
   </header>
 
-  <!-- LIVE PREVIEW -->
+  <!-- LIVE PREVIEW --------------------------------------------------->
   <section id="live-preview" class="section">
     <div class="container">
       <h2>Try It Live</h2>
       <p class="section-subtitle">Preview how backgrounds look with your camera</p>
+
       <div class="preview-container">
+        <!-- Camera feed -->
         <div class="camera-preview">
           <div class="preview-header">
             <div class="preview-label">Camera Preview</div>
             <div class="camera-status" id="cameraStatus">Camera access required</div>
           </div>
-          <video id="webcam" autoplay playsinline muted></video>
+          <video id="webcam" autoplay muted playsinline></video>
           <canvas id="canvas"></canvas>
         </div>
 
+        <!-- Controls + Dropdown -->
         <div class="preview-controls">
           <div class="form-group">
             <label for="bgSelect">Choose a background:</label>
@@ -49,7 +52,7 @@
     </div>
   </section>
 
-  <!-- GALLERY -->
+  <!-- GALLERY -------------------------------------------------------->
   <section id="gallery" class="section">
     <div class="container">
       <h2>Professional Background Collection</h2>
@@ -58,17 +61,17 @@
     </div>
   </section>
 
-  <!-- FULLSCREEN PREVIEW -->
+  <!-- FULLSCREEN PREVIEW -------------------------------------------->
   <div id="fullscreen-preview">
     <span class="close-preview">&times;</span>
-    <img id="preview-image" alt="Fullscreen Preview">
+    <img id="preview-image" alt="Fullscreen Preview" />
     <div class="preview-controls">
-      <button id="download-btn" class="preview-btn">⬇ Download</button>
+      <a id="download-btn" class="preview-btn" download>⬇ Download</a>
       <a id="newtab-btn" class="preview-btn" target="_blank">↗ New Tab</a>
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- FOOTER --------------------------------------------------------->
   <footer>
     <div class="container">
       <p>Made for remote professionals who want to look sharp on camera.</p>
@@ -77,11 +80,10 @@
         <a href="#">Terms</a>
         <a href="mailto:contact@streambackdrops.com">Contact</a>
       </div>
-      <p class="copyright">&copy; 2023 StreamBackdrops</p>
+      <p class="copyright">&copy; 2024 StreamBackdrops</p>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/selfie_segmentation.js"></script>
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>
