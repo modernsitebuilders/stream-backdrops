@@ -150,6 +150,10 @@
           } 
         });
         webcam.srcObject = stream;
+        
+        // FIX: Ensure video plays
+        await webcam.play().catch(e => console.error('Video play error:', e));
+        
         cameraActive = true;
         cameraStatus.textContent = 'Camera active';
         cameraStatus.classList.add('active');
