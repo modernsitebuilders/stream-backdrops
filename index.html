@@ -143,6 +143,9 @@
     // Initialize Camera
     async function initCamera() {
       try {
+        if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+    }
         stream = await navigator.mediaDevices.getUserMedia({ 
           video: { 
             width: { ideal: 1280 },
@@ -150,6 +153,12 @@
           } 
         });
         webcam.srcObject = stream;
+        window.addEventListener('resize', () => {
+  if (cameraActive) {
+    canvas.width = webcam.videoWidth;
+    canvas.height = webcam.videoHeight;
+  }
+});
         
         // FIX: Ensure video plays
         await webcam.play().catch(e => console.error('Video play error:', e));
