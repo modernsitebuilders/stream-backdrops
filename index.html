@@ -5,7 +5,7 @@
   <title>Office HD Backdrops</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="style.css"/>
-
+  
   <!-- Google AdSense -->
   <script async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2391004325385163"
@@ -39,12 +39,22 @@
     <div id="gallery-grid" class="grid"></div>
   </section>
 
+  <!-- LIGHTBOX MODAL -->
+  <div id="lightbox" class="lightbox">
+    <span class="close-btn">&times;</span>
+    <img id="lightbox-img" class="lightbox-content">
+    <div class="lightbox-controls">
+      <a id="open-new-tab" class="lightbox-btn" target="_blank">Open in New Tab</a>
+      <a id="download-full" class="lightbox-btn">Download Full Size</a>
+    </div>
+  </div>
+
   <footer>
     <p>Made for remote professionals, freelancers & executives who want to look sharp on camera.</p>
   </footer>
 
   <script>
-  // Fixed gallery rendering with proper download functionality
+  // Gallery rendering with lightbox preview
   fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/backgrounds')
     .then(r => r.json())
     .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
@@ -59,51 +69,90 @@
         img.src = f.download_url;
         img.alt = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
         img.loading = 'lazy';
+        
+        // Add click handler for lightbox
+        img.addEventListener('click', () => {
+          document.getElementById('lightbox-img').src = f.download_url;
+          document.getElementById('lightbox').style.display = 'flex';
+          
+          // Set up new tab button
+          document.getElementById('open-new-tab').href = f.download_url;
+          
+          // Set up download button
+          document.getElementById('download-full').onclick = () => {
+            downloadImage(f.download_url, f.name);
+          };
+        });
 
         const btn = document.createElement('a');
         btn.textContent = 'Download';
         btn.className = 'download-btn';
         
-        // Fixed download functionality
-        btn.addEventListener('click', async (e) => {
+        // Download functionality
+        btn.addEventListener('click', (e) => {
           e.preventDefault();
-          
-          // Show downloading state
-          const originalText = btn.textContent;
-          btn.textContent = 'Downloading...';
-          btn.style.pointerEvents = 'none';
-          
-          try {
-            // Fetch image as blob
-            const response = await fetch(f.download_url);
-            const blob = await response.blob();
-            const blobUrl = URL.createObjectURL(blob);
-            
-            // Create temporary download link
-            const tempLink = document.createElement('a');
-            tempLink.href = blobUrl;
-            tempLink.download = f.name;
-            document.body.appendChild(tempLink);
-            tempLink.click();
-            document.body.removeChild(tempLink);
-            
-            // Clean up
-            URL.revokeObjectURL(blobUrl);
-          } catch (error) {
-            console.error('Download failed:', error);
-            btn.textContent = 'Error! Retry';
-          } finally {
-            setTimeout(() => {
-              btn.textContent = originalText;
-              btn.style.pointerEvents = 'auto';
-            }, 2000);
-          }
+          downloadImage(f.download_url, f.name);
         });
 
         card.append(img, btn);
         grid.appendChild(card);
       });
     });
+    
+  // Image download function
+  async function downloadImage(url, filename) {
+    const btn = event.currentTarget;
+    const originalText = btn.textContent;
+    
+    try {
+      btn.textContent = 'Downloading...';
+      btn.style.pointerEvents = 'none';
+      
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      
+      const tempLink = document.createElement('a');
+      tempLink.href = blobUrl;
+      tempLink.download = filename;
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
+      
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error('Download failed:', error);
+      btn.textContent = 'Error! Retry';
+    } finally {
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.style.pointerEvents = 'auto';
+      }, 2000);
+    }
+  }
+  
+  // Lightbox functionality
+  const lightbox = document.getElementById('lightbox');
+  const closeBtn = document.querySelector('.close-btn');
+  
+  // Close lightbox when close button is clicked
+  closeBtn.addEventListener('click', () => {
+    lightbox.style.display = 'none';
+  });
+  
+  // Close lightbox when clicking outside the image
+  window.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.style.display = 'none';
+    }
+  });
+  
+  // Close lightbox with ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.style.display === 'flex') {
+      lightbox.style.display = 'none';
+    }
+  });
   </script>
 </body>
 </html>
