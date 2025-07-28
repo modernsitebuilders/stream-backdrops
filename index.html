@@ -2,14 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Professional HD Backdrops | StreamBackdrops</title>
   <meta name="description" content="Free HD Zoom & Teams backgrounds for professionals.">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/selfie_segmentation.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
   <!-- HERO -->
   <header class="hero">
     <div class="hero-content">
@@ -41,7 +39,7 @@
           <div class="form-group">
             <label for="bgSelect">Choose a background:</label>
             <select id="bgSelect" class="form-control">
-              <option value="" disabled selected>Select background...</option>
+              <option disabled selected>Loading…</option>
             </select>
           </div>
           <button id="snapBtn" class="preview-btn" disabled>📸 Take Snapshot</button>
@@ -70,6 +68,7 @@
     </div>
   </div>
 
+  <!-- Footer -->
   <footer>
     <div class="container">
       <p>Made for remote professionals who want to look sharp on camera.</p>
@@ -82,134 +81,7 @@
     </div>
   </footer>
 
-  <!-- Single inline script (no external JS file needed) -->
-  <script>
-    /***********************************************************************
-     *  GitHub Pages front-end only
-     *  Repo: davidmilesphilly / streams-backdrops
-     **********************************************************************/
-    const GITHUB_USER = 'davidmilesphilly';
-    const GITHUB_REPO = 'streams-backdrops';
-    const FOLDER      = 'backgrounds';
-
-    /* DOM shortcuts */
-    const bgSelect    = document.getElementById('bgSelect');
-    const webcam      = document.getElementById('webcam');
-    const canvas      = document.getElementById('canvas');
-    const ctx         = canvas.getContext('2d');
-    const cameraStatus= document.getElementById('cameraStatus');
-    const snapBtn     = document.getElementById('snapBtn');
-    const galleryGrid = document.getElementById('gallery-grid');
-    const fullscreen  = document.getElementById('fullscreen-preview');
-    const previewImg  = document.getElementById('preview-image');
-    const closeBtn    = document.querySelector('.close-preview');
-
-    let bgImg, selfie, currentStream;
-
-    /* Fetch list of backgrounds via GitHub API */
-    async function fetchBackgrounds() {
-      const apiURL = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${FOLDER}`;
-      try {
-        const r = await fetch(apiURL);
-        if (!r.ok) throw new Error(r.status);
-        const list = await r.json();
-        return list
-          .filter(f => /(jpg|jpeg|png|webp)$/i.test(f.name))
-          .map(f => `https://cdn.jsdelivr.net/gh/${GITHUB_USER}/${GITHUB_REPO}@main/${FOLDER}/${f.name}`);
-      } catch {
-        return [];
-      }
-    }
-
-    /* Populate dropdown + gallery */
-    function initUI(urls) {
-      bgSelect.innerHTML = '<option value="" disabled selected>Select background...</option>';
-      urls.forEach(url => {
-        const opt = document.createElement('option');
-        opt.value = url;
-        opt.textContent = url.split('/').pop().replace(/\.(jpg|jpeg|png|webp)$/i, '').replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-        bgSelect.appendChild(opt);
-      });
-
-      galleryGrid.innerHTML = '';
-      urls.forEach(url => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        const img = new Image();
-        img.src = url;
-        img.alt = url.split('/').pop();
-        img.loading = 'lazy';
-        const dl = document.createElement('button');
-        dl.className = 'download-btn';
-        dl.textContent = 'Download';
-        dl.onclick = e => { e.stopPropagation(); const a = document.createElement('a'); a.href = url; a.download = ''; a.click(); };
-        card.onclick = () => { previewImg.src = url; fullscreen.style.display = 'flex'; };
-        card.append(img, dl);
-        galleryGrid.appendChild(card);
-      });
-    }
-
-    /* Camera + segmentation */
-    async function initCamera() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
-        currentStream = stream;
-        webcam.srcObject = stream;
-        cameraStatus.textContent = 'Camera active';
-        cameraStatus.className = 'camera-status active';
-        snapBtn.disabled = false;
-        webcam.onloadedmetadata = () => {
-          canvas.width  = webcam.videoWidth;
-          canvas.height = webcam.videoHeight;
-          startSegmentation();
-        };
-      } catch (e) {
-        cameraStatus.textContent = 'Camera error: ' + e.message;
-        cameraStatus.className = 'camera-status error';
-      }
-    }
-
-    function startSegmentation() {
-      selfie = new SelfieSegmentation({
-        locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${file}`
-      });
-      selfie.setOptions({ modelSelection: 1 });
-      selfie.onResults(results => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (bgImg && bgImg.src && bgImg.complete) {
-          ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
-        } else {
-          ctx.fillStyle = '#333'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-        ctx.globalCompositeOperation = 'source-in';
-        ctx.drawImage(results.segmentationMask, 0, 0, canvas.width, canvas.height);
-        ctx.globalCompositeOperation = 'source-over';
-        ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
-      });
-      function loop() {
-        if (webcam.readyState >= webcam.HAVE_ENOUGH_DATA) selfie.send({ image: webcam });
-        requestAnimationFrame(loop);
-      }
-      loop();
-    }
-
-    /* Events */
-    document.addEventListener('DOMContentLoaded', async () => {
-      initUI(await fetchBackgrounds());
-      initCamera();
-    });
-    bgSelect.addEventListener('change', e => {
-      if (e.target.value) { bgImg = new Image(); bgImg.crossOrigin = 'anonymous'; bgImg.src = e.target.value; }
-    });
-    snapBtn.addEventListener('click', () => {
-      const a = document.createElement('a');
-      a.href = canvas.toDataURL('image/png');
-      a.download = 'backdrop.png';
-      a.click();
-    });
-    fullscreen.addEventListener('click', e => {
-      if (e.target === fullscreen || e.target === closeBtn) fullscreen.style.display = 'none';
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/selfie_segmentation.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
