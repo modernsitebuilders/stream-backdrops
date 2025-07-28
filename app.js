@@ -257,6 +257,14 @@ window.addEventListener('beforeunload', () => {
 /* ---------- 9.  CHANGE BACKGROUND ---------- */
 bgSelect.addEventListener('change', e => {
   bgImg.src = e.target.value;
+  bgImg.onload = () => {
+    if (segmentationActive) {
+      // Force redraw with new background
+      requestAnimationFrame(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      });
+    }
+  };
 });
 /* ---------- 10. VIDEO CONFERENCE BACKGROUND ---------- */
 function applyVirtualBackground() {
