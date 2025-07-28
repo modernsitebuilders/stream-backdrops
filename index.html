@@ -216,10 +216,18 @@
       ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
     }
 
-    // Background selection
+    // Background selection - FIXED: Proper image loading with CORS
     bgSelect.addEventListener('change', e => {
       if (e.target.value) {
-        bgImg.src = e.target.value;
+        const newImg = new Image();
+        newImg.crossOrigin = "Anonymous"; // Fix CORS issues
+        newImg.onload = () => {
+          bgImg = newImg;
+        };
+        newImg.onerror = () => {
+          console.error('Failed to load background image:', e.target.value);
+        };
+        newImg.src = e.target.value;
       }
     });
 
