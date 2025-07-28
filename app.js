@@ -1,12 +1,6 @@
 /***********************************************************************
- *  Virtual Background App using GitHub-hosted images
- *  Uses GitHub API to discover images in specified folder
+ *  Virtual Background App - Auto-loads all images from backgrounds folder
  ***********************************************************************/
-
-// GitHub Configuration
-const GITHUB_USER = 'davidmilesphilly';      // Your GitHub username
-const GITHUB_REPO = 'streams-backdrops';     // Your repository name
-const BACKGROUNDS_FOLDER = 'backgrounds';    // Folder containing background images
 
 // DOM Elements
 const bgSelect = document.getElementById('bgSelect');
@@ -24,9 +18,7 @@ let bgImg = new Image();
 let currentStream = null;
 
 // Initialize App
-document.addEventListener('DOMContentLoaded', async () => {
-  console.log(`Initializing app with repository: ${GITHUB_USER}/${GITHUB_REPO}/${BACKGROUNDS_FOLDER}`);
-  
+document.addEventListener('DOMContentLoaded', async () => {  
   try {
     const urls = await fetchBackgrounds();
     
@@ -35,56 +27,37 @@ document.addEventListener('DOMContentLoaded', async () => {
       initCamera();
       setupEventListeners();
     } else {
-      showError('No backgrounds found. Please check your repository settings.');
-      console.error(`No images found in ${GITHUB_USER}/${GITHUB_REPO}/${BACKGROUNDS_FOLDER}`);
+      showError('No background images found. Please add PNG/JPG files to your backgrounds folder.');
     }
   } catch (error) {
-    console.error('Initialization failed:', error);
-    showError('Failed to load backgrounds. Please try again later.');
+    showError('Failed to load backgrounds. Please check your internet connection.');
   }
 });
 
-// Fetch backgrounds from GitHub
+// Fetch all images from backgrounds folder
 async function fetchBackgrounds() {
-  const apiURL = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${BACKGROUNDS_FOLDER}`;
-  console.log(`Fetching images from: ${apiURL}`);
-
   try {
-    const res = await fetch(apiURL);
-    if (!res.ok) throw new Error(`GitHub API responded with ${res.status}`);
+    const res = await fetch('https://api.github.com/repos/davidmilesphilly/streams-backdrops/contents/backgrounds');
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
     
     const files = await res.json();
-    return files
-      .filter(f => /(png|jpe?g|webp)$/i.test(f.name))
-      .map(f => `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${BACKGROUNDS_FOLDER}/${encodeURIComponent(f.name)}`);
-  } catch (error) {
-    console.error('Error fetching from GitHub:', error);
+    const imageUrls = files
+      .filter(f => /\.(png|jpe?g|webp)$/i.test(f.name))
+      .map(f => `https://raw.githubusercontent.com/davidmilesphilly/streams-backdrops/main/backgrounds/${encodeURIComponent(f.name)}`);
     
-    // Fallback to manual list if API fails
-    return getManualImageList();
+    if (imageUrls.length === 0) {
+      throw new Error('No images found in backgrounds folder');
+    }
+    
+    return imageUrls;
+  } catch (error) {
+    console.error('Error loading images:', error);
+    throw error; // Re-throw to be caught in initialization
   }
-}
-
-// Manual image list fallback
-function getManualImageList() {
-  console.warn(`Using manual image list for ${GITHUB_USER}/${GITHUB_REPO}`);
-  
-  // Add your actual image filenames here
-  const manualImages = [
-    'office-background-1.jpg',
-    'professional-backdrop-2.png',
-    'home-office-3.jpg'
-  ];
-  
-  return manualImages.map(img => 
-    `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/${BACKGROUNDS_FOLDER}/${encodeURIComponent(img)}`
-  );
 }
 
 // Initialize UI with fetched backgrounds
 function initUI(urls) {
-  console.log(`Initializing UI with ${urls.length} backgrounds from ${GITHUB_REPO}`);
-  
   // Populate dropdown
   bgSelect.innerHTML = '<option value="" disabled selected>Select background...</option>';
   urls.forEach(url => {
@@ -99,18 +72,16 @@ function initUI(urls) {
   urls.forEach(url => {
     const card = document.createElement('div');
     card.className = 'card';
-    card.title = `From ${GITHUB_REPO}: ${formatName(url)}`;
 
     const img = new Image();
     img.src = url;
-    img.alt = `Background from ${GITHUB_REPO}: ${formatName(url)}`;
+    img.alt = formatName(url);
     img.loading = 'lazy';
     img.crossOrigin = 'anonymous';
     
     img.onerror = () => {
-      console.error(`Failed to load image from ${url}`);
       img.style.display = 'none';
-      card.innerHTML += `<div class="image-error">Image unavailable (${formatName(url)})</div>`;
+      card.innerHTML += '<div class="image-error">Image failed to load</div>';
     };
 
     const dl = document.createElement('button');
@@ -118,7 +89,7 @@ function initUI(urls) {
     dl.textContent = 'Download';
     dl.onclick = (e) => {
       e.stopPropagation();
-      downloadImage(url, `${GITHUB_REPO}_${formatName(url)}.${url.split('.').pop()}`);
+      downloadImage(url);
     };
 
     card.onclick = () => previewImage(url);
@@ -129,7 +100,6 @@ function initUI(urls) {
 
 // Camera initialization
 async function initCamera() {
-  console.log('Initializing camera...');
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ 
       video: { facingMode: 'user' } 
@@ -145,14 +115,12 @@ async function initCamera() {
       startSegmentation();
     };
   } catch (err) {
-    console.error('Camera initialization failed:', err);
     updateCameraStatus('error', `Camera error: ${err.message}`);
   }
 }
 
-// Background segmentation setup
+// Background segmentation
 function startSegmentation() {
-  console.log('Starting background segmentation...');
   const selfie = new SelfieSegmentation({
     locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${file}`
   });
@@ -194,12 +162,11 @@ function setupEventListeners() {
       bgImg = new Image();
       bgImg.crossOrigin = 'anonymous';
       bgImg.src = e.target.value;
-      console.log(`Selected background: ${e.target.value}`);
     }
   });
 
   snapBtn.addEventListener('click', () => {
-    downloadImage(canvas.toDataURL('image/png'), `${GITHUB_REPO}_virtual_background.png`);
+    downloadImage(canvas.toDataURL('image/png'), 'virtual-background.png');
   });
 
   fullscreen.addEventListener('click', e => {
@@ -210,7 +177,7 @@ function setupEventListeners() {
 
   document.getElementById('download-btn').addEventListener('click', async (e) => {
     e.preventDefault();
-    await downloadImage(previewImg.src, `${GITHUB_REPO}_${formatName(previewImg.src)}.${previewImg.src.split('.').pop()}`);
+    await downloadImage(previewImg.src);
   });
 
   document.getElementById('newtab-btn').addEventListener('click', (e) => {
@@ -233,12 +200,11 @@ function updateCameraStatus(cls, msg) {
 }
 
 async function downloadImage(href, name) {
-  console.log(`Downloading image from ${href}`);
   try {
     if (href.startsWith('data:')) {
       const a = document.createElement('a');
       a.href = href;
-      a.download = name;
+      a.download = name || 'background.png';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -253,7 +219,7 @@ async function downloadImage(href, name) {
     
     const a = document.createElement('a');
     a.href = blobUrl;
-    a.download = name;
+    a.download = name || href.split('/').pop();
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -268,15 +234,11 @@ async function downloadImage(href, name) {
 function previewImage(src) {
   previewImg.src = src;
   fullscreen.style.display = 'flex';
-  console.log(`Previewing image: ${src}`);
 }
 
 function showError(msg) {
   const div = document.createElement('div');
   div.className = 'error';
-  div.innerHTML = `
-    <p>${msg}</p>
-    <p>Repository: ${GITHUB_USER}/${GITHUB_REPO}/${BACKGROUNDS_FOLDER}</p>
-  `;
+  div.textContent = msg;
   galleryGrid.parentNode.insertBefore(div, galleryGrid);
 }
