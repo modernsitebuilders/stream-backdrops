@@ -1,6 +1,6 @@
 /***********************************************************************
  *  STREAM BACKDROPS – app.js
- *  Updated with dynamic background loading
+ *  Pure dynamic background loading version
  ***********************************************************************/
 
 // DOM Elements
@@ -10,7 +10,6 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const cameraStatus = document.getElementById('cameraStatus');
 const snapBtn = document.getElementById('snapBtn');
-const toggleCameraBtn = document.getElementById('toggleCameraBtn');
 const galleryGrid = document.getElementById('gallery-grid');
 
 // Background image handling
@@ -19,90 +18,81 @@ let currentStream = null;
 
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', async () => {
-  await loadBackgrounds();
-  initCamera();
-  setupEventListeners();
+  const backgrounds = await fetchBackgrounds();
+  if (backgrounds.length > 0) {
+    initUI(backgrounds);
+    initCamera();
+  } else {
+    showError("No backgrounds found. Please upload images to /backgrounds/ folder.");
+  }
 });
 
-// Load backgrounds dynamically from server
-async function loadBackgrounds() {
+// Fetch backgrounds from server
+async function fetchBackgrounds() {
   try {
     const response = await fetch('/get_backgrounds.php');
-    if (!response.ok) throw new Error('Network response was not ok');
+    if (!response.ok) throw new Error('Server error: ' + response.status);
     
     const backgrounds = await response.json();
+    if (!Array.isArray(backgrounds)) throw new Error('Invalid response format');
     
-    if (!backgrounds || !backgrounds.length) {
-      throw new Error('No backgrounds found');
-    }
-    
-    populateBackgroundSelect(backgrounds);
-    populateGallery(backgrounds);
-    
-    return backgrounds;
+    return backgrounds.filter(bg => 
+      bg.endsWith('.jpg') || 
+      bg.endsWith('.jpeg') || 
+      bg.endsWith('.png') ||
+      bg.endsWith('.webp')
+    );
   } catch (error) {
-    console.error('Error loading backgrounds:', error);
-    
-    // Fallback to hardcoded backgrounds if API fails
-    const fallbackBackgrounds = [
-      'backgrounds/art_gallery_interior.jpg',
-      'backgrounds/art_gallery_interior_black_and_white.jpg',
-      'backgrounds/contemporary-office-layout.jpg',
-      'backgrounds/digital-architecture-visualization.jpg'
-    ];
-    
-    populateBackgroundSelect(fallbackBackgrounds);
-    populateGallery(fallbackBackgrounds);
-    return fallbackBackgrounds;
+    console.error("Background loading failed:", error);
+    showError("Couldn't load backgrounds. Please check console for details.");
+    return [];
   }
 }
 
-// Populate background dropdown
-function populateBackgroundSelect(backgrounds) {
+// Initialize UI with backgrounds
+function initUI(backgrounds) {
+  // Populate dropdown
   bgSelect.innerHTML = '<option value="" disabled selected>Select background...</option>';
-  
   backgrounds.forEach(path => {
     const opt = document.createElement('option');
     opt.value = path;
-    opt.textContent = path.split('/').pop()
-                         .split('.')[0]
-                         .replace(/[-_]/g, ' ')
-                         .replace(/\b\w/g, l => l.toUpperCase());
+    opt.textContent = formatName(path);
     bgSelect.appendChild(opt);
   });
-}
 
-// Populate gallery grid
-function populateGallery(backgrounds) {
+  // Populate gallery
   galleryGrid.innerHTML = '';
-  
   backgrounds.forEach(path => {
     const card = document.createElement('div');
     card.className = 'card';
     
-    const img = document.createElement('img');
+    const img = new Image();
     img.src = path;
-    img.alt = path.split('/').pop()
-                  .split('.')[0]
-                  .replace(/[-_]/g, ' ');
+    img.alt = formatName(path);
     img.loading = 'lazy';
+    img.onerror = () => { img.style.display = 'none'; };
     
     const downloadBtn = document.createElement('button');
     downloadBtn.className = 'download-btn';
-    downloadBtn.innerHTML = 'Download';
-    downloadBtn.addEventListener('click', () => {
+    downloadBtn.textContent = 'Download';
+    downloadBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       downloadImage(path);
     });
     
-    // Click on image to preview
-    card.addEventListener('click', () => {
-      previewImage(path);
-    });
-    
+    card.addEventListener('click', () => previewImage(path));
     card.appendChild(img);
     card.appendChild(downloadBtn);
     galleryGrid.appendChild(card);
   });
+}
+
+// Format display names
+function formatName(path) {
+  return path.split('/').pop()
+    .split('.')[0]
+    .replace(/[-_]/g, ' ')
+    .replace(/\b\w/g, l => l.toUpperCase());
 }
 
 // Initialize camera
@@ -111,8 +101,7 @@ function initCamera() {
     .then(stream => {
       currentStream = stream;
       webcam.srcObject = stream;
-      cameraStatus.textContent = 'Camera active';
-      cameraStatus.classList.add('active');
+      updateCameraStatus('active', 'Camera active');
       snapBtn.disabled = false;
       
       webcam.onloadedmetadata = () => {
@@ -122,13 +111,12 @@ function initCamera() {
       };
     })
     .catch(err => {
-      console.error("Camera access error:", err);
-      cameraStatus.textContent = 'Camera error: ' + err.message;
-      cameraStatus.classList.add('error');
+      console.error("Camera error:", err);
+      updateCameraStatus('error', 'Camera error: ' + err.message);
     });
 }
 
-// Setup MediaPipe selfie segmentation
+// MediaPipe segmentation
 function startSegmentation() {
   const selfieSegmentation = new SelfieSegmentation({
     locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${file}`
@@ -137,14 +125,13 @@ function startSegmentation() {
   selfieSegmentation.setOptions({ modelSelection: 1 });
   selfieSegmentation.onResults(onResults);
   
-  function loop() {
+  function processFrame() {
     if (webcam.readyState >= webcam.HAVE_ENOUGH_DATA) {
       selfieSegmentation.send({ image: webcam });
     }
-    requestAnimationFrame(loop);
+    requestAnimationFrame(processFrame);
   }
-  
-  requestAnimationFrame(loop);
+  processFrame();
 }
 
 // Handle segmentation results
@@ -165,42 +152,25 @@ function onResults(results) {
   ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
 }
 
-// Setup event listeners
-function setupEventListeners() {
-  // Background selection
-  bgSelect.addEventListener('change', e => {
-    if (e.target.value) {
-      bgImg.crossOrigin = 'Anonymous';
-      bgImg.src = e.target.value;
-    }
-  });
-  
-  // Take snapshot
-  snapBtn.addEventListener('click', () => {
-    downloadImage(canvas.toDataURL('image/png'), 'backdrop.png');
-  });
-  
-  // Toggle camera
-  toggleCameraBtn.addEventListener('click', () => {
-    if (currentStream) {
-      currentStream.getTracks().forEach(track => track.stop());
-      currentStream = null;
-      webcam.srcObject = null;
-      cameraStatus.textContent = 'Camera off';
-      cameraStatus.classList.remove('active');
-      snapBtn.disabled = true;
-    } else {
-      initCamera();
-    }
-  });
-  
-  // Fullscreen preview close
-  document.querySelector('.close-preview').addEventListener('click', () => {
-    document.getElementById('fullscreen-preview').style.display = 'none';
-  });
+// Event handlers
+bgSelect.addEventListener('change', (e) => {
+  if (e.target.value) {
+    bgImg = new Image();
+    bgImg.crossOrigin = 'Anonymous';
+    bgImg.src = e.target.value;
+  }
+});
+
+snapBtn.addEventListener('click', () => {
+  downloadImage(canvas.toDataURL('image/png'), 'backdrop.png');
+});
+
+// Helper functions
+function updateCameraStatus(status, message) {
+  cameraStatus.textContent = message;
+  cameraStatus.className = 'camera-status ' + status;
 }
 
-// Download image helper
 function downloadImage(url, filename = null) {
   const link = document.createElement('a');
   link.download = filename || url.split('/').pop();
@@ -208,13 +178,18 @@ function downloadImage(url, filename = null) {
   link.click();
 }
 
-// Preview image in fullscreen
 function previewImage(url) {
   const preview = document.getElementById('fullscreen-preview');
   const img = document.getElementById('preview-image');
-  
   img.src = url;
   document.getElementById('download-btn').href = url;
   document.getElementById('newtab-btn').href = url;
   preview.style.display = 'flex';
+}
+
+function showError(message) {
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'error';
+  errorDiv.textContent = message;
+  galleryGrid.parentNode.insertBefore(errorDiv, galleryGrid);
 }
