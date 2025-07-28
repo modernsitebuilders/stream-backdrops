@@ -164,11 +164,40 @@ function updateCameraStatus(cls, msg) {
   cameraStatus.textContent = msg;
   cameraStatus.className = 'camera-status ' + cls;
 }
-function downloadImage(href, name) {
-  const a = document.createElement('a');
-  a.href = href;
-  a.download = name || href.split('/').pop();
-  a.click();
+async function downloadImage(href, name) {
+  try {
+    // Handle data URLs (snapshots)
+    if (href.startsWith('data:')) {
+      const a = document.createElement('a');
+      a.href = href;
+      a.download = name || 'backdrop.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      return;
+    }
+    
+    // Handle GitHub URLs
+    const response = await fetch(href);
+    if (!response.ok) throw new Error('Failed to fetch image');
+    
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = name || href.split('/').pop();
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    // Clean up after download
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 100);
+  } catch (error) {
+    console.error('Download failed:', error);
+    // Fallback to opening in new tab
+    window.open(href, '_blank');
+  }
 }
 function previewImage(src) {
   previewImg.src = src;
