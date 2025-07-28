@@ -22,16 +22,16 @@ let segmentationActive = false;
 
 async function listBackgrounds() {
   const repo = 'davidmilesphilly/stream-backdrops';
-  const api = `https://api.github.com/repos/${repo}/contents/backgrounds`;
-  const res = await fetch(api);
-  if (!res.ok) throw new Error('GitHub API request failed');
-  
-  const files = await res.json();
-  return files
-    .filter(f => /\.(png|jpe?g|webp)$/i.test(f.name))
-    .map(f => `https://raw.githubusercontent.com/${repo}/main/backgrounds/${encodeURIComponent(f.name)}`);
-}
-
+  try {
+    // Option 1: Use GitHub API (may hit rate limits)
+    const api = `https://api.github.com/repos/${repo}/contents/backgrounds`;
+    const res = await fetch(api);
+    if (!res.ok) throw new Error('GitHub API request failed');
+    
+    const files = await res.json();
+    return files
+      .filter(f => /\.(png|jpe?g|webp)$/i.test(f.name))
+      .map(f => `https://raw.githubusercontent.com/${repo}/main/backgrounds/${encodeURIComponent(f.name)}`);
 /* ---------- 2.  INIT ---------- */
 document.addEventListener('DOMContentLoaded', async () => {
   try {
