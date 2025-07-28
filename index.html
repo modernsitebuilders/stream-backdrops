@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <title>Office HD Backdrops
-
-</title>
+  <title>Office HD Backdrops</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="style.css"/>
 
@@ -20,8 +18,7 @@
   <header class="hero"
           style="background:url('https://raw.githubusercontent.com/davidmilesphilly/stream-backdrops/main/backgrounds/hero.jpg') center/cover;">
     <div>
-      <h1>Office-Ready Camera-Sharp HD Backdrops for Any Workspace
-</h1>
+      <h1>Office-Ready Camera-Sharp HD Backdrops for Any Workspace</h1>
       <p>HD Zoom & Teams backgrounds for professionals—no messy room, no judgment.</p>
       <a href="#gallery" class="cta">Browse Office Backgrounds</a>
     </div>
@@ -31,7 +28,7 @@
   <div class="ad-slot">
     <ins class="adsbygoogle"
          style="display:block; margin:0 auto 1rem;"
-         data-ad-client="ca-pub-XXXXXXXXXXXX"
+         data-ad-client="ca-pub-2391004325385163"
          data-ad-slot="1234567890"
          data-ad-format="auto"></ins>
   </div>
@@ -47,48 +44,32 @@
   </footer>
 
   <script>
+  // Single gallery rendering script
   fetch('https://api.github.com/repos/davidmilesphilly/stream-backdrops/contents/backgrounds')
     .then(r => r.json())
     .then(list => list.filter(f => /\.(jpe?g|png)$/i.test(f.name)))
     .then(files => {
       const grid = document.getElementById('gallery-grid');
-      grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(420px, 1fr))';
-      grid.style.gap = '2.5rem';
-
+      
       files.forEach(f => {
-        // wrapper
         const card = document.createElement('div');
-        card.style.position = 'relative';
-        card.style.cursor = 'pointer';
+        card.className = 'card';
 
-        // preview image
         const img = document.createElement('img');
-        img.crossOrigin = 'anonymous';
         img.src = f.download_url;
         img.alt = f.name.replace(/\.\w+$/, '').replace(/[-_]/g, ' ');
-        img.style.width = '100%';
-        img.style.borderRadius = '12px';
-        img.style.transition = 'transform .3s';
-        img.onclick = () => window.open(f.download_url, '_blank');
+        img.loading = 'lazy';
 
-        // download button — forces save dialog
         const btn = document.createElement('a');
-        btn.href = `./backgrounds/${f.name}`;
-        btn.download = f.name;                // magic: triggers download
-        btn.className = 'download-btn';
+        btn.href = f.download_url;
+        btn.download = f.name;
         btn.textContent = 'Download';
-        btn.style.cssText = `
-          position:absolute; bottom:12px; right:12px;
-          background:#0078ff; color:#fff; padding:8px 12px;
-          border-radius:4px; font-size:.8rem; font-weight:600;
-          text-decoration:none; pointer-events:auto;
-        `;
+        btn.className = 'download-btn';
 
         card.append(img, btn);
         grid.appendChild(card);
       });
     });
-</script>
-
+  </script>
 </body>
 </html>
