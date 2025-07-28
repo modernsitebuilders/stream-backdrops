@@ -1,21 +1,12 @@
 /***********************************************************************
- *  StreamBackdrops – 100 % front-end version
+ *  100 % static, no file names, no PHP
+ *  Works on GitHub Pages
  ***********************************************************************/
 
-// ---------- CONFIGURATION ----------
-// 1. Put your images in /backgrounds/  (root of repo)
-// 2. List their exact filenames below (same order you want them shown)
-//    → NO leading slashes, NO full URLs needed if they’re in the repo.
-const BACKGROUND_FILES = [
-  'office1.jpg',
-  'office2.jpg',
-  'office3.jpg',
-  'office4.png'
-];
-
-// Build absolute URLs for GitHub Pages (auto-detect origin)
-const ORIGIN = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
-const BACKGROUND_URLS = BACKGROUND_FILES.map(f => `${ORIGIN}/backgrounds/${f}`);
+// ---------- CONFIG ----------
+const GITHUB_USER = 'YOUR_USERNAME';          // <-- change
+const GITHUB_REPO = 'YOUR_REPO';              // <-- change
+const FOLDER      = 'backgrounds';            // folder inside repo
 
 // ---------- DOM ----------
 const bgSelect    = document.getElementById('bgSelect');
@@ -29,18 +20,41 @@ const fullscreen  = document.getElementById('fullscreen-preview');
 const previewImg  = document.getElementById('preview-image');
 const closeBtn    = document.querySelector('.close-preview');
 
-let bgImg = new Image();
+let bgImg       = new Image();
 let currentStream = null;
 
-// ---------- INITIALISE ----------
-document.addEventListener('DOMContentLoaded', () => {
-  initUI(BACKGROUND_URLS);
-  initCamera();
+// ---------- START ----------
+document.addEventListener('DOMContentLoaded', async () => {
+  const urls = await fetchBackgrounds();
+  if (urls.length) {
+    initUI(urls);
+    initCamera();
+  } else {
+    showError('No backgrounds found in /backgrounds/');
+  }
 });
+
+// ---------- DISCOVERY via GitHub API ----------
+async function fetchBackgrounds() {
+  const apiURL =
+    `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${FOLDER}`;
+  try {
+    const r = await fetch(apiURL);
+    if (!r.ok) throw new Error(r.status);
+    const list = await r.json();            // array of {name, download_url, …}
+    return list
+      .filter(f => /(jpg|jpeg|png|webp)$/i.test(f.name))
+      .map(f => f.download_url);            // direct raw URLs
+  } catch (err) {
+    console.error('Background fetch failed:', err);
+    showError('Could not load backgrounds.');
+    return [];
+  }
+}
 
 // ---------- UI ----------
 function initUI(urls) {
-  // Dropdown
+  // dropdown
   bgSelect.innerHTML = '<option value="" disabled selected>Select background...</option>';
   urls.forEach(url => {
     const opt = document.createElement('option');
@@ -49,24 +63,24 @@ function initUI(urls) {
     bgSelect.appendChild(opt);
   });
 
-  // Gallery
+  // gallery
   galleryGrid.innerHTML = '';
   urls.forEach(url => {
     const card = document.createElement('div');
     card.className = 'card';
 
-    const img = new Image();
+    const img = document.createElement('img');
     img.src = url;
     img.alt = formatName(url);
     img.loading = 'lazy';
 
-    const dlBtn = document.createElement('button');
-    dlBtn.className = 'download-btn';
-    dlBtn.textContent = 'Download';
-    dlBtn.onclick = e => { e.stopPropagation(); downloadImage(url); };
+    const dl = document.createElement('button');
+    dl.className = 'download-btn';
+    dl.textContent = 'Download';
+    dl.onclick = e => { e.stopPropagation(); downloadImage(url); };
 
     card.onclick = () => previewImage(url);
-    card.append(img, dlBtn);
+    card.append(img, dl);
     galleryGrid.appendChild(card);
   });
 }
@@ -80,7 +94,6 @@ function initCamera() {
       webcam.srcObject = stream;
       updateCameraStatus('active', 'Camera active');
       snapBtn.disabled = false;
-
       webcam.onloadedmetadata = () => {
         canvas.width  = webcam.videoWidth;
         canvas.height = webcam.videoHeight;
@@ -96,7 +109,7 @@ function initCamera() {
 // ---------- SEGMENTATION ----------
 function startSegmentation() {
   const selfie = new SelfieSegmentation({
-    locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${file}`
+    locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${f}`
   });
   selfie.setOptions({ modelSelection: 1 });
   selfie.onResults(onResults);
@@ -112,7 +125,6 @@ function startSegmentation() {
 function onResults(results) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Background
   if (bgImg.src && bgImg.complete)
     ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
   else {
@@ -120,11 +132,9 @@ function onResults(results) {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
-  // Mask
   ctx.globalCompositeOperation = 'source-in';
   ctx.drawImage(results.segmentationMask, 0, 0, canvas.width, canvas.height);
 
-  // Webcam overlay
   ctx.globalCompositeOperation = 'source-over';
   ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
 }
@@ -137,11 +147,9 @@ bgSelect.addEventListener('change', e => {
     bgImg.src = e.target.value;
   }
 });
-
-snapBtn.addEventListener('click', () => {
-  downloadImage(canvas.toDataURL('image/png'), 'backdrop.png');
-});
-
+snapBtn.addEventListener('click', () =>
+  downloadImage(canvas.toDataURL('image/png'), 'backdrop.png')
+);
 fullscreen.addEventListener('click', e => {
   if (e.target === fullscreen || e.target === closeBtn)
     fullscreen.style.display = 'none';
@@ -158,7 +166,7 @@ function updateCameraStatus(cls, msg) {
   cameraStatus.textContent = msg;
   cameraStatus.className = 'camera-status ' + cls;
 }
-function downloadImage(href, name = null) {
+function downloadImage(href, name) {
   const a = document.createElement('a');
   a.href = href;
   a.download = name || href.split('/').pop();
@@ -169,4 +177,10 @@ function previewImage(src) {
   document.getElementById('download-btn').href = src;
   document.getElementById('newtab-btn').href = src;
   fullscreen.style.display = 'flex';
+}
+function showError(msg) {
+  const div = document.createElement('div');
+  div.className = 'error';
+  div.textContent = msg;
+  galleryGrid.parentNode.insertBefore(div, galleryGrid);
 }
