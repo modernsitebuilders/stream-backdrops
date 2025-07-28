@@ -19,7 +19,7 @@ const newtabBtn   = document.getElementById('newtab-btn');
 let bgImg     = new Image();
 let currentStream = null;
 let segmentationActive = false;
-
+/* ---------- 1.  IMAGES ---------- */
 async function listBackgrounds() {
   const repo = 'davidmilesphilly/stream-backdrops';
   try {
@@ -36,11 +36,11 @@ async function listBackgrounds() {
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const urls = await listBackgrounds();
-    console.log('Loaded backgrounds:', urls); // Debug log
+    console.log('Loaded backgrounds:', urls);
     buildUI(urls);
     await initCamera();
   } catch (err) {
-    console.error('Error:', err); // More detailed error
+    console.error('Error:', err);
     showError('Cannot load backgrounds: ' + err.message);
   }
 });
