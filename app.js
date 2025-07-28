@@ -4,8 +4,8 @@
  ***********************************************************************/
 
 // ---------- CONFIG ----------
-const GITHUB_USER = 'YOUR_USERNAME';          // <-- change
-const GITHUB_REPO = 'YOUR_REPO';              // <-- change
+const GITHUB_USER = 'davidmilesphilly';          // <-- change
+const GITHUB_REPO = 'stream-backdrops';              // <-- change
 const FOLDER      = 'backgrounds';            // folder inside repo
 
 // ---------- DOM ----------
