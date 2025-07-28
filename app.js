@@ -187,18 +187,22 @@ async function downloadImage(url) {
   }
 }
 
-/* ---------- 7.  FULLSCREEN PREVIEW ---------- */
+/* ---------- 7. FULLSCREEN PREVIEW ---------- */
 function previewImage(src) {
   previewImg.src = src;
-  downloadBtn.href = src;
-  downloadBtn.download = src.split('/').pop();
+  
+  // Update download button
+  downloadBtn.onclick = (e) => {
+    e.preventDefault();
+    downloadImage(src);
+  };
+  
+  // Update new tab button
   newtabBtn.href = src;
+  newtabBtn.target = '_blank';
+  
   fullscreen.style.display = 'flex';
 }
-document.querySelector('.close-preview').onclick = () => {
-  fullscreen.style.display = 'none';
-};
-
 /* ---------- 8.  CLEAN-UP ---------- */
 window.addEventListener('beforeunload', () => {
   currentStream?.getTracks().forEach(t => t.stop());
