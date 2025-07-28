@@ -19,11 +19,9 @@ const newtabBtn   = document.getElementById('newtab-btn');
 let bgImg     = new Image();
 let currentStream = null;
 let segmentationActive = false;
-/* ---------- 1.  IMAGES ---------- */
 async function listBackgrounds() {
   const repo = 'davidmilesphilly/stream-backdrops';
   try {
-    // Option 1: Use GitHub API (may hit rate limits)
     const api = `https://api.github.com/repos/${repo}/contents/backgrounds`;
     const res = await fetch(api);
     if (!res.ok) throw new Error('GitHub API request failed');
@@ -32,7 +30,13 @@ async function listBackgrounds() {
     return files
       .filter(f => /\.(png|jpe?g|webp)$/i.test(f.name))
       .map(f => `https://raw.githubusercontent.com/${repo}/main/backgrounds/${encodeURIComponent(f.name)}`);
-/* ---------- 2.  INIT ---------- */
+  } catch (err) {  // <-- Close `try` and handle errors
+    console.error("Failed to fetch backgrounds:", err);
+    return [];  // Return empty array on failure
+  }
+}  // <-- Close `listBackgrounds()` function
+
+/* ---------- 2. INIT ---------- */  // <-- Now this is outside the function
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const urls = await listBackgrounds();
@@ -44,7 +48,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     showError('Cannot load backgrounds: ' + err.message);
   }
 });
-
 /* ---------- 3.  UI ---------- */
 function buildUI(urls) {
   bgSelect.innerHTML = '';
