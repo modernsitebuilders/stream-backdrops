@@ -201,8 +201,7 @@ async function downloadImage(href, name) {
 }
 function previewImage(src) {
   previewImg.src = src;
-  document.getElementById('download-btn').href = src;
-  document.getElementById('newtab-btn').href = src;
+  // Remove href assignments and use event listeners instead
   fullscreen.style.display = 'flex';
 }
 function showError(msg) {
