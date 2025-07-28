@@ -198,28 +198,26 @@ function showError(msg) {
 /* ---------- 6. DOWNLOAD (works with GitHub URLs) ---------- */
 async function downloadImage(url) {
   try {
-    // Fetch the image as a blob first
-    const response = await fetch(url, { mode: 'cors' });
-    if (!response.ok) throw new Error('Failed to fetch image');
-    
+    // Fetch image as blob (works around GitHub CORS)
+    const response = await fetch(url);
     const blob = await response.blob();
-    const blobUrl = window.URL.createObjectURL(blob);
-    
+    const blobUrl = URL.createObjectURL(blob);
+
+    // Trigger download
     const a = document.createElement('a');
     a.href = blobUrl;
-    a.download = url.split('/').pop();
+    a.download = url.split('/').pop(); // Filename
     document.body.appendChild(a);
     a.click();
-    
+
     // Cleanup
     setTimeout(() => {
       document.body.removeChild(a);
-      window.URL.revokeObjectURL(blobUrl);
+      URL.revokeObjectURL(blobUrl);
     }, 100);
   } catch (err) {
-    console.error('Download failed:', err);
-    // Fallback to opening in new tab
-    window.open(url, '_blank');
+    console.error("Download failed:", err);
+    window.open(url, '_blank'); // Fallback
   }
 }
 /* ---------- 7. FULLSCREEN PREVIEW ---------- */
