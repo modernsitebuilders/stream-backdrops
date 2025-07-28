@@ -20,12 +20,12 @@ let bgImg     = new Image();
 let currentStream = null;
 let segmentationActive = false;
 
-/* ---------- 1.  LIST BACKGROUNDS (same-origin) ---------- */
 async function listBackgrounds() {
   const repo = 'davidmilesphilly/stream-backdrops';
   const api = `https://api.github.com/repos/${repo}/contents/backgrounds`;
   const res = await fetch(api);
-  if (!res.ok) throw new Error('Unable to load backgrounds');
+  if (!res.ok) throw new Error('GitHub API request failed');
+  
   const files = await res.json();
   return files
     .filter(f => /\.(png|jpe?g|webp)$/i.test(f.name))
