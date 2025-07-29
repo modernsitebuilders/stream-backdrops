@@ -1,14 +1,23 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 import os
 
-app = Flask(__name__)
+# Absolute path solution
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+app = Flask(__name__,
+            template_folder=os.path.join(PROJECT_ROOT, 'templates'),
+            static_folder=os.path.join(PROJECT_ROOT, 'static'))
 
 @app.route('/')
 def home():
-    print("Trying to load:", os.path.abspath('templates/index.html'))
+    print("Looking for index.html at:", os.path.join(app.template_folder, 'index.html'))
     return render_template('index.html')
 
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory(app.static_folder, filename)
+
 if __name__ == '__main__':
-    print("Current working directory:", os.getcwd())
-    print("Templates path:", os.path.abspath('templates'))
+    print("PROJECT ROOT:", PROJECT_ROOT)
+    print("Templates exist:", os.path.exists(os.path.join(app.template_folder, 'index.html')))
+    print("Static folder exists:", os.path.exists(app.static_folder))
     app.run(host='0.0.0.0', port=8000, debug=True)
