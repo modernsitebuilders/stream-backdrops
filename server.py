@@ -1,24 +1,19 @@
-from flask import Flask, send_from_directory
-from flask_cors import CORS
+from flask import Flask, render_template, send_from_directory
+import os
 
-app = Flask(__name__)
-CORS(app)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
-# Serve index.html
 @app.route('/')
 def home():
-    return send_from_directory('.', 'index.html')
+    return render_template('index.html')
 
-# Serve background images
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
+
 @app.route('/backgrounds/<path:filename>')
-def serve_bg(filename):
-    return send_from_directory('backgrounds', filename)
-
-# Add CORS headers
-@app.after_request
-def add_cors_headers(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    return response
+def backgrounds(filename):
+    return send_from_directory('static/backgrounds', filename)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)  # Debug mode + port
+    app.run(host='0.0.0.0', port=8000, debug=True)
