@@ -85,14 +85,13 @@ dl.onclick = e => {
 };
 
 card.append(img, dl);
-galleryGrid.appendChild(card);
+galleryGrid.appendChild(card)}
 
   /* first background selected */
   if (urls.length) {
     bgSelect.value = urls[0];
     bgImg.src = urls[0];
   }
-}
 
 /* ---------- 4.  CAMERA & SEGMENTATION ---------- */
 async function initCamera() {
@@ -254,12 +253,10 @@ document.addEventListener('keydown', (e) => {
   // Update new tab button
   newtabBtn.href = src;
   newtabBtn.target = '_blank';
-  
+                          
   fullscreen.style.display = 'flex';
-}
 /* ---------- 8.  CLEAN-UP ---------- */
 document.querySelector('.close-preview').addEventListener('click', () => {
-  fullscreen.style.display = 'none';
 });
     document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
