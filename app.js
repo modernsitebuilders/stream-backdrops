@@ -194,7 +194,7 @@ function onSegment({ segmentationMask, image }) {
     // Reload if failed
     if (bgImg.src && !bgImg.complete) bgImg.src = bgImg.src;
   }
-
+  bgImg.src = selectedUrl + '?t=' + Date.now();
   ctx.globalCompositeOperation = 'source-in';
   ctx.drawImage(segmentationMask, 0, 0, canvas.width, canvas.height);
 
