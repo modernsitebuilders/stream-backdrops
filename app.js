@@ -200,6 +200,12 @@ function onSegment({ segmentationMask, image }) {
   // Try direct image load in new tab for debugging
   window.open(bgImg.src, '_blank');
 };
+  webcam.onloadedmetadata = () => {
+  canvas.width = webcam.videoWidth;
+  canvas.height = webcam.videoHeight;
+  console.log('Canvas dimensions set to:', canvas.width, canvas.height);
+  startSegmentation();
+};
   ctx.globalCompositeOperation = 'source-in';
   ctx.drawImage(segmentationMask, 0, 0, canvas.width, canvas.height);
 
