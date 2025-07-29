@@ -19,6 +19,7 @@ const newtabBtn   = document.getElementById('newtab-btn');
 let bgImg     = new Image();
 let currentStream = null;
 let segmentationActive = false;
+
 async function listBackgrounds() {
   const repo = 'davidmilesphilly/stream-backdrops';
   try {
@@ -30,13 +31,12 @@ async function listBackgrounds() {
     return files
       .filter(f => /\.(png|jpe?g|webp)$/i.test(f.name))
       .map(f => `https://raw.githubusercontent.com/${repo}/main/backgrounds/${encodeURIComponent(f.name)}`);
-  } catch (err) {  // <-- Close `try` and handle errors
+  } catch (err) {
     console.error("Failed to fetch backgrounds:", err);
-    return [];  // Return empty array on failure
+    return [];
   }
-}  // <-- Close `listBackgrounds()` function
+}
 
-/* ---------- 2. INIT ---------- */  // <-- Now this is outside the function
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const urls = await listBackgrounds();
@@ -48,10 +48,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     showError('Cannot load backgrounds: ' + err.message);
   }
 });
-/* ---------- 3.  UI ---------- */
+
 function buildUI(urls) {
   bgSelect.innerHTML = '';
   galleryGrid.innerHTML = '';
+  
   urls.forEach(url => {
     const name = formatName(url);
 
@@ -63,40 +64,39 @@ function buildUI(urls) {
 
     /* gallery card */
     const card = document.createElement('div');
-card.className = 'card';
-const img = new Image();
-img.src = url;
-img.alt = name;
-img.loading = 'lazy';
-img.crossOrigin = 'anonymous';
-img.onerror = () => { card.innerHTML = '<div class="error-text">Failed to load</div>'; };
-img.style.cursor = 'pointer'; // Add pointer cursor
-img.onclick = (e) => {
-  e.stopPropagation();
-  previewImage(url);
-};
+    card.className = 'card';
+    const img = new Image();
+    img.src = url;
+    img.alt = name;
+    img.loading = 'lazy';
+    img.crossOrigin = 'anonymous';
+    img.onerror = () => { card.innerHTML = '<div class="error-text">Failed to load</div>'; };
+    img.style.cursor = 'pointer';
+    img.onclick = (e) => {
+      e.stopPropagation();
+      previewImage(url);
+    };
 
-const dl = document.createElement('button');
-dl.className = 'download-btn';
-dl.textContent = 'Download';
-dl.onclick = e => {
-  e.stopPropagation();
-  downloadImage(url);
-};
+    const dl = document.createElement('button');
+    dl.className = 'download-btn';
+    dl.textContent = 'Download';
+    dl.onclick = e => {
+      e.stopPropagation();
+      downloadImage(url);
+    };
 
-card.append(img, dl);
-galleryGrid.appendChild(card)}
+    card.append(img, dl);
+    galleryGrid.appendChild(card);
+  });
 
-  /* first background selected */
   if (urls.length) {
     bgSelect.value = urls[0];
     bgImg.src = urls[0];
   }
+}
 
-/* ---------- 4.  CAMERA & SEGMENTATION ---------- */
 async function initCamera() {
   try {
-    // Stop any existing stream first
     if (currentStream) {
       currentStream.getTracks().forEach(track => track.stop());
     }
@@ -165,7 +165,6 @@ function startSegmentation() {
 function onSegment({ segmentationMask, image }) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Always draw the background first
   if (bgImg.src && bgImg.complete) {
     ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
   } else {
@@ -173,26 +172,25 @@ function onSegment({ segmentationMask, image }) {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
-  // Then apply the segmentation mask
   ctx.globalCompositeOperation = 'source-in';
   ctx.drawImage(segmentationMask, 0, 0, canvas.width, canvas.height);
 
-  // Finally draw the camera feed
   ctx.globalCompositeOperation = 'source-over';
   ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 }
 
-/* ---------- 5.  HELPERS ---------- */
 function formatName(url) {
   return url.split('/').pop()
     .replace(/\.[^/.]+$/, '')
     .replace(/[-_]/g, ' ')
     .replace(/\b\w/g, c => c.toUpperCase());
 }
+
 function updateStatus(cls, msg) {
   cameraStatus.textContent = msg;
   cameraStatus.className = 'camera-status ' + cls;
 }
+
 function showError(msg) {
   const div = document.createElement('div');
   div.className = 'global-error';
@@ -200,65 +198,58 @@ function showError(msg) {
   document.querySelector('.container').prepend(div);
 }
 
-/* ---------- 6. DOWNLOAD (works with GitHub URLs) ---------- */
 async function downloadImage(url) {
   try {
-    // Fetch image as blob (works around GitHub CORS)
     const response = await fetch(url);
     const blob = await response.blob();
     const blobUrl = URL.createObjectURL(blob);
 
-    // Trigger download
     const a = document.createElement('a');
     a.href = blobUrl;
-    a.download = url.split('/').pop(); // Filename
+    a.download = url.split('/').pop();
     document.body.appendChild(a);
     a.click();
 
-    // Cleanup
     setTimeout(() => {
       document.body.removeChild(a);
       URL.revokeObjectURL(blobUrl);
     }, 100);
   } catch (err) {
     console.error("Download failed:", err);
-    window.open(url, '_blank'); // Fallback
+    window.open(url, '_blank');
   }
 }
-/* ---------- 7. FULLSCREEN PREVIEW ---------- */
+
 function previewImage(src) {
   previewImg.src = src;
   fullscreen.style.display = 'flex';
   
-  // Close when clicking outside the image
   fullscreen.addEventListener('click', (e) => {
     if (e.target === fullscreen) {
       fullscreen.style.display = 'none';
     }
   });
-}
-  // Add this to your event listeners
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && fullscreen.style.display === 'flex') {
-    fullscreen.style.display = 'none';
-  }
-});
-  
-  // Update download button
+
   downloadBtn.onclick = (e) => {
     e.preventDefault();
     downloadImage(src);
   };
   
-  // Update new tab button
   newtabBtn.href = src;
   newtabBtn.target = '_blank';
-                          
-  fullscreen.style.display = 'flex';
-/* ---------- 8.  CLEAN-UP ---------- */
-document.querySelector('.close-preview').addEventListener('click', () => {
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && fullscreen.style.display === 'flex') {
+    fullscreen.style.display = 'none';
+  }
 });
-    document.addEventListener('visibilitychange', () => {
+
+document.querySelector('.close-preview').addEventListener('click', () => {
+  fullscreen.style.display = 'none';
+});
+
+document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
     segmentationActive = false;
   } else {
@@ -268,49 +259,36 @@ document.querySelector('.close-preview').addEventListener('click', () => {
     }
   }
 });
+
 window.addEventListener('beforeunload', () => {
   currentStream?.getTracks().forEach(t => t.stop());
   segmentationActive = false;
 });
 
-/* ---------- 9.  CHANGE BACKGROUND ---------- */
 bgSelect.addEventListener('change', e => {
   bgImg.src = e.target.value;
   bgImg.onload = () => {
     if (segmentationActive) {
-      // Force redraw with new background
       requestAnimationFrame(() => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       });
     }
   };
 });
-/* ---------- 10. VIDEO CONFERENCE BACKGROUND ---------- */
+
+// Remove or keep these video conference functions if not needed
 function applyVirtualBackground() {
-  // Create a new canvas for the virtual background stream
   const virtualCanvas = document.createElement('canvas');
   virtualCanvas.width = canvas.width;
   virtualCanvas.height = canvas.height;
   const virtualCtx = virtualCanvas.getContext('2d');
   
-  // Draw the composition (same as our preview)
   virtualCtx.drawImage(bgImg, 0, 0, virtualCanvas.width, virtualCanvas.height);
   virtualCtx.globalCompositeOperation = 'source-in';
   virtualCtx.drawImage(canvas, 0, 0);
   
-  // Convert to video stream
   return virtualCanvas.captureStream();
 }
-
-/* ---------- 11. DROPDOWN INTEGRATION ---------- */
-bgSelect.addEventListener('change', e => {
-  bgImg.src = e.target.value;
-  
-  // Optional: Auto-apply to video conference when background changes
-  if (currentStream) {
-    updateVirtualBackgroundStream();
-  }
-});
 
 let virtualStream = null;
 
@@ -319,14 +297,9 @@ function updateVirtualBackgroundStream() {
     virtualStream.getTracks().forEach(track => track.stop());
   }
   virtualStream = applyVirtualBackground();
-  
-  // Here you would replace your video conference stream
   console.log('New virtual background stream ready:', virtualStream);
-  // videoConference.updateStream(virtualStream);
 }
 
-/* ---------- 12. EXPORT FUNCTION ---------- */
-// Add this to your global scope
 window.getVirtualBackgroundStream = () => {
   return virtualStream || applyVirtualBackground();
 };
