@@ -4,24 +4,29 @@
  *  Download buttons actually download the file
  ***********************************************************************/
 const SelfieSegmentation = window.SelfieSegmentation || {};
-const bgSelect   = document.getElementById('bgSelect');
-const webcam     = document.getElementById('webcam');
-const canvas     = document.getElementById('canvas');
-const ctx        = canvas.getContext('2d');
+const bgSelect = document.getElementById('bgSelect');
+const webcam = document.getElementById('webcam');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 const cameraStatus = document.getElementById('cameraStatus');
-const snapBtn    = document.getElementById('snapBtn');
 const galleryGrid = document.getElementById('gallery-grid');
 const fullscreen = document.getElementById('fullscreen-preview');
 const previewImg = document.getElementById('preview-image');
 
-let bgImg     = new Image();
+let bgImg = new Image();
 let currentStream = null;
 let segmentationActive = false;
+
+// CORS proxy for GitHub raw content
+function getImageWithCORS(url) {
+  return url.startsWith('https://raw.githubusercontent.com') 
+    ? `https://cors-anywhere.herokuapp.com/${url}`
+    : url;
+}
 
 async function listBackgrounds() {
   const repo = 'davidmilesphilly/stream-backdrops';
   try {
-    // Try to load from localStorage cache first
     const cached = localStorage.getItem('backgrounds');
     if (cached) return JSON.parse(cached);
     
@@ -34,7 +39,6 @@ async function listBackgrounds() {
       .filter(f => /\.(png|jpe?g|webp)$/i.test(f.name))
       .map(f => `https://raw.githubusercontent.com/${repo}/main/backgrounds/${encodeURIComponent(f.name)}`);
     
-    // Cache for 1 hour
     localStorage.setItem('backgrounds', JSON.stringify(urls));
     setTimeout(() => localStorage.removeItem('backgrounds'), 3600000);
     
@@ -45,17 +49,24 @@ async function listBackgrounds() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const urls = await listBackgrounds();
-    console.log('Loaded backgrounds:', urls);
-    buildUI(urls);
-    await initCamera();
-  } catch (err) {
-    console.error('Error:', err);
-    showError('Cannot load backgrounds: ' + err.message);
-  }
-});
+function formatName(url) {
+  return url.split('/').pop()
+    .replace(/\.[^/.]+$/, '')
+    .replace(/[-_]/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function updateStatus(cls, msg) {
+  cameraStatus.textContent = msg;
+  cameraStatus.className = 'camera-status ' + cls;
+}
+
+function showError(msg) {
+  const div = document.createElement('div');
+  div.className = 'global-error';
+  div.innerHTML = `<p>${msg}</p>`;
+  document.querySelector('.container').prepend(div);
+}
 
 function buildUI(urls) {
   bgSelect.innerHTML = '';
@@ -64,35 +75,28 @@ function buildUI(urls) {
   urls.forEach(url => {
     const name = formatName(url);
 
-    /* dropdown */
+    // Add to dropdown
     const opt = document.createElement('option');
     opt.value = url;
     opt.textContent = name;
     bgSelect.appendChild(opt);
 
-    /* gallery card */
+    // Create gallery card
     const card = document.createElement('div');
     card.className = 'card';
+    
     const img = new Image();
     img.src = url;
     img.alt = name;
     img.loading = 'lazy';
     img.crossOrigin = 'anonymous';
-    img.onerror = () => { card.innerHTML = '<div class="error-text">Failed to load</div>'; };
+    img.onerror = () => card.innerHTML = '<div class="error-text">Failed to load</div>';
     img.style.cursor = 'pointer';
     img.onclick = (e) => {
       e.stopPropagation();
       previewImage(url);
     };
-    const loadingIndicator = document.createElement('div');
-loadingIndicator.className = 'loading-indicator';
-loadingIndicator.textContent = 'Loading background...';
-card.appendChild(loadingIndicator);
 
-img.onload = () => {
-  card.removeChild(loadingIndicator);
-  card.appendChild(img);
-};
     const dl = document.createElement('button');
     dl.className = 'download-btn';
     dl.textContent = 'Download';
@@ -106,13 +110,31 @@ img.onload = () => {
   });
 
   if (urls.length) {
+    loadBackgroundImage(urls[0]);
     bgSelect.value = urls[0];
-    bgImg = new Image();
-    bgImg.crossOrigin = "anonymous";
-    bgImg.onload = () => console.log("Background loaded");
-    bgImg.onerror = () => console.error("Background failed to load");
-    bgImg.src = urls[0];
   }
+}
+
+function loadBackgroundImage(url) {
+  bgImg = new Image();
+  bgImg.crossOrigin = "anonymous";
+  
+  bgImg.onload = () => {
+    console.log('Background loaded:', url);
+    if (segmentationActive) {
+      requestAnimationFrame(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      });
+    }
+  };
+  
+  bgImg.onerror = () => {
+    console.error('Failed to load background:', url);
+    ctx.fillStyle = '#333';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  };
+  
+  bgImg.src = getImageWithCORS(url) + '?t=' + Date.now(); // Cache busting
 }
 
 async function initCamera() {
@@ -136,11 +158,11 @@ async function initCamera() {
     webcam.onloadedmetadata = () => {
       canvas.width = webcam.videoWidth;
       canvas.height = webcam.videoHeight;
+      console.log('Camera initialized at:', canvas.width, 'x', canvas.height);
       startSegmentation();
     };
     
     updateStatus('active', 'Camera active');
-    // Remove this line: snapBtn.disabled = false;
   } catch (err) {
     updateStatus('error', `Camera error: ${err.message}`);
     console.error('Camera initialization error:', err);
@@ -185,100 +207,32 @@ function startSegmentation() {
 function onSegment({ segmentationMask, image }) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw background if loaded, otherwise show fallback
-  if (bgImg.complete && bgImg.naturalWidth !== 0) {
-    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
-  } else {
-    ctx.fillStyle = '#333';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // Reload if failed
-    if (bgImg.src && !bgImg.complete) bgImg.src = bgImg.src;
-  }
-  let bgImg = new Image();
-bgImg.crossOrigin = "anonymous";
-
-// Dropdown handler
-bgSelect.addEventListener('change', (e) => {
-  const newUrl = e.target.value;
-  loadBackgroundImage(newUrl);
-});
-
-function loadBackgroundImage(url) {
-  const newImg = new Image();
-  newImg.crossOrigin = "anonymous";
-  
-  newImg.onload = () => {
-    bgImg = newImg;
-    console.log('Background loaded successfully');
-  };
-  
-  newImg.onerror = () => {
-    console.error('Failed to load background:', url);
-  };
-  
-  newImg.src = url + '?t=' + Date.now(); // Cache bust
-}
-
-// Segmentation drawing
-function onSegment(results) {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
   // Draw background if loaded
-  if (bgImg.complete && bgImg.naturalWidth > 0) {
-    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+  if (bgImg.complete && bgImg.naturalWidth !== 0) {
+    try {
+      ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+    } catch (err) {
+      console.error('Error drawing background:', err);
+      ctx.fillStyle = '#333';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
   } else {
     ctx.fillStyle = '#333';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
-  
-  // Apply segmentation
-  ctx.globalCompositeOperation = 'source-in';
-  ctx.drawImage(results.segmentationMask, 0, 0, canvas.width, canvas.height);
-  
-  // Draw camera feed
-  ctx.globalCompositeOperation = 'source-over';
-  ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
-}
-  bgImg.src = selectedUrl + '?t=' + Date.now();
-  bgImg.onerror = () => {
-  console.error('Failed to load:', bgImg.src);
-  // Try direct image load in new tab for debugging
-  window.open(bgImg.src, '_blank');
-};
-  webcam.onloadedmetadata = () => {
-  canvas.width = webcam.videoWidth;
-  canvas.height = webcam.videoHeight;
-  console.log('Canvas dimensions set to:', canvas.width, canvas.height);
-  startSegmentation();
-};
+
+  // Apply segmentation mask
   ctx.globalCompositeOperation = 'source-in';
   ctx.drawImage(segmentationMask, 0, 0, canvas.width, canvas.height);
 
+  // Draw camera feed
   ctx.globalCompositeOperation = 'source-over';
   ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-}
-function formatName(url) {
-  return url.split('/').pop()
-    .replace(/\.[^/.]+$/, '')
-    .replace(/[-_]/g, ' ')
-    .replace(/\b\w/g, c => c.toUpperCase());
-}
-
-function updateStatus(cls, msg) {
-  cameraStatus.textContent = msg;
-  cameraStatus.className = 'camera-status ' + cls;
-}
-
-function showError(msg) {
-  const div = document.createElement('div');
-  div.className = 'global-error';
-  div.innerHTML = `<p>${msg}</p>`;
-  document.querySelector('.container').prepend(div);
 }
 
 async function downloadImage(url) {
   try {
-    const response = await fetch(url);
+    const response = await fetch(getImageWithCORS(url));
     const blob = await response.blob();
     const blobUrl = URL.createObjectURL(blob);
 
@@ -307,15 +261,20 @@ function previewImage(src) {
       fullscreen.style.display = 'none';
     }
   });
-
-  downloadBtn.onclick = (e) => {
-    e.preventDefault();
-    downloadImage(src);
-  };
-  
-  newtabBtn.href = src;
-  newtabBtn.target = '_blank';
 }
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const urls = await listBackgrounds();
+    console.log('Loaded backgrounds:', urls);
+    buildUI(urls);
+    await initCamera();
+  } catch (err) {
+    console.error('Error:', err);
+    showError('Cannot load backgrounds: ' + err.message);
+  }
+});
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && fullscreen.style.display === 'flex') {
@@ -344,40 +303,5 @@ window.addEventListener('beforeunload', () => {
 });
 
 bgSelect.addEventListener('change', e => {
-  bgImg.src = e.target.value;
-  bgImg.onload = () => {
-    if (segmentationActive) {
-      requestAnimationFrame(() => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-      });
-    }
-  };
+  loadBackgroundImage(e.target.value);
 });
-
-// Remove or keep these video conference functions if not needed
-function applyVirtualBackground() {
-  const virtualCanvas = document.createElement('canvas');
-  virtualCanvas.width = canvas.width;
-  virtualCanvas.height = canvas.height;
-  const virtualCtx = virtualCanvas.getContext('2d');
-  
-  virtualCtx.drawImage(bgImg, 0, 0, virtualCanvas.width, virtualCanvas.height);
-  virtualCtx.globalCompositeOperation = 'source-in';
-  virtualCtx.drawImage(canvas, 0, 0);
-  
-  return virtualCanvas.captureStream();
-}
-
-let virtualStream = null;
-
-function updateVirtualBackgroundStream() {
-  if (virtualStream) {
-    virtualStream.getTracks().forEach(track => track.stop());
-  }
-  virtualStream = applyVirtualBackground();
-  console.log('New virtual background stream ready:', virtualStream);
-}
-
-window.getVirtualBackgroundStream = () => {
-  return virtualStream || applyVirtualBackground();
-};
