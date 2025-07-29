@@ -63,26 +63,29 @@ function buildUI(urls) {
 
     /* gallery card */
     const card = document.createElement('div');
-    card.className = 'card';
-    const img = new Image();
-    img.src = url;
-    img.alt = name;
-    img.loading = 'lazy';
-    img.crossOrigin = 'anonymous';
-    img.onerror = () => { card.innerHTML = '<div class="error-text">Failed to load</div>'; };
+card.className = 'card';
+const img = new Image();
+img.src = url;
+img.alt = name;
+img.loading = 'lazy';
+img.crossOrigin = 'anonymous';
+img.onerror = () => { card.innerHTML = '<div class="error-text">Failed to load</div>'; };
+img.style.cursor = 'pointer'; // Add pointer cursor
+img.onclick = (e) => {
+  e.stopPropagation();
+  previewImage(url);
+};
 
-    const dl = document.createElement('button');
-    dl.className = 'download-btn';
-    dl.textContent = 'Download';
-    dl.onclick = e => {
-      e.stopPropagation();
-      downloadImage(url);
-    };
+const dl = document.createElement('button');
+dl.className = 'download-btn';
+dl.textContent = 'Download';
+dl.onclick = e => {
+  e.stopPropagation();
+  downloadImage(url);
+};
 
-    card.onclick = () => previewImage(url);
-    card.append(img, dl);
-    galleryGrid.appendChild(card);
-  });
+card.append(img, dl);
+galleryGrid.appendChild(card);
 
   /* first background selected */
   if (urls.length) {
