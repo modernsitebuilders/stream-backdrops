@@ -83,3 +83,13 @@ footer { background:#fff; text-align:center; padding:3rem 1rem; color:#555; bord
   .card img{height:200px;}
   .download-btn{bottom:-35px;padding:.5rem 1rem;font-size:.8rem;}
 }
+  .loading-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  background: rgba(0,0,0,0.7);
+  padding: 10px 20px;
+  border-radius: 20px;
+}
