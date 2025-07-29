@@ -1,41 +1,20 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template
 import os
 
-# Initialize Flask with explicit paths
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-app = Flask(__name__,
-            template_folder=os.path.join(PROJECT_ROOT, 'templates'),
-            static_folder=os.path.join(PROJECT_ROOT, 'static'))
+# Get absolute path to templates
+template_dir = os.path.abspath('templates')
+static_dir = os.path.abspath('static')
 
-# Main route
+app = Flask(__name__, 
+            template_folder=template_dir,
+            static_folder=static_dir)
+
 @app.route('/')
 def home():
+    print(f"Looking for template at: {os.path.join(template_dir, 'index.html')}")
     return render_template('index.html')
 
-# Static files route
-@app.route('/static/<path:filename>')
-def static_files(filename):
-    return send_from_directory(app.static_folder, filename)
-
-# Debug route (NEW)
-@app.route('/debug')
-def debug():
-    return {
-        "project_root": PROJECT_ROOT,
-        "templates": os.listdir(app.template_folder),
-        "static_files": {
-            "css": os.listdir(os.path.join(app.static_folder, 'css')),
-            "backgrounds": os.listdir(os.path.join(app.static_folder, 'backgrounds'))
-        }
-    }
-
-# Test route (NEW)
-@app.route('/simple-test')
-def simple_test():
-    return "Hello! This basic route works!"
-
 if __name__ == '__main__':
-    print(f"PROJECT ROOT: {PROJECT_ROOT}")
-    print(f"Templates exist: {os.path.exists(os.path.join(app.template_folder, 'index.html'))}")
-    print(f"Static folder exists: {os.path.exists(app.static_folder)}")
+    print("Templates folder exists:", os.path.exists(template_dir))
+    print("Static folder exists:", os.path.exists(static_dir))
     app.run(host='0.0.0.0', port=8000, debug=True)
