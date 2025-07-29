@@ -16,43 +16,43 @@ let segmentationActive = false;
 
 // Local background images (relative paths)
 const BACKGROUNDS = [
-  'backgrounds/01-bright-office-environment.jpg',
-  'backgrounds/02-art-gallery-interior.jpg',
-  'backgrounds/03-contemporary-office-furniture.jpg',
-  'backgrounds/04-chic-home-office-setup.jpg',
-  'backgrounds/05-minimalist-office-design.jpg',
-  'backgrounds/06-organized-home-office.jpg',
-  'backgrounds/07-office-storage-solutions.jpg',
-  'backgrounds/08-corporate-office-space.jpg',
-  'backgrounds/09-professional-office-interior.jpg',
-  'backgrounds/10-collaborative-workspace.jpg',
-  'backgrounds/11-stylish-office-interior.jpg',
-  'backgrounds/12-modern-home-office-design.jpg',
-  'backgrounds/13a-cozy-office-environment.jpg',
-  'backgrounds/14-modern-office-corner.jpg',
-  'backgrounds/14a-workspace-setup.jpg',
-  'backgrounds/15-basement-workspace.jpg',
-  'backgrounds/16-stylish-home-office.jpg',
-  'backgrounds/18-professional-home-office.jpg',
-  'backgrounds/19-contemporary-learning-area.jpg',
-  'backgrounds/20-corporate-office-interior.jpg',
-  'backgrounds/21-office-desk-and-chairs.jpg',
-  'backgrounds/22-serene-indoor-environment.jpg',
-  'backgrounds/23-cozy-workspace.jpg',
-  'backgrounds/24-corporate-office-environment.jpg',
-  'backgrounds/25-office-workspace-design.jpg',
-  'backgrounds/26-simple-office-design.jpg',
-  'backgrounds/27-training-room-interior.jpg',
-  'backgrounds/28-modern-office-interior-shelving.jpg',
-  'backgrounds/29-modern-office-space.jpg',
-  'backgrounds/30-digital-printing-workspace.jpg',
-  'backgrounds/31-presentation-screen-in-conference-room.jpg',
-  'backgrounds/32-collaborative-workspace.jpg',
-  'backgrounds/33-contemporary-office-furniture.jpg',
-  'backgrounds/34-elegant_desk_chair_combination.jpg',
-  'backgrounds/35-creative-work-environment.jpg',
-  'backgrounds/36-office-storage-solutions.jpg',
-  'backgrounds/hero.jpg'
+  '/backgrounds/01-bright-office-environment.jpg',
+  '/backgrounds/02-art-gallery-interior.jpg',
+  '/backgrounds/03-contemporary-office-furniture.jpg',
+  '/backgrounds/04-chic-home-office-setup.jpg',
+  '/backgrounds/05-minimalist-office-design.jpg',
+  '/backgrounds/06-organized-home-office.jpg',
+  '/backgrounds/07-office-storage-solutions.jpg',
+  '/backgrounds/08-corporate-office-space.jpg',
+  '/backgrounds/09-professional-office-interior.jpg',
+  '/backgrounds/10-collaborative-workspace.jpg',
+  '/backgrounds/11-stylish-office-interior.jpg',
+  '/backgrounds/12-modern-home-office-design.jpg',
+  '/backgrounds/13a-cozy-office-environment.jpg',
+  '/backgrounds/14-modern-office-corner.jpg',
+  '/backgrounds/14a-workspace-setup.jpg',
+  '/backgrounds/15-basement-workspace.jpg',
+  '/backgrounds/16-stylish-home-office.jpg',
+  '/backgrounds/18-professional-home-office.jpg',
+  '/backgrounds/19-contemporary-learning-area.jpg',
+  '/backgrounds/20-corporate-office-interior.jpg',
+  '/backgrounds/21-office-desk-and-chairs.jpg',
+  '/backgrounds/22-serene-indoor-environment.jpg',
+  '/backgrounds/23-cozy-workspace.jpg',
+  '/backgrounds/24-corporate-office-environment.jpg',
+  '/backgrounds/25-office-workspace-design.jpg',
+  '/backgrounds/26-simple-office-design.jpg',
+  '/backgrounds/27-training-room-interior.jpg',
+  '/backgrounds/28-modern-office-interior-shelving.jpg',
+  '/backgrounds/29-modern-office-space.jpg',
+  '/backgrounds/30-digital-printing-workspace.jpg',
+  '/backgrounds/31-presentation-screen-in-conference-room.jpg',
+  '/backgrounds/32-collaborative-workspace.jpg',
+  '/backgrounds/33-contemporary-office-furniture.jpg',
+  '/backgrounds/34-elegant_desk_chair_combination.jpg',
+  '/backgrounds/35-creative-work-environment.jpg',
+  '/backgrounds/36-office-storage-solutions.jpg',
+  '/backgrounds/hero.jpg'
 ];
 
 function formatName(url) {
@@ -71,7 +71,7 @@ function buildUI() {
   const noneOpt = document.createElement('option');
   noneOpt.value = 'none';
   noneOpt.textContent = 'No Background';
-  noneOption.selected = true;
+  noneOpt.selected = true;
   bgSelect.appendChild(noneOpt);
   
   // Add all background options
@@ -121,6 +121,10 @@ async function loadBackgroundImage(url) {
     };
     img.src = url;
   });
+}
+
+async function changeBackground(bgUrl) {
+  await loadBackgroundImage(bgUrl);
 }
 
 async function initCamera() {
@@ -176,9 +180,7 @@ function startSegmentation() {
   
   processFrame();
 }
-async function changeBackground(bgUrl) {
-  const response = await fetch(`/set_background?url=${encodeURIComponent(bgUrl)}`);
-  // Update UI accordingly
+
 function processSegmentation({ segmentationMask, image }) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -195,7 +197,7 @@ function processSegmentation({ segmentationMask, image }) {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
-  // Apply segmentation mask - FIXED COMPOSITE OPERATIONS
+  // Apply segmentation mask
   ctx.globalCompositeOperation = 'source-out';
   ctx.drawImage(segmentationMask, 0, 0, canvas.width, canvas.height);
 
@@ -208,12 +210,12 @@ function processSegmentation({ segmentationMask, image }) {
 document.addEventListener('DOMContentLoaded', async () => {
   buildUI();
   await initCamera();
-   // Set "No Background" as default
+  // Set "No Background" as default
   bgSelect.value = 'none';
   await loadBackgroundImage('none');
   
   bgSelect.addEventListener('change', async () => {
-    await loadBackgroundImage(bgSelect.value);
+    await changeBackground(bgSelect.value);
   });
 });
 
