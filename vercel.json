@@ -2,11 +2,26 @@
   "version": 2,
   "builds": [
     {
-      "src": "test.py",
-      "use": "@vercel/python"
+      "src": "server.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.9",
+        "maxLambdaSize": "15mb",
+        "includeFiles": [
+          "templates/**",
+          "static/**"
+        ]
+      }
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "test.py" }
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)", 
+      "dest": "server.py"
+    }
   ]
 }
