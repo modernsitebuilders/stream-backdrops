@@ -238,6 +238,12 @@ function previewImage(src) {
     }
   });
 }
+  // Add this to your event listeners
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && fullscreen.style.display === 'flex') {
+    fullscreen.style.display = 'none';
+  }
+});
   
   // Update download button
   downloadBtn.onclick = (e) => {
