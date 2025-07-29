@@ -173,11 +173,14 @@ function startSegmentation() {
 function onSegment({ segmentationMask, image }) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (bgImg.src && bgImg.complete) {
+  // Draw background if loaded, otherwise show fallback
+  if (bgImg.complete && bgImg.naturalWidth !== 0) {
     ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
   } else {
     ctx.fillStyle = '#333';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Reload if failed
+    if (bgImg.src && !bgImg.complete) bgImg.src = bgImg.src;
   }
 
   ctx.globalCompositeOperation = 'source-in';
@@ -186,7 +189,6 @@ function onSegment({ segmentationMask, image }) {
   ctx.globalCompositeOperation = 'source-over';
   ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 }
-
 function formatName(url) {
   return url.split('/').pop()
     .replace(/\.[^/.]+$/, '')
