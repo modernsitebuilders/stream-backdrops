@@ -1,6 +1,6 @@
 /***********************************************************************
  *  Virtual Background App - Final Version
- *  With all backgrounds hardcoded
+ *  With "No Background" default and fixed image loading
  ***********************************************************************/
 const SelfieSegmentation = window.SelfieSegmentation || {};
 const bgSelect = document.getElementById('bgSelect');
@@ -60,6 +60,7 @@ async function listBackgrounds() {
 }
 
 function formatName(url) {
+  if (url === 'none') return 'No Background';
   return url.split('/').pop()
     .replace(/\.[^/.]+$/, '')
     .replace(/[-_]/g, ' ')
@@ -80,6 +81,11 @@ function showError(msg) {
 
 function loadImageWithRetry(url, retries = 3, delay = 1000) {
   return new Promise((resolve, reject) => {
+    if (url === 'none') {
+      resolve(null);
+      return;
+    }
+
     const img = new Image();
     img.crossOrigin = "Anonymous";
     
@@ -103,6 +109,13 @@ function buildUI(urls) {
   bgSelect.innerHTML = '';
   galleryGrid.innerHTML = '';
   
+  // Add "No Background" option first
+  const noneOpt = document.createElement('option');
+  noneOpt.value = 'none';
+  noneOpt.textContent = 'No Background';
+  bgSelect.appendChild(noneOpt);
+  
+  // Add all other backgrounds
   urls.forEach(url => {
     const name = formatName(url);
 
@@ -138,14 +151,23 @@ function buildUI(urls) {
     galleryGrid.appendChild(card);
   });
 
-  if (urls.length) {
-    loadBackgroundImage(urls[0]);
-    bgSelect.value = urls[0];
-  }
+  // Set default to "No Background"
+  bgSelect.value = 'none';
+  bgImg = null;
 }
 
 async function loadBackgroundImage(url) {
   try {
+    if (url === 'none') {
+      bgImg = null;
+      if (segmentationActive) {
+        requestAnimationFrame(() => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+      }
+      return;
+    }
+
     const img = await loadImageWithRetry(url);
     bgImg = img;
     console.log('Background successfully loaded:', url);
@@ -232,7 +254,8 @@ function startSegmentation() {
 function onSegment({ segmentationMask, image }) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (bgImg.complete && bgImg.naturalWidth !== 0) {
+  // Draw background if loaded and exists
+  if (bgImg && bgImg.complete && bgImg.naturalWidth !== 0) {
     try {
       ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
     } catch (err) {
@@ -241,13 +264,16 @@ function onSegment({ segmentationMask, image }) {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
   } else {
+    // No background or failed to load - show plain color
     ctx.fillStyle = '#333';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
+  // Apply segmentation mask
   ctx.globalCompositeOperation = 'source-in';
   ctx.drawImage(segmentationMask, 0, 0, canvas.width, canvas.height);
 
+  // Draw camera feed
   ctx.globalCompositeOperation = 'source-over';
   ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 }
@@ -275,6 +301,8 @@ async function downloadImage(url) {
 }
 
 function previewImage(src) {
+  if (src === 'none') return;
+  
   previewImg.src = src;
   fullscreen.style.display = 'flex';
   
