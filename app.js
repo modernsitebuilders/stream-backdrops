@@ -71,6 +71,7 @@ function buildUI() {
   const noneOpt = document.createElement('option');
   noneOpt.value = 'none';
   noneOpt.textContent = 'No Background';
+  noneOption.selected = true;
   bgSelect.appendChild(noneOpt);
   
   // Add all background options
