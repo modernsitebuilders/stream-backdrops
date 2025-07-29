@@ -13,8 +13,6 @@ const snapBtn    = document.getElementById('snapBtn');
 const galleryGrid = document.getElementById('gallery-grid');
 const fullscreen = document.getElementById('fullscreen-preview');
 const previewImg = document.getElementById('preview-image');
-const downloadBtn = document.getElementById('download-btn');
-const newtabBtn   = document.getElementById('newtab-btn');
 
 let bgImg     = new Image();
 let currentStream = null;
