@@ -176,7 +176,9 @@ function startSegmentation() {
   
   processFrame();
 }
-
+async function changeBackground(bgUrl) {
+  const response = await fetch(`/set_background?url=${encodeURIComponent(bgUrl)}`);
+  // Update UI accordingly
 function processSegmentation({ segmentationMask, image }) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
