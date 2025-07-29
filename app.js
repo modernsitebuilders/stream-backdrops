@@ -128,7 +128,7 @@ async function initCamera() {
     };
     
     updateStatus('active', 'Camera active');
-    snapBtn.disabled = false;
+    // Remove this line: snapBtn.disabled = false;
   } catch (err) {
     updateStatus('error', `Camera error: ${err.message}`);
     console.error('Camera initialization error:', err);
