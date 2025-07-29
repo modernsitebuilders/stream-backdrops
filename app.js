@@ -201,6 +201,10 @@ function processSegmentation({ segmentationMask, image }) {
 // Initialize the app
 document.addEventListener('DOMContentLoaded', async () => {
   buildUI();
+   // Set "No Background" as default
+  bgSelect.value = 'none';
+  await loadBackgroundImage('none');
+  
   await initCamera();
   
   bgSelect.addEventListener('change', async () => {
