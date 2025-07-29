@@ -182,19 +182,23 @@ function processSegmentation({ segmentationMask, image }) {
 
   // Draw background if available
   if (bgImg && bgImg.complete) {
-    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+    // Scale background to cover canvas
+    const scale = Math.max(canvas.width / bgImg.width, canvas.height / bgImg.height);
+    const x = (canvas.width - bgImg.width * scale) / 2;
+    const y = (canvas.height - bgImg.height * scale) / 2;
+    ctx.drawImage(bgImg, x, y, bgImg.width * scale, bgImg.height * scale);
   } else {
     // Default background when none selected
     ctx.fillStyle = '#333';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
-  // Apply segmentation mask
-  ctx.globalCompositeOperation = 'source-in';
+  // Apply segmentation mask - FIXED COMPOSITE OPERATIONS
+  ctx.globalCompositeOperation = 'source-out';
   ctx.drawImage(segmentationMask, 0, 0, canvas.width, canvas.height);
 
   // Draw camera feed
-  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalCompositeOperation = 'destination-over';
   ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 }
 
