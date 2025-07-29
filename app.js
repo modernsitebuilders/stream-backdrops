@@ -23,14 +23,24 @@ let segmentationActive = false;
 async function listBackgrounds() {
   const repo = 'davidmilesphilly/stream-backdrops';
   try {
+    // Try to load from localStorage cache first
+    const cached = localStorage.getItem('backgrounds');
+    if (cached) return JSON.parse(cached);
+    
     const api = `https://api.github.com/repos/${repo}/contents/backgrounds`;
     const res = await fetch(api);
     if (!res.ok) throw new Error('GitHub API request failed');
     
     const files = await res.json();
-    return files
+    const urls = files
       .filter(f => /\.(png|jpe?g|webp)$/i.test(f.name))
       .map(f => `https://raw.githubusercontent.com/${repo}/main/backgrounds/${encodeURIComponent(f.name)}`);
+    
+    // Cache for 1 hour
+    localStorage.setItem('backgrounds', JSON.stringify(urls));
+    setTimeout(() => localStorage.removeItem('backgrounds'), 3600000);
+    
+    return urls;
   } catch (err) {
     console.error("Failed to fetch backgrounds:", err);
     return [];
