@@ -51,7 +51,7 @@ const BACKGROUNDS = [
   'backgrounds/33-contemporary-office-furniture.jpg',
   'backgrounds/34-elegant_desk_chair_combination.jpg',
   'backgrounds/35-creative-work-environment.jpg',
-  'backgrounds/36-office-storage-solutions .jpg',
+  'backgrounds/36-office-storage-solutions.jpg',
   'backgrounds/hero.jpg'
 ];
 
