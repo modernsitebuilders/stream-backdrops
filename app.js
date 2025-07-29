@@ -163,6 +163,7 @@ function startSegmentation() {
 function onSegment({ segmentationMask, image }) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  // Always draw the background first
   if (bgImg.src && bgImg.complete) {
     ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
   } else {
@@ -170,9 +171,11 @@ function onSegment({ segmentationMask, image }) {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
+  // Then apply the segmentation mask
   ctx.globalCompositeOperation = 'source-in';
   ctx.drawImage(segmentationMask, 0, 0, canvas.width, canvas.height);
 
+  // Finally draw the camera feed
   ctx.globalCompositeOperation = 'source-over';
   ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 }
@@ -223,6 +226,15 @@ async function downloadImage(url) {
 /* ---------- 7. FULLSCREEN PREVIEW ---------- */
 function previewImage(src) {
   previewImg.src = src;
+  fullscreen.style.display = 'flex';
+  
+  // Close when clicking outside the image
+  fullscreen.addEventListener('click', (e) => {
+    if (e.target === fullscreen) {
+      fullscreen.style.display = 'none';
+    }
+  });
+}
   
   // Update download button
   downloadBtn.onclick = (e) => {
@@ -237,6 +249,9 @@ function previewImage(src) {
   fullscreen.style.display = 'flex';
 }
 /* ---------- 8.  CLEAN-UP ---------- */
+document.querySelector('.close-preview').addEventListener('click', () => {
+  fullscreen.style.display = 'none';
+});
     document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
     segmentationActive = false;
