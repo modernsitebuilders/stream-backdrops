@@ -53,7 +53,6 @@ const BACKGROUNDS = [
     "/static/backgrounds/36-office-storage-solutions.jpg",
     "/static/backgrounds/hero.jpg"
 ];
-
 // Rest of your existing JS code...
 // [Keep all your existing functions below exactly as they were]
 // [buildUI(), loadBackgroundImage(), changeBackground(), etc.]
