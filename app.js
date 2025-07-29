@@ -195,6 +195,11 @@ function onSegment({ segmentationMask, image }) {
     if (bgImg.src && !bgImg.complete) bgImg.src = bgImg.src;
   }
   bgImg.src = selectedUrl + '?t=' + Date.now();
+  bgImg.onerror = () => {
+  console.error('Failed to load:', bgImg.src);
+  // Try direct image load in new tab for debugging
+  window.open(bgImg.src, '_blank');
+};
   ctx.globalCompositeOperation = 'source-in';
   ctx.drawImage(segmentationMask, 0, 0, canvas.width, canvas.height);
 
