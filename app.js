@@ -194,6 +194,51 @@ function onSegment({ segmentationMask, image }) {
     // Reload if failed
     if (bgImg.src && !bgImg.complete) bgImg.src = bgImg.src;
   }
+  let bgImg = new Image();
+bgImg.crossOrigin = "anonymous";
+
+// Dropdown handler
+bgSelect.addEventListener('change', (e) => {
+  const newUrl = e.target.value;
+  loadBackgroundImage(newUrl);
+});
+
+function loadBackgroundImage(url) {
+  const newImg = new Image();
+  newImg.crossOrigin = "anonymous";
+  
+  newImg.onload = () => {
+    bgImg = newImg;
+    console.log('Background loaded successfully');
+  };
+  
+  newImg.onerror = () => {
+    console.error('Failed to load background:', url);
+  };
+  
+  newImg.src = url + '?t=' + Date.now(); // Cache bust
+}
+
+// Segmentation drawing
+function onSegment(results) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Draw background if loaded
+  if (bgImg.complete && bgImg.naturalWidth > 0) {
+    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+  } else {
+    ctx.fillStyle = '#333';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }
+  
+  // Apply segmentation
+  ctx.globalCompositeOperation = 'source-in';
+  ctx.drawImage(results.segmentationMask, 0, 0, canvas.width, canvas.height);
+  
+  // Draw camera feed
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
+}
   bgImg.src = selectedUrl + '?t=' + Date.now();
   bgImg.onerror = () => {
   console.error('Failed to load:', bgImg.src);
