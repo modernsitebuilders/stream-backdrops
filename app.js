@@ -84,7 +84,15 @@ function buildUI(urls) {
       e.stopPropagation();
       previewImage(url);
     };
+    const loadingIndicator = document.createElement('div');
+loadingIndicator.className = 'loading-indicator';
+loadingIndicator.textContent = 'Loading background...';
+card.appendChild(loadingIndicator);
 
+img.onload = () => {
+  card.removeChild(loadingIndicator);
+  card.appendChild(img);
+};
     const dl = document.createElement('button');
     dl.className = 'download-btn';
     dl.textContent = 'Download';
