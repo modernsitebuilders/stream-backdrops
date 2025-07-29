@@ -99,6 +99,10 @@ function buildUI(urls) {
 
   if (urls.length) {
     bgSelect.value = urls[0];
+    bgImg = new Image();
+    bgImg.crossOrigin = "anonymous";
+    bgImg.onload = () => console.log("Background loaded");
+    bgImg.onerror = () => console.error("Background failed to load");
     bgImg.src = urls[0];
   }
 }
