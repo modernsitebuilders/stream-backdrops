@@ -8,7 +8,7 @@
   <meta name="description" content="Free HD Zoom & Teams backgrounds for professionals.">
   <!-- Move ALL scripts to the BOTTOM of body -->
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/static/style.css">  <!-- Fixed path -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  <!-- Fixed path -->
   
 </head>
 <body>
@@ -85,6 +85,6 @@
   </footer>
 
  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
-  <script src="/static/app.js"></script>  <!-- Fixed path -->
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
