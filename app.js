@@ -16,7 +16,7 @@ let segmentationActive = false;
 
 // Local background images (must be in your project's /backgrounds folder)
 const BACKGROUNDS = [
-  'backgrounds/01-bright-office-environment..jpg',
+  'backgrounds/01-bright-office-environment.jpg',
   'backgrounds/02-art-gallery-interior.jpg',
   'backgrounds/03-contemporary-office-furniture.jpg',
   'backgrounds/04-chic-home-office-setup.jpg',
