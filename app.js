@@ -1,6 +1,6 @@
 /***********************************************************************
- *  Virtual Background App - Working Version
- *  With functional backgrounds and "No Background" option
+ *  Virtual Background App - Fixed Version
+ *  With working "No Background" option and error handling
  ***********************************************************************/
 const SelfieSegmentation = window.SelfieSegmentation || {};
 const bgSelect = document.getElementById('bgSelect');
@@ -10,11 +10,11 @@ const ctx = canvas.getContext('2d');
 const cameraStatus = document.getElementById('cameraStatus');
 const galleryGrid = document.getElementById('gallery-grid');
 
-let bgImg = new Image();
+let bgImg = null;
 let currentStream = null;
 let segmentationActive = false;
 
-// Local background images (must be in your project's /backgrounds folder)
+// Local background images (relative paths)
 const BACKGROUNDS = [
   'backgrounds/01-bright-office-environment.jpg',
   'backgrounds/02-art-gallery-interior.jpg',
@@ -71,7 +71,6 @@ function buildUI() {
   const noneOpt = document.createElement('option');
   noneOpt.value = 'none';
   noneOpt.textContent = 'No Background';
-  noneOpt.selected = true;
   bgSelect.appendChild(noneOpt);
   
   // Add all background options
@@ -98,6 +97,13 @@ function buildUI() {
 async function loadBackgroundImage(url) {
   if (url === 'none') {
     bgImg = null;
+    // Force redraw with no background
+    if (segmentationActive) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#333';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
+    }
     return;
   }
 
@@ -133,6 +139,8 @@ async function initCamera() {
     
     webcam.srcObject = stream;
     currentStream = stream;
+    cameraStatus.textContent = 'Camera active';
+    cameraStatus.classList.add('active');
     
     webcam.onloadedmetadata = () => {
       canvas.width = webcam.videoWidth;
@@ -141,6 +149,8 @@ async function initCamera() {
     };
   } catch (err) {
     console.error('Camera initialization error:', err);
+    cameraStatus.textContent = 'Camera error: ' + err.message;
+    cameraStatus.classList.add('error');
   }
 }
 
