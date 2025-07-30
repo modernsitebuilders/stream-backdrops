@@ -428,18 +428,13 @@ body {
   transform: translateY(0);
 }
 
-/* ========== SEARCH & FILTER FUNCTIONALITY ========== */
+/* ========== FILTER FUNCTIONALITY ========== */
 .gallery-controls {
   display: flex;
   justify-content: center;
   gap: 1rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
-}
-
-.search-box {
-  max-width: 300px;
-  flex: 1;
 }
 
 .filter-buttons {
