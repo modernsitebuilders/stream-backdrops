@@ -50,8 +50,14 @@
             <div class="preview-label">Camera Preview</div>
             <div class="camera-status" id="cameraStatus">Camera access required</div>
           </div>
+          <div class="performance-indicator" id="performanceIndicator">FPS: --</div>
           <video id="webcam" autoplay muted playsinline></video>
           <canvas id="canvas"></canvas>
+          <div class="camera-controls">
+            <button class="control-btn" id="flipCamera" title="Flip Camera">🔄</button>
+            <button class="control-btn" id="toggleCamera" title="Toggle Camera">📷</button>
+            <button class="control-btn" id="capturePhoto" title="Capture Photo">📸</button>
+          </div>
         </div>
 
         <!-- Controls + Sidebar Ad -->
@@ -87,6 +93,21 @@
     <div class="container">
       <h2>Professional Background Collection</h2>
       <p class="section-subtitle">Free downloads for Zoom, Teams, and more</p>
+      
+      <!-- Gallery Controls -->
+      <div class="gallery-controls">
+        <div class="search-box">
+          <input type="text" id="searchInput" class="form-control" placeholder="Search backgrounds..." />
+        </div>
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="office">Office</button>
+          <button class="filter-btn" data-filter="modern">Modern</button>
+          <button class="filter-btn" data-filter="cozy">Cozy</button>
+          <button class="filter-btn" data-filter="professional">Professional</button>
+        </div>
+      </div>
+      
       <div id="gallery-grid" class="grid"></div>
     </div>
   </section>
