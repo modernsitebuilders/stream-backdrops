@@ -110,6 +110,34 @@ body {
   background: var(--light);
 }
 
+/* ========== FORM STYLES ========== */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e6ed;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  background: #fff;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 120, 255, 0.1);
+}
+
 /* ========== CAMERA PREVIEW ========== */
 .preview-container {
   display: grid;
@@ -125,6 +153,13 @@ body {
   border-radius: var(--border-radius);
   overflow: hidden;
   aspect-ratio: 16/9;
+}
+
+.preview-controls {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
 }
 
 .preview-header {
@@ -149,29 +184,43 @@ body {
   border-radius: 20px;
   font-size: 0.85rem;
   font-weight: 500;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
 }
 
 .camera-status.active {
-  background: rgba(40, 167, 69, 0.2);
-  color: #28a745;
+  background: rgba(40, 167, 69, 0.9);
+  color: #fff;
 }
 
 .camera-status.error {
-  background: rgba(220, 53, 69, 0.2);
-  color: #dc3545;
+  background: rgba(220, 53, 69, 0.9);
+  color: #fff;
+}
+
+#webcam, #canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* ========== GALLERY STYLES ========== */
 .grid {
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .card {
   position: relative;
   border-radius: var(--border-radius);
-  overflow: visible;
+  overflow: hidden;
   box-shadow: var(--shadow);
   background: #fff;
   transition: var(--transition);
@@ -179,38 +228,125 @@ body {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0,0,0,.15);
+  box-shadow: 0 8px 25px rgba(0,0,0,.2);
 }
 
 .card img {
   width: 100%;
-  height: 250px;
+  height: 220px;
   object-fit: cover;
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
   transition: var(--transition);
+  cursor: pointer;
 }
 
 .card:hover img {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .download-btn {
   position: absolute;
-  bottom: -40px;
-  right: 0;
-  background: var(--primary);
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 120, 255, 0.9);
   color: #fff;
-  padding: 0.7rem 1.2rem;
+  padding: 0.5rem 0.8rem;
   border-radius: 6px;
-  font-size: 0.9rem;
-  text-decoration: none;
-  cursor: pointer;
-  z-index: 10;
+  font-size: 0.8rem;
+  font-weight: 600;
   border: none;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: var(--transition);
+  z-index: 10;
+}
+
+.card:hover .download-btn {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .download-btn:hover {
   background: var(--primary-dark);
+  transform: scale(1.05);
+}
+
+/* ========== FULLSCREEN PREVIEW ========== */
+#fullscreen-preview {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+#preview-image {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border-radius: var(--border-radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.close-preview {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 3rem;
+  color: #fff;
+  cursor: pointer;
+  transition: var(--transition);
+  z-index: 1001;
+}
+
+.close-preview:hover {
+  color: var(--secondary);
+  transform: scale(1.1);
+}
+
+/* ========== GOOGLE ADSENSE CONTAINERS ========== */
+.ad-container {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+  border: 1px solid #e9ecef;
+}
+
+.ad-container.header-ad {
+  margin-bottom: 2rem;
+}
+
+.ad-container.sidebar-ad {
+  position: sticky;
+  top: 20px;
+  margin-left: 1rem;
+}
+
+.ad-container.footer-ad {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.ad-placeholder {
+  display: block;
+  width: 100%;
+  height: 250px;
+  background: #e9ecef;
+  border: 2px dashed #adb5bd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-size: 0.9rem;
+  border-radius: 4px;
 }
 
 /* ========== ERROR STATES ========== */
@@ -233,6 +369,35 @@ body {
   border-radius: 20px;
 }
 
+/* ========== FOOTER ========== */
+footer {
+  background: var(--dark);
+  color: #fff;
+  padding: 3rem 0 2rem;
+  text-align: center;
+}
+
+.footer-links {
+  margin: 1rem 0;
+}
+
+.footer-links a {
+  color: #ccc;
+  text-decoration: none;
+  margin: 0 1rem;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--secondary);
+}
+
+.copyright {
+  margin-top: 1rem;
+  color: #999;
+  font-size: 0.9rem;
+}
+
 /* ========== RESPONSIVE STYLES ========== */
 @media (max-width: 768px) {
   .hero {
@@ -246,21 +411,43 @@ body {
   
   .grid {
     gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
   
   .card img {
-    height: 200px;
+    height: 180px;
   }
   
   .download-btn {
-    bottom: -35px;
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
+    opacity: 1;
+    transform: translateY(0);
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  #fullscreen-preview {
+    padding: 1rem;
+  }
+
+  .close-preview {
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+  }
+
+  .ad-container.sidebar-ad {
+    position: static;
+    margin-left: 0;
+    margin: 1rem 0;
   }
 }
 
 @media (min-width: 992px) {
   .preview-container {
     grid-template-columns: 1fr 320px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
 }
