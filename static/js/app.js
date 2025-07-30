@@ -1,3 +1,4 @@
+
 /***********************************************************************
  * Virtual Background App - Enhanced Version
  ***********************************************************************/
@@ -265,9 +266,9 @@ async function initCamera() {
     const stream = await navigator.mediaDevices.getUserMedia({
       video: { 
         facingMode: 'user', 
-        width: { ideal: 640 },
-        height: { ideal: 480 },
-        frameRate: { ideal: 15 }
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
+        frameRate: { ideal: 30 }
       }
     });
     
@@ -298,28 +299,16 @@ function startSegmentation() {
 
   segmentationActive = true;
   
-  let lastFrameTime = 0;
-  const targetFPS = 15;
-  const frameInterval = 1000 / targetFPS;
-  
-  function processFrame(timestamp) {
+  function processFrame() {
     if (!segmentationActive) return;
     
-    if (timestamp - lastFrameTime > frameInterval) {
-      if (webcam.readyState >= 2) {
-        try {
-          selfieSegmentation.send({ image: webcam });
-        } catch (e) {
-          console.error('Segmentation error:', e);
-        }
-      }
-      lastFrameTime = timestamp;
+    if (webcam.readyState >= 2) {
+      selfieSegmentation.send({ image: webcam }).catch(console.error);
     }
-    
     requestAnimationFrame(processFrame);
   }
   
-  requestAnimationFrame(processFrame);
+  processFrame();
 }
 
 function processSegmentation({ segmentationMask, image }) {
@@ -379,6 +368,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     await changeBackground(bgSelect.value);
   });
   
+  // Search functionality
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', filterGallery);
+  
   // Filter buttons
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -389,6 +382,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
   
   // Camera controls
+  document.getElementById('flipCamera').addEventListener('click', flipCamera);
   document.getElementById('toggleCamera').addEventListener('click', toggleCamera);
   document.getElementById('capturePhoto').addEventListener('click', capturePhoto);
   
@@ -397,6 +391,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function filterGallery() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
   const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
   const cards = document.querySelectorAll('.card');
   
@@ -405,15 +400,21 @@ function filterGallery() {
     if (!img) return;
     
     const name = img.alt.toLowerCase();
+    const matchesSearch = name.includes(searchTerm);
     const matchesFilter = activeFilter === 'all' || name.includes(activeFilter);
     
-    if (matchesFilter) {
+    if (matchesSearch && matchesFilter) {
       card.style.display = 'block';
       card.style.animation = 'fadeIn 0.3s ease';
     } else {
       card.style.display = 'none';
     }
   });
+}
+
+async function flipCamera() {
+  // This would require more complex camera switching logic
+  showNotification('Camera flip feature coming soon!', 'info');
 }
 
 let cameraEnabled = true;
