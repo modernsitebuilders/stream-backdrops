@@ -429,7 +429,7 @@ body {
   transform: translateY(0);
 }
 
-/* ========== SEARCH & FILTER FUNCTIONALITY ========== */
+/* ========== FILTER FUNCTIONALITY ========== */
 .gallery-controls {
   display: flex;
   justify-content: center;
@@ -438,15 +438,11 @@ body {
   flex-wrap: wrap;
 }
 
-.search-box {
-  max-width: 300px;
-  flex: 1;
-}
-
 .filter-buttons {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .filter-btn {

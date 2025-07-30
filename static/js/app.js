@@ -17,6 +17,7 @@ let bgImg = null;
 let currentStream = null;
 let segmentationActive = false;
 let selfieSegmentation = null;
+let isProcessingFrame = false;
 
 // Background images - automatically detects .jpg or .png extensions
 const BACKGROUND_NAMES = [
@@ -290,53 +291,101 @@ async function initCamera() {
 }
 
 function startSegmentation() {
-  selfieSegmentation = new SelfieSegmentation({
-    locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${f}`
-  });
-  
-  selfieSegmentation.setOptions({ modelSelection: 1, selfieMode: true });
-  selfieSegmentation.onResults(processSegmentation);
-
-  segmentationActive = true;
-  
-  function processFrame() {
-    if (!segmentationActive) return;
-    
-    if (webcam.readyState >= 2) {
-      selfieSegmentation.send({ image: webcam }).catch(console.error);
-    }
-    requestAnimationFrame(processFrame);
+  // Wait for the MediaPipe library to load properly
+  if (typeof window.SelfieSegmentation === 'undefined') {
+    console.error('MediaPipe SelfieSegmentation not loaded');
+    cameraStatus.textContent = 'MediaPipe library not loaded';
+    cameraStatus.classList.add('error');
+    return;
   }
-  
-  processFrame();
+
+  try {
+    selfieSegmentation = new window.SelfieSegmentation({
+      locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${file}`;
+      }
+    });
+    
+    selfieSegmentation.setOptions({ 
+      modelSelection: 1, 
+      selfieMode: true 
+    });
+    
+    selfieSegmentation.onResults(processSegmentation);
+    
+    segmentationActive = true;
+    
+    function processFrame() {
+      if (!segmentationActive || isProcessingFrame) return;
+      
+      if (webcam.readyState >= 2 && webcam.videoWidth > 0 && webcam.videoHeight > 0) {
+        isProcessingFrame = true;
+        selfieSegmentation.send({ image: webcam })
+          .catch(error => {
+            console.error('Segmentation error:', error);
+            isProcessingFrame = false;
+          });
+      }
+      
+      if (segmentationActive) {
+        requestAnimationFrame(processFrame);
+      }
+    }
+    
+    // Start processing after a short delay to ensure everything is initialized
+    setTimeout(processFrame, 100);
+    
+  } catch (error) {
+    console.error('Failed to initialize segmentation:', error);
+    cameraStatus.textContent = 'Segmentation initialization failed';
+    cameraStatus.classList.add('error');
+  }
 }
 
 function processSegmentation({ segmentationMask, image }) {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  try {
+    // Ensure canvas dimensions match video
+    if (canvas.width !== image.width || canvas.height !== image.height) {
+      canvas.width = image.width;
+      canvas.height = image.height;
+    }
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Draw background if available
-  if (bgImg && bgImg.complete) {
-    // Scale background to cover canvas
-    const scale = Math.max(canvas.width / bgImg.width, canvas.height / bgImg.height);
-    const x = (canvas.width - bgImg.width * scale) / 2;
-    const y = (canvas.height - bgImg.height * scale) / 2;
-    ctx.drawImage(bgImg, x, y, bgImg.width * scale, bgImg.height * scale);
-  } else {
-    // Default background when none selected
-    ctx.fillStyle = '#333';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Draw background if available
+    if (bgImg && bgImg.complete && bgImg.naturalWidth > 0) {
+      // Scale background to cover canvas
+      const scale = Math.max(canvas.width / bgImg.naturalWidth, canvas.height / bgImg.naturalHeight);
+      const x = (canvas.width - bgImg.naturalWidth * scale) / 2;
+      const y = (canvas.height - bgImg.naturalHeight * scale) / 2;
+      ctx.drawImage(bgImg, x, y, bgImg.naturalWidth * scale, bgImg.naturalHeight * scale);
+    } else {
+      // Default background when none selected
+      ctx.fillStyle = '#333';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Create temporary canvas for segmentation processing
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = canvas.width;
+    tempCanvas.height = canvas.height;
+    const tempCtx = tempCanvas.getContext('2d');
+    
+    // Draw the person (foreground) using segmentation mask
+    tempCtx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    tempCtx.globalCompositeOperation = 'destination-in';
+    tempCtx.drawImage(segmentationMask, 0, 0, canvas.width, canvas.height);
+    
+    // Draw the processed person on top of the background
+    ctx.drawImage(tempCanvas, 0, 0);
+    
+  } catch (error) {
+    console.error('Error in processSegmentation:', error);
+    // Fallback: just draw the original video
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+  } finally {
+    isProcessingFrame = false;
   }
-
-  // Apply segmentation mask
-  ctx.globalCompositeOperation = 'source-out';
-  ctx.drawImage(segmentationMask, 0, 0, canvas.width, canvas.height);
-
-  // Draw camera feed
-  ctx.globalCompositeOperation = 'destination-over';
-  ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-  // Reset composite operation
-  ctx.globalCompositeOperation = 'source-over';
 }
 
 // Event Listeners
@@ -368,9 +417,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await changeBackground(bgSelect.value);
   });
   
-  // Search functionality
-  const searchInput = document.getElementById('searchInput');
-  searchInput.addEventListener('input', filterGallery);
+  // Search functionality removed as requested
   
   // Filter buttons
   document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -391,7 +438,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function filterGallery() {
-  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
   const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
   const cards = document.querySelectorAll('.card');
   
@@ -400,10 +446,9 @@ function filterGallery() {
     if (!img) return;
     
     const name = img.alt.toLowerCase();
-    const matchesSearch = name.includes(searchTerm);
     const matchesFilter = activeFilter === 'all' || name.includes(activeFilter);
     
-    if (matchesSearch && matchesFilter) {
+    if (matchesFilter) {
       card.style.display = 'block';
       card.style.animation = 'fadeIn 0.3s ease';
     } else {
