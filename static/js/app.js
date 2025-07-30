@@ -1,5 +1,5 @@
 /***********************************************************************
- * Virtual Background App - Optimized Version
+ * Virtual Background App - Enhanced Version
  ***********************************************************************/
 const SelfieSegmentation = window.SelfieSegmentation || {};
 const bgSelect = document.getElementById('bgSelect');
@@ -8,12 +8,16 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const cameraStatus = document.getElementById('cameraStatus');
 const galleryGrid = document.getElementById('gallery-grid');
+const fullscreenPreview = document.getElementById('fullscreen-preview');
+const previewImage = document.getElementById('preview-image');
+const closePreview = document.querySelector('.close-preview');
 
 let bgImg = null;
 let currentStream = null;
 let segmentationActive = false;
+let selfieSegmentation = null;
 
-// Background images with verified paths
+// Background images - update extensions to match your files (.png or .jpg)
 const BACKGROUNDS = [
     "/static/backgrounds/01-bright-office-environment.jpg",
     "/static/backgrounds/02-art-gallery-interior.jpg",
@@ -53,9 +57,7 @@ const BACKGROUNDS = [
     "/static/backgrounds/36-office-storage-solutions.jpg",
     "/static/backgrounds/hero.jpg"
 ];
-// Rest of your existing JS code...
-// [Keep all your existing functions below exactly as they were]
-// [buildUI(), loadBackgroundImage(), changeBackground(), etc.]
+
 function formatName(url) {
   if (url === 'none') return 'No Background';
   return url.split('/').pop()
@@ -64,11 +66,31 @@ function formatName(url) {
     .replace(/\b\w/g, c => c.toUpperCase());
 }
 
+function downloadImage(url, filename) {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function openPreview(imageSrc) {
+  previewImage.src = imageSrc;
+  fullscreenPreview.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closePreviewModal() {
+  fullscreenPreview.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
 function buildUI() {
   bgSelect.innerHTML = '';
   galleryGrid.innerHTML = '';
   
-  // Add "No Background" option first
+  // Add "No Background" option first and set as default
   const noneOpt = document.createElement('option');
   noneOpt.value = 'none';
   noneOpt.textContent = 'No Background';
@@ -86,12 +108,32 @@ function buildUI() {
     // Create gallery cards
     const card = document.createElement('div');
     card.className = 'card';
+    
     const img = new Image();
     img.src = url;
     img.alt = name;
     img.loading = 'lazy';
-    img.onerror = () => card.innerHTML = '<div class="error-text">Failed to load</div>';
+    img.style.cursor = 'pointer';
+    
+    // Add click handler for preview
+    img.addEventListener('click', () => openPreview(url));
+    
+    img.onerror = () => {
+      card.innerHTML = '<div class="error-text">Failed to load</div>';
+    };
+    
+    // Create download button
+    const downloadBtn = document.createElement('button');
+    downloadBtn.className = 'download-btn';
+    downloadBtn.innerHTML = '⬇ Download';
+    downloadBtn.onclick = (e) => {
+      e.stopPropagation();
+      const filename = url.split('/').pop();
+      downloadImage(url, filename);
+    };
+    
     card.appendChild(img);
+    card.appendChild(downloadBtn);
     galleryGrid.appendChild(card);
   });
 }
@@ -99,13 +141,6 @@ function buildUI() {
 async function loadBackgroundImage(url) {
   if (url === 'none') {
     bgImg = null;
-    // Force redraw with no background
-    if (segmentationActive) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#333';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(webcam, 0, 0, canvas.width, canvas.height);
-    }
     return;
   }
 
@@ -161,12 +196,12 @@ async function initCamera() {
 }
 
 function startSegmentation() {
-  const selfie = new SelfieSegmentation({
+  selfieSegmentation = new SelfieSegmentation({
     locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1/${f}`
   });
   
-  selfie.setOptions({ modelSelection: 1, selfieMode: true });
-  selfie.onResults(processSegmentation);
+  selfieSegmentation.setOptions({ modelSelection: 1, selfieMode: true });
+  selfieSegmentation.onResults(processSegmentation);
 
   segmentationActive = true;
   
@@ -174,7 +209,7 @@ function startSegmentation() {
     if (!segmentationActive) return;
     
     if (webcam.readyState >= 2) {
-      selfie.send({ image: webcam }).catch(console.error);
+      selfieSegmentation.send({ image: webcam }).catch(console.error);
     }
     requestAnimationFrame(processFrame);
   }
@@ -205,12 +240,31 @@ function processSegmentation({ segmentationMask, image }) {
   // Draw camera feed
   ctx.globalCompositeOperation = 'destination-over';
   ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+  // Reset composite operation
+  ctx.globalCompositeOperation = 'source-over';
 }
+
+// Event Listeners
+closePreview.addEventListener('click', closePreviewModal);
+
+fullscreenPreview.addEventListener('click', (e) => {
+  if (e.target === fullscreenPreview) {
+    closePreviewModal();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closePreviewModal();
+  }
+});
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', async () => {
   buildUI();
   await initCamera();
+  
   // Set "No Background" as default
   bgSelect.value = 'none';
   await loadBackgroundImage('none');
