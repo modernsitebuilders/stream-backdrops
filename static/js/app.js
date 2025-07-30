@@ -17,46 +17,48 @@ let currentStream = null;
 let segmentationActive = false;
 let selfieSegmentation = null;
 
-// Background images - update extensions to match your files (.png or .jpg)
-const BACKGROUNDS = [
-    "/static/backgrounds/01-bright-office-environment.jpg",
-    "/static/backgrounds/02-art-gallery-interior.jpg",
-    "/static/backgrounds/03-contemporary-office-furniture.jpg",
-    "/static/backgrounds/04-chic-home-office-setup.jpg",
-    "/static/backgrounds/05-minimalist-office-design.jpg",
-    "/static/backgrounds/06-organized-home-office.jpg",
-    "/static/backgrounds/07-office-storage-solutions.jpg",
-    "/static/backgrounds/08-corporate-office-space.jpg",
-    "/static/backgrounds/09-professional-office-interior.jpg",
-    "/static/backgrounds/10-collaborative-workspace.jpg",
-    "/static/backgrounds/11-stylish-office-interior.jpg",
-    "/static/backgrounds/12-modern-home-office-design.jpg",
-    "/static/backgrounds/13a-cozy-office-environment.jpg",
-    "/static/backgrounds/14-modern-office-corner.jpg",
-    "/static/backgrounds/14a-workspace-setup.jpg",
-    "/static/backgrounds/15-basement-workspace.jpg",
-    "/static/backgrounds/16-stylish-home-office.jpg",
-    "/static/backgrounds/18-professional-home-office.jpg",
-    "/static/backgrounds/19-contemporary-learning-area.jpg",
-    "/static/backgrounds/20-corporate-office-interior.jpg",
-    "/static/backgrounds/21-office-desk-and-chairs.jpg",
-    "/static/backgrounds/22-serene-indoor-environment.jpg",
-    "/static/backgrounds/23-cozy-workspace.jpg",
-    "/static/backgrounds/24-corporate-office-environment.jpg",
-    "/static/backgrounds/25-office-workspace-design.jpg",
-    "/static/backgrounds/26-simple-office-design.jpg",
-    "/static/backgrounds/27-training-room-interior.jpg",
-    "/static/backgrounds/28-modern-office-interior-shelving.jpg",
-    "/static/backgrounds/29-modern-office-space.jpg",
-    "/static/backgrounds/30-digital-printing-workspace.jpg",
-    "/static/backgrounds/31-presentation-screen-in-conference-room.jpg",
-    "/static/backgrounds/32-collaborative-workspace.jpg",
-    "/static/backgrounds/33-contemporary-office-furniture.jpg",
-    "/static/backgrounds/34-elegant_desk_chair_combination.jpg",
-    "/static/backgrounds/35-creative-work-environment.jpg",
-    "/static/backgrounds/36-office-storage-solutions.jpg",
-    "/static/backgrounds/hero.jpg"
+// Background images - automatically detects .jpg or .png extensions
+const BACKGROUND_NAMES = [
+    "01-bright-office-environment",
+    "02-art-gallery-interior",
+    "03-contemporary-office-furniture",
+    "04-chic-home-office-setup",
+    "05-minimalist-office-design",
+    "06-organized-home-office",
+    "07-office-storage-solutions",
+    "08-corporate-office-space",
+    "09-professional-office-interior",
+    "10-collaborative-workspace",
+    "11-stylish-office-interior",
+    "12-modern-home-office-design",
+    "13a-cozy-office-environment",
+    "14-modern-office-corner",
+    "14a-workspace-setup",
+    "15-basement-workspace",
+    "16-stylish-home-office",
+    "18-professional-home-office",
+    "19-contemporary-learning-area",
+    "20-corporate-office-interior",
+    "21-office-desk-and-chairs",
+    "22-serene-indoor-environment",
+    "23-cozy-workspace",
+    "24-corporate-office-environment",
+    "25-office-workspace-design",
+    "26-simple-office-design",
+    "27-training-room-interior",
+    "28-modern-office-interior-shelving",
+    "29-modern-office-space",
+    "30-digital-printing-workspace",
+    "31-presentation-screen-in-conference-room",
+    "32-collaborative-workspace",
+    "33-contemporary-office-furniture",
+    "34-elegant_desk_chair_combination",
+    "35-creative-work-environment",
+    "36-office-storage-solutions",
+    "hero"
 ];
+
+let BACKGROUNDS = [];
 
 function formatName(url) {
   if (url === 'none') return 'No Background';
@@ -66,13 +68,82 @@ function formatName(url) {
     .replace(/\b\w/g, c => c.toUpperCase());
 }
 
-function downloadImage(url, filename) {
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+// Auto-detect image extensions and build background URLs
+async function detectImageExtensions() {
+  const extensions = ['.jpg', '.jpeg', '.png', '.webp'];
+  
+  for (const name of BACKGROUND_NAMES) {
+    for (const ext of extensions) {
+      const url = `/static/backgrounds/${name}${ext}`;
+      try {
+        const response = await fetch(url, { method: 'HEAD' });
+        if (response.ok) {
+          BACKGROUNDS.push(url);
+          break;
+        }
+      } catch (e) {
+        // Continue to next extension
+      }
+    }
+  }
+  
+  if (BACKGROUNDS.length === 0) {
+    console.warn('No background images found. Please check your file paths.');
+  }
+}
+
+function showLoadingState() {
+  const loadingDiv = document.createElement('div');
+  loadingDiv.className = 'loading-state';
+  loadingDiv.innerHTML = `
+    <div class="loading-spinner"></div>
+    <p>Loading backgrounds...</p>
+  `;
+  galleryGrid.appendChild(loadingDiv);
+}
+
+function removeLoadingState() {
+  const loading = document.querySelector('.loading-state');
+  if (loading) loading.remove();
+}
+
+function addImageToGallery(url, name) {
+  // Create gallery cards
+  const card = document.createElement('div');
+  card.className = 'card';
+  
+  const img = new Image();
+  img.src = url;
+  img.alt = name;
+  img.loading = 'lazy';
+  img.style.cursor = 'pointer';
+  
+  // Add click handler for preview
+  img.addEventListener('click', () => openPreview(url));
+  
+  img.onerror = () => {
+    card.innerHTML = '<div class="error-text">Failed to load</div>';
+  };
+  
+  // Create download button
+  const downloadBtn = document.createElement('button');
+  downloadBtn.className = 'download-btn';
+  downloadBtn.innerHTML = '⬇ Download';
+  downloadBtn.onclick = (e) => {
+    e.stopPropagation();
+    const filename = url.split('/').pop();
+    downloadImage(url, filename);
+  };
+  
+  // Add card info overlay
+  const cardInfo = document.createElement('div');
+  cardInfo.className = 'card-info';
+  cardInfo.innerHTML = `<h3>${name}</h3>`;
+  
+  card.appendChild(img);
+  card.appendChild(downloadBtn);
+  card.appendChild(cardInfo);
+  galleryGrid.appendChild(card);
 }
 
 function openPreview(imageSrc) {
@@ -86,9 +157,56 @@ function closePreviewModal() {
   document.body.style.overflow = '';
 }
 
-function buildUI() {
+function downloadImage(url, filename) {
+  // Analytics tracking (if you have Google Analytics)
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'download', {
+      'event_category': 'background',
+      'event_label': filename,
+      'value': 1
+    });
+  }
+  
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  
+  // Show success message
+  showNotification('Background downloaded successfully!', 'success');
+}
+
+function showNotification(message, type = 'info') {
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.textContent = message;
+  
+  document.body.appendChild(notification);
+  
+  // Trigger animation
+  setTimeout(() => notification.classList.add('show'), 100);
+  
+  // Remove after 3 seconds
+  setTimeout(() => {
+    notification.classList.remove('show');
+    setTimeout(() => document.body.removeChild(notification), 300);
+  }, 3000);
+}
+
+async function buildUI() {
   bgSelect.innerHTML = '';
   galleryGrid.innerHTML = '';
+  
+  // Show loading state
+  showLoadingState();
+  
+  // Detect available images
+  await detectImageExtensions();
+  
+  // Remove loading state
+  removeLoadingState();
   
   // Add "No Background" option first and set as default
   const noneOpt = document.createElement('option');
@@ -105,37 +223,12 @@ function buildUI() {
     opt.textContent = name;
     bgSelect.appendChild(opt);
 
-    // Create gallery cards
-    const card = document.createElement('div');
-    card.className = 'card';
-    
-    const img = new Image();
-    img.src = url;
-    img.alt = name;
-    img.loading = 'lazy';
-    img.style.cursor = 'pointer';
-    
-    // Add click handler for preview
-    img.addEventListener('click', () => openPreview(url));
-    
-    img.onerror = () => {
-      card.innerHTML = '<div class="error-text">Failed to load</div>';
-    };
-    
-    // Create download button
-    const downloadBtn = document.createElement('button');
-    downloadBtn.className = 'download-btn';
-    downloadBtn.innerHTML = '⬇ Download';
-    downloadBtn.onclick = (e) => {
-      e.stopPropagation();
-      const filename = url.split('/').pop();
-      downloadImage(url, filename);
-    };
-    
-    card.appendChild(img);
-    card.appendChild(downloadBtn);
-    galleryGrid.appendChild(card);
+    addImageToGallery(url, name);
   });
+  
+  if (BACKGROUNDS.length === 0) {
+    galleryGrid.innerHTML = '<div class="error-text">No background images found. Please check your backgrounds folder.</div>';
+  }
 }
 
 async function loadBackgroundImage(url) {
@@ -262,17 +355,128 @@ document.addEventListener('keydown', (e) => {
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', async () => {
-  buildUI();
+  await buildUI();
   await initCamera();
   
   // Set "No Background" as default
   bgSelect.value = 'none';
   await loadBackgroundImage('none');
   
+  // Event listeners
   bgSelect.addEventListener('change', async () => {
     await changeBackground(bgSelect.value);
   });
+  
+  // Search functionality
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', filterGallery);
+  
+  // Filter buttons
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      filterGallery();
+    });
+  });
+  
+  // Camera controls
+  document.getElementById('flipCamera').addEventListener('click', flipCamera);
+  document.getElementById('toggleCamera').addEventListener('click', toggleCamera);
+  document.getElementById('capturePhoto').addEventListener('click', capturePhoto);
+  
+  // Performance monitoring
+  startPerformanceMonitoring();
 });
+
+function filterGallery() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+  const cards = document.querySelectorAll('.card');
+  
+  cards.forEach(card => {
+    const img = card.querySelector('img');
+    if (!img) return;
+    
+    const name = img.alt.toLowerCase();
+    const matchesSearch = name.includes(searchTerm);
+    const matchesFilter = activeFilter === 'all' || name.includes(activeFilter);
+    
+    if (matchesSearch && matchesFilter) {
+      card.style.display = 'block';
+      card.style.animation = 'fadeIn 0.3s ease';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+async function flipCamera() {
+  // This would require more complex camera switching logic
+  showNotification('Camera flip feature coming soon!', 'info');
+}
+
+let cameraEnabled = true;
+async function toggleCamera() {
+  if (cameraEnabled) {
+    if (currentStream) {
+      currentStream.getTracks().forEach(track => track.stop());
+    }
+    webcam.srcObject = null;
+    segmentationActive = false;
+    cameraStatus.textContent = 'Camera disabled';
+    cameraStatus.classList.remove('active');
+    cameraEnabled = false;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#333';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#fff';
+    ctx.font = '20px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('Camera Disabled', canvas.width/2, canvas.height/2);
+  } else {
+    await initCamera();
+    cameraEnabled = true;
+  }
+}
+
+function capturePhoto() {
+  const link = document.createElement('a');
+  link.download = `backdrop-photo-${Date.now()}.png`;
+  link.href = canvas.toDataURL();
+  link.click();
+  showNotification('Photo captured!', 'success');
+}
+
+let frameCount = 0;
+let lastTime = performance.now();
+
+function startPerformanceMonitoring() {
+  const performanceIndicator = document.getElementById('performanceIndicator');
+  
+  function updateFPS() {
+    frameCount++;
+    const currentTime = performance.now();
+    
+    if (currentTime - lastTime >= 1000) {
+      const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
+      
+      performanceIndicator.textContent = `FPS: ${fps}`;
+      performanceIndicator.className = `performance-indicator ${
+        fps >= 25 ? 'fps-good' : fps >= 15 ? 'fps-medium' : 'fps-poor'
+      }`;
+      
+      frameCount = 0;
+      lastTime = currentTime;
+    }
+    
+    if (segmentationActive) {
+      requestAnimationFrame(updateFPS);
+    }
+  }
+  
+  updateFPS();
+}
 
 // Cleanup
 window.addEventListener('beforeunload', () => {
