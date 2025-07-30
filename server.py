@@ -1,6 +1,6 @@
 from flask import Flask, render_template, send_from_directory
 import os
-
+from flask import jsonify
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
 # Debug endpoints
@@ -34,13 +34,16 @@ def static_files(path):
     except Exception as e:
         return f"Static error: {str(e)}", 404
 
-# Vercel handler
 def vercel_handler(request):
     with app.app_context():
+        response = app.response_class()
         try:
-            return app.full_dispatch_request(request)
+            req_data = request.get_json()
+            with app.request_context(request.environ):
+                response = app.full_dispatch_request()
         except Exception as e:
-            return f"Handler error: {str(e)}", 500
+            response = jsonify({"error": str(e)}), 500
+        return response
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
