@@ -1,0 +1,4 @@
+Flask==3.0.2
+Werkzeug==3.0.1
+opencv-python-headless==4.9.0.80  # If using computer vision
+numpy==1.26.4  # Often required with OpenCV
