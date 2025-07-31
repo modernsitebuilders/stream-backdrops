@@ -1,0 +1,176 @@
+import Head from 'next/head';
+import Link from 'next/link';
+
+function AdUnit({ slot, style = {} }) {
+  return (
+    <div style={{textAlign: 'center', margin: '2rem 0', ...style}}>
+      <ins 
+        className="adsbygoogle"
+        style={{display: 'block'}}
+        data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+        data-ad-slot={slot}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+    </div>
+  );
+}
+
+export default function Home() {
+  const categories = [
+    {
+      name: 'Home Offices',
+      slug: 'home-offices',
+      description: 'Professional home office backgrounds perfect for remote work',
+      count: '28',
+      image: 'scandinavian-home-office-white-oak-background.webp'
+    },
+    {
+      name: 'Executive Offices',
+      slug: 'executive-offices', 
+      description: 'Luxury executive office backgrounds for leadership calls',
+      count: '24',
+      image: 'classic-executive-office-mahogany-background.webp'
+    },
+    {
+      name: 'Conference Rooms',
+      slug: 'conference-rooms',
+      description: 'Professional meeting room backgrounds for team calls',
+      count: '20',
+      image: 'contemporary-glass-conference-room-white-table-background.webp'
+    },
+    {
+      name: 'Open Offices',
+      slug: 'open-offices',
+      description: 'Modern open workspace backgrounds for collaborative calls',
+      count: '20',
+      image: 'tech-open-office-sit-stand-desks-background.webp'
+    },
+    {
+      name: 'Lounges',
+      slug: 'lounges',
+      description: 'Comfortable lounge backgrounds for casual meetings',
+      count: '20',
+      image: 'contemporary-office-lounge-comfortable-seating-background.webp'
+    }
+  ];
+
+  return (
+    <>
+      <Head>
+        <title>StreamBackdrops - Professional Virtual Backgrounds for Video Calls</title>
+        <meta name="description" content="Download high-quality professional virtual backgrounds for Zoom, Teams, and video calls. Perfect for remote work, home offices, executive meetings, and professional presentations." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+
+      <div>
+        <header>
+          <div className="container">
+            <h1>Stream<span className="logo-blue">Backdrops</span></h1>
+            <p className="subtitle">Professional virtual backgrounds for your video calls</p>
+            <p className="description">112 high-quality backgrounds • Free downloads • Perfect for Zoom, Teams & more</p>
+          </div>
+        </header>
+
+        <main className="container">
+          <div style={{textAlign: 'center', marginBottom: '3rem'}}>
+            <h2 style={{fontSize: '2.5rem', marginBottom: '1rem', color: '#111827'}}>Choose Your Professional Setting</h2>
+            <p style={{fontSize: '1.2rem', color: '#6b7280', maxWidth: '600px', margin: '0 auto'}}>
+              Transform your video calls with high-quality virtual backgrounds designed for working professionals
+            </p>
+          </div>
+          
+          <div className="category-grid">
+            {categories.map((category) => (
+              <Link key={category.slug} href={`/category/${category.slug}`} className="category-card">
+                <div>
+                  <div style={{position: 'relative', height: '200px', overflow: 'hidden', borderRadius: '1rem 1rem 0 0'}}>
+                    <img 
+                      src={`/images/${category.image}`}
+                      alt={category.description}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover'
+                      }}
+                    />
+                    <div style={{
+                      position: 'absolute',
+                      top: '1rem',
+                      right: '1rem',
+                      background: 'rgba(255,255,255,0.9)',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '20px',
+                      fontSize: '0.9rem',
+                      fontWeight: '600'
+                    }}>
+                      {category.count} backgrounds
+                    </div>
+                  </div>
+                  
+                  <div style={{padding: '1.5rem'}}>
+                    <h3 style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', marginBottom: '0.5rem'}}>
+                      {category.name}
+                    </h3>
+                    <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                      {category.description}
+                    </p>
+                    <div style={{color: '#2563eb', fontWeight: '600', display: 'flex', alignItems: 'center'}}>
+                      <span>Browse collection</span>
+                      <span style={{marginLeft: '0.5rem'}}>→</span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </main>
+
+        <section className="features">
+          <div className="container">
+            <div style={{textAlign: 'center', marginBottom: '3rem'}}>
+              <h2 style={{fontSize: '2rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem'}}>
+                Why Choose StreamBackdrops?
+              </h2>
+            </div>
+            <div className="features-grid">
+              <div className="feature">
+                <div className="feature-icon">
+                  <span style={{fontSize: '2rem'}}>🖼️</span>
+                </div>
+                <h3>High Quality</h3>
+                <p>1920x1080 resolution, optimized for all video platforms</p>
+              </div>
+              <div className="feature">
+                <div className="feature-icon">
+                  <span style={{fontSize: '2rem'}}>💼</span>
+                </div>
+                <h3>Professional</h3>
+                <p>Designed for business meetings and professional calls</p>
+              </div>
+              <div className="feature">
+                <div className="feature-icon">
+                  <span style={{fontSize: '2rem'}}>⬇️</span>
+                </div>
+                <h3>Free Download</h3>
+                <p>All backgrounds are completely free to download and use</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer>
+          <div className="container">
+            <h3>StreamBackdrops</h3>
+            <p style={{color: '#9ca3af', marginBottom: '1rem'}}>
+              Professional virtual backgrounds for the modern workplace
+            </p>
+            <p style={{color: '#6b7280', fontSize: '0.9rem'}}>
+              © 2025 StreamBackdrops. All backgrounds are free for personal and commercial use.
+            </p>
+          </div>
+        </footer>
+      </div>
+    </>
+  );
+}
