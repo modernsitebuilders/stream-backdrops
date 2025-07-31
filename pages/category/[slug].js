@@ -52,64 +52,18 @@ export default function CategoryPage() {
     });
   }, [categoryImages, searchTerm]);
 
-  const handleDownload = async (image) => {
-  try {
-    // Fetch the WebP image
-    const response = await fetch(`/images/${image.filename}`);
-    const blob = await response.blob();
-    
-    // Create an image element to load the WebP
-    const img = new Image();
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    
-    // Promise to handle image loading
-    const loadImage = new Promise((resolve, reject) => {
-      img.onload = () => {
-        // Set canvas size to match image
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        
-        // Draw image to canvas
-        ctx.drawImage(img, 0, 0);
-        
-        // Convert canvas to PNG blob
-        canvas.toBlob((pngBlob) => {
-          if (pngBlob) {
-            // Create download link
-            const url = URL.createObjectURL(pngBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = image.filename.replace('.webp', '.png');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            resolve();
-          } else {
-            reject(new Error('Failed to convert to PNG'));
-          }
-        }, 'image/png', 1.0);
-      };
-      
-      img.onerror = () => reject(new Error('Failed to load image'));
-    });
-    
-    // Load the image
-    img.src = URL.createObjectURL(blob);
-    await loadImage;
-    
-  } catch (error) {
-    console.error('PNG conversion failed:', error);
-    // Fallback to direct download
+  const handleDownload = (image) => {
     const link = document.createElement('a');
     link.href = `/images/${image.filename}`;
-    link.download = image.filename;
+    link.download = image.filename.replace('.webp', '.png');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  if (!slug || !categoryInfo[slug]) {
+    return <div>Loading...</div>;
   }
-};
 
   const category = categoryInfo[slug];
 
