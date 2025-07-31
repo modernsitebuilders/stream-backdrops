@@ -1,15 +1,28 @@
+// Update your pages/api/metadata.js file:
+
 import fs from 'fs';
 import path from 'path';
 
 export default function handler(req, res) {
   try {
-    // Your metadata file is at the root level in data/image-metadata.json
-    const filePath = path.join(process.cwd(), 'data', 'image-metadata.json');
+    // Try both locations - public folder and root data folder
+    const possiblePaths = [
+      path.join(process.cwd(), 'public', 'data', 'image-metadata.json'),
+      path.join(process.cwd(), 'data', 'image-metadata.json')
+    ];
     
-    if (!fs.existsSync(filePath)) {
+    let filePath = null;
+    for (const testPath of possiblePaths) {
+      if (fs.existsSync(testPath)) {
+        filePath = testPath;
+        break;
+      }
+    }
+    
+    if (!filePath) {
       return res.status(404).json({ 
         error: 'Metadata file not found',
-        expectedPath: filePath
+        searchedPaths: possiblePaths 
       });
     }
 
@@ -19,7 +32,7 @@ export default function handler(req, res) {
     console.log(`Loaded ${Object.keys(data).length} images from metadata`);
     
     res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Cache-Control', 'public, max-age=3600'); // Cache for 1 hour
+    res.setHeader('Cache-Control', 'public, max-age=3600');
     res.status(200).json(data);
   } catch (error) {
     console.error('Error loading metadata:', error);
