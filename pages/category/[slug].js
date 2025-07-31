@@ -1,8 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import imageMetadata from '../../data/image-metadata.json';
 
 export default function CategoryPage() {
   const router = useRouter();
@@ -10,6 +9,24 @@ export default function CategoryPage() {
   
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
+  const [imageMetadata, setImageMetadata] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  // Load metadata on client side
+  useEffect(() => {
+    async function loadMetadata() {
+      try {
+        const response = await fetch('/data/image-metadata.json');
+        const data = await response.json();
+        setImageMetadata(data);
+      } catch (error) {
+        console.error('Failed to load metadata:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadMetadata();
+  }, []);
 
   const categoryInfo = {
     'home-offices': {
@@ -35,34 +52,97 @@ export default function CategoryPage() {
   };
 
   const categoryImages = useMemo(() => {
-    if (!slug || !imageMetadata) return [];
+    if (!slug || !imageMetadata || loading) return [];
     
     return Object.entries(imageMetadata)
-      .filter(([_, data]) => data.category === slug)
+      .filter(([_, data]) => data && data.category === slug)
       .map(([key, data]) => ({ key, ...data }));
-  }, [slug]);
+  }, [slug, imageMetadata, loading]);
 
   const filteredImages = useMemo(() => {
     return categoryImages.filter(image => {
       const matchesSearch = searchTerm === '' || 
-        image.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        image.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm.toLowerCase()));
+        image.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (image.keywords && image.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm.toLowerCase())));
       
       return matchesSearch;
     });
   }, [categoryImages, searchTerm]);
 
-  const handleDownload = (image) => {
-    const link = document.createElement('a');
-    link.href = `/images/${image.filename}`;
-    link.download = image.filename.replace('.webp', '.png');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleDownload = async (image) => {
+    try {
+      const response = await fetch(`/images/${image.filename}`);
+      const blob = await response.blob();
+      
+      const img = new Image();
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      const loadImage = new Promise((resolve, reject) => {
+        img.onload = () => {
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          ctx.drawImage(img, 0, 0);
+          
+          canvas.toBlob((pngBlob) => {
+            if (pngBlob) {
+              const url = URL.createObjectURL(pngBlob);
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = image.filename.replace('.webp', '.png');
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              URL.revokeObjectURL(url);
+              resolve();
+            } else {
+              reject(new Error('Failed to convert to PNG'));
+            }
+          }, 'image/png', 1.0);
+        };
+        
+        img.onerror = () => reject(new Error('Failed to load image'));
+      });
+      
+      img.src = URL.createObjectURL(blob);
+      await loadImage;
+      
+    } catch (error) {
+      console.error('PNG conversion failed:', error);
+      const link = document.createElement('a');
+      link.href = `/images/${image.filename}`;
+      link.download = image.filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   };
 
-  if (!slug || !categoryInfo[slug]) {
-    return <div>Loading...</div>;
+  // Show loading while router and data load
+  if (!router.isReady || loading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <div>Loading...</div>
+      </div>
+    );
+  }
+
+  // Show 404 if invalid slug
+  if (!categoryInfo[slug]) {
+    return (
+      <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
+        <h1>Category Not Found</h1>
+        <p>The category you're looking for doesn't exist.</p>
+        <Link href="/" style={{color: '#2563eb', textDecoration: 'none'}}>
+          ← Back to Home
+        </Link>
+      </div>
+    );
   }
 
   const category = categoryInfo[slug];
@@ -158,7 +238,7 @@ export default function CategoryPage() {
                     <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
                       <img
                         src={`/images/${image.filename}`}
-                        alt={image.alt}
+                        alt={image.alt || 'Virtual background'}
                         style={{
                           width: '100%',
                           height: '100%',
@@ -216,20 +296,20 @@ export default function CategoryPage() {
                             cursor: 'pointer'
                           }}
                         >
-                          Download
+                          Download PNG
                         </button>
                       </div>
                     </div>
 
                     <div style={{padding: '1rem'}}>
                       <h3 style={{fontWeight: '600', color: '#111827', marginBottom: '0.5rem', fontSize: '1rem'}}>
-                        {image.title}
+                        {image.title || 'Virtual Background'}
                       </h3>
                       <p style={{color: '#6b7280', fontSize: '0.9rem', marginBottom: '0.75rem'}}>
-                        {image.description}
+                        {image.description || 'Professional virtual background'}
                       </p>
                       <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem'}}>
-                        {image.keywords.slice(0, 3).map(keyword => (
+                        {(image.keywords || []).slice(0, 3).map(keyword => (
                           <span key={keyword} style={{
                             background: '#f3f4f6',
                             color: '#374151',
@@ -280,7 +360,7 @@ export default function CategoryPage() {
                 borderBottom: '1px solid #e5e7eb'
               }}>
                 <h3 style={{fontSize: '1.1rem', fontWeight: '600', color: '#111827', margin: 0}}>
-                  {selectedImage.title}
+                  {selectedImage.title || 'Virtual Background'}
                 </h3>
                 <button
                   onClick={() => setSelectedImage(null)}
@@ -301,7 +381,7 @@ export default function CategoryPage() {
                 <div style={{marginBottom: '1rem'}}>
                   <img
                     src={`/images/${selectedImage.filename}`}
-                    alt={selectedImage.alt}
+                    alt={selectedImage.alt || 'Virtual background'}
                     style={{
                       width: '100%',
                       height: 'auto',
@@ -321,10 +401,10 @@ export default function CategoryPage() {
                 }}>
                   <div style={{flex: 1}}>
                     <p style={{color: '#6b7280', marginBottom: '0.5rem', fontSize: '0.9rem'}}>
-                      {selectedImage.description}
+                      {selectedImage.description || 'Professional virtual background'}
                     </p>
                     <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem'}}>
-                      {selectedImage.keywords.map(keyword => (
+                      {(selectedImage.keywords || []).map(keyword => (
                         <span key={keyword} style={{
                           background: '#f3f4f6',
                           color: '#374151',
@@ -350,7 +430,7 @@ export default function CategoryPage() {
                       cursor: 'pointer'
                     }}
                   >
-                    Download
+                    Download PNG
                   </button>
                 </div>
               </div>
