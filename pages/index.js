@@ -22,35 +22,30 @@ export default function Home() {
       name: 'Home Offices',
       slug: 'home-offices',
       description: 'Professional home office backgrounds perfect for remote work',
-      count: '28',
       image: 'scandinavian-home-office-white-oak-background.webp'
     },
     {
       name: 'Executive Offices',
       slug: 'executive-offices', 
       description: 'Luxury executive office backgrounds for leadership calls',
-      count: '24',
       image: 'classic-executive-office-mahogany-background.webp'
     },
     {
       name: 'Conference Rooms',
       slug: 'conference-rooms',
       description: 'Professional meeting room backgrounds for team calls',
-      count: '20',
       image: 'contemporary-glass-conference-room-white-table-background.webp'
     },
     {
       name: 'Open Offices',
       slug: 'open-offices',
       description: 'Modern open workspace backgrounds for collaborative calls',
-      count: '20',
       image: 'tech-open-office-sit-stand-desks-background.webp'
     },
     {
       name: 'Lounges',
       slug: 'lounges',
       description: 'Comfortable lounge backgrounds for casual meetings',
-      count: '20',
       image: 'contemporary-office-lounge-comfortable-seating-background.webp'
     }
   ];
@@ -68,7 +63,16 @@ export default function Home() {
           <div className="container">
             <h1>Stream<span className="logo-blue">Backdrops</span></h1>
             <p className="subtitle">Professional virtual backgrounds for your video calls</p>
-            <p className="description">112 high-quality backgrounds • Free downloads • Perfect for Zoom, Teams & more</p>
+            <p className="description">
+              High-quality backgrounds • <span style={{
+                background: '#16a34a',
+                color: 'white',
+                padding: '0.25rem 0.75rem',
+                borderRadius: '1rem',
+                fontWeight: 'bold',
+                fontSize: '1rem'
+              }}>FREE</span> downloads • Perfect for Zoom, Teams & more
+            </p>
           </div>
         </header>
 
@@ -94,18 +98,6 @@ export default function Home() {
                         objectFit: 'cover'
                       }}
                     />
-                    <div style={{
-                      position: 'absolute',
-                      top: '1rem',
-                      right: '1rem',
-                      background: 'rgba(255,255,255,0.9)',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '20px',
-                      fontSize: '0.9rem',
-                      fontWeight: '600'
-                    }}>
-                      {category.count} backgrounds
-                    </div>
                   </div>
                   
                   <div style={{padding: '1.5rem'}}>

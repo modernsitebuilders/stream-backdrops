@@ -7,35 +7,32 @@ export default function CategoryPage() {
   const router = useRouter();
   const { slug } = router.query;
   
-  const [searchTerm, setSearchTerm] = useState('');
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageMetadata, setImageMetadata] = useState({});
   const [loading, setLoading] = useState(true);
 
   // Load metadata on client side
   useEffect(() => {
-  async function loadMetadata() {
-    try {
-      // Use the API route we just created
-      const response = await fetch('/api/metadata');
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+    async function loadMetadata() {
+      try {
+        const response = await fetch('/api/metadata');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Successfully loaded metadata:', Object.keys(data).length, 'images');
+        setImageMetadata(data);
+      } catch (error) {
+        console.error('Failed to load metadata:', error);
+        setImageMetadata({});
+      } finally {
+        setLoading(false);
       }
-      
-      const data = await response.json();
-      console.log('Successfully loaded metadata:', Object.keys(data).length, 'images');
-      setImageMetadata(data);
-    } catch (error) {
-      console.error('Failed to load metadata:', error);
-      // Set empty metadata to prevent infinite loading
-      setImageMetadata({});
-    } finally {
-      setLoading(false);
     }
-  }
-  loadMetadata();
-}, []);
+    loadMetadata();
+  }, []);
 
   const categoryInfo = {
     'home-offices': {
@@ -67,16 +64,6 @@ export default function CategoryPage() {
       .filter(([_, data]) => data && data.category === slug)
       .map(([key, data]) => ({ key, ...data }));
   }, [slug, imageMetadata, loading]);
-
-  const filteredImages = useMemo(() => {
-    return categoryImages.filter(image => {
-      const matchesSearch = searchTerm === '' || 
-        image.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (image.keywords && image.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm.toLowerCase())));
-      
-      return matchesSearch;
-    });
-  }, [categoryImages, searchTerm]);
 
   const handleDownload = async (image) => {
     try {
@@ -176,10 +163,13 @@ export default function CategoryPage() {
                     key={key}
                     href={`/category/${key}`}
                     style={{
-                      fontSize: '0.9rem',
-                      fontWeight: '500',
+                      fontSize: '1.1rem',
+                      fontWeight: '600',
                       color: key === slug ? '#2563eb' : '#6b7280',
-                      textDecoration: 'none'
+                      textDecoration: 'none',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '0.5rem',
+                      transition: 'all 0.2s ease'
                     }}
                   >
                     {info.name}
@@ -199,48 +189,28 @@ export default function CategoryPage() {
               {category.description}
             </p>
             <p style={{opacity: 0.9}}>
-              {filteredImages.length} professional backgrounds available
+              Professional backgrounds available
             </p>
-          </div>
-        </section>
-
-        <section style={{padding: '2rem 0', background: 'white', borderBottom: '1px solid #e5e7eb'}}>
-          <div className="container">
-            <div style={{maxWidth: '400px'}}>
-              <input
-                type="text"
-                placeholder="Search backgrounds..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                style={{
-                  width: '100%',
-                  padding: '0.75rem 1rem',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '0.5rem',
-                  fontSize: '1rem'
-                }}
-              />
-            </div>
           </div>
         </section>
 
         <section style={{padding: '3rem 0'}}>
           <div className="container">
-            {filteredImages.length === 0 ? (
+            {categoryImages.length === 0 ? (
               <div style={{textAlign: 'center', padding: '3rem 0'}}>
-                <p style={{color: '#6b7280', fontSize: '1.1rem'}}>No backgrounds found matching your criteria.</p>
+                <p style={{color: '#6b7280', fontSize: '1.1rem'}}>No backgrounds found.</p>
               </div>
             ) : (
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                gap: '1.5rem'
+                gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+                gap: '2rem'
               }}>
-                {filteredImages.map((image) => (
+                {categoryImages.map((image) => (
                   <div key={image.key} style={{
                     background: 'white',
-                    borderRadius: '0.5rem',
-                    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                    borderRadius: '0.75rem',
+                    boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
                     overflow: 'hidden',
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease'
                   }}>
@@ -305,16 +275,16 @@ export default function CategoryPage() {
                             cursor: 'pointer'
                           }}
                         >
-                          Download PNG
+                          Download
                         </button>
                       </div>
                     </div>
 
-                    <div style={{padding: '1rem'}}>
-                      <h3 style={{fontWeight: '600', color: '#111827', marginBottom: '0.5rem', fontSize: '1rem'}}>
+                    <div style={{padding: '1.5rem'}}>
+                      <h3 style={{fontWeight: '600', color: '#111827', marginBottom: '0.5rem', fontSize: '1.1rem'}}>
                         {image.title || 'Virtual Background'}
                       </h3>
-                      <p style={{color: '#6b7280', fontSize: '0.9rem', marginBottom: '0.75rem'}}>
+                      <p style={{color: '#6b7280', fontSize: '0.95rem', marginBottom: '0.75rem'}}>
                         {image.description || 'Professional virtual background'}
                       </p>
                       <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem'}}>
@@ -439,7 +409,7 @@ export default function CategoryPage() {
                       cursor: 'pointer'
                     }}
                   >
-                    Download PNG
+                    Download
                   </button>
                 </div>
               </div>
