@@ -131,7 +131,7 @@ export default function Home() {
                   <span style={{fontSize: '2rem'}}>🖼️</span>
                 </div>
                 <h3>High Quality</h3>
-                <p>1920x1080 resolution, optimized for all video platforms</p>
+                <p>Optimized for all video platforms and calling apps</p>
               </div>
               <div className="feature">
                 <div className="feature-icon">
