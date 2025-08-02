@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Footer from '../../components/Footer';
 
 export default function CategoryPage() {
   const router = useRouter();
@@ -51,9 +52,18 @@ export default function CategoryPage() {
       name: 'Open Offices',
       description: 'Modern open workspace backgrounds for collaborative video calls'
     },
-    'lounges': {
-      name: 'Lounges',
-      description: 'Comfortable lounge backgrounds for casual meetings and calls'
+    'lobbies': {
+      name: 'Lobbies',
+      description: 'Professional lobby backgrounds for client meetings and business calls'
+    },
+    'private-offices': {
+      name: 'Private Offices',
+      description: 'Specialized private office backgrounds for professional consultations and meetings'
+    },
+    'premium-4k': {
+      name: 'Premium 4K',
+      description: 'Ultra high-quality 4K virtual backgrounds with premium materials and luxury details',
+      isPremium: true
     }
   };
 
@@ -65,7 +75,19 @@ export default function CategoryPage() {
       .map(([key, data]) => ({ key, ...data }));
   }, [slug, imageMetadata, loading]);
 
+  const handlePremiumPurchase = (image) => {
+    // Redirect to Gumroad product
+    const gumroadUrl = `https://gumroad.com/l/${image.gumroadPermalink}`;
+    window.open(gumroadUrl, '_blank');
+  };
+
   const handleDownload = async (image) => {
+    if (image.isPremium) {
+      handlePremiumPurchase(image);
+      return;
+    }
+
+    // Free download logic
     try {
       const response = await fetch(`/images/${image.filename}`);
       const blob = await response.blob();
@@ -169,10 +191,24 @@ export default function CategoryPage() {
                       textDecoration: 'none',
                       padding: '0.5rem 1rem',
                       borderRadius: '0.5rem',
-                      transition: 'all 0.2s ease'
+                      transition: 'all 0.2s ease',
+                      position: 'relative'
                     }}
                   >
                     {info.name}
+                    {info.isPremium && (
+                      <span style={{
+                        background: '#fbbf24',
+                        color: '#92400e',
+                        fontSize: '0.75rem',
+                        fontWeight: 'bold',
+                        padding: '0.125rem 0.375rem',
+                        borderRadius: '0.75rem',
+                        marginLeft: '0.5rem'
+                      }}>
+                        PREMIUM
+                      </span>
+                    )}
                   </Link>
                 ))}
               </nav>
@@ -180,17 +216,40 @@ export default function CategoryPage() {
           </div>
         </header>
 
-        <section style={{background: '#2563eb', color: 'white', padding: '4rem 0', textAlign: 'center'}}>
+        <section style={{
+          background: category.isPremium ? 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' : '#2563eb', 
+          color: 'white', 
+          padding: '4rem 0', 
+          textAlign: 'center'
+        }}>
           <div className="container">
             <h1 style={{fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem', color: 'white'}}>
               {category.name}
+              {category.isPremium && (
+                <span style={{
+                  background: 'rgba(255,255,255,0.2)',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '1rem',
+                  fontSize: '1rem',
+                  marginLeft: '1rem',
+                  display: 'inline-block'
+                }}>
+                  4K QUALITY
+                </span>
+              )}
             </h1>
             <p style={{fontSize: '1.2rem', marginBottom: '0.5rem'}}>
               {category.description}
             </p>
-            <p style={{opacity: 0.9}}>
-              Professional backgrounds available
-            </p>
+            {category.isPremium ? (
+              <p style={{opacity: 0.9, fontSize: '1.1rem'}}>
+                Ultra high-definition backgrounds • Professional quality • Starting at $5.99
+              </p>
+            ) : (
+              <p style={{opacity: 0.9}}>
+                Professional backgrounds available
+              </p>
+            )}
           </div>
         </section>
 
@@ -212,8 +271,26 @@ export default function CategoryPage() {
                     borderRadius: '0.75rem',
                     boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
                     overflow: 'hidden',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                    position: 'relative'
                   }}>
+                    {image.isPremium && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '1rem',
+                        right: '1rem',
+                        background: 'linear-gradient(45deg, #fbbf24, #f59e0b)',
+                        color: '#92400e',
+                        padding: '0.375rem 0.75rem',
+                        borderRadius: '1rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 'bold',
+                        zIndex: 10
+                      }}>
+                        PREMIUM 4K
+                      </div>
+                    )}
+                    
                     <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
                       <img
                         src={`/images/${image.filename}`}
@@ -222,9 +299,15 @@ export default function CategoryPage() {
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          cursor: 'pointer'
+                          cursor: 'pointer',
+                          // Anti-theft protection
+                          userSelect: 'none',
+                          WebkitUserDrag: 'none',
+                          userDrag: 'none'
                         }}
                         onClick={() => setSelectedImage(image)}
+                        onContextMenu={(e) => e.preventDefault()} // Disable right-click
+                        className="premium-image"
                       />
                       
                       <div style={{
@@ -265,8 +348,8 @@ export default function CategoryPage() {
                             handleDownload(image);
                           }}
                           style={{
-                            background: '#2563eb',
-                            color: 'white',
+                            background: image.isPremium ? '#fbbf24' : '#2563eb',
+                            color: image.isPremium ? '#92400e' : 'white',
                             padding: '0.75rem 1.5rem',
                             border: 'none',
                             borderRadius: '0.5rem',
@@ -275,15 +358,29 @@ export default function CategoryPage() {
                             cursor: 'pointer'
                           }}
                         >
-                          Download
+                          {image.isPremium ? `Buy $${image.price || '5.99'}` : 'Download'}
                         </button>
                       </div>
                     </div>
 
                     <div style={{padding: '1.5rem'}}>
-                      <h3 style={{fontWeight: '600', color: '#111827', marginBottom: '0.5rem', fontSize: '1.1rem'}}>
-                        {image.title || 'Virtual Background'}
-                      </h3>
+                      <div style={{display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.5rem'}}>
+                        <h3 style={{fontWeight: '600', color: '#111827', fontSize: '1.1rem', flex: 1}}>
+                          {image.title || 'Virtual Background'}
+                        </h3>
+                        {image.resolution && (
+                          <span style={{
+                            background: '#f3f4f6',
+                            color: '#374151',
+                            padding: '0.25rem 0.5rem',
+                            borderRadius: '0.25rem',
+                            fontSize: '0.75rem',
+                            fontWeight: '600'
+                          }}>
+                            {image.resolution}
+                          </span>
+                        )}
+                      </div>
                       <p style={{color: '#6b7280', fontSize: '0.95rem', marginBottom: '0.75rem'}}>
                         {image.description || 'Professional virtual background'}
                       </p>
@@ -338,9 +435,23 @@ export default function CategoryPage() {
                 padding: '1rem',
                 borderBottom: '1px solid #e5e7eb'
               }}>
-                <h3 style={{fontSize: '1.1rem', fontWeight: '600', color: '#111827', margin: 0}}>
-                  {selectedImage.title || 'Virtual Background'}
-                </h3>
+                <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+                  <h3 style={{fontSize: '1.1rem', fontWeight: '600', color: '#111827', margin: 0}}>
+                    {selectedImage.title || 'Virtual Background'}
+                  </h3>
+                  {selectedImage.isPremium && (
+                    <span style={{
+                      background: '#fbbf24',
+                      color: '#92400e',
+                      padding: '0.25rem 0.75rem',
+                      borderRadius: '1rem',
+                      fontSize: '0.75rem',
+                      fontWeight: 'bold'
+                    }}>
+                      PREMIUM 4K
+                    </span>
+                  )}
+                </div>
                 <button
                   onClick={() => setSelectedImage(null)}
                   style={{
@@ -366,8 +477,11 @@ export default function CategoryPage() {
                       height: 'auto',
                       maxHeight: '60vh',
                       objectFit: 'contain',
-                      borderRadius: '0.5rem'
+                      borderRadius: '0.5rem',
+                      userSelect: 'none',
+                      WebkitUserDrag: 'none'
                     }}
+                    onContextMenu={(e) => e.preventDefault()}
                   />
                 </div>
                 
@@ -399,8 +513,8 @@ export default function CategoryPage() {
                   <button
                     onClick={() => handleDownload(selectedImage)}
                     style={{
-                      background: '#2563eb',
-                      color: 'white',
+                      background: selectedImage.isPremium ? '#fbbf24' : '#2563eb',
+                      color: selectedImage.isPremium ? '#92400e' : 'white',
                       padding: '0.75rem 2rem',
                       border: 'none',
                       borderRadius: '0.5rem',
@@ -409,7 +523,7 @@ export default function CategoryPage() {
                       cursor: 'pointer'
                     }}
                   >
-                    Download
+                    {selectedImage.isPremium ? `Buy for $${selectedImage.price || '5.99'}` : 'Download'}
                   </button>
                 </div>
               </div>
@@ -417,6 +531,8 @@ export default function CategoryPage() {
           </div>
         )}
       </div>
+
+      <Footer />
     </>
   );
 }

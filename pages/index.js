@@ -1,5 +1,7 @@
+
 import Head from 'next/head';
 import Link from 'next/link';
+import Footer from '../components/Footer';
 
 function AdUnit({ slot, style = {} }) {
   return (
@@ -18,37 +20,43 @@ function AdUnit({ slot, style = {} }) {
 
 export default function Home() {
   const categories = [
-    {
-      name: 'Home Offices',
-      slug: 'home-offices',
-      description: 'Professional home office backgrounds perfect for remote work',
-      image: 'scandinavian-home-office-white-oak-background.webp'
-    },
-    {
-      name: 'Executive Offices',
-      slug: 'executive-offices', 
-      description: 'Luxury executive office backgrounds for leadership calls',
-      image: 'classic-executive-office-mahogany-background.webp'
-    },
-    {
-      name: 'Conference Rooms',
-      slug: 'conference-rooms',
-      description: 'Professional meeting room backgrounds for team calls',
-      image: 'contemporary-glass-conference-room-white-table-background.webp'
-    },
-    {
-      name: 'Open Offices',
-      slug: 'open-offices',
-      description: 'Modern open workspace backgrounds for collaborative calls',
-      image: 'tech-open-office-sit-stand-desks-background.webp'
-    },
-    {
-      name: 'Lounges',
-      slug: 'lounges',
-      description: 'Comfortable lounge backgrounds for casual meetings',
-      image: 'contemporary-office-lounge-comfortable-seating-background.webp'
-    }
-  ];
+  {
+    name: 'Home Offices',
+    slug: 'home-offices',
+    description: 'Professional home office backgrounds perfect for remote work',
+    image: 'scandinavian-minimalist-home-office-1.webp'
+  },
+  {
+    name: 'Executive Offices',
+    slug: 'executive-offices', 
+    description: 'Luxury executive office backgrounds for leadership calls',
+    image: 'luxury-ceo-corner-office-1.webp'
+  },
+  {
+    name: 'Conference Rooms',
+    slug: 'conference-rooms',
+    description: 'Professional meeting room backgrounds for team calls',
+    image: 'modern-glass-conference-room-1.webp'
+  },
+  {
+    name: 'Open Offices',
+    slug: 'open-offices',
+    description: 'Modern open workspace backgrounds for collaborative calls',
+    image: 'modern-open-office-workspace-1.webp'
+  },
+  {
+     name: 'Lobbies', // Change from 'Lounges' to 'Lobbies'
+     slug: 'lobbies', // Change from 'lounges' to 'lobbies'
+     description: 'Professional lobby backgrounds for client meetings',
+     image: 'startup-incubator-lobby-1.webp'
+  },
+  {
+    name: 'Private Offices',
+    slug: 'private-offices',
+    description: 'Specialized private office backgrounds for consultations',
+    image: 'therapist-private-office-1.webp'
+  }
+];
 
   return (
     <>
@@ -131,7 +139,7 @@ export default function Home() {
                   <span style={{fontSize: '2rem'}}>🖼️</span>
                 </div>
                 <h3>High Quality</h3>
-                <p>1920x1080 resolution, optimized for all video platforms</p>
+                <p>Optimized for all video platforms and calling apps</p>
               </div>
               <div className="feature">
                 <div className="feature-icon">
@@ -151,17 +159,7 @@ export default function Home() {
           </div>
         </section>
 
-        <footer>
-          <div className="container">
-            <h3>StreamBackdrops</h3>
-            <p style={{color: '#9ca3af', marginBottom: '1rem'}}>
-              Professional virtual backgrounds for the modern workplace
-            </p>
-            <p style={{color: '#6b7280', fontSize: '0.9rem'}}>
-              © 2025 StreamBackdrops. All backgrounds are free for personal and commercial use.
-            </p>
-          </div>
-        </footer>
+      <Footer />
       </div>
     </>
   );
