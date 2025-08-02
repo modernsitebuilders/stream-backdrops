@@ -1,4 +1,4 @@
-// Create this new file: pages/blog.js
+// Replace your pages/blog.js with this corrected version:
 
 import Head from 'next/head';
 import Link from 'next/link';
@@ -56,49 +56,100 @@ export default function Blog() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className="min-h-screen bg-gray-50">
+      <div style={{minHeight: '100vh', background: '#f9fafb'}}>
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 py-8">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Link href="/" className="text-blue-600 hover:text-blue-800 mb-4 inline-block">
+        <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '2rem 0'}}>
+          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
+            <Link href="/" style={{color: '#2563eb', textDecoration: 'none', marginBottom: '1rem', display: 'inline-block'}}>
               ← Back to Home
             </Link>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">StreamBackdrops Blog</h1>
-            <p className="text-xl text-gray-600">Expert tips, guides, and insights for professional video calls and remote work</p>
+            <h1 style={{fontSize: '3rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem'}}>
+              StreamBackdrops Blog
+            </h1>
+            <p style={{fontSize: '1.25rem', color: '#6b7280'}}>
+              Expert tips, guides, and insights for professional video calls and remote work
+            </p>
           </div>
         </header>
 
         {/* Blog Posts Grid */}
-        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid gap-8">
+        <main style={{maxWidth: '1200px', margin: '0 auto', padding: '3rem 2rem'}}>
+          <div style={{display: 'grid', gap: '2rem'}}>
             {blogPosts.map((post) => (
-              <article key={post.slug} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <div className="p-8">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+              <article 
+                key={post.slug} 
+                style={{
+                  background: 'white',
+                  borderRadius: '0.5rem',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  overflow: 'hidden',
+                  transition: 'box-shadow 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.boxShadow = '0 10px 15px rgba(0, 0, 0, 0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)'}
+              >
+                <div style={{padding: '2rem'}}>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem'}}>
+                    <span style={{
+                      background: '#dbeafe',
+                      color: '#1e40af',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      padding: '0.25rem 0.75rem',
+                      borderRadius: '9999px'
+                    }}>
                       {post.category}
                     </span>
-                    <span className="text-gray-500 text-sm">{post.date}</span>
-                    <span className="text-gray-500 text-sm">•</span>
-                    <span className="text-gray-500 text-sm">{post.readTime}</span>
+                    <span style={{color: '#6b7280', fontSize: '0.875rem'}}>{post.date}</span>
+                    <span style={{color: '#6b7280', fontSize: '0.875rem'}}>•</span>
+                    <span style={{color: '#6b7280', fontSize: '0.875rem'}}>{post.readTime}</span>
                   </div>
                   
-                  <h2 className="text-2xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
-                    <Link href={`/${post.slug}`}>
+                  <h2 style={{
+                    fontSize: '1.5rem',
+                    fontWeight: 'bold',
+                    color: '#111827',
+                    marginBottom: '0.75rem',
+                    lineHeight: '1.3'
+                  }}>
+                    <Link 
+                      href={`/${post.slug}`}
+                      style={{
+                        color: '#111827',
+                        textDecoration: 'none',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = '#2563eb'}
+                      onMouseLeave={(e) => e.currentTarget.style.color = '#111827'}
+                    >
                       {post.title}
                     </Link>
                   </h2>
                   
-                  <p className="text-gray-600 mb-4 leading-relaxed">
+                  <p style={{
+                    color: '#6b7280',
+                    marginBottom: '1rem',
+                    lineHeight: '1.6',
+                    fontSize: '1rem'
+                  }}>
                     {post.excerpt}
                   </p>
                   
                   <Link 
                     href={`/${post.slug}`}
-                    className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      color: '#2563eb',
+                      fontWeight: '500',
+                      textDecoration: 'none',
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#1d4ed8'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = '#2563eb'}
                   >
                     Read more
-                    <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg style={{marginLeft: '0.5rem', width: '1rem', height: '1rem'}} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </Link>
@@ -108,27 +159,66 @@ export default function Blog() {
           </div>
 
           {/* Newsletter Signup */}
-          <div className="mt-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-8 text-white text-center">
-            <h2 className="text-2xl font-bold mb-4">Stay Updated</h2>
-            <p className="text-blue-100 mb-6">Get the latest tips and guides for professional video calls delivered to your inbox.</p>
-            <div className="max-w-md mx-auto flex gap-4">
+          <div style={{
+            marginTop: '4rem',
+            background: 'linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)',
+            borderRadius: '0.5rem',
+            padding: '2rem',
+            color: 'white',
+            textAlign: 'center'
+          }}>
+            <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem'}}>
+              Stay Updated
+            </h2>
+            <p style={{color: '#dbeafe', marginBottom: '1.5rem'}}>
+              Get the latest tips and guides for professional video calls delivered to your inbox.
+            </p>
+            <div style={{maxWidth: '400px', margin: '0 auto', display: 'flex', gap: '1rem'}}>
               <input 
                 type="email" 
                 placeholder="Enter your email" 
-                className="flex-1 px-4 py-2 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white"
+                style={{
+                  flex: 1,
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  border: 'none',
+                  color: '#111827',
+                  outline: 'none'
+                }}
               />
-              <button className="bg-white text-blue-600 px-6 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+              <button style={{
+                background: 'white',
+                color: '#2563eb',
+                padding: '0.5rem 1.5rem',
+                borderRadius: '0.5rem',
+                border: 'none',
+                fontWeight: '500',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s ease'
+              }}>
                 Subscribe
               </button>
             </div>
           </div>
 
           {/* Categories */}
-          <div className="mt-12 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Browse by Category</h2>
-            <div className="flex flex-wrap justify-center gap-3">
+          <div style={{marginTop: '3rem', textAlign: 'center'}}>
+            <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', marginBottom: '1.5rem'}}>
+              Browse by Category
+            </h2>
+            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.75rem'}}>
               {['Video Call Tips', 'Technical Setup', 'Remote Work', 'Industry Guide', 'Technical Guide'].map((category) => (
-                <span key={category} className="bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium">
+                <span 
+                  key={category} 
+                  style={{
+                    background: '#e5e7eb',
+                    color: '#374151',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '9999px',
+                    fontSize: '0.875rem',
+                    fontWeight: '500'
+                  }}
+                >
                   {category}
                 </span>
               ))}
