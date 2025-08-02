@@ -8,14 +8,9 @@ export default function CategoryPage() {
   const router = useRouter();
   const { slug } = router.query;
   
-  const [selectedImage, setSelectedImage] = useState(null);
+const [selectedImage, setSelectedImage] = useState(null);
 const [imageMetadata, setImageMetadata] = useState({});
 const [loading, setLoading] = useState(true);
-
-
-
-
-// Load metadata on client side
 const [isMobile, setIsMobile] = useState(false);
 
 useEffect(() => {
@@ -28,7 +23,7 @@ useEffect(() => {
   return () => window.removeEventListener('resize', checkMobile);
 }, []);
 
-// Load metadata on client side
+
 useEffect(() => {
   async function loadMetadata() {
     try {
@@ -51,10 +46,7 @@ useEffect(() => {
   loadMetadata();
 }, []);
 
-
-
 const categoryInfo = {
-  // ... rest of your code
     'home-offices': {
       name: 'Home Offices',
       description: 'Professional home office backgrounds perfect for remote work and video calls'
