@@ -8,45 +8,44 @@ export default function CategoryPage() {
   const router = useRouter();
   const { slug } = router.query;
   
-const [selectedImage, setSelectedImage] = useState(null);
-const [imageMetadata, setImageMetadata] = useState({});
-const [loading, setLoading] = useState(true);
-const [isMobile, setIsMobile] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imageMetadata, setImageMetadata] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
-useEffect(() => {
-  const checkMobile = () => {
-    setIsMobile(window.innerWidth <= 768);
-  };
-  
-  checkMobile();
-  window.addEventListener('resize', checkMobile);
-  return () => window.removeEventListener('resize', checkMobile);
-}, []);
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
-
-useEffect(() => {
-  async function loadMetadata() {
-    try {
-      const response = await fetch('/api/metadata');
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+  useEffect(() => {
+    async function loadMetadata() {
+      try {
+        const response = await fetch('/api/metadata');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Successfully loaded metadata:', Object.keys(data).length, 'images');
+        setImageMetadata(data);
+      } catch (error) {
+        console.error('Failed to load metadata:', error);
+        setImageMetadata({});
+      } finally {
+        setLoading(false);
       }
-      
-      const data = await response.json();
-      console.log('Successfully loaded metadata:', Object.keys(data).length, 'images');
-      setImageMetadata(data);
-    } catch (error) {
-      console.error('Failed to load metadata:', error);
-      setImageMetadata({});
-    } finally {
-      setLoading(false);
     }
-  }
-  loadMetadata();
-}, []);
+    loadMetadata();
+  }, []);
 
-const categoryInfo = {
+  const categoryInfo = {
     'home-offices': {
       name: 'Home Offices',
       description: 'Professional home office backgrounds perfect for remote work and video calls'
@@ -230,8 +229,6 @@ const categoryInfo = {
           </div>
         </header>
 
-      
-
         <section style={{
           background: category.isPremium ? 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' : '#2563eb', 
           color: 'white', 
@@ -254,6 +251,7 @@ const categoryInfo = {
                 </span>
               )}
             </h1>
+            
             <p style={{fontSize: '1.2rem', marginBottom: '0.5rem'}}>
               {category.description}
             </p>
@@ -277,12 +275,12 @@ const categoryInfo = {
               </div>
             ) : (
               <div className="image-grid" style={{
-                   display: 'grid',
-                   gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))',
-                   gap: '2rem',
-                   justifyItems: 'center',
-                   padding: isMobile ? '0 1rem' : '0'
-               }}>
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))',
+                gap: '2rem',
+                justifyItems: 'center',
+                padding: isMobile ? '0 1rem' : '0'
+              }}>
                 {categoryImages.map((image) => (
                   <div key={image.key} className="image-card" style={{
                     background: 'white',
@@ -290,7 +288,12 @@ const categoryInfo = {
                     boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
                     overflow: 'hidden',
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    position: 'relative'
+                    position: 'relative',
+                    ...(isMobile && {
+                      width: '100%',
+                      maxWidth: '350px',
+                      margin: '0 auto'
+                    })
                   }}>
                     {image.isPremium && (
                       <div style={{
@@ -420,94 +423,94 @@ const categoryInfo = {
         </section>
 
         {selectedImage && (
-  <div 
-    style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100vw',
-      height: '100vh',
-      backgroundColor: 'rgba(0, 0, 0, 0.9)',
-      zIndex: 99999,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px'
-    }}
-    onClick={() => setSelectedImage(null)}
-  >
-    <div 
-  style={{
-    backgroundColor: 'white',
-    borderRadius: '8px',
-    padding: '20px',
-    maxWidth: '90vw',     // ← Wider
-    maxHeight: '95vh',    // ← Taller
-    overflow: 'auto',
-    position: 'relative'
-  }}
-  onClick={(e) => e.stopPropagation()}
->
-      {/* Close button */}
-      <button
-        onClick={() => setSelectedImage(null)}
-        style={{
-          position: 'absolute',
-          top: '10px',
-          right: '15px',
-          background: 'none',
-          border: 'none',
-          fontSize: '24px',
-          cursor: 'pointer',
-          color: '#666'
-        }}
-      >
-        ×
-      </button>
-      
-      {/* Image title */}
-      <h3 style={{ marginBottom: '15px', paddingRight: '30px' }}>
-        {selectedImage.title || 'Virtual Background'}
-      </h3>
-      
-      {/* Image */}
-      <img
-       src={`/images/${selectedImage.filename}`}
-       alt={selectedImage.alt || 'Virtual background'}
-       style={{
-       width: '100%',
-       height: 'auto',
-       maxHeight: '70vh',   // ← Much larger!
-       objectFit: 'contain',
-       borderRadius: '4px',
-       marginBottom: '15px'
-     }}
-/>
-      
-      {/* Description */}
-      <p style={{ color: '#666', marginBottom: '20px' }}>
-        {selectedImage.description || 'Professional virtual background'}
-      </p>
-      
-      {/* Download button */}
-      <button
-        onClick={() => handleDownload(selectedImage)}
-        style={{
-          backgroundColor: '#2563eb',
-          color: 'white',
-          border: 'none',
-          padding: '12px 24px',
-          borderRadius: '6px',
-          fontSize: '16px',
-          cursor: 'pointer',
-          fontWeight: '600'
-        }}
-      >
-        Download
-      </button>
-    </div>
-  </div>
-)}
+          <div 
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              backgroundColor: 'rgba(0, 0, 0, 0.9)',
+              zIndex: 99999,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '20px'
+            }}
+            onClick={() => setSelectedImage(null)}
+          >
+            <div 
+              style={{
+                backgroundColor: 'white',
+                borderRadius: '8px',
+                padding: '20px',
+                maxWidth: '90vw',
+                maxHeight: '95vh',
+                overflow: 'auto',
+                position: 'relative'
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setSelectedImage(null)}
+                style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '15px',
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '24px',
+                  cursor: 'pointer',
+                  color: '#666'
+                }}
+              >
+                ×
+              </button>
+              
+              {/* Image title */}
+              <h3 style={{ marginBottom: '15px', paddingRight: '30px' }}>
+                {selectedImage.title || 'Virtual Background'}
+              </h3>
+              
+              {/* Image */}
+              <img
+                src={`/images/${selectedImage.filename}`}
+                alt={selectedImage.alt || 'Virtual background'}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  maxHeight: '70vh',
+                  objectFit: 'contain',
+                  borderRadius: '4px',
+                  marginBottom: '15px'
+                }}
+              />
+              
+              {/* Description */}
+              <p style={{ color: '#666', marginBottom: '20px' }}>
+                {selectedImage.description || 'Professional virtual background'}
+              </p>
+              
+              {/* Download button */}
+              <button
+                onClick={() => handleDownload(selectedImage)}
+                style={{
+                  backgroundColor: '#2563eb',
+                  color: 'white',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: '6px',
+                  fontSize: '16px',
+                  cursor: 'pointer',
+                  fontWeight: '600'
+                }}
+              >
+                Download
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       <Footer />
