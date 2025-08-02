@@ -403,110 +403,94 @@ export default function CategoryPage() {
         </section>
 
         {selectedImage && (
-          <div className="modal" onClick={() => setSelectedImage(null)}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '1rem',
-                borderBottom: '1px solid #e5e7eb'
-              }}>
-                <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-                  <h3 style={{fontSize: '1.1rem', fontWeight: '600', color: '#111827', margin: 0}}>
-                    {selectedImage.title || 'Virtual Background'}
-                  </h3>
-                  {selectedImage.isPremium && (
-                    <span style={{
-                      background: '#fbbf24',
-                      color: '#92400e',
-                      padding: '0.25rem 0.75rem',
-                      borderRadius: '1rem',
-                      fontSize: '0.75rem',
-                      fontWeight: 'bold'
-                    }}>
-                      PREMIUM 4K
-                    </span>
-                  )}
-                </div>
-                <button
-                  onClick={() => setSelectedImage(null)}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    fontSize: '1.5rem',
-                    color: '#6b7280',
-                    cursor: 'pointer',
-                    padding: '0.25rem'
-                  }}
-                >
-                  ✕
-                </button>
-              </div>
-              
-              <div style={{padding: '1rem'}}>
-                <div style={{marginBottom: '1rem'}}>
-                  <img
-                    src={`/images/${selectedImage.filename}`}
-                    alt={selectedImage.alt || 'Virtual background'}
-                    style={{
-                      width: '100%',
-                      height: 'auto',
-                      maxHeight: '60vh',
-                      objectFit: 'contain',
-                      borderRadius: '0.5rem',
-                      userSelect: 'none',
-                      WebkitUserDrag: 'none'
-                    }}
-                    onContextMenu={(e) => e.preventDefault()}
-                  />
-                </div>
-                
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  flexWrap: 'wrap',
-                  gap: '1rem'
-                }}>
-                  <div style={{flex: 1}}>
-                    <p style={{color: '#6b7280', marginBottom: '0.5rem', fontSize: '0.9rem'}}>
-                      {selectedImage.description || 'Professional virtual background'}
-                    </p>
-                    <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem'}}>
-                      {(selectedImage.keywords || []).map(keyword => (
-                        <span key={keyword} style={{
-                          background: '#f3f4f6',
-                          color: '#374151',
-                          padding: '0.25rem 0.5rem',
-                          borderRadius: '0.25rem',
-                          fontSize: '0.75rem'
-                        }}>
-                          {keyword}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => handleDownload(selectedImage)}
-                    style={{
-                      background: selectedImage.isPremium ? '#fbbf24' : '#2563eb',
-                      color: selectedImage.isPremium ? '#92400e' : 'white',
-                      padding: '0.75rem 2rem',
-                      border: 'none',
-                      borderRadius: '0.5rem',
-                      fontSize: '1rem',
-                      fontWeight: '600',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    {selectedImage.isPremium ? `Buy for $${selectedImage.price || '5.99'}` : 'Download'}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+  <div 
+    style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100vw',
+      height: '100vh',
+      backgroundColor: 'rgba(0, 0, 0, 0.9)',
+      zIndex: 99999,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px'
+    }}
+    onClick={() => setSelectedImage(null)}
+  >
+    <div 
+      style={{
+        backgroundColor: 'white',
+        borderRadius: '8px',
+        padding: '20px',
+        maxWidth: '800px',
+        maxHeight: '90vh',
+        overflow: 'auto',
+        position: 'relative'
+      }}
+      onClick={(e) => e.stopPropagation()}
+    >
+      {/* Close button */}
+      <button
+        onClick={() => setSelectedImage(null)}
+        style={{
+          position: 'absolute',
+          top: '10px',
+          right: '15px',
+          background: 'none',
+          border: 'none',
+          fontSize: '24px',
+          cursor: 'pointer',
+          color: '#666'
+        }}
+      >
+        ×
+      </button>
+      
+      {/* Image title */}
+      <h3 style={{ marginBottom: '15px', paddingRight: '30px' }}>
+        {selectedImage.title || 'Virtual Background'}
+      </h3>
+      
+      {/* Image */}
+      <img
+        src={`/images/${selectedImage.filename}`}
+        alt={selectedImage.alt || 'Virtual background'}
+        style={{
+          width: '100%',
+          height: 'auto',
+          maxHeight: '500px',
+          objectFit: 'contain',
+          borderRadius: '4px',
+          marginBottom: '15px'
+        }}
+      />
+      
+      {/* Description */}
+      <p style={{ color: '#666', marginBottom: '20px' }}>
+        {selectedImage.description || 'Professional virtual background'}
+      </p>
+      
+      {/* Download button */}
+      <button
+        onClick={() => handleDownload(selectedImage)}
+        style={{
+          backgroundColor: '#2563eb',
+          color: 'white',
+          border: 'none',
+          padding: '12px 24px',
+          borderRadius: '6px',
+          fontSize: '16px',
+          cursor: 'pointer',
+          fontWeight: '600'
+        }}
+      >
+        Download
+      </button>
+    </div>
+  </div>
+)}
       </div>
 
       <Footer />
