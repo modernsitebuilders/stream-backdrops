@@ -9,33 +9,52 @@ export default function CategoryPage() {
   const { slug } = router.query;
   
   const [selectedImage, setSelectedImage] = useState(null);
-  const [imageMetadata, setImageMetadata] = useState({});
-  const [loading, setLoading] = useState(true);
+const [imageMetadata, setImageMetadata] = useState({});
+const [loading, setLoading] = useState(true);
 
-  // Load metadata on client side
-  useEffect(() => {
-    async function loadMetadata() {
-      try {
-        const response = await fetch('/api/metadata');
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        console.log('Successfully loaded metadata:', Object.keys(data).length, 'images');
-        setImageMetadata(data);
-      } catch (error) {
-        console.error('Failed to load metadata:', error);
-        setImageMetadata({});
-      } finally {
-        setLoading(false);
+
+
+
+// Load metadata on client side
+const [isMobile, setIsMobile] = useState(false);
+
+useEffect(() => {
+  const checkMobile = () => {
+    setIsMobile(window.innerWidth <= 768);
+  };
+  
+  checkMobile();
+  window.addEventListener('resize', checkMobile);
+  return () => window.removeEventListener('resize', checkMobile);
+}, []);
+
+// Load metadata on client side
+useEffect(() => {
+  async function loadMetadata() {
+    try {
+      const response = await fetch('/api/metadata');
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      
+      const data = await response.json();
+      console.log('Successfully loaded metadata:', Object.keys(data).length, 'images');
+      setImageMetadata(data);
+    } catch (error) {
+      console.error('Failed to load metadata:', error);
+      setImageMetadata({});
+    } finally {
+      setLoading(false);
     }
-    loadMetadata();
-  }, []);
+  }
+  loadMetadata();
+}, []);
 
-  const categoryInfo = {
+
+
+const categoryInfo = {
+  // ... rest of your code
     'home-offices': {
       name: 'Home Offices',
       description: 'Professional home office backgrounds perfect for remote work and video calls'
@@ -266,11 +285,12 @@ export default function CategoryPage() {
               </div>
             ) : (
               <div className="image-grid" style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-                gap: '2rem',
-                justifyItems: 'center'
-              }}>
+                   display: 'grid',
+                   gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))',
+                   gap: '2rem',
+                   justifyItems: 'center',
+                   padding: isMobile ? '0 1rem' : '0'
+               }}>
                 {categoryImages.map((image) => (
                   <div key={image.key} className="image-card" style={{
                     background: 'white',
