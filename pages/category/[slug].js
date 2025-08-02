@@ -269,10 +269,7 @@ export default function CategoryPage() {
 
 
 <section style={{
-  padding: '3rem 0',
-  backgroundColor: 'red',
-  border: '2px solid yellow'
-}}>
+  padding: '3rem 0'}}>
   <div className="container" style={{
     display: 'flex',
     flexDirection: 'column',
@@ -280,10 +277,7 @@ export default function CategoryPage() {
     width: '100%',
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: isMobile ? '0 1rem' : '20px',
-    backgroundColor: 'blue',
-    border: '2px solid green'
-  }}>
+    padding: isMobile ? '0 1rem' : '20px'}}>
     {categoryImages.length === 0 ? (
       <div style={{textAlign: 'center', padding: '3rem 0'}}>
         <p style={{color: '#6b7280', fontSize: '1.1rem'}}>No backgrounds found.</p>
@@ -296,10 +290,7 @@ export default function CategoryPage() {
         gap: '2rem',
         width: '100%',
         maxWidth: isMobile ? '350px' : '100%',
-        margin: '0 auto',
-        backgroundColor: 'purple',
-        border: '2px solid orange'
-      }}>
+        margin: '0 auto'}}>
         {categoryImages.map((image) => (
           <div 
             key={image.key} 
@@ -307,7 +298,6 @@ export default function CategoryPage() {
               background: 'white',
               borderRadius: '0.75rem',
               boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
-              border: '3px solid magenta',
               overflow: 'hidden',
               transition: 'transform 0.3s ease, box-shadow 0.3s ease',
               position: 'relative',
