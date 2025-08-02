@@ -294,11 +294,6 @@ footer h3 {
   }
 }
 
-@media (orientation: landscape) and (max-width: 768px) {
-  .orientation-warning {
-    display: none;
-  }
-}
 
 /* Premium image protection */
 .premium-image {

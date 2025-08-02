@@ -219,9 +219,7 @@ export default function CategoryPage() {
           </div>
         </header>
 
-        <div className="orientation-warning">
-          💡 <strong>Tip:</strong> These backgrounds work best in landscape mode for video calls
-        </div>
+      
 
         <section style={{
           background: category.isPremium ? 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' : '#2563eb', 
