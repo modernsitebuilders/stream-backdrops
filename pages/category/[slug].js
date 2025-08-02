@@ -267,165 +267,171 @@ export default function CategoryPage() {
           </div>
         </section>
 
-        <section style={{padding: '3rem 0'}}>
-          <div className="container">
-            {categoryImages.length === 0 ? (
-              <div style={{textAlign: 'center', padding: '3rem 0'}}>
-                <p style={{color: '#6b7280', fontSize: '1.1rem'}}>No backgrounds found.</p>
-              </div>
-            ) : (
-              <div 
-  className="image-grid"
-  style={{
-    display: 'grid',
-    gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))',
-    gap: '2rem',
-    justifyItems: 'center',    // ← This centers the items
-    padding: isMobile ? '0 1rem' : '0',
-    width: '100%',
-    margin: '0 auto'           // ← This centers the container
-  }}
->
-                {categoryImages.map((image) => (
-                  <div key={image.key} className="image-card" style={{
-                    background: 'white',
-                    borderRadius: '0.75rem',
-                    boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
-                    overflow: 'hidden',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    position: 'relative',
-                    ...(isMobile && {
-                      width: '100%',
-                      maxWidth: '350px',
-                      margin: '0 auto'
-                    })
-                  }}>
-                    {image.isPremium && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '1rem',
-                        right: '1rem',
-                        background: 'linear-gradient(45deg, #fbbf24, #f59e0b)',
-                        color: '#92400e',
-                        padding: '0.375rem 0.75rem',
-                        borderRadius: '1rem',
-                        fontSize: '0.875rem',
-                        fontWeight: 'bold',
-                        zIndex: 10
-                      }}>
-                        PREMIUM 4K
-                      </div>
-                    )}
-                    
-                    <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
-                      <img
-                        src={`/images/${image.filename}`}
-                        alt={image.alt || 'Virtual background'}
-                        className="image-preview premium-image"
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          cursor: 'pointer'
-                        }}
-                        onClick={() => setSelectedImage(image)}
-                        onContextMenu={(e) => e.preventDefault()}
-                      />
-                      
-                      <div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: 'rgba(0,0,0,0.7)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '1rem',
-                        opacity: 0,
-                        transition: 'opacity 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.opacity = 1}
-                      onMouseLeave={(e) => e.currentTarget.style.opacity = 0}
-                      >
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedImage(image);
-                          }}
-                          style={{
-                            background: 'rgba(255,255,255,0.9)',
-                            color: '#111827',
-                            padding: '0.75rem 1.5rem',
-                            border: 'none',
-                            borderRadius: '0.5rem',
-                            fontSize: '1rem',
-                            fontWeight: '600',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          Preview
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDownload(image);
-                          }}
-                          style={{
-                            background: image.isPremium ? '#fbbf24' : '#2563eb',
-                            color: image.isPremium ? '#92400e' : 'white',
-                            padding: '0.75rem 1.5rem',
-                            border: 'none',
-                            borderRadius: '0.5rem',
-                            fontSize: '1rem',
-                            fontWeight: '600',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          {image.isPremium ? `Buy $${image.price || '5.99'}` : 'Download'}
-                        </button>
-                      </div>
-                    </div>
 
-                    <div style={{padding: '1.5rem'}}>
-                      <div style={{display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.5rem'}}>
-                        <h3 style={{fontWeight: '600', color: '#111827', fontSize: '1.1rem', flex: 1}}>
-                          {image.title || 'Virtual Background'}
-                        </h3>
-                        {image.resolution && (
-                          <span style={{
-                            background: '#f3f4f6',
-                            color: '#374151',
-                            padding: '0.25rem 0.5rem',
-                            borderRadius: '0.25rem',
-                            fontSize: '0.75rem',
-                            fontWeight: '600'
-                          }}>
-                            {image.resolution}
-                          </span>
-                        )}
-                      </div>
-                      <p style={{color: '#6b7280', fontSize: '0.95rem', marginBottom: '0.75rem'}}>
-                        {image.description || 'Professional virtual background'}
-                      </p>
-                      <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem'}}>
-                        {(image.keywords || []).slice(0, 3).map(keyword => (
-                          <span key={keyword} style={{
-                            background: '#f3f4f6',
-                            color: '#374151',
-                            padding: '0.25rem 0.5rem',
-                            borderRadius: '0.25rem',
-                            fontSize: '0.75rem'
-                          }}>
-                            {keyword}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+<section style={{padding: '3rem 0'}}>
+  <div className="container" style={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: isMobile ? '0 1rem' : '20px'
+  }}>
+    {categoryImages.length === 0 ? (
+      <div style={{textAlign: 'center', padding: '3rem 0'}}>
+        <p style={{color: '#6b7280', fontSize: '1.1rem'}}>No backgrounds found.</p>
+      </div>
+    ) : (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '2rem',
+        width: '100%',
+        maxWidth: isMobile ? '350px' : '100%'
+      }}>
+        {categoryImages.map((image) => (
+          <div 
+            key={image.key} 
+            style={{
+              background: 'white',
+              borderRadius: '0.75rem',
+              boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
+              overflow: 'hidden',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              position: 'relative',
+              width: '100%',
+              maxWidth: isMobile ? '320px' : '400px',
+              margin: '0 auto'
+            }}
+          >
+            {/* Rest of your image card content stays the same */}
+            {image.isPremium && (
+              <div style={{
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
+                background: 'linear-gradient(45deg, #fbbf24, #f59e0b)',
+                color: '#92400e',
+                padding: '0.375rem 0.75rem',
+                borderRadius: '1rem',
+                fontSize: '0.875rem',
+                fontWeight: 'bold',
+                zIndex: 10
+              }}>
+                PREMIUM 4K
               </div>
             )}
+            
+            <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
+              <img
+                src={`/images/${image.filename}`}
+                alt={image.alt || 'Virtual background'}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  cursor: 'pointer'
+                }}
+                onClick={() => setSelectedImage(image)}
+                onContextMenu={(e) => e.preventDefault()}
+              />
+              
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'rgba(0,0,0,0.7)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '1rem',
+                opacity: 0,
+                transition: 'opacity 0.3s ease'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.opacity = 1}
+              onMouseLeave={(e) => e.currentTarget.style.opacity = 0}
+              >
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedImage(image);
+                  }}
+                  style={{
+                    background: 'rgba(255,255,255,0.9)',
+                    color: '#111827',
+                    padding: '0.75rem 1.5rem',
+                    border: 'none',
+                    borderRadius: '0.5rem',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Preview
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDownload(image);
+                  }}
+                  style={{
+                    background: image.isPremium ? '#fbbf24' : '#2563eb',
+                    color: image.isPremium ? '#92400e' : 'white',
+                    padding: '0.75rem 1.5rem',
+                    border: 'none',
+                    borderRadius: '0.5rem',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {image.isPremium ? `Buy $${image.price || '5.99'}` : 'Download'}
+                </button>
+              </div>
+            </div>
+
+            <div style={{padding: '1.5rem'}}>
+              <div style={{display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.5rem'}}>
+                <h3 style={{fontWeight: '600', color: '#111827', fontSize: '1.1rem', flex: 1}}>
+                  {image.title || 'Virtual Background'}
+                </h3>
+                {image.resolution && (
+                  <span style={{
+                    background: '#f3f4f6',
+                    color: '#374151',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '0.25rem',
+                    fontSize: '0.75rem',
+                    fontWeight: '600'
+                  }}>
+                    {image.resolution}
+                  </span>
+                )}
+              </div>
+              <p style={{color: '#6b7280', fontSize: '0.95rem', marginBottom: '0.75rem'}}>
+                {image.description || 'Professional virtual background'}
+              </p>
+              <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem'}}>
+                {(image.keywords || []).slice(0, 3).map(keyword => (
+                  <span key={keyword} style={{
+                    background: '#f3f4f6',
+                    color: '#374151',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '0.25rem',
+                    fontSize: '0.75rem'
+                  }}>
+                    {keyword}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
-        </section>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
 
         {selectedImage && (
           <div 
