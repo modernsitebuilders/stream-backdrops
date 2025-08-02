@@ -460,16 +460,16 @@ export default function CategoryPage() {
       
       {/* Image */}
       <img
-  src={`/images/${selectedImage.filename}`}
-  alt={selectedImage.alt || 'Virtual background'}
-  style={{
-    width: '100%',
-    height: 'auto',
-    maxHeight: '70vh',   // ← Much larger!
-    objectFit: 'contain',
-    borderRadius: '4px',
-    marginBottom: '15px'
-  }}
+       src={`/images/${selectedImage.filename}`}
+       alt={selectedImage.alt || 'Virtual background'}
+       style={{
+       width: '100%',
+       height: 'auto',
+       maxHeight: '70vh',   // ← Much larger!
+       objectFit: 'contain',
+       borderRadius: '4px',
+       marginBottom: '15px'
+     }}
 />
       
       {/* Description */}
