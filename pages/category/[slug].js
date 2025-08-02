@@ -296,6 +296,7 @@ export default function CategoryPage() {
         gap: '2rem',
         width: '100%',
         maxWidth: isMobile ? '350px' : '100%',
+        margin: '0 auto',
         backgroundColor: 'purple',
         border: '2px solid orange'
       }}>
