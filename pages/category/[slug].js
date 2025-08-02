@@ -265,7 +265,12 @@ export default function CategoryPage() {
                 <p style={{color: '#6b7280', fontSize: '1.1rem'}}>No backgrounds found.</p>
               </div>
             ) : (
-              <div className="image-grid">
+              <div className="image-grid" style={{
+                display: 'grid',
+                gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))',
+                gap: '2rem',
+                justifyItems: 'center'
+              }}>
                 {categoryImages.map((image) => (
                   <div key={image.key} className="image-card" style={{
                     background: 'white',
