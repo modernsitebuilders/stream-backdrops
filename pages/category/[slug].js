@@ -175,46 +175,53 @@ export default function CategoryPage() {
       <div style={{minHeight: '100vh', background: '#f9fafb'}}>
         <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '1rem 0'}}>
           <div className="container">
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem'}}>
               <Link href="/" style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', textDecoration: 'none'}}>
                 Stream<span style={{color: '#2563eb'}}>Backdrops</span>
               </Link>
-              <nav style={{display: 'flex', gap: '2rem'}}>
-                {Object.entries(categoryInfo).map(([key, info]) => (
-                  <Link
-                    key={key}
-                    href={`/category/${key}`}
-                    style={{
-                      fontSize: '1.1rem',
-                      fontWeight: '600',
-                      color: key === slug ? '#2563eb' : '#6b7280',
-                      textDecoration: 'none',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '0.5rem',
-                      transition: 'all 0.2s ease',
-                      position: 'relative'
-                    }}
-                  >
-                    {info.name}
-                    {info.isPremium && (
-                      <span style={{
-                        background: '#fbbf24',
-                        color: '#92400e',
-                        fontSize: '0.75rem',
-                        fontWeight: 'bold',
-                        padding: '0.125rem 0.375rem',
-                        borderRadius: '0.75rem',
-                        marginLeft: '0.5rem'
-                      }}>
-                        PREMIUM
-                      </span>
-                    )}
-                  </Link>
-                ))}
-              </nav>
             </div>
+            
+            <nav className="category-nav">
+              {Object.entries(categoryInfo).map(([key, info]) => (
+                <Link
+                  key={key}
+                  href={`/category/${key}`}
+                  className={key === slug ? 'active' : ''}
+                  style={{
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    color: key === slug ? '#2563eb' : '#6b7280',
+                    textDecoration: 'none',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '0.5rem',
+                    transition: 'all 0.2s ease',
+                    position: 'relative',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  {info.name}
+                  {info.isPremium && (
+                    <span style={{
+                      background: '#fbbf24',
+                      color: '#92400e',
+                      fontSize: '0.75rem',
+                      fontWeight: 'bold',
+                      padding: '0.125rem 0.375rem',
+                      borderRadius: '0.75rem',
+                      marginLeft: '0.5rem'
+                    }}>
+                      PREMIUM
+                    </span>
+                  )}
+                </Link>
+              ))}
+            </nav>
           </div>
         </header>
+
+        <div className="orientation-warning">
+          💡 <strong>Tip:</strong> These backgrounds work best in landscape mode for video calls
+        </div>
 
         <section style={{
           background: category.isPremium ? 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)' : '#2563eb', 
@@ -260,13 +267,9 @@ export default function CategoryPage() {
                 <p style={{color: '#6b7280', fontSize: '1.1rem'}}>No backgrounds found.</p>
               </div>
             ) : (
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-                gap: '2rem'
-              }}>
+              <div className="image-grid">
                 {categoryImages.map((image) => (
-                  <div key={image.key} style={{
+                  <div key={image.key} className="image-card" style={{
                     background: 'white',
                     borderRadius: '0.75rem',
                     boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
@@ -295,19 +298,15 @@ export default function CategoryPage() {
                       <img
                         src={`/images/${image.filename}`}
                         alt={image.alt || 'Virtual background'}
+                        className="image-preview premium-image"
                         style={{
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          cursor: 'pointer',
-                          // Anti-theft protection
-                          userSelect: 'none',
-                          WebkitUserDrag: 'none',
-                          userDrag: 'none'
+                          cursor: 'pointer'
                         }}
                         onClick={() => setSelectedImage(image)}
-                        onContextMenu={(e) => e.preventDefault()} // Disable right-click
-                        className="premium-image"
+                        onContextMenu={(e) => e.preventDefault()}
                       />
                       
                       <div style={{
@@ -406,28 +405,8 @@ export default function CategoryPage() {
         </section>
 
         {selectedImage && (
-          <div style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(0,0,0,0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 50,
-            padding: '2rem'
-          }}
-          onClick={() => setSelectedImage(null)}
-          >
-            <div style={{
-              background: 'white',
-              borderRadius: '0.5rem',
-              maxWidth: '90vw',
-              maxHeight: '90vh',
-              overflow: 'hidden',
-              position: 'relative'
-            }}
-            onClick={(e) => e.stopPropagation()}
-            >
+          <div className="modal" onClick={() => setSelectedImage(null)}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',

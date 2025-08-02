@@ -48,9 +48,10 @@ h1 {
 
 .category-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 2.5rem;
+  grid-template-columns: 1fr;
+  gap: 1rem;
   margin: 4rem 0;
+  padding: 1rem;
 }
 
 .category-card {
@@ -123,7 +124,31 @@ footer h3 {
   color: white;
 }
 
-/* Responsive */
+/* Mobile-first responsive improvements */
+@media (min-width: 640px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .container {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .category-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2.5rem;
+    padding: 2rem;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+}
+
+/* Mobile-specific styles */
 @media (max-width: 768px) {
   h1 {
     font-size: 2rem;
@@ -136,9 +161,187 @@ footer h3 {
   .category-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    margin: 2rem 0;
   }
   
   .container {
     padding: 1rem;
+  }
+  
+  /* Better mobile navigation */
+  .category-nav {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding: 1rem;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .category-nav a {
+    flex-shrink: 0;
+    padding: 0.5rem 1rem;
+    background: white;
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+    text-decoration: none;
+    color: #6b7280;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  
+  .category-nav a:hover,
+  .category-nav a.active {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+  }
+  
+  /* Larger touch targets for mobile */
+  button {
+    min-height: 44px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  /* Better image cards on mobile */
+  .image-card {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .image-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  }
+  
+  .image-preview {
+    aspect-ratio: 16/9;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  
+  /* Improve modal on mobile */
+  .modal {
+    position: fixed;
+    inset: 0;
+    padding: 1rem;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+  
+  .modal-content {
+    background: white;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  /* Grid layout for category pages */
+  .image-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .image-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1024px) {
+  .image-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+}
+
+/* Orientation-specific styles */
+@media (orientation: portrait) and (max-width: 768px) {
+  .orientation-warning {
+    display: block;
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 1rem 0;
+    text-align: center;
+    color: #92400e;
+    font-size: 0.9rem;
+  }
+  
+  .orientation-warning strong {
+    font-weight: 600;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 768px) {
+  .orientation-warning {
+    display: none;
+  }
+}
+
+/* Premium image protection */
+.premium-image {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .category-card,
+  .image-card,
+  button {
+    transition: none;
+  }
+  
+  .category-card:hover,
+  .image-card:hover {
+    transform: none;
+  }
+}
+
+/* Focus styles for better keyboard navigation */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .category-card {
+    border: 2px solid #000;
+  }
+  
+  .feature-icon {
+    border: 2px solid #000;
   }
 }
