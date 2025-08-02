@@ -420,17 +420,17 @@ export default function CategoryPage() {
     onClick={() => setSelectedImage(null)}
   >
     <div 
-      style={{
-        backgroundColor: 'white',
-        borderRadius: '8px',
-        padding: '20px',
-        maxWidth: '800px',
-        maxHeight: '90vh',
-        overflow: 'auto',
-        position: 'relative'
-      }}
-      onClick={(e) => e.stopPropagation()}
-    >
+  style={{
+    backgroundColor: 'white',
+    borderRadius: '8px',
+    padding: '20px',
+    maxWidth: '90vw',     // ← Wider
+    maxHeight: '95vh',    // ← Taller
+    overflow: 'auto',
+    position: 'relative'
+  }}
+  onClick={(e) => e.stopPropagation()}
+>
       {/* Close button */}
       <button
         onClick={() => setSelectedImage(null)}
@@ -455,17 +455,17 @@ export default function CategoryPage() {
       
       {/* Image */}
       <img
-        src={`/images/${selectedImage.filename}`}
-        alt={selectedImage.alt || 'Virtual background'}
-        style={{
-          width: '100%',
-          height: 'auto',
-          maxHeight: '500px',
-          objectFit: 'contain',
-          borderRadius: '4px',
-          marginBottom: '15px'
-        }}
-      />
+  src={`/images/${selectedImage.filename}`}
+  alt={selectedImage.alt || 'Virtual background'}
+  style={{
+    width: '100%',
+    height: 'auto',
+    maxHeight: '70vh',   // ← Much larger!
+    objectFit: 'contain',
+    borderRadius: '4px',
+    marginBottom: '15px'
+  }}
+/>
       
       {/* Description */}
       <p style={{ color: '#666', marginBottom: '20px' }}>
