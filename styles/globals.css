@@ -250,13 +250,7 @@ footer h3 {
     overflow-y: auto;
     position: relative;
   }
-  
-  /* Grid layout for category pages */
-  .image-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
+
 }
 
 /* Tablet styles */
@@ -319,7 +313,19 @@ footer h3 {
     transform: none;
   }
 }
-
+/* Mobile responsive fixes for category pages */
+@media (max-width: 768px) {
+  .image-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    padding: 0 1rem !important;
+  }
+  
+  .image-card {
+    width: 100% !important;
+    max-width: 400px !important;
+  }
+}
 /* Focus styles for better keyboard navigation */
 button:focus,
 a:focus,

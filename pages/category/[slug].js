@@ -267,7 +267,7 @@ export default function CategoryPage() {
             ) : (
               <div className="image-grid" style={{
                 display: 'grid',
-                gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(400px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
                 gap: '2rem',
                 justifyItems: 'center'
               }}>
