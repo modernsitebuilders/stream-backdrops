@@ -364,7 +364,11 @@ footer h3 {
   .image-card {
     max-width: 300px !important;
   }
-  
+@media (max-width: 768px) {
+  .image-card {
+    justify-self: center !important;
+  }
+}
   /* Better modal sizing in portrait */
   div[style*="maxHeight: 70vh"] {
     max-height: 50vh !important;
