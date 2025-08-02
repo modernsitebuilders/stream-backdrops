@@ -29,6 +29,12 @@ function generateSiteMap() {
        <changefreq>yearly</changefreq>
        <priority>0.6</priority>
      </url>
+     <url>
+       <loc>https://streambackdrops.com/terms</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>yearly</changefreq>
+       <priority>0.6</priority>
+     </url>
      
      <!-- Category Pages -->
      <url>
@@ -74,7 +80,7 @@ function generateSiteMap() {
        <priority>0.9</priority>
      </url>
      
-     <!-- Blog Posts -->
+     <!-- Blog Posts (only the working ones) -->
      <url>
        <loc>https://streambackdrops.com/blog-professional-video-calls</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
@@ -83,12 +89,6 @@ function generateSiteMap() {
      </url>
      <url>
        <loc>https://streambackdrops.com/blog-lighting-tips</loc>
-       <lastmod>${new Date().toISOString()}</lastmod>
-       <changefreq>monthly</changefreq>
-       <priority>0.8</priority>
-     </url>
-     <url>
-       <loc>https://streambackdrops.com/blog-backgrounds-by-industry</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>monthly</changefreq>
        <priority>0.8</priority>
