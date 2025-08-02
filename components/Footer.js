@@ -1,3 +1,5 @@
+// Update your components/Footer.js file with this:
+
 import Link from 'next/link';
 
 export default function Footer() {
@@ -21,7 +23,7 @@ export default function Footer() {
             Terms of Service
           </Link>
           <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
-          <Link href="/blog-professional-video-calls" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
+          <Link href="/blog" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
             Blog
           </Link>
           <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
