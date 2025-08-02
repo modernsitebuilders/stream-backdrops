@@ -314,26 +314,61 @@ footer h3 {
   }
 }
 /* Mobile responsive fixes for category pages */
+/* Mobile responsive fixes for category pages */
 @media (max-width: 768px) {
+  /* Force center alignment for category page grids */
   .image-grid {
+    display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 1.5rem !important;
     padding: 0 1rem !important;
+    justify-items: center !important;
+    width: 100% !important;
   }
   
   .image-card {
     width: 100% !important;
-    max-width: 400px !important;
+    max-width: 350px !important;
+    margin: 0 auto !important;
+  }
+  
+  /* Fix container centering on mobile */
+  .container {
+    padding: 1rem !important;
+    text-align: center !important;
+  }
+  
+  /* Larger preview modal on mobile */
+  div[style*="position: fixed"][style*="zIndex: 99999"] {
+    padding: 1rem !important;
+  }
+  
+  div[style*="position: fixed"][style*="zIndex: 99999"] > div {
+    max-width: 95vw !important;
+    max-height: 90vh !important;
+  }
+  
+  div[style*="position: fixed"][style*="zIndex: 99999"] img {
+    max-height: 60vh !important;
   }
 }
-/* Focus styles for better keyboard navigation */
-button:focus,
-a:focus,
-input:focus,
-select:focus,
-textarea:focus {
-  outline: 2px solid #2563eb;
-  outline-offset: 2px;
+
+/* Portrait mode specific fixes */
+@media (max-width: 768px) and (orientation: portrait) {
+  .image-grid {
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    padding: 0 0.5rem !important;
+  }
+  
+  .image-card {
+    max-width: 300px !important;
+  }
+  
+  /* Better modal sizing in portrait */
+  div[style*="maxHeight: 70vh"] {
+    max-height: 50vh !important;
+  }
 }
 
 /* High contrast mode support */
