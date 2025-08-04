@@ -5,52 +5,44 @@ import Link from 'next/link';
 import Footer from '../components/Footer';
 
 export default function Home() {
-  // Using your ACTUAL processed filenames from the search results
   const categories = [
-    {
-      name: 'Home Offices',
-      slug: 'home-offices',
-      description: 'Professional home office backgrounds perfect for remote work',
-      image: 'biophilic-home-office-with-plants-1.webp', // Your actual file
-      featured: true
-    },
-    {
-      name: 'Executive Offices',
-      slug: 'executive-offices', 
-      description: 'Luxury executive office backgrounds for leadership calls',
-      image: 'executive-office-with-marble-wall-1.webp', // Your actual marble executive office
-      featured: true,
-      premiumAvailable: true
-    },
-    {
-      name: 'Minimalist',
-      slug: 'minimalist',
-      description: 'Clean, minimalist backgrounds for modern professionals',
-      image: 'minimalist-executive-office-1.webp', // Your actual minimalist executive
-      featured: true,
-      premiumAvailable: true
-    },
-    {
-      name: 'Conference Rooms',
-      slug: 'conference-rooms',
-      description: 'Professional meeting room backgrounds for team calls',
-      image: 'financial-firm-conference-room-1.webp' // Your actual conference room
-    },
-    {
-      name: 'Lobbies',
-      slug: 'lobbies',
-      description: 'Professional lobby backgrounds for client meetings',
-      image: 'modern-glass-lobby-3.webp', // Keep this if it exists, or replace
-      featured: true,
-      premiumAvailable: true
-    },
-    {
-      name: 'Private Offices',
-      slug: 'private-offices',
-      description: 'Specialized private office backgrounds for consultations',
-      image: 'professional-consultation-office-1.webp' // Keep this if it exists
-    }
-  ];
+  {
+    name: 'Home Offices',
+    slug: 'home-offices',
+    description: 'Professional home office backgrounds perfect for remote work',
+    image: 'clean-scandinavian-home-office-2.webp', 
+    featured: true
+  },
+  {
+    name: 'Executive Offices',
+    slug: 'executive-offices', 
+    description: 'Luxury executive office backgrounds for leadership calls',
+    image: 'executive-office-with-marble-wall-1.webp',
+    featured: true,
+    premiumAvailable: true
+  },
+  {
+    name: 'Minimalist',
+    slug: 'minimalist',
+    description: 'Clean, minimalist backgrounds for modern professionals',
+    image: 'minimalist-executive-office-1.webp',
+    premiumAvailable: true
+  }, 
+  {
+    name: 'Lobbies',
+    slug: 'lobbies',
+    description: 'Professional lobby backgrounds for client meetings',
+    image: 'modern-glass-lobby-3.webp',
+    featured: true,
+    premiumAvailable: true
+  },
+  {
+    name: 'Private Offices',
+    slug: 'private-offices',
+    description: 'Specialized private office backgrounds for consultations',
+    image: 'professional-consultation-office-1.webp'
+  }
+];
 
   return (
     <>
