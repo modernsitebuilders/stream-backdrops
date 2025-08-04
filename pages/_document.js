@@ -23,16 +23,18 @@ export default function Document() {
           }}
         />
         
-        {/* Google AdSense (your existing code) */}
+        {/* Google AdSense */}
         <script 
           async 
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2391004325385163"
           crossOrigin="anonymous"
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        ></script>
+        
+        {/* Favicon - ADD THESE OUTSIDE THE SCRIPT TAGS */}
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/png" href="/favicon.png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#2563eb" />
-        ></script>
       </Head>
       <body>
         <Main />
