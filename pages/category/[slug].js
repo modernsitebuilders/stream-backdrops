@@ -81,10 +81,9 @@ export default function CategoryPage() {
   }, [slug, imageMetadata, loading]);
 
   const handlePremiumPurchase = (image) => {
-    // Redirect to Gumroad product
-    const gumroadUrl = `https://gumroad.com/l/${image.gumroadPermalink}`;
-    window.open(gumroadUrl, '_blank');
-  };
+  const downloadUrl = `/api/premium-download?imageId=${image.key}&purchaseToken=temp123`;
+  window.open(downloadUrl, '_blank');
+};
 
   const handleDownload = async (image) => {
     if (image.isPremium) {
@@ -390,18 +389,6 @@ export default function CategoryPage() {
                 <h3 style={{fontWeight: '600', color: '#111827', fontSize: '1.1rem', flex: 1}}>
                   {image.title || 'Virtual Background'}
                 </h3>
-                {image.resolution && (
-                  <span style={{
-                    background: '#f3f4f6',
-                    color: '#374151',
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '0.25rem',
-                    fontSize: '0.75rem',
-                    fontWeight: '600'
-                  }}>
-                    {image.resolution}
-                  </span>
-                )}
               </div>
               <p style={{color: '#6b7280', fontSize: '0.95rem', marginBottom: '0.75rem'}}>
                 {image.description || 'Professional virtual background'}

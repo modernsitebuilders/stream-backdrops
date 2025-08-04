@@ -24,31 +24,37 @@ export default function Home() {
     name: 'Home Offices',
     slug: 'home-offices',
     description: 'Professional home office backgrounds perfect for remote work',
-    image: 'clean-scandinavian-home-office-2.webp'  // ✅ Clean Scandinavian Home Office #2
+    image: 'scandinavian-minimalist-home-office-premium-4.webp' // CHANGE TO BETTER IMAGE
   },
   {
     name: 'Executive Offices',
     slug: 'executive-offices', 
     description: 'Luxury executive office backgrounds for leadership calls',
-    image: 'executive-office-with-dark-wood-1.webp'  // ✅ Executive Office With Dark Wood
+    image: 'executive-office-marble-financial-premium-1.webp' // NEW EXECUTIVE IMAGE
   },
   {
-    name: 'Minimalist',
-    slug: 'minimalist',
-    description: 'Clean, minimalist backgrounds for modern professionals',
-    image: 'minimalist-consultant-office-1.webp'  // ✅ Keep as is
+    name: 'Conference Rooms',
+    slug: 'conference-rooms',
+    description: 'Professional meeting room backgrounds for team calls',
+    image: 'modern-glass-conference-room-1.webp'
   },
   {
-    name: 'Lobbies',
-    slug: 'lobbies',
-    description: 'Professional lobby backgrounds for client meetings',
-    image: 'modern-glass-lobby-3.webp'  // ✅ Modern Glass Lobby #3
+    name: 'Open Offices',
+    slug: 'open-offices',
+    description: 'Modern open workspace backgrounds for collaborative calls',
+    image: 'modern-open-office-workspace-1.webp'
+  },
+  {
+     name: 'Lobbies',
+     slug: 'lobbies',
+     description: 'Professional lobby backgrounds for client meetings',
+     image: 'startup-incubator-lobby-1.webp'
   },
   {
     name: 'Private Offices',
     slug: 'private-offices',
     description: 'Specialized private office backgrounds for consultations',
-    image: 'professional-consultation-office-1.webp'  // ✅ Keep as is
+    image: 'therapist-private-office-1.webp'
   }
 ];
 
