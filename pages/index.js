@@ -1,62 +1,56 @@
+// FINAL pages/index.js with YOUR ACTUAL FILENAMES
 
 import Head from 'next/head';
 import Link from 'next/link';
 import Footer from '../components/Footer';
 
-function AdUnit({ slot, style = {} }) {
-  return (
-    <div style={{textAlign: 'center', margin: '2rem 0', ...style}}>
-      <ins 
-        className="adsbygoogle"
-        style={{display: 'block'}}
-        data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
-        data-ad-slot={slot}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      ></ins>
-    </div>
-  );
-}
-
 export default function Home() {
- const categories = [
-  {
-    name: 'Home Offices',
-    slug: 'home-offices',
-    description: 'Professional home office backgrounds perfect for remote work',
-    image: 'scandinavian-minimalist-home-office-premium-4.webp' // CHANGE TO BETTER IMAGE
-  },
-  {
-    name: 'Executive Offices',
-    slug: 'executive-offices', 
-    description: 'Luxury executive office backgrounds for leadership calls',
-    image: 'executive-office-marble-financial-premium-1.webp' // NEW EXECUTIVE IMAGE
-  },
-  {
-    name: 'Conference Rooms',
-    slug: 'conference-rooms',
-    description: 'Professional meeting room backgrounds for team calls',
-    image: 'modern-glass-conference-room-1.webp'
-  },
-  {
-    name: 'Open Offices',
-    slug: 'open-offices',
-    description: 'Modern open workspace backgrounds for collaborative calls',
-    image: 'modern-open-office-workspace-1.webp'
-  },
-  {
-     name: 'Lobbies',
-     slug: 'lobbies',
-     description: 'Professional lobby backgrounds for client meetings',
-     image: 'startup-incubator-lobby-1.webp'
-  },
-  {
-    name: 'Private Offices',
-    slug: 'private-offices',
-    description: 'Specialized private office backgrounds for consultations',
-    image: 'therapist-private-office-1.webp'
-  }
-];
+  // Using your ACTUAL processed filenames from the search results
+  const categories = [
+    {
+      name: 'Home Offices',
+      slug: 'home-offices',
+      description: 'Professional home office backgrounds perfect for remote work',
+      image: 'biophilic-home-office-with-plants-1.webp', // Your actual file
+      featured: true
+    },
+    {
+      name: 'Executive Offices',
+      slug: 'executive-offices', 
+      description: 'Luxury executive office backgrounds for leadership calls',
+      image: 'executive-office-with-marble-wall-1.webp', // Your actual marble executive office
+      featured: true,
+      premiumAvailable: true
+    },
+    {
+      name: 'Minimalist',
+      slug: 'minimalist',
+      description: 'Clean, minimalist backgrounds for modern professionals',
+      image: 'minimalist-executive-office-1.webp', // Your actual minimalist executive
+      featured: true,
+      premiumAvailable: true
+    },
+    {
+      name: 'Conference Rooms',
+      slug: 'conference-rooms',
+      description: 'Professional meeting room backgrounds for team calls',
+      image: 'financial-firm-conference-room-1.webp' // Your actual conference room
+    },
+    {
+      name: 'Lobbies',
+      slug: 'lobbies',
+      description: 'Professional lobby backgrounds for client meetings',
+      image: 'modern-glass-lobby-3.webp', // Keep this if it exists, or replace
+      featured: true,
+      premiumAvailable: true
+    },
+    {
+      name: 'Private Offices',
+      slug: 'private-offices',
+      description: 'Specialized private office backgrounds for consultations',
+      image: 'professional-consultation-office-1.webp' // Keep this if it exists
+    }
+  ];
 
   return (
     <>
@@ -97,6 +91,44 @@ export default function Home() {
               <Link key={category.slug} href={`/category/${category.slug}`} className="category-card">
                 <div>
                   <div style={{position: 'relative', height: '200px', overflow: 'hidden', borderRadius: '1rem 1rem 0 0'}}>
+                    {/* Premium quality badge */}
+                    {category.featured && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '0.75rem',
+                        left: '0.75rem',
+                        background: 'linear-gradient(45deg, #10b981, #059669)',
+                        color: 'white',
+                        padding: '0.25rem 0.75rem',
+                        borderRadius: '1rem',
+                        fontSize: '0.75rem',
+                        fontWeight: 'bold',
+                        zIndex: 10,
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+                      }}>
+                        PREMIUM QUALITY
+                      </div>
+                    )}
+                    
+                    {/* Premium available hint */}
+                    {category.premiumAvailable && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '0.75rem',
+                        right: '0.75rem',
+                        background: 'linear-gradient(45deg, #fbbf24, #f59e0b)',
+                        color: '#92400e',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '0.75rem',
+                        fontSize: '0.625rem',
+                        fontWeight: 'bold',
+                        zIndex: 10,
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+                      }}>
+                        4K AVAILABLE
+                      </div>
+                    )}
+                    
                     <img 
                       src={`/images/${category.image}`}
                       alt={category.description}
@@ -115,9 +147,26 @@ export default function Home() {
                     <p style={{color: '#6b7280', marginBottom: '1rem'}}>
                       {category.description}
                     </p>
-                    <div style={{color: '#2563eb', fontWeight: '600', display: 'flex', alignItems: 'center'}}>
-                      <span>Browse collection</span>
-                      <span style={{marginLeft: '0.5rem'}}>→</span>
+                    
+                    {/* Enhanced call-to-action */}
+                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                      <div style={{color: '#2563eb', fontWeight: '600', display: 'flex', alignItems: 'center'}}>
+                        <span>Browse collection</span>
+                        <span style={{marginLeft: '0.5rem'}}>→</span>
+                      </div>
+                      
+                      {category.premiumAvailable && (
+                        <div style={{
+                          background: '#fef3c7',
+                          color: '#92400e',
+                          fontSize: '0.75rem',
+                          fontWeight: '600',
+                          padding: '0.25rem 0.5rem',
+                          borderRadius: '0.5rem'
+                        }}>
+                          Premium 4K
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -125,7 +174,8 @@ export default function Home() {
             ))}
           </div>
         </main>
- <section style={{
+
+        <section style={{
           background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
           borderRadius: '1rem',
           padding: '3rem 2rem',
@@ -169,6 +219,7 @@ export default function Home() {
             </Link>
           </div>
         </section>
+
         <section className="features">
           <div className="container">
             <div style={{textAlign: 'center', marginBottom: '3rem'}}>
@@ -202,7 +253,7 @@ export default function Home() {
           </div>
         </section>
 
-      <Footer />
+        <Footer />
       </div>
     </>
   );
