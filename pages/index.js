@@ -19,42 +19,36 @@ function AdUnit({ slot, style = {} }) {
 }
 
 export default function Home() {
-  const categories = [
+ const categories = [
   {
     name: 'Home Offices',
     slug: 'home-offices',
     description: 'Professional home office backgrounds perfect for remote work',
-    image: 'scandinavian-minimalist-home-office-1.webp'
+    image: 'clean-scandinavian-home-office-2.webp'  // ✅ Clean Scandinavian Home Office #2
   },
   {
     name: 'Executive Offices',
     slug: 'executive-offices', 
     description: 'Luxury executive office backgrounds for leadership calls',
-    image: 'luxury-ceo-corner-office-1.webp'
+    image: 'executive-office-with-dark-wood-1.webp'  // ✅ Executive Office With Dark Wood
   },
   {
-    name: 'Conference Rooms',
-    slug: 'conference-rooms',
-    description: 'Professional meeting room backgrounds for team calls',
-    image: 'modern-glass-conference-room-1.webp'
+    name: 'Minimalist',
+    slug: 'minimalist',
+    description: 'Clean, minimalist backgrounds for modern professionals',
+    image: 'minimalist-consultant-office-1.webp'  // ✅ Keep as is
   },
   {
-    name: 'Open Offices',
-    slug: 'open-offices',
-    description: 'Modern open workspace backgrounds for collaborative calls',
-    image: 'modern-open-office-workspace-1.webp'
-  },
-  {
-     name: 'Lobbies', // Change from 'Lounges' to 'Lobbies'
-     slug: 'lobbies', // Change from 'lounges' to 'lobbies'
-     description: 'Professional lobby backgrounds for client meetings',
-     image: 'startup-incubator-lobby-1.webp'
+    name: 'Lobbies',
+    slug: 'lobbies',
+    description: 'Professional lobby backgrounds for client meetings',
+    image: 'modern-glass-lobby-3.webp'  // ✅ Modern Glass Lobby #3
   },
   {
     name: 'Private Offices',
     slug: 'private-offices',
     description: 'Specialized private office backgrounds for consultations',
-    image: 'therapist-private-office-1.webp'
+    image: 'professional-consultation-office-1.webp'  // ✅ Keep as is
   }
 ];
 
@@ -125,7 +119,50 @@ export default function Home() {
             ))}
           </div>
         </main>
-
+ <section style={{
+          background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
+          borderRadius: '1rem',
+          padding: '3rem 2rem',
+          margin: '3rem 0',
+          textAlign: 'center',
+          color: 'white'
+        }}>
+          <div style={{maxWidth: '600px', margin: '0 auto'}}>
+            <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '1rem', color: 'white'}}>
+              Premium 4K Collection
+              <span style={{
+                background: 'rgba(255,255,255,0.2)',
+                padding: '0.5rem 1rem',
+                borderRadius: '1rem',
+                fontSize: '1rem',
+                marginLeft: '1rem',
+                display: 'inline-block'
+              }}>
+                ULTRA HD
+              </span>
+            </h2>
+            <p style={{fontSize: '1.2rem', marginBottom: '2rem', opacity: 0.9}}>
+              Ultra high-quality 4K virtual backgrounds for the most important meetings and presentations
+            </p>
+            <Link href="/premium" style={{
+              background: 'white',
+              color: '#f59e0b',
+              padding: '1rem 2rem',
+              borderRadius: '0.75rem',
+              textDecoration: 'none',
+              fontSize: '1.1rem',
+              fontWeight: 'bold',
+              display: 'inline-block',
+              transition: 'transform 0.2s ease',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+            >
+              View Premium Collection →
+            </Link>
+          </div>
+        </section>
         <section className="features">
           <div className="container">
             <div style={{textAlign: 'center', marginBottom: '3rem'}}>

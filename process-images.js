@@ -1,4 +1,4 @@
-// process-images.js
+// process-images.js - Updated for Batch 2
 // Save this file in your stream-backdrops/nextjs-site/ folder
 // Run with: node process-images.js
 
@@ -6,112 +6,86 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-// Your actual filenames from the paste
+// BATCH 2 FILES - Your actual filenames from original_pngs_batch_2
 const currentFiles = [
-  'u9972584128_Architect_private_studio_with_drafting_table_to_r_b926b6a8-9dfe-45ad-b31f-6ccbbfe89c7a_1.png',
-  'u9972584128_Architect_private_studio_with_drafting_table_to_r_b926b6a8-9dfe-45ad-b31f-6ccbbfe89c7a_2.png',
-  'u9972584128_Architect_private_studio_with_drafting_table_to_r_b926b6a8-9dfe-45ad-b31f-6ccbbfe89c7a_3.png',
-  'u9972584128_Consulting_firm_open_workspace_with_strategy_desk_e21b3d9f-8dc2-4b8e-9444-3f86bcff40d6_0.png',
-  'u9972584128_Consulting_firm_open_workspace_with_strategy_desk_e21b3d9f-8dc2-4b8e-9444-3f86bcff40d6_1.png',
-  'u9972584128_Consulting_firm_open_workspace_with_strategy_desk_e21b3d9f-8dc2-4b8e-9444-3f86bcff40d6_2.png',
-  'u9972584128_Consulting_firm_open_workspace_with_strategy_desk_e21b3d9f-8dc2-4b8e-9444-3f86bcff40d6_3.png',
-  'u9972584128_Contemporary_glass_home_office_with_transparent_d_0e35ece5-5714-4720-96d5-b5647f427302_0.png',
-  'u9972584128_Contemporary_glass_home_office_with_transparent_d_0e35ece5-5714-4720-96d5-b5647f427302_1.png',
-  'u9972584128_Contemporary_glass_home_office_with_transparent_d_0e35ece5-5714-4720-96d5-b5647f427302_2.png',
-  'u9972584128_Contemporary_glass_home_office_with_transparent_d_0e35ece5-5714-4720-96d5-b5647f427302_3.png',
-  'u9972584128_Corporate_executive_office_with_large_wooden_desk_9b4f972a-70d9-41ed-bc50-c7efadcc0627_1.png',
-  'u9972584128_Corporate_executive_office_with_large_wooden_desk_9b4f972a-70d9-41ed-bc50-c7efadcc0627_2.png',
-  'u9972584128_Corporate_executive_office_with_large_wooden_desk_9b4f972a-70d9-41ed-bc50-c7efadcc0627_3.png',
-  'u9972584128_Creative_executive_office_with_artistic_desk_posi_2f40169c-d7f9-412f-ba40-7b1ba4a64526_0.png',
-  'u9972584128_Creative_executive_office_with_artistic_desk_posi_2f40169c-d7f9-412f-ba40-7b1ba4a64526_1.png',
-  'u9972584128_Creative_executive_office_with_artistic_desk_posi_2f40169c-d7f9-412f-ba40-7b1ba4a64526_3.png',
-  'u9972584128_Financial_firm_conference_room_with_polished_tabl_9a2f72bc-9075-4487-89d9-9ee9698173d6_1.png',
-  'u9972584128_Financial_firm_conference_room_with_polished_tabl_9a2f72bc-9075-4487-89d9-9ee9698173d6_2.png',
-  'u9972584128_Hotel_conference_room_with_elegant_table_in_lower_dcd0a6d3-8731-4494-8dec-52a745bacc91_0.png',
-  'u9972584128_Hotel_conference_room_with_elegant_table_in_lower_dcd0a6d3-8731-4494-8dec-52a745bacc91_1.png',
-  'u9972584128_Hotel_conference_room_with_elegant_table_in_lower_dcd0a6d3-8731-4494-8dec-52a745bacc91_2.png',
-  'u9972584128_Hotel_conference_room_with_elegant_table_in_lower_dcd0a6d3-8731-4494-8dec-52a745bacc91_3.png',
-  'u9972584128_Industrial_loft_home_office_with_exposed_brick_wa_353f390c-3b3d-479a-b977-1dd9ae436e66_0.png',
-  'u9972584128_Industrial_loft_home_office_with_exposed_brick_wa_353f390c-3b3d-479a-b977-1dd9ae436e66_1.png',
-  'u9972584128_Industrial_loft_home_office_with_exposed_brick_wa_353f390c-3b3d-479a-b977-1dd9ae436e66_2.png',
-  'u9972584128_Industrial_loft_home_office_with_exposed_brick_wa_353f390c-3b3d-479a-b977-1dd9ae436e66_3.png',
-  'u9972584128_International_executive_office_with_global_desk_t_0be7d783-fee0-4fc2-8713-02aa4c310952_0.png',
-  'u9972584128_International_executive_office_with_global_desk_t_0be7d783-fee0-4fc2-8713-02aa4c310952_1.png',
-  'u9972584128_International_executive_office_with_global_desk_t_0be7d783-fee0-4fc2-8713-02aa4c310952_2.png',
-  'u9972584128_International_executive_office_with_global_desk_t_0be7d783-fee0-4fc2-8713-02aa4c310952_3.png',
-  'u9972584128_Law_firm_lobby_with_traditional_reception_to_righ_7cc6d22e-dd11-4360-90b0-3e6c891c4bb5_0.png',
-  'u9972584128_Law_firm_lobby_with_traditional_reception_to_righ_7cc6d22e-dd11-4360-90b0-3e6c891c4bb5_1.png',
-  'u9972584128_Law_firm_lobby_with_traditional_reception_to_righ_7cc6d22e-dd11-4360-90b0-3e6c891c4bb5_2.png',
-  'u9972584128_Law_firm_lobby_with_traditional_reception_to_righ_7cc6d22e-dd11-4360-90b0-3e6c891c4bb5_3.png',
-  'u9972584128_Legal_counsel_private_office_with_consultation_de_be9a3512-8553-4f0e-a72b-168a56e6b2f7_0.png',
-  'u9972584128_Legal_counsel_private_office_with_consultation_de_be9a3512-8553-4f0e-a72b-168a56e6b2f7_1.png',
-  'u9972584128_Legal_counsel_private_office_with_consultation_de_be9a3512-8553-4f0e-a72b-168a56e6b2f7_3.png',
-  'u9972584128_Luxury_CEO_corner_office_with_panoramic_city_view_91602419-8e77-42c8-b1e4-4b9d0ebac8e8_0.png',
-  'u9972584128_Luxury_CEO_corner_office_with_panoramic_city_view_91602419-8e77-42c8-b1e4-4b9d0ebac8e8_1.png',
-  'u9972584128_Luxury_CEO_corner_office_with_panoramic_city_view_91602419-8e77-42c8-b1e4-4b9d0ebac8e8_2.png',
-  'u9972584128_Luxury_CEO_corner_office_with_panoramic_city_view_91602419-8e77-42c8-b1e4-4b9d0ebac8e8_3.png',
-  'u9972584128_Media_company_open_workspace_with_editing_station_d24690f8-0915-49a7-99ee-db7406c22f97_0.png',
-  'u9972584128_Media_company_open_workspace_with_editing_station_d24690f8-0915-49a7-99ee-db7406c22f97_1.png',
-  'u9972584128_Media_company_open_workspace_with_editing_station_d24690f8-0915-49a7-99ee-db7406c22f97_2.png',
-  'u9972584128_Media_company_open_workspace_with_editing_station_d24690f8-0915-49a7-99ee-db7406c22f97_3.png',
-  'u9972584128_Medical_executive_office_with_professional_desk_t_e7cf8287-e1a3-476a-a7f5-f1ec58af718a_0.png',
-  'u9972584128_Medical_executive_office_with_professional_desk_t_e7cf8287-e1a3-476a-a7f5-f1ec58af718a_1.png',
-  'u9972584128_Medical_executive_office_with_professional_desk_t_e7cf8287-e1a3-476a-a7f5-f1ec58af718a_2.png',
-  'u9972584128_Medical_executive_office_with_professional_desk_t_e7cf8287-e1a3-476a-a7f5-f1ec58af718a_3.png',
-  'u9972584128_Mediterranean_villa_home_office_with_terracotta_t_7b1b1d04-b473-4d0d-b23c-e036ba952a3d_0.png',
-  'u9972584128_Mediterranean_villa_home_office_with_terracotta_t_7b1b1d04-b473-4d0d-b23c-e036ba952a3d_1.png',
-  'u9972584128_Mediterranean_villa_home_office_with_terracotta_t_7b1b1d04-b473-4d0d-b23c-e036ba952a3d_2.png',
-  'u9972584128_Mediterranean_villa_home_office_with_terracotta_t_7b1b1d04-b473-4d0d-b23c-e036ba952a3d_3.png',
-  'u9972584128_Mid-century_modern_home_office_with_teak_wood_des_8c7b0ebe-9251-4435-9b17-7d5bbe0891ab_1.png',
-  'u9972584128_Mid-century_modern_home_office_with_teak_wood_des_8c7b0ebe-9251-4435-9b17-7d5bbe0891ab_2.png',
-  'u9972584128_Mid-century_modern_home_office_with_teak_wood_des_8c7b0ebe-9251-4435-9b17-7d5bbe0891ab_3.png',
-  'u9972584128_Mid-century_modern_home_office_with_teak_wood_des_9a34b44c-adf9-4441-8d06-d61730e12669_0.png',
-  'u9972584128_Minimalist_conference_room_with_white_rectangular_3930e75c-d433-4f5c-8927-41c6d8b0ceb2_1.png',
-  'u9972584128_Minimalist_conference_room_with_white_rectangular_3930e75c-d433-4f5c-8927-41c6d8b0ceb2_3.png',
-  'u9972584128_Modern_glass_conference_room_with_large_oval_tabl_3596e74c-a523-49ed-8634-2fe8cd1ec1f0_0.png',
-  'u9972584128_Modern_glass_conference_room_with_large_oval_tabl_3596e74c-a523-49ed-8634-2fe8cd1ec1f0_1.png',
-  'u9972584128_Modern_glass_conference_room_with_large_oval_tabl_3596e74c-a523-49ed-8634-2fe8cd1ec1f0_2.png',
-  'u9972584128_Modern_glass_conference_room_with_large_oval_tabl_3596e74c-a523-49ed-8634-2fe8cd1ec1f0_3.png',
-  'u9972584128_Modern_open_office_workspace_with_desks_positione_ea35bd79-5fca-48d8-b26b-7df437bd70e6_0.png',
-  'u9972584128_Modern_open_office_workspace_with_desks_positione_ea35bd79-5fca-48d8-b26b-7df437bd70e6_1.png',
-  'u9972584128_Modern_open_office_workspace_with_desks_positione_ea35bd79-5fca-48d8-b26b-7df437bd70e6_2.png',
-  'u9972584128_Modern_open_office_workspace_with_desks_positione_ea35bd79-5fca-48d8-b26b-7df437bd70e6_3.png',
-  'u9972584128_Scandinavian_minimalist_home_office_with_white_oa_7f1cebf1-f20f-4544-8731-546a74e5f72f_0.png',
-  'u9972584128_Scandinavian_minimalist_home_office_with_white_oa_7f1cebf1-f20f-4544-8731-546a74e5f72f_1.png',
-  'u9972584128_Scandinavian_minimalist_home_office_with_white_oa_7f1cebf1-f20f-4544-8731-546a74e5f72f_2.png',
-  'u9972584128_Scandinavian_minimalist_home_office_with_white_oa_7f1cebf1-f20f-4544-8731-546a74e5f72f_3.png',
-  'u9972584128_Software_development_open_workspace_with_coding_s_12eed624-fd6e-4532-ae2a-992f2645e13d_0.png',
-  'u9972584128_Software_development_open_workspace_with_coding_s_12eed624-fd6e-4532-ae2a-992f2645e13d_1.png',
-  'u9972584128_Software_development_open_workspace_with_coding_s_12eed624-fd6e-4532-ae2a-992f2645e13d_2.png',
-  'u9972584128_Software_development_open_workspace_with_coding_s_12eed624-fd6e-4532-ae2a-992f2645e13d_3.png',
-  'u9972584128_Startup_incubator_lobby_with_innovation_desk_to_s_84c1fb42-3b2e-4d1e-b5e8-ce20337f2066_0.png',
-  'u9972584128_Startup_incubator_lobby_with_innovation_desk_to_s_84c1fb42-3b2e-4d1e-b5e8-ce20337f2066_1.png',
-  'u9972584128_Startup_incubator_lobby_with_innovation_desk_to_s_84c1fb42-3b2e-4d1e-b5e8-ce20337f2066_2.png',
-  'u9972584128_Startup_incubator_lobby_with_innovation_desk_to_s_84c1fb42-3b2e-4d1e-b5e8-ce20337f2066_3.png',
-  'u9972584128_Tech_startup_conference_room_with_collaborative_t_e4455d89-c69b-495c-a16d-1204302a70e5_0.png',
-  'u9972584128_Tech_startup_conference_room_with_collaborative_t_e4455d89-c69b-495c-a16d-1204302a70e5_1.png',
-  'u9972584128_Tech_startup_conference_room_with_collaborative_t_e4455d89-c69b-495c-a16d-1204302a70e5_2.png',
-  'u9972584128_Tech_startup_conference_room_with_collaborative_t_e4455d89-c69b-495c-a16d-1204302a70e5_3.png',
-  'u9972584128_Therapist_private_office_with_consultation_desk_p_5e90b0c8-9600-4022-8491-e457739a2212_0 (1).png',
-  'u9972584128_Therapist_private_office_with_consultation_desk_p_5e90b0c8-9600-4022-8491-e457739a2212_0.png',
-  'u9972584128_Therapist_private_office_with_consultation_desk_p_5e90b0c8-9600-4022-8491-e457739a2212_1 (1).png',
-  'u9972584128_Therapist_private_office_with_consultation_desk_p_5e90b0c8-9600-4022-8491-e457739a2212_1.png',
-  'u9972584128_Therapist_private_office_with_consultation_desk_p_5e90b0c8-9600-4022-8491-e457739a2212_2 (1).png',
-  'u9972584128_Therapist_private_office_with_consultation_desk_p_5e90b0c8-9600-4022-8491-e457739a2212_2.png',
-  'u9972584128_Therapist_private_office_with_consultation_desk_p_5e90b0c8-9600-4022-8491-e457739a2212_3 (1).png',
-  'u9972584128_Therapist_private_office_with_consultation_desk_p_5e90b0c8-9600-4022-8491-e457739a2212_3.png',
-  'u9972584128_Traditional_library_home_office_with_dark_wood_pa_24f03229-877c-4bf4-94c5-1dc58d543318_0.png',
-  'u9972584128_Traditional_library_home_office_with_dark_wood_pa_24f03229-877c-4bf4-94c5-1dc58d543318_1.png',
-  'u9972584128_Traditional_library_home_office_with_dark_wood_pa_24f03229-877c-4bf4-94c5-1dc58d543318_2.png',
-  'u9972584128_Traditional_library_home_office_with_dark_wood_pa_24f03229-877c-4bf4-94c5-1dc58d543318_3.png',
-  'u9972584128_University_lobby_with_information_desk_to_left_si_9a98d19d-5d5a-4700-b187-6747848cdf40_0.png',
-  'u9972584128_University_lobby_with_information_desk_to_left_si_9a98d19d-5d5a-4700-b187-6747848cdf40_1.png',
-  'u9972584128_University_lobby_with_information_desk_to_left_si_9a98d19d-5d5a-4700-b187-6747848cdf40_2.png',
-  'u9972584128_University_lobby_with_information_desk_to_left_si_9a98d19d-5d5a-4700-b187-6747848cdf40_3.png',
-  'u9972584128_Wellness_practitioner_private_office_with_treatme_f8c0d774-6887-4df9-8d96-53fbba74b45a_0.png',
-  'u9972584128_Wellness_practitioner_private_office_with_treatme_f8c0d774-6887-4df9-8d96-53fbba74b45a_1.png',
-  'u9972584128_Wellness_practitioner_private_office_with_treatme_f8c0d774-6887-4df9-8d96-53fbba74b45a_2.png',
-  'u9972584128_Wellness_practitioner_private_office_with_treatme_f8c0d774-6887-4df9-8d96-53fbba74b45a_3.png'
+  'u9972584128_Contemporary_executive_home_office_with_sleek_bla_21e661d4-8912-436f-8cf3-5851fc50af3b_0.png',
+  'u9972584128_Contemporary_executive_home_office_with_sleek_bla_21e661d4-8912-436f-8cf3-5851fc50af3b_2.png',
+  'u9972584128_Contemporary_executive_home_office_with_sleek_bla_468eda8d-a5a6-473e-be7b-dd6ac1e36048_0.png',
+  'u9972584128_Contemporary_executive_home_office_with_sleek_bla_468eda8d-a5a6-473e-be7b-dd6ac1e36048_1.png',
+  'u9972584128_Contemporary_executive_home_office_with_sleek_bla_468eda8d-a5a6-473e-be7b-dd6ac1e36048_2.png',
+  'u9972584128_Contemporary_executive_home_office_with_sleek_bla_468eda8d-a5a6-473e-be7b-dd6ac1e36048_3.png',
+  'u9972584128_Empty_minimalist_consultant_office_with_single_mo_00d5dfe1-350b-4c51-8478-973a98ab1112_1.png',
+  'u9972584128_Empty_minimalist_high-end_executive_office_with_s_2cab17be-6b5d-4e4b-8470-c2253e75caec_0.png',
+  'u9972584128_Empty_minimalist_high-end_executive_office_with_s_2cab17be-6b5d-4e4b-8470-c2253e75caec_2.png',
+  'u9972584128_Empty_minimalist_Japandi_home_office_with_single__d7873ac8-b470-43fd-be47-35f50ffe9fad_1.png',
+  'u9972584128_Empty_minimalist_medical_lobby_with_single_clean__5376d3c6-1140-461f-90f4-fc5241420e67_2.png',
+  'u9972584128_Farmhouse_home_office_with_distressed_wood_desk_i_4eab93d2-ee24-44e6-b45e-7d9c5d242c93_0.png',
+  'u9972584128_Farmhouse_home_office_with_distressed_wood_desk_i_4eab93d2-ee24-44e6-b45e-7d9c5d242c93_1.png',
+  'u9972584128_Modern_biophilic_home_office_with_natural_wood_de_bf0614b7-242d-450f-9319-ef0e2f865061_2.png',
+  'u9972584128_Modern_home_office_with_large_plants_positioned_i_4d9cf929-7e77-40a4-bafc-38511971de1f_2.png',
+  'u9972584128_Modern_minimalist_home_office_with_clean_white_de_0facadbd-2bee-49e3-9118-0e5b76723fd7_1.png',
+  'u9972584128_Modern_minimalist_home_office_with_clean_white_de_0facadbd-2bee-49e3-9118-0e5b76723fd7_3.png',
+  'u9972584128_Modern_minimalist_home_office_with_clean_white_de_234f81b1-da93-474e-9651-83f57a3e4947_2.png',
+  'u9972584128_Modern_minimalist_home_office_with_clean_white_de_234f81b1-da93-474e-9651-83f57a3e4947_3.png',
+  'u9972584128_Photorealistic_home_office_with_wood_accent_wall__32c2ca0f-782a-461f-bded-72e2b505b001_0.png',
+  'u9972584128_Photorealistic_home_office_with_wood_accent_wall__32c2ca0f-782a-461f-bded-72e2b505b001_1.png',
+  'u9972584128_Photorealistic_home_office_with_wood_accent_wall__32c2ca0f-782a-461f-bded-72e2b505b001_2.png',
+  'u9972584128_Professional_consultation_office_interior_photogr_2a8e15a0-46b4-486a-9caa-82efdbe2e6bd_0.png',
+  'u9972584128_Professional_consultation_office_interior_photogr_2a8e15a0-46b4-486a-9caa-82efdbe2e6bd_1.png',
+  'u9972584128_Professional_consultation_office_interior_photogr_2a8e15a0-46b4-486a-9caa-82efdbe2e6bd_2.png',
+  'u9972584128_Professional_consultation_office_interior_photogr_2a8e15a0-46b4-486a-9caa-82efdbe2e6bd_3.png',
+  'u9972584128_Professional_home_office_with_clean_white_desk_mi_72058675-4bd7-4c5c-ab21-8d451f6c157e_0.png',
+  'u9972584128_Professional_home_office_with_clean_white_desk_mi_72058675-4bd7-4c5c-ab21-8d451f6c157e_3.png',
+  'u9972584128_Professional_interior_photograph_of_cozy_home_off_91b2f24b-10e2-4384-81ca-e72ee7e25d1b_0.png',
+  'u9972584128_Professional_interior_photograph_of_cozy_home_off_91b2f24b-10e2-4384-81ca-e72ee7e25d1b_2.png',
+  'u9972584128_Professional_interior_photograph_of_cozy_home_off_91b2f24b-10e2-4384-81ca-e72ee7e25d1b_3.png',
+  'u9972584128_Professional_office_interior_photograph_with_sing_5f03ac15-f293-483c-8324-418ea938c0fa_0.png',
+  'u9972584128_Professional_office_interior_photograph_with_sing_5f03ac15-f293-483c-8324-418ea938c0fa_1.png',
+  'u9972584128_Professional_office_interior_photograph_with_sing_5f03ac15-f293-483c-8324-418ea938c0fa_3.png',
+  'u9972584128_Realistic_artistic_home_office_with_standing_desk_3fcf36c2-5860-4d52-9087-4ee981d2187b_3.png',
+  'u9972584128_Realistic_contemporary_physicians_office_with_med_2d46d94e-aba1-4953-96f4-e8e45609311b_1.png',
+  'u9972584128_Realistic_modern_engineering_office_with_technica_901b9fd7-fdca-47a7-a073-6c677d76291c_1.png',
+  'u9972584128_Realistic_modern_engineering_office_with_technica_901b9fd7-fdca-47a7-a073-6c677d76291c_2.png',
+  'u9972584128_Realistic_modern_engineering_office_with_technica_901b9fd7-fdca-47a7-a073-6c677d76291c_3.png',
+  'u9972584128_Realistic_upscale_real_estate_office_with_propert_b1ab0ca7-a033-4707-9c10-5ef46695a6c9_2.png',
+  'u9972584128_Realistic_warm_therapy_office_with_comfortable_se_fa0702ee-30fa-4c0c-8346-20d14d82a0e1_0.png',
+  'u9972584128_Realistic_warm_therapy_office_with_comfortable_se_fa0702ee-30fa-4c0c-8346-20d14d82a0e1_2.png',
+  'u9972584128_Real_corner_office_photograph_with_floor-to-ceili_b587704b-319b-44a0-a04f-8ba5deb88785_0.png',
+  'u9972584128_Real_corner_office_photograph_with_floor-to-ceili_b587704b-319b-44a0-a04f-8ba5deb88785_2.png',
+  'u9972584128_Real_corner_office_photograph_with_floor-to-ceili_b587704b-319b-44a0-a04f-8ba5deb88785_3.png',
+  'u9972584128_Real_corporate_lobby_photograph_with_single_recep_fb0495e6-14ac-44f0-82ae-fbde4ce15a20_0.png',
+  'u9972584128_Real_corporate_lobby_photograph_with_single_recep_fb0495e6-14ac-44f0-82ae-fbde4ce15a20_2.png',
+  'u9972584128_Real_glass_lobby_photograph_with_single_modern_se_4e495534-470e-44e8-aab0-1789246a2f01_0.png',
+  'u9972584128_Real_glass_lobby_photograph_with_single_modern_se_4e495534-470e-44e8-aab0-1789246a2f01_1.png',
+  'u9972584128_Real_glass_lobby_photograph_with_single_modern_se_4e495534-470e-44e8-aab0-1789246a2f01_2.png',
+  'u9972584128_Real_glass_lobby_photograph_with_single_modern_se_4e495534-470e-44e8-aab0-1789246a2f01_3.png',
+  'u9972584128_Real_home_office_photograph_natural_lighting_wood_5a78f507-ec7d-4be6-8b26-50236304b5fa_0.png',
+  'u9972584128_Real_home_office_photograph_natural_lighting_wood_5a78f507-ec7d-4be6-8b26-50236304b5fa_3.png',
+  'u9972584128_Real_home_office_photograph_single_plant_position_c79ad3d7-e2ff-444b-8c7d-7c8d75be3234_0.png',
+  'u9972584128_Real_home_office_photograph_single_plant_position_c79ad3d7-e2ff-444b-8c7d-7c8d75be3234_1.png',
+  'u9972584128_Real_home_office_photograph_single_plant_position_c79ad3d7-e2ff-444b-8c7d-7c8d75be3234_3.png',
+  'u9972584128_Real_home_office_photograph_with_light_wood_accen_697e2714-c527-42a6-8cf3-d1b3c53a275d_0.png',
+  'u9972584128_Real_home_office_photograph_with_light_wood_accen_697e2714-c527-42a6-8cf3-d1b3c53a275d_1.png',
+  'u9972584128_Real_home_office_photograph_with_light_wood_accen_697e2714-c527-42a6-8cf3-d1b3c53a275d_2.png',
+  'u9972584128_Real_home_office_photograph_with_single_concrete__f2a938b1-8bbf-4f96-b9f3-5e01d0674dc8_1.png',
+  'u9972584128_Real_home_office_photograph_with_single_warm_wood_f96d8880-fca0-4f04-a07d-32bce6ae09b3_2.png',
+  'u9972584128_Real_modern_office_lobby_photograph_with_single_l_d42674b0-7298-460c-8db8-5a522fed35b1_0.png',
+  'u9972584128_Real_modern_office_lobby_photograph_with_single_l_d42674b0-7298-460c-8db8-5a522fed35b1_1.png',
+  'u9972584128_Real_modern_office_lobby_photograph_with_single_l_d42674b0-7298-460c-8db8-5a522fed35b1_2.png',
+  'u9972584128_Real_modern_office_lobby_photograph_with_single_l_d42674b0-7298-460c-8db8-5a522fed35b1_3.png',
+  'u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_0.png',
+  'u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_1.png',
+  'u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_2.png',
+  'u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_3.png',
+  'u9972584128_Real_office_photograph_with_single_dark_wood_acce_dd48ae64-c8ed-43bc-8c63-3370109d1ff4_0.png',
+  'u9972584128_Real_office_photograph_with_single_dark_wood_acce_dd48ae64-c8ed-43bc-8c63-3370109d1ff4_1.png',
+  'u9972584128_Real_office_photograph_with_single_dark_wood_acce_dd48ae64-c8ed-43bc-8c63-3370109d1ff4_3.png',
+  'u9972584128_Real_private_office_photograph_with_single_booksh_7e83009f-67a9-4ba7-9765-234f83e5d87c_0.png',
+  'u9972584128_Real_private_office_photograph_with_single_booksh_7e83009f-67a9-4ba7-9765-234f83e5d87c_1.png',
+  'u9972584128_Real_private_office_photograph_with_single_booksh_7e83009f-67a9-4ba7-9765-234f83e5d87c_2.png',
+  'u9972584128_Real_private_office_photograph_with_single_booksh_7e83009f-67a9-4ba7-9765-234f83e5d87c_3.png',
+  'u9972584128_Real_world_Clean_Scandinavian_home_office_with_wh_f74a7d7a-9d64-41b2-bc7e-9c0f207bdcae_0.png',
+  'u9972584128_Real_world_Clean_Scandinavian_home_office_with_wh_f74a7d7a-9d64-41b2-bc7e-9c0f207bdcae_2.png'
 ];
 
 // Function to extract meaningful name from filename
@@ -123,6 +97,101 @@ function extractImageType(filename) {
   // Convert underscores to spaces and clean up
   name = name.replace(/_/g, ' ');
   
+  // Handle specific patterns from your batch 2 images
+  if (name.includes('Contemporary executive home office with sleek')) {
+    return 'Contemporary executive home office';
+  }
+  if (name.includes('Empty minimalist consultant office')) {
+    return 'Minimalist consultant office';
+  }
+  if (name.includes('Empty minimalist high-end executive office')) {
+    return 'Minimalist executive office';
+  }
+  if (name.includes('Empty minimalist Japandi home office')) {
+    return 'Japandi minimalist home office';
+  }
+  if (name.includes('Empty minimalist medical lobby')) {
+    return 'Minimalist medical lobby';
+  }
+  if (name.includes('Farmhouse home office with distressed wood')) {
+    return 'Farmhouse home office';
+  }
+  if (name.includes('Modern biophilic home office')) {
+    return 'Biophilic home office with plants';
+  }
+  if (name.includes('Modern home office with large plants')) {
+    return 'Modern home office with plants';
+  }
+  if (name.includes('Modern minimalist home office with clean white')) {
+    return 'Minimalist white home office';
+  }
+  if (name.includes('Photorealistic home office with wood accent wall')) {
+    return 'Home office with wood accent wall';
+  }
+  if (name.includes('Professional consultation office interior')) {
+    return 'Professional consultation office';
+  }
+  if (name.includes('Professional home office with clean white desk')) {
+    return 'Clean modern home office';
+  }
+  if (name.includes('Professional interior photograph of cozy home')) {
+    return 'Cozy professional home office';
+  }
+  if (name.includes('Professional office interior photograph with sing')) {
+    return 'Professional office with windows';
+  }
+  if (name.includes('Realistic artistic home office with standing')) {
+    return 'Artistic home office with standing desk';
+  }
+  if (name.includes('Realistic contemporary physicians office')) {
+    return 'Contemporary physicians office';
+  }
+  if (name.includes('Realistic modern engineering office')) {
+    return 'Modern engineering office';
+  }
+  if (name.includes('Realistic upscale real estate office')) {
+    return 'Upscale real estate office';
+  }
+  if (name.includes('Realistic warm therapy office')) {
+    return 'Warm therapy office';
+  }
+  if (name.includes('Real corner office photograph with floor-to-ceili')) {
+    return 'Corner office with city views';
+  }
+  if (name.includes('Real corporate lobby photograph with single recep')) {
+    return 'Corporate lobby with reception';
+  }
+  if (name.includes('Real glass lobby photograph with single modern')) {
+    return 'Modern glass lobby';
+  }
+  if (name.includes('Real home office photograph natural lighting wood')) {
+    return 'Home office with natural wood';
+  }
+  if (name.includes('Real home office photograph single plant position')) {
+    return 'Home office with plant accent';
+  }
+  if (name.includes('Real home office photograph with light wood accen')) {
+    return 'Scandinavian home office';
+  }
+  if (name.includes('Real home office photograph with single concrete')) {
+    return 'Industrial home office with concrete';
+  }
+  if (name.includes('Real home office photograph with single warm wood')) {
+    return 'Traditional home office with wood';
+  }
+  if (name.includes('Real office photograph with marble accent wall')) {
+    return 'Executive office with marble wall';
+  }
+  if (name.includes('Real office photograph with single dark wood')) {
+    return 'Executive office with dark wood';
+  }
+  if (name.includes('Real private office photograph with single booksh')) {
+    return 'Private office with bookshelf';
+  }
+  if (name.includes('Real world Clean Scandinavian home office')) {
+    return 'Clean Scandinavian home office';
+  }
+  
   // Truncate if too long (Midjourney cuts off descriptions)
   if (name.includes(' with ')) {
     name = name.split(' with ')[0];
@@ -131,18 +200,46 @@ function extractImageType(filename) {
   return name;
 }
 
-// Function to determine category from filename
+// Function to determine category from filename and content
 function categorizeImage(filename) {
   const name = filename.toLowerCase();
   
-  if (name.includes('home_office')) return 'home-offices';
-  if (name.includes('conference_room') || name.includes('meeting_room')) return 'conference-rooms';
-  if (name.includes('executive_office')) return 'executive-offices';
-  if (name.includes('lobby')) return 'lobbies';
-  if (name.includes('open_workspace') || name.includes('open_office')) return 'open-offices';
-  if (name.includes('private_office') || name.includes('private_studio')) return 'private-offices';
+  // Home office variations
+  if (name.includes('home_office') || name.includes('scandinavian') || name.includes('mediterranean')) {
+    return 'home-offices';
+  }
   
-  // Fallback
+  // Executive offices
+  if (name.includes('ceo_office') || name.includes('executive_office') || 
+      name.includes('luxury_ceo') || name.includes('corner_office') ||
+      name.includes('marble_accent') || name.includes('city_view')) {
+    return 'executive-offices';
+  }
+  
+  // Lobbies
+  if (name.includes('lobby') || name.includes('reception') || 
+      name.includes('corporate_lobby') || name.includes('glass_lobby')) {
+    return 'lobbies';
+  }
+  
+  // Conference rooms (if any survived)
+  if (name.includes('conference_room') || name.includes('meeting_room') || 
+      name.includes('boardroom')) {
+    return 'conference-rooms';
+  }
+  
+  // Private offices
+  if (name.includes('private_office') || name.includes('consultation') || 
+      name.includes('therapist') || name.includes('counseling')) {
+    return 'private-offices';
+  }
+  
+  // Open offices
+  if (name.includes('open_office') || name.includes('open_workspace')) {
+    return 'open-offices';
+  }
+  
+  // Fallback to home offices
   return 'home-offices';
 }
 
@@ -170,28 +267,28 @@ function generateMetadata(filename) {
   // Create proper title (title case)
   const title = type.replace(/\b\w/g, l => l.toUpperCase());
   
-  // Generate description based on category
+  // Generate description based on category and content
   let description = '';
   let keywords = [];
   
   if (category === 'home-offices') {
     description = `Professional ${type.toLowerCase()} virtual background perfect for remote work and video calls`;
     keywords = ['home office', 'remote work', 'virtual background', 'professional', 'video calls'];
-  } else if (category === 'conference-rooms') {
-    description = `${title} virtual background ideal for team meetings and professional presentations`;
-    keywords = ['conference room', 'meeting room', 'team meetings', 'presentations', 'professional'];
   } else if (category === 'executive-offices') {
     description = `Luxury ${type.toLowerCase()} virtual background for executive meetings and leadership calls`;
     keywords = ['executive office', 'luxury', 'leadership', 'professional', 'business'];
   } else if (category === 'lobbies') {
     description = `Professional ${type.toLowerCase()} virtual background for client meetings and business calls`;
     keywords = ['lobby', 'reception', 'professional', 'business', 'client meetings'];
-  } else if (category === 'open-offices') {
-    description = `Modern ${type.toLowerCase()} virtual background for collaborative work and team calls`;
-    keywords = ['open office', 'collaborative', 'modern', 'teamwork', 'professional'];
+  } else if (category === 'conference-rooms') {
+    description = `${title} virtual background ideal for team meetings and professional presentations`;
+    keywords = ['conference room', 'meeting room', 'team meetings', 'presentations', 'professional'];
   } else if (category === 'private-offices') {
     description = `Specialized ${type.toLowerCase()} virtual background for professional consultations and meetings`;
     keywords = ['private office', 'consultation', 'professional', 'specialized', 'meetings'];
+  } else if (category === 'open-offices') {
+    description = `Modern ${type.toLowerCase()} virtual background for collaborative work and team calls`;
+    keywords = ['open office', 'collaborative', 'modern', 'teamwork', 'professional'];
   }
   
   // Extract specific keywords from the type
@@ -205,11 +302,29 @@ function generateMetadata(filename) {
 
 // Main processing function
 function processImages() {
-  const imagesDir = path.join(__dirname, 'public', 'images');
-  const metadata = {};
+  // UPDATE THESE PATHS FOR YOUR SETUP:
+  const sourceDir = path.join(__dirname, '..', 'original_pngs_batch_2'); // Source folder
+  const targetDir = path.join(__dirname, 'public', 'images'); // Target folder
+  
+  // Load existing metadata to avoid overwrites
+  const metadataPath = path.join(__dirname, 'public', 'data', 'image-metadata.json');
+  let metadata = {};
+  
+  if (fs.existsSync(metadataPath)) {
+    try {
+      const existingData = fs.readFileSync(metadataPath, 'utf8');
+      metadata = JSON.parse(existingData);
+      console.log(`📋 Loaded existing metadata with ${Object.keys(metadata).length} images`);
+    } catch (error) {
+      console.log('⚠️  Could not load existing metadata, starting fresh');
+    }
+  }
+  
   let processedCount = 0;
   
-  console.log('🚀 Starting image processing...\n');
+  console.log('🚀 Starting Batch 2 image processing...\n');
+  console.log(`📁 Source: ${sourceDir}`);
+  console.log(`📁 Target: ${targetDir}\n`);
   
   // Group files by type to avoid duplicates
   const groupedFiles = {};
@@ -225,8 +340,8 @@ function processImages() {
   Object.entries(groupedFiles).forEach(([type, files]) => {
     files.forEach((oldFilename, index) => {
       const newFilename = createSEOFilename(oldFilename, index);
-      const oldPath = path.join(imagesDir, oldFilename);
-      const webpPath = path.join(imagesDir, newFilename);
+      const oldPath = path.join(sourceDir, oldFilename);
+      const webpPath = path.join(targetDir, newFilename);
       
       if (fs.existsSync(oldPath)) {
         try {
@@ -255,14 +370,12 @@ function processImages() {
         }
       } else {
         console.log(`⚠️  File not found: ${oldFilename}`);
+        console.log(`     Looking in: ${oldPath}`);
       }
     });
   });
   
-  // Write metadata JSON
-  const metadataPath = path.join(__dirname, 'public', 'data', 'image-metadata.json');
-  
-  // Ensure data directory exists
+  // Write updated metadata JSON
   const dataDir = path.dirname(metadataPath);
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
@@ -270,10 +383,10 @@ function processImages() {
   
   fs.writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
   
-  console.log(`\n🎉 Processing complete!`);
-  console.log(`📊 Processed ${processedCount} images`);
+  console.log(`\n🎉 Batch 2 processing complete!`);
+  console.log(`📊 Processed ${processedCount} new images`);
+  console.log(`📁 Total images in metadata: ${Object.keys(metadata).length}`);
   console.log(`📁 Metadata saved to: ${metadataPath}`);
-  console.log(`\n📋 Summary by category:`);
   
   // Count by category
   const categoryCounts = {};
@@ -281,14 +394,10 @@ function processImages() {
     categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1;
   });
   
+  console.log(`\n📋 Updated summary by category:`);
   Object.entries(categoryCounts).forEach(([category, count]) => {
     console.log(`   ${category}: ${count} images`);
   });
-  
-  console.log(`\n🧹 Next steps:`);
-  console.log(`1. Remove original PNG files if conversion looks good`);
-  console.log(`2. Test your site: npm run dev`);
-  console.log(`3. Check images load at: http://localhost:3000/images/[filename]`);
 }
 
 // Check if ImageMagick is installed
