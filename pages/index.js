@@ -1,8 +1,9 @@
-// FINAL pages/index.js with YOUR ACTUAL FILENAMES
+
 
 import Head from 'next/head';
 import Link from 'next/link';
 import Footer from '../components/Footer';
+import Image from 'next/image';
 
 export default function Home() {
   const categories = [
@@ -121,14 +122,18 @@ export default function Home() {
                       </div>
                     )}
                     
-                    <img 
+                    <Image
                       src={`/images/${category.image}`}
                       alt={category.description}
+                      width={400}   
+                      height={225}     
                       style={{
                         width: '100%',
                         height: '100%',
                         objectFit: 'cover'
                       }}
+                      priority={category.featured}
+                      loading="lazy"
                     />
                   </div>
                   

@@ -1,10 +1,11 @@
-// pages/category/[slug].js - Fixed version with proper sorting and premium filtering
+
 
 import { useState, useMemo, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
+import Image from 'next/image';  // ADD THIS LINE
 
 export default function CategoryPage() {
   const router = useRouter();
@@ -412,9 +413,11 @@ export default function CategoryPage() {
                         </div>
                       )}
                       <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
-                        <img
+                        <Image
                           src={`/images/${image.filename}`}
                           alt={image.alt || 'Virtual background'}
+                          width={400}
+                          height={225}
                           style={{
                             width: '100%',
                             height: '100%',
@@ -423,6 +426,7 @@ export default function CategoryPage() {
                           }}
                           onClick={() => setSelectedImage(image)}
                           onContextMenu={(e) => e.preventDefault()}
+                          loading="lazy"
                         />
                         
                         <div style={{
@@ -508,6 +512,7 @@ export default function CategoryPage() {
             )}
           </div>
         </section>
+        
         {slug === 'executive-offices' && categoryImages.some(img => img.isPremium) && (
           <section style={{
             background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
@@ -575,9 +580,11 @@ export default function CategoryPage() {
                 {selectedImage.title || 'Virtual Background'}
               </h3>
               
-              <img
+              <Image
                 src={`/images/${selectedImage.filename}`}
                 alt={selectedImage.alt || 'Virtual background'}
+                width={800}
+                height={450}
                 style={{
                   width: '100%',
                   height: 'auto',
@@ -586,6 +593,7 @@ export default function CategoryPage() {
                   borderRadius: '4px',
                   marginBottom: '15px'
                 }}
+                loading="eager"
               />
               
               <p style={{ color: '#666', marginBottom: '20px' }}>

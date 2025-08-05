@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    formats: ['image/webp', 'image/avif'],
+    formats: ['image/webp', 'image/avif'],  // Makes images smaller automatically
+    quality: 80,                            // Good quality, smaller files
   },
   async headers() {
     return [
@@ -18,5 +19,3 @@ const nextConfig = {
     ];
   },
 }
-
-module.exports = nextConfig
