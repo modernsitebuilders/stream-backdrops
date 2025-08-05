@@ -1,11 +1,3 @@
-// ============================================================================
-// MOBILE PERFORMANCE FIXES FOR STREAMBACKDROPS
-// ============================================================================
-
-// 1. CRITICAL: REDUCE GOOGLE ANALYTICS IMPACT
-// ============================================================================
-
-// REPLACE your _document.js Google Analytics code with this optimized version:
 
 import { Html, Head, Main, NextScript } from 'next/document'
 
