@@ -411,26 +411,6 @@ export default function CategoryPage() {
                           PREMIUM 4K
                         </div>
                       )}
-                      {slug === 'home-offices' && (
-                        <div style={{
-                          position: 'absolute',
-                          top: '1rem',
-                          left: '1rem',
-                          background: image.title.toLowerCase().includes('scandinavian') 
-                            ? 'rgba(59, 130, 246, 0.9)' 
-                            : image.title.toLowerCase().includes('farmhouse')
-                            ? 'rgba(139, 69, 19, 0.9)'
-                            : 'rgba(107, 114, 128, 0.9)',
-                          color: 'white',
-                          padding: '0.25rem 0.5rem',
-                          borderRadius: '0.5rem',
-                          fontSize: '0.75rem',
-                          fontWeight: '600',
-                          zIndex: 10
-                        }}>
-                        </div>
-                      )}
-
                       <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
                         <img
                           src={`/images/${image.filename}`}

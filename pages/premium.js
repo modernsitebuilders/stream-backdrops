@@ -1,3 +1,5 @@
+// Update your pages/premium.js file with this version:
+
 import { useState, useMemo, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -50,10 +52,9 @@ export default function PremiumPage() {
       .map(([key, data]) => ({ key, ...data }));
   }, [imageMetadata, loading]);
 
-  const handlePremiumPurchase = (image) => {
-    // Redirect to Gumroad product
-    const gumroadUrl = `https://gumroad.com/l/${image.gumroadPermalink || 'premium-backgrounds'}`;
-    window.open(gumroadUrl, '_blank');
+  const handleComingSoonClick = () => {
+    // You can add analytics tracking here if needed
+    console.log('User clicked on coming soon - interested in premium!');
   };
 
   if (loading) {
@@ -73,11 +74,11 @@ export default function PremiumPage() {
     <>
       <Head>
         <title>Premium 4K Virtual Backgrounds - StreamBackdrops</title>
-        <meta name="description" content="Download ultra high-quality 4K virtual backgrounds. Premium professional backgrounds for the most important video calls and presentations." />
+        <meta name="description" content="Ultra high-quality 4K virtual backgrounds coming soon. Premium professional backgrounds for the most important video calls and presentations." />
       </Head>
 
       <div style={{minHeight: '100vh', background: '#f9fafb'}}>
-        {/* Add Category Navigation Header */}
+        {/* Category Navigation Header */}
         <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '1rem 0'}}>
           <div className="container">
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem'}}>
@@ -130,7 +131,7 @@ export default function PremiumPage() {
           </div>
         </header>
 
-        {/* Premium Hero Section */}
+        {/* Premium Hero Section with Coming Soon */}
         <section style={{
           background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
           color: 'white',
@@ -148,20 +149,52 @@ export default function PremiumPage() {
                 marginLeft: '1rem',
                 display: 'inline-block'
               }}>
-                ULTRA HD
+                COMING SOON
               </span>
             </h1>
             
             <p style={{fontSize: '1.2rem', marginBottom: '0.5rem'}}>
               Ultra high-quality 4K virtual backgrounds with premium materials and luxury details
             </p>
-            <p style={{opacity: 0.9, fontSize: '1.1rem'}}>
-              Professional quality • Perfect for important meetings • Starting at $5.99
+            <p style={{opacity: 0.9, fontSize: '1.1rem', marginBottom: '2rem'}}>
+              Professional quality • Perfect for important meetings • Launching soon at $7.99
             </p>
+
+            {/* Coming Soon Notice */}
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              borderRadius: '1rem',
+              padding: '2rem',
+              maxWidth: '600px',
+              margin: '0 auto',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: 'white'}}>
+                🚀 Premium Collection Launching Soon!
+              </h2>
+              <p style={{fontSize: '1.1rem', marginBottom: '1.5rem', lineHeight: '1.6'}}>
+                We're working on setting up secure payment processing for our premium 4K backgrounds. 
+                Check back soon for ultra high-definition backgrounds perfect for your most important meetings.
+              </p>
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.2)',
+                borderRadius: '0.75rem',
+                padding: '1rem',
+                fontSize: '0.95rem'
+              }}>
+                <strong>What to expect:</strong>
+                <ul style={{textAlign: 'left', marginTop: '0.5rem', paddingLeft: '1.5rem'}}>
+                  <li>4K Ultra HD resolution (3840×2160)</li>
+                  <li>Premium lighting and materials</li>
+                  <li>Instant digital download</li>
+                  <li>Commercial use license included</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Premium Images */}
+        {/* Preview Images Section */}
         <section style={{padding: '3rem 0'}}>
           <div className="container" style={{
             display: 'flex',
@@ -172,21 +205,45 @@ export default function PremiumPage() {
             margin: '0 auto',
             padding: isMobile ? '0 1rem' : '20px'
           }}>
+            <div style={{textAlign: 'center', marginBottom: '3rem'}}>
+              <h2 style={{fontSize: '2.5rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem'}}>
+                Preview: Premium Quality
+              </h2>
+              <p style={{fontSize: '1.1rem', color: '#6b7280', maxWidth: '600px'}}>
+                Get a taste of what's coming with these preview images. The full premium collection will feature 
+                even higher quality and more exclusive designs.
+              </p>
+            </div>
+
             {premiumImages.length === 0 ? (
               <div style={{textAlign: 'center', padding: '3rem 0'}}>
-                <p style={{color: '#6b7280', fontSize: '1.1rem', marginBottom: '1rem'}}>
-                  Premium collection coming soon!
-                </p>
-                <Link href="/" style={{
-                  background: '#2563eb',
-                  color: 'white',
-                  padding: '0.75rem 1.5rem',
-                  borderRadius: '0.5rem',
-                  textDecoration: 'none',
-                  fontWeight: '600'
+                <div style={{
+                  background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+                  borderRadius: '1rem',
+                  padding: '3rem 2rem',
+                  maxWidth: '500px',
+                  margin: '0 auto'
                 }}>
-                  Browse Free Collection
-                </Link>
+                  <div style={{fontSize: '4rem', marginBottom: '1rem'}}>⏳</div>
+                  <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#0369a1', marginBottom: '1rem'}}>
+                    Premium Collection Coming Soon
+                  </h3>
+                  <p style={{color: '#0284c7', fontSize: '1rem', marginBottom: '2rem'}}>
+                    We're putting the finishing touches on our premium 4K backgrounds. 
+                    Meanwhile, enjoy our free professional collection!
+                  </p>
+                  <Link href="/" style={{
+                    background: '#0369a1',
+                    color: 'white',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '0.5rem',
+                    textDecoration: 'none',
+                    fontWeight: '600',
+                    display: 'inline-block'
+                  }}>
+                    Browse Free Collection
+                  </Link>
+                </div>
               </div>
             ) : (
               <div style={{
@@ -198,7 +255,7 @@ export default function PremiumPage() {
                 maxWidth: isMobile ? '350px' : '100%',
                 margin: '0 auto'
               }}>
-                {premiumImages.map((image) => (
+                {premiumImages.slice(0, 3).map((image) => (
                   <div 
                     key={image.key} 
                     style={{
@@ -206,7 +263,6 @@ export default function PremiumPage() {
                       borderRadius: '0.75rem',
                       boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
                       overflow: 'hidden',
-                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                       position: 'relative',
                       width: '100%',
                       maxWidth: isMobile ? '320px' : '400px',
@@ -227,36 +283,47 @@ export default function PremiumPage() {
                       fontWeight: 'bold',
                       zIndex: 10
                     }}>
-                      PREMIUM 4K
+                      COMING SOON
                     </div>
 
                     <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
                       <img
                         src={`/images/${image.filename}`}
-                        alt={image.alt || 'Premium virtual background'}
+                        alt={image.alt || 'Premium virtual background preview'}
                         style={{
                           width: '100%',
                           height: '100%',
                           objectFit: 'cover',
-                          cursor: 'pointer'
+                          cursor: 'pointer',
+                          filter: 'brightness(0.7)' // Slightly dimmed to indicate coming soon
                         }}
                         onClick={() => setSelectedImage(image)}
                       />
                       
+                      {/* Coming Soon Overlay */}
                       <div style={{
                         position: 'absolute',
                         inset: 0,
-                        background: 'rgba(0,0,0,0.7)',
+                        background: 'rgba(0,0,0,0.6)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '1rem',
-                        opacity: 0,
-                        transition: 'opacity 0.3s ease'
-                      }}
-                      onMouseEnter={(e) => e.currentTarget.style.opacity = 1}
-                      onMouseLeave={(e) => e.currentTarget.style.opacity = 0}
-                      >
+                        flexDirection: 'column',
+                        gap: '1rem'
+                      }}>
+                        <div style={{
+                          background: 'rgba(251, 191, 36, 0.95)',
+                          color: '#92400e',
+                          padding: '1rem 2rem',
+                          borderRadius: '1rem',
+                          textAlign: 'center',
+                          backdropFilter: 'blur(10px)'
+                        }}>
+                          <div style={{fontSize: '1.5rem', marginBottom: '0.5rem'}}>⏳</div>
+                          <div style={{fontWeight: 'bold', fontSize: '1.1rem'}}>Coming Soon</div>
+                          <div style={{fontSize: '0.9rem', opacity: 0.8}}>4K Premium Quality</div>
+                        </div>
+                        
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -275,24 +342,6 @@ export default function PremiumPage() {
                         >
                           Preview
                         </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handlePremiumPurchase(image);
-                          }}
-                          style={{
-                            background: '#fbbf24',
-                            color: '#92400e',
-                            padding: '0.75rem 1.5rem',
-                            border: 'none',
-                            borderRadius: '0.5rem',
-                            fontSize: '1rem',
-                            fontWeight: '600',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          Buy ${image.price || '5.99'}
-                        </button>
                       </div>
                     </div>
 
@@ -309,11 +358,11 @@ export default function PremiumPage() {
                           fontSize: '0.75rem',
                           fontWeight: '600'
                         }}>
-                          4K ULTRA HD
+                          COMING SOON
                         </span>
                       </div>
                       <p style={{color: '#6b7280', fontSize: '0.95rem', marginBottom: '0.75rem'}}>
-                        {image.description || 'Premium professional virtual background'}
+                        {image.description || 'Premium professional virtual background'} (Preview quality - final version will be 4K)
                       </p>
                       <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem'}}>
                         {(image.keywords || []).slice(0, 3).map(keyword => (
@@ -331,6 +380,36 @@ export default function PremiumPage() {
                     </div>
                   </div>
                 ))}
+
+                {/* Call to Action for Free Backgrounds */}
+                <div style={{
+                  background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+                  borderRadius: '1rem',
+                  padding: '2rem',
+                  textAlign: 'center',
+                  color: 'white',
+                  maxWidth: '500px',
+                  margin: '2rem auto 0'
+                }}>
+                  <h3 style={{fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1rem', color: 'white'}}>
+                    Can't Wait? Start with Our Free Collection
+                  </h3>
+                  <p style={{marginBottom: '1.5rem', opacity: 0.9}}>
+                    While you're waiting for our premium 4K backgrounds, explore our extensive 
+                    free collection of professional virtual backgrounds.
+                  </p>
+                  <Link href="/" style={{
+                    background: 'white',
+                    color: '#2563eb',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '0.5rem',
+                    textDecoration: 'none',
+                    fontWeight: '600',
+                    display: 'inline-block'
+                  }}>
+                    Browse Free Backgrounds →
+                  </Link>
+                </div>
               </div>
             )}
           </div>
@@ -383,12 +462,12 @@ export default function PremiumPage() {
               </button>
               
               <h3 style={{ marginBottom: '15px', paddingRight: '30px' }}>
-                {selectedImage.title || 'Premium Virtual Background'}
+                {selectedImage.title || 'Premium Virtual Background'} (Preview)
               </h3>
               
               <img
                 src={`/images/${selectedImage.filename}`}
-                alt={selectedImage.alt || 'Premium virtual background'}
+                alt={selectedImage.alt || 'Premium virtual background preview'}
                 style={{
                   width: '100%',
                   height: 'auto',
@@ -399,25 +478,56 @@ export default function PremiumPage() {
                 }}
               />
               
+              <div style={{
+                background: '#fef3c7',
+                border: '1px solid #fbbf24',
+                borderRadius: '0.5rem',
+                padding: '1rem',
+                marginBottom: '1rem'
+              }}>
+                <p style={{ color: '#92400e', margin: 0, fontWeight: '600' }}>
+                  🚀 This is a preview! The premium version will be available in 4K Ultra HD quality (3840×2160) very soon.
+                </p>
+              </div>
+              
               <p style={{ color: '#666', marginBottom: '20px' }}>
-                {selectedImage.description || 'Premium professional virtual background'}
+                {selectedImage.description || 'Premium professional virtual background'} 
+                The final premium version will feature enhanced details and 4K resolution.
               </p>
               
-              <button
-                onClick={() => handlePremiumPurchase(selectedImage)}
-                style={{
-                  backgroundColor: '#fbbf24',
-                  color: '#92400e',
+              <div style={{display: 'flex', gap: '1rem'}}>
+                <button
+                  onClick={handleComingSoonClick}
+                  style={{
+                    backgroundColor: '#fbbf24',
+                    color: '#92400e',
+                    border: 'none',
+                    padding: '12px 24px',
+                    borderRadius: '6px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    fontWeight: '600',
+                    opacity: 0.7
+                  }}
+                  disabled
+                >
+                  Coming Soon - $7.99
+                </button>
+                
+                <Link href="/" style={{
+                  backgroundColor: '#2563eb',
+                  color: 'white',
                   border: 'none',
                   padding: '12px 24px',
                   borderRadius: '6px',
                   fontSize: '16px',
-                  cursor: 'pointer',
-                  fontWeight: '600'
-                }}
-              >
-                Buy ${selectedImage.price || '5.99'}
-              </button>
+                  textDecoration: 'none',
+                  fontWeight: '600',
+                  display: 'inline-block'
+                }}>
+                  Browse Free Collection
+                </Link>
+              </div>
             </div>
           </div>
         )}
