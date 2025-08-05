@@ -4,7 +4,21 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* OPTIMIZED Google Analytics - loads after page is interactive */}
+        {/* PRELOAD THE LARGEST IMAGES FIRST - CRITICAL FOR LCP */}
+        <link
+          rel="preload"
+          as="image"
+          href="/images/clean-scandinavian-home-office-2.webp"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image" 
+          href="/images/executive-office-with-marble-wall-1.webp"
+          fetchPriority="high"
+        />
+
+        {/* Google Analytics - optimized */}
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-QMD6NEPFWR"
@@ -23,24 +37,12 @@ export default function Document() {
           }}
         />
         
-        {/* DEFER Google AdSense - don't block page loading */}
+        {/* Google AdSense - deferred */}
         <script 
           async 
           defer
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2391004325385163"
           crossOrigin="anonymous"
-        />
-        
-        {/* Preload critical images for mobile */}
-        <link
-          rel="preload"
-          as="image"
-          href="/images/clean-scandinavian-home-office-2.webp"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/images/executive-office-with-marble-wall-1.webp"
         />
         
         {/* Favicon and meta */}

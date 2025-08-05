@@ -1,4 +1,4 @@
-
+// COMPLETE pages/index.js with LCP FIX - COPY THIS ENTIRE FILE
 
 import Head from 'next/head';
 import Link from 'next/link';
@@ -80,7 +80,7 @@ export default function Home() {
           </div>
           
           <div className="category-grid">
-            {categories.map((category) => (
+            {categories.map((category, index) => (
               <Link key={category.slug} href={`/category/${category.slug}`} className="category-card">
                 <div>
                   <div style={{position: 'relative', height: '200px', overflow: 'hidden', borderRadius: '1rem 1rem 0 0'}}>
@@ -132,8 +132,10 @@ export default function Home() {
                         height: '100%',
                         objectFit: 'cover'
                       }}
-                      priority={category.featured}
-                      loading="lazy"
+                      priority={index < 2}
+                      loading={index < 2 ? "eager" : "lazy"}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      quality={index < 2 ? 85 : 75}
                     />
                   </div>
                   
