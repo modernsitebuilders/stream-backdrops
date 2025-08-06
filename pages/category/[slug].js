@@ -1,3 +1,5 @@
+// This is the COMPLETE pages/category/[slug].js file with the beautiful homepage header
+
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -204,11 +206,55 @@ export default function CategoryPage() {
         </Head>
         
         <div>
-          <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '0.75rem 0'}}>
+          {/* KEEP THE BEAUTIFUL HOMEPAGE HEADER */}
+          <header>
             <div className="container">
-              <Link href="/" style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', textDecoration: 'none'}}>
-                Stream<span style={{color: '#2563eb'}}>Backdrops</span>
-              </Link>
+              <h1>Stream<span className="logo-blue">Backdrops</span></h1>
+              <p className="subtitle">{category.name}</p>
+              <p className="description">
+                {category.description} • <span style={{
+                  background: '#16a34a',
+                  color: 'white',
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '1rem',
+                  fontWeight: 'bold',
+                  fontSize: '1rem'
+                }}>FREE</span> downloads • Perfect for Zoom, Teams & more
+              </p>
+              
+              {/* Category Navigation */}
+              <nav style={{
+                display: 'flex',
+                gap: '0.5rem',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+                marginTop: '1.5rem',
+                paddingBottom: '0.5rem'
+              }}>
+                {Object.entries(categoryInfo).map(([key, info]) => (
+                  <Link 
+                    key={key} 
+                    href={key === 'premium' ? '/premium' : `/category/${key}`}
+                    style={{
+                      padding: '0.5rem 1rem',
+                      background: key === slug ? '#2563eb' : 'white',
+                      border: '1px solid #e5e7eb',
+                      borderRadius: '1rem',
+                      color: key === slug ? 'white' : '#6b7280',
+                      textDecoration: 'none',
+                      fontSize: '0.9rem',
+                      fontWeight: '600',
+                      ...(key === 'premium' ? {
+                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                        color: 'white',
+                        border: 'none'
+                      } : {})
+                    }}
+                  >
+                    {key === 'premium' ? '✨ Premium 4K' : info.name}
+                  </Link>
+                ))}
+              </nav>
             </div>
           </header>
           
@@ -250,96 +296,62 @@ export default function CategoryPage() {
         <title>{category.name} Virtual Backgrounds - StreamBackdrops</title>
         <meta name="description" content={`Download ${category.description.toLowerCase()}.`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
-        {/* CRITICAL PERFORMANCE - MINIMAL CSS */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
-            /* MOBILE CRITICAL CSS - ABSOLUTE MINIMUM */
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: system-ui, sans-serif; background: #f8fafc; }
-            .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-            .hero { background: #2563eb; color: white; padding: 1.5rem 0; text-align: center; }
-            .image-grid { 
-              display: grid; 
-              grid-template-columns: 1fr;
-              gap: 1.5rem;
-            }
-            .image-card {
-              background: white;
-              border-radius: 0.75rem;
-              box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-              overflow: hidden;
-            }
-            .nav-tab {
-              padding: 0.5rem 1rem;
-              border-radius: 1rem;
-              font-weight: 600;
-              text-decoration: none;
-              font-size: 0.8rem;
-              white-space: nowrap;
-              flex-shrink: 0;
-            }
-            .nav-tab.active {
-              background: #2563eb;
-              color: white;
-            }
-            .nav-tab.inactive {
-              background: white;
-              color: #6b7280;
-              border: 1px solid #e5e7eb;
-            }
-            /* TABLET+ ONLY */
-            @media (min-width: 768px) { 
-              .image-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-              .hero { padding: 2.5rem 0; }
-              .nav-tab { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
-              .image-card:hover { transform: translateY(-4px); }
-            }
-          `
-        }} />
       </Head>
 
       <div>
-        {/* ULTRA MINIMAL HEADER */}
-        <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '0.75rem 0'}}>
+        {/* KEEP THE BEAUTIFUL HOMEPAGE HEADER */}
+        <header>
           <div className="container">
-            <Link href="/" style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', textDecoration: 'none', display: 'block', marginBottom: '0.75rem'}}>
-              Stream<span style={{color: '#2563eb'}}>Backdrops</span>
-            </Link>
+            <h1>Stream<span className="logo-blue">Backdrops</span></h1>
+            <p className="subtitle">{category.name}</p>
+            <p className="description">
+              {category.description} • <span style={{
+                background: '#16a34a',
+                color: 'white',
+                padding: '0.25rem 0.75rem',
+                borderRadius: '1rem',
+                fontWeight: 'bold',
+                fontSize: '1rem'
+              }}>FREE</span> downloads • Perfect for Zoom, Teams & more
+            </p>
             
-            {/* MINIMAL NAV */}
-            <nav style={{display: 'flex', gap: '0.5rem', overflowX: 'auto', padding: '0.25rem 0'}}>
+            {/* Category Navigation */}
+            <nav style={{
+              display: 'flex',
+              gap: '0.5rem',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              marginTop: '1.5rem',
+              paddingBottom: '0.5rem'
+            }}>
               {Object.entries(categoryInfo).map(([key, info]) => (
-                <Link
-                  key={key}
+                <Link 
+                  key={key} 
                   href={key === 'premium' ? '/premium' : `/category/${key}`}
-                  className={`nav-tab ${key === slug ? 'active' : 'inactive'}`}
-                  style={key === 'premium' ? {
-                    background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                    color: 'white',
-                    border: 'none'
-                  } : {}}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    background: key === slug ? '#2563eb' : 'white',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '1rem',
+                    color: key === slug ? 'white' : '#6b7280',
+                    textDecoration: 'none',
+                    fontSize: '0.9rem',
+                    fontWeight: '600',
+                    ...(key === 'premium' ? {
+                      background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                      color: 'white',
+                      border: 'none'
+                    } : {})
+                  }}
                 >
-                  {key === 'premium' ? '✨ 4K' : info.name}
+                  {key === 'premium' ? '✨ Premium 4K' : info.name}
                 </Link>
               ))}
             </nav>
           </div>
         </header>
 
-        {/* MINIMAL HERO - FASTEST LCP */}
-        <section className="hero">
-          <div className="container">
-            <h1 style={{fontSize: 'clamp(1.5rem, 6vw, 2rem)', fontWeight: 'bold', marginBottom: '0.5rem'}}>
-              {category.name}
-            </h1>
-            <p style={{fontSize: 'clamp(0.8rem, 3vw, 0.9rem)', opacity: 0.9}}>
-              {loading ? 'Loading...' : `${categoryImages.length} backgrounds`}
-            </p>
-          </div>
-        </section>
-
-        {/* DELAYED IMAGES SECTION */}
+        {/* IMAGES SECTION */}
         <section style={{padding: '1.5rem 0'}}>
           <div className="container">
             {!showImages ? (
@@ -365,10 +377,26 @@ export default function CategoryPage() {
                 <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>← Back to Home</Link>
               </div>
             ) : (
-              <div className="image-grid">
+              <div className="category-grid">
                 {categoryImages.map((image, index) => (
-                  <div key={image.key} className="image-card">
-                    <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
+                  <div key={image.key} style={{
+                    background: 'white',
+                    borderRadius: '1rem',
+                    boxShadow: '0 6px 12px rgba(0,0,0,0.15)',
+                    overflow: 'hidden',
+                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                    minHeight: '350px'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px)';
+                    e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
+                  }}
+                  >
+                    <div style={{position: 'relative', height: '250px', overflow: 'hidden', borderRadius: '1rem 1rem 0 0'}}>
                       <Image
                         src={`/images/${image.filename}`}
                         alt={image.alt || image.title || 'Virtual background'}
@@ -383,7 +411,7 @@ export default function CategoryPage() {
                         quality={60}
                       />
                       
-                      {/* SIMPLIFIED BUTTONS */}
+                      {/* BUTTONS */}
                       <div style={{
                         position: 'absolute',
                         bottom: '0.5rem',
@@ -436,13 +464,19 @@ export default function CategoryPage() {
                       </div>
                     </div>
 
-                    <div style={{padding: '0.75rem'}}>
-                      <h3 style={{fontWeight: '600', color: '#111827', fontSize: '0.9rem', marginBottom: '0.25rem'}}>
+                    <div style={{padding: '1.5rem'}}>
+                      <h3 style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', marginBottom: '0.5rem'}}>
                         {image.title || 'Virtual Background'}
                       </h3>
-                      <p style={{color: '#6b7280', fontSize: '0.75rem', lineHeight: 1.3}}>
+                      <p style={{color: '#6b7280', marginBottom: '1rem'}}>
                         {image.description || 'Professional virtual background'}
                       </p>
+                      
+                      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                        <div style={{color: '#2563eb', fontWeight: '600', display: 'flex', alignItems: 'center'}}>
+                          <span>Free Download</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -451,7 +485,7 @@ export default function CategoryPage() {
           </div>
         </section>
 
-        {/* MINIMAL MODAL */}
+        {/* MODAL */}
         {selectedImage && (
           <div 
             style={{
@@ -564,7 +598,6 @@ export default function CategoryPage() {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-        nav::-webkit-scrollbar { display: none; }
       `}</style>
     </>
   );
