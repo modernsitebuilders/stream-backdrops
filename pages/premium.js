@@ -281,7 +281,7 @@ export default function PremiumPage() {
                         fontWeight: 'bold',
                         fontSize: '1.2rem'
                       }}>
-                        $2.99
+                        $7.99
                       </span>
                     </div>
                   </div>
