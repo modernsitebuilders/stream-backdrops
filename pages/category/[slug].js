@@ -320,12 +320,8 @@ export default function CategoryPage() {
                           height: '100%',
                           objectFit: 'cover'
                         }}
-                        loading={index < 2 ? "eager" : "lazy"} // First 2 images eager (your best ones)
-                        priority={index === 0} // Only first image gets priority
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        quality={65} // Lower quality for faster loading
+                        loading="lazy" // ALL images lazy load for better performance
+                        quality={60} // Even lower quality for better speed
                       />
                       
                       {/* SIMPLIFIED BUTTONS */}

@@ -96,6 +96,88 @@ const safeCategories = categories.map(category => ({
                 fontSize: '1rem'
               }}>FREE</span> downloads • Perfect for Zoom, Teams & more
             </p>
+            
+            {/* Add Category Navigation */}
+            <nav style={{
+              display: 'flex',
+              gap: '0.5rem',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              marginTop: '1.5rem',
+              paddingBottom: '0.5rem'
+            }}>
+              <Link href="/category/home-offices" style={{
+                padding: '0.5rem 1rem',
+                background: 'white',
+                border: '1px solid #e5e7eb',
+                borderRadius: '1rem',
+                color: '#6b7280',
+                textDecoration: 'none',
+                fontSize: '0.9rem',
+                fontWeight: '600'
+              }}>
+                Home Offices
+              </Link>
+              <Link href="/category/executive-offices" style={{
+                padding: '0.5rem 1rem',
+                background: 'white',
+                border: '1px solid #e5e7eb',
+                borderRadius: '1rem',
+                color: '#6b7280',
+                textDecoration: 'none',
+                fontSize: '0.9rem',
+                fontWeight: '600'
+              }}>
+                Executive
+              </Link>
+              <Link href="/category/minimalist" style={{
+                padding: '0.5rem 1rem',
+                background: 'white',
+                border: '1px solid #e5e7eb',
+                borderRadius: '1rem',
+                color: '#6b7280',
+                textDecoration: 'none',
+                fontSize: '0.9rem',
+                fontWeight: '600'
+              }}>
+                Minimalist
+              </Link>
+              <Link href="/category/lobbies" style={{
+                padding: '0.5rem 1rem',
+                background: 'white',
+                border: '1px solid #e5e7eb',
+                borderRadius: '1rem',
+                color: '#6b7280',
+                textDecoration: 'none',
+                fontSize: '0.9rem',
+                fontWeight: '600'
+              }}>
+                Lobbies
+              </Link>
+              <Link href="/category/private-offices" style={{
+                padding: '0.5rem 1rem',
+                background: 'white',
+                border: '1px solid #e5e7eb',
+                borderRadius: '1rem',
+                color: '#6b7280',
+                textDecoration: 'none',
+                fontSize: '0.9rem',
+                fontWeight: '600'
+              }}>
+                Private Offices
+              </Link>
+              <Link href="/premium" style={{
+                padding: '0.5rem 1rem',
+                background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                borderRadius: '1rem',
+                color: 'white',
+                textDecoration: 'none',
+                fontSize: '0.9rem',
+                fontWeight: '600'
+              }}>
+                ✨ Premium 4K
+              </Link>
+            </nav>
           </div>
         </header>
 
