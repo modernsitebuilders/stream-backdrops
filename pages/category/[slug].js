@@ -19,9 +19,11 @@ export default function CategoryPage() {
       setIsMobile(window.innerWidth <= 768);
     };
     
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    if (typeof window !== 'undefined') {
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
+    }
   }, []);
 
   useEffect(() => {
@@ -43,7 +45,10 @@ export default function CategoryPage() {
         setLoading(false);
       }
     }
-    loadMetadata();
+    
+    if (typeof window !== 'undefined') {
+      loadMetadata();
+    }
   }, []);
 
   const categoryInfo = {
@@ -76,38 +81,28 @@ export default function CategoryPage() {
 
   // Custom sorting function for different categories
   const sortImages = (images, categorySlug) => {
-    // Create a copy to avoid mutating original array
     const sorted = [...images];
     
     if (categorySlug === 'home-offices') {
-      // For home offices: Scandinavian first, then others, Farmhouse last
       return sorted.sort((a, b) => {
         const aTitle = a.title.toLowerCase();
         const bTitle = b.title.toLowerCase();
         
-        // Scandinavian goes to top
         if (aTitle.includes('scandinavian') && !bTitle.includes('scandinavian')) return -1;
         if (!aTitle.includes('scandinavian') && bTitle.includes('scandinavian')) return 1;
         
-        // Farmhouse goes to bottom
         if (aTitle.includes('farmhouse') && !bTitle.includes('farmhouse')) return 1;
         if (!aTitle.includes('farmhouse') && bTitle.includes('farmhouse')) return -1;
         
-        // Everything else alphabetical
         return aTitle.localeCompare(bTitle);
       });
     } else if (categorySlug === 'executive-offices') {
-      // For executive offices: Non-premium first, premium at bottom
       return sorted.sort((a, b) => {
-        // Non-premium first
         if (!a.isPremium && b.isPremium) return -1;
         if (a.isPremium && !b.isPremium) return 1;
-        
-        // Within same premium status, alphabetical
         return a.title.localeCompare(b.title);
       });
     } else {
-      // Default alphabetical sorting
       return sorted.sort((a, b) => a.title.localeCompare(b.title));
     }
   };
@@ -115,48 +110,22 @@ export default function CategoryPage() {
   const categoryImages = useMemo(() => {
     if (!slug || !imageMetadata || Object.keys(imageMetadata).length === 0 || loading) return [];
     
-    if (process.env.NODE_ENV === 'development') {
-      console.log('🔍 DEBUG: Category filtering for slug:', slug);
-      console.log('🔍 DEBUG: Total images in metadata:', Object.keys(imageMetadata).length);
-    }
-    
-    // Log all categories in the metadata
-    const allCategories = [...new Set(Object.values(imageMetadata).map(img => img?.category).filter(Boolean))];
-    if (process.env.NODE_ENV === 'development') {
-      console.log('🔍 DEBUG: All categories found:', allCategories);
-    }
-    
-    // Map URL slugs to category names
     const categoryMap = {
       'home-offices': 'home-offices',
       'executive-offices': 'executive-offices', 
-      'minimalist': 'minimalist', // Minimalist images are in executive-offices category
+      'minimalist': 'minimalist',
       'lobbies': 'lobbies',
       'private-offices': 'private-offices',
       'premium-4k': 'premium-4k'
     };
     
     const targetCategory = categoryMap[slug] || slug;
-    if (process.env.NODE_ENV === 'development') {
-      console.log('🔍 DEBUG: Looking for category:', targetCategory, 'from slug:', slug);
-    }
     
-    // Filter images for this category
     let filteredImages = Object.entries(imageMetadata)
       .filter(([_, data]) => {
-        if (!data) {
-          if (process.env.NODE_ENV === 'development') {
-            console.log('🔍 DEBUG: Skipping null/undefined data');
-          }
-          return false;
-        }
-        if (process.env.NODE_ENV === 'development') {
-          console.log('🔍 DEBUG: Checking image:', data.title, 'category:', data.category, 'vs target:', targetCategory);
-        }
-        // Check category match
+        if (!data) return false;
         if (data.category !== targetCategory) return false;
         
-        // Special handling for minimalist - look for specific keywords
         if (slug === 'minimalist') {
           const title = data.title?.toLowerCase() || '';
           const isMinimalist = title.includes('minimalist') || 
@@ -166,31 +135,26 @@ export default function CategoryPage() {
           if (!isMinimalist) return false;
         }
         
-        // For non-premium categories, exclude premium images
         if (slug !== 'premium-4k' && data.isPremium) return false;
-        
-        // For premium category, only include premium images
         if (slug === 'premium-4k' && !data.isPremium) return false;
         
         return true;
       })
       .map(([key, data]) => ({ key, ...data }));
     
-    if (process.env.NODE_ENV === 'development') {
-      console.log('🔍 DEBUG: Filtered images for', slug, ':', filteredImages.length);
-      console.log('🔍 DEBUG: First few filtered images:', filteredImages.slice(0, 3).map(img => img?.title));
-    }
-    
-    // Apply custom sorting
     return sortImages(filteredImages, slug);
   }, [slug, imageMetadata, loading]);
 
   const handlePremiumPurchase = (image) => {
     const downloadUrl = `/api/premium-download?imageId=${image.key}&purchaseToken=temp123`;
-    window.open(downloadUrl, '_blank');
+    if (typeof window !== 'undefined') {
+      window.open(downloadUrl, '_blank');
+    }
   };
 
   const handleDownload = async (image) => {
+    if (typeof window === 'undefined') return;
+    
     if (image.isPremium) {
       handlePremiumPurchase(image);
       return;
@@ -273,7 +237,6 @@ export default function CategoryPage() {
 
   const category = categoryInfo[slug];
   
-  // Container style definition
   const containerStyle = {
     maxWidth: '1200px',
     margin: '0 auto',
@@ -398,174 +361,150 @@ export default function CategoryPage() {
                 </Link>
               </div>
             ) : (
-              <>
-                {/* Show sorting info for home offices */}
-                {slug === 'home-offices' && (
-                  <div style={{
-                    textAlign: 'center',
-                    marginBottom: '2rem',
-                    padding: '1rem',
-                    background: '#f0f9ff',
-                    borderRadius: '0.5rem',
-                    border: '1px solid #e0f2fe'
-                  }}>
-                    <p style={{color: '#0369a1', margin: 0, fontSize: '0.9rem'}}>
-                    </p>
-                  </div>
-                )}
-
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: isMobile 
-                    ? '1fr' 
-                    : 'repeat(auto-fit, minmax(350px, 1fr))',
-                  gap: '2rem',
-                  width: '100%'
-                }}>
-                  {/* DEBUG: Show what we're rendering */}
-                  {console.log('🔍 RENDERING: About to render', categoryImages.length, 'images')}
-                  {categoryImages.length > 0 && console.log('🔍 RENDERING: First image:', categoryImages[0])}
-                  
-                  {categoryImages.map((image, index) => {
-                    console.log('🔍 RENDERING IMAGE:', index, image.title, image.filename);
-                    return (
-                      <div 
-                        key={image.key} 
-                        style={{
-                          background: 'white',
-                          borderRadius: '0.75rem',
-                          boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
-                          overflow: 'hidden',
-                          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                          position: 'relative',
-                          cursor: 'pointer',
-                          marginTop: slug === 'executive-offices' && image.isPremium && index > 0 && !categoryImages[index-1].isPremium ? '3rem' : '0'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = 'translateY(-4px)';
-                          e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.18)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)';
-                        }}
-                      >
-                        {/* Premium badge */}
-                        {image.isPremium && (
-                          <div style={{
-                            position: 'absolute',
-                            top: '1rem',
-                            right: '1rem',
-                            background: 'linear-gradient(45deg, #fbbf24, #f59e0b)',
-                            color: '#92400e',
-                            padding: '0.375rem 0.75rem',
-                            borderRadius: '1rem',
-                            fontSize: '0.875rem',
-                            fontWeight: 'bold',
-                            zIndex: 10
-                          }}>
-                            PREMIUM 4K
-                          </div>
-                        )}
-                     <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
-  <Image
-    src={`/images/${image.filename}`}
-    alt={image.alt || 'Virtual background'}
-    width={400}
-    height={225}
-    style={{
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover',
-      cursor: 'pointer'
-    }}
-    onClick={() => setSelectedImage(image)}
-    onContextMenu={(e) => e.preventDefault()}
-    loading={index === 0 ? "eager" : "lazy"}
-    priority={index === 0}
-                          />
-                          
-                          <div style={{
-                            position: 'absolute',
-                            inset: 0,
-                            background: 'rgba(0,0,0,0.7)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '1rem',
-                            opacity: 0,
-                            transition: 'opacity 0.3s ease'
-                          }}
-                          onMouseEnter={(e) => e.currentTarget.style.opacity = 1}
-                          onMouseLeave={(e) => e.currentTarget.style.opacity = 0}
-                          >
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedImage(image);
-                              }}
-                              style={{
-                                background: 'rgba(255,255,255,0.9)',
-                                color: '#111827',
-                                padding: '0.75rem 1.5rem',
-                                border: 'none',
-                                borderRadius: '0.5rem',
-                                fontSize: '1rem',
-                                fontWeight: '600',
-                                cursor: 'pointer'
-                              }}
-                            >
-                              Preview
-                            </button>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDownload(image);
-                              }}
-                              style={{
-                                background: image.isPremium ? '#fbbf24' : '#2563eb',
-                                color: image.isPremium ? '#92400e' : 'white',
-                                padding: '0.75rem 1.5rem',
-                                border: 'none',
-                                borderRadius: '0.5rem',
-                                fontSize: '1rem',
-                                fontWeight: '600',
-                                cursor: 'pointer'
-                              }}
-                            >
-                              {image.isPremium ? `Buy $${image.price || '5.99'}` : 'Download'}
-                            </button>
-                          </div>
-                        </div>
-
-                        <div style={{padding: '1.5rem'}}>
-                          <div style={{display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.5rem'}}>
-                            <h3 style={{fontWeight: '600', color: '#111827', fontSize: '1.1rem', flex: 1}}>
-                              {image.title || 'Virtual Background'}
-                            </h3>
-                          </div>
-                          <p style={{color: '#6b7280', fontSize: '0.95rem', marginBottom: '0.75rem'}}>
-                              {image.description || 'Professional virtual background'}
-                          </p>
-                          <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem'}}>
-                            {(image.keywords || []).slice(0, 3).map(keyword => (
-                              <span key={keyword} style={{
-                                background: '#f3f4f6',
-                                color: '#374151',
-                                padding: '0.25rem 0.5rem',
-                                borderRadius: '0.25rem',
-                                fontSize: '0.75rem'
-                              }}>
-                                {keyword}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile 
+                  ? '1fr' 
+                  : 'repeat(auto-fit, minmax(350px, 1fr))',
+                gap: '2rem',
+                width: '100%'
+              }}>
+                {categoryImages.map((image, index) => (
+                  <div 
+                    key={image.key} 
+                    style={{
+                      background: 'white',
+                      borderRadius: '0.75rem',
+                      boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
+                      overflow: 'hidden',
+                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                      position: 'relative',
+                      cursor: 'pointer',
+                      marginTop: slug === 'executive-offices' && image.isPremium && index > 0 && !categoryImages[index-1].isPremium ? '3rem' : '0'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                      e.currentTarget.style.boxShadow = '0 12px 28px rgba(0,0,0,0.18)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)';
+                    }}
+                  >
+                    {image.isPremium && (
+                      <div style={{
+                        position: 'absolute',
+                        top: '1rem',
+                        right: '1rem',
+                        background: 'linear-gradient(45deg, #fbbf24, #f59e0b)',
+                        color: '#92400e',
+                        padding: '0.375rem 0.75rem',
+                        borderRadius: '1rem',
+                        fontSize: '0.875rem',
+                        fontWeight: 'bold',
+                        zIndex: 10
+                      }}>
+                        PREMIUM 4K
                       </div>
-                    );
-                  })}
-                </div>
-              </>
+                    )}
+
+                    <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
+                      <Image
+                        src={`/images/${image.filename}`}
+                        alt={image.alt || 'Virtual background'}
+                        width={400}
+                        height={225}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          cursor: 'pointer'
+                        }}
+                        onClick={() => setSelectedImage(image)}
+                        onContextMenu={(e) => e.preventDefault()}
+                        loading={index === 0 ? "eager" : "lazy"}
+                        priority={index === 0}
+                      />
+                      
+                      <div style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: 'rgba(0,0,0,0.7)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '1rem',
+                        opacity: 0,
+                        transition: 'opacity 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.opacity = 1}
+                      onMouseLeave={(e) => e.currentTarget.style.opacity = 0}
+                      >
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedImage(image);
+                          }}
+                          style={{
+                            background: 'rgba(255,255,255,0.9)',
+                            color: '#111827',
+                            padding: '0.75rem 1.5rem',
+                            border: 'none',
+                            borderRadius: '0.5rem',
+                            fontSize: '1rem',
+                            fontWeight: '600',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Preview
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDownload(image);
+                          }}
+                          style={{
+                            background: image.isPremium ? '#fbbf24' : '#2563eb',
+                            color: image.isPremium ? '#92400e' : 'white',
+                            padding: '0.75rem 1.5rem',
+                            border: 'none',
+                            borderRadius: '0.5rem',
+                            fontSize: '1rem',
+                            fontWeight: '600',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {image.isPremium ? `Buy $${image.price || '5.99'}` : 'Download'}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div style={{padding: '1.5rem'}}>
+                      <div style={{display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.5rem'}}>
+                        <h3 style={{fontWeight: '600', color: '#111827', fontSize: '1.1rem', flex: 1}}>
+                          {image.title || 'Virtual Background'}
+                        </h3>
+                      </div>
+                      <p style={{color: '#6b7280', fontSize: '0.95rem', marginBottom: '0.75rem'}}>
+                        {image.description || 'Professional virtual background'}
+                      </p>
+                      <div style={{display: 'flex', flexWrap: 'wrap', gap: '0.25rem'}}>
+                        {(image.keywords || []).slice(0, 3).map(keyword => (
+                          <span key={keyword} style={{
+                            background: '#f3f4f6',
+                            color: '#374151',
+                            padding: '0.25rem 0.5rem',
+                            borderRadius: '0.25rem',
+                            fontSize: '0.75rem'
+                          }}>
+                            {keyword}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         </section>
