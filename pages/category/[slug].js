@@ -12,6 +12,7 @@ export default function CategoryPage() {
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
   const [showImages, setShowImages] = useState(false);
+  const [error, setError] = useState(false);
 
   // Memoize category info to prevent recreating on each render
   const categoryInfo = useMemo(() => ({
@@ -112,12 +113,19 @@ export default function CategoryPage() {
 
   const loadMetadata = useCallback(async () => {
     try {
+      setError(false);
       const response = await fetch('/api/metadata');
+      
+      if (!response.ok) {
+        throw new Error('Failed to load metadata');
+      }
+      
       const data = await response.json();
       setImageMetadata(data || {});
     } catch (error) {
       console.error('Failed to load metadata:', error);
       setImageMetadata({});
+      setError(true);
     } finally {
       setLoading(false);
       // Delay showing images to improve LCP
@@ -185,6 +193,56 @@ export default function CategoryPage() {
   }
 
   const category = categoryInfo[slug];
+
+  // Show error state if metadata failed to load
+  if (error) {
+    return (
+      <>
+        <Head>
+          <title>{category.name} Virtual Backgrounds - StreamBackdrops</title>
+          <meta name="description" content={category.description} />
+        </Head>
+        
+        <div>
+          <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '0.75rem 0'}}>
+            <div className="container">
+              <Link href="/" style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', textDecoration: 'none'}}>
+                Stream<span style={{color: '#2563eb'}}>Backdrops</span>
+              </Link>
+            </div>
+          </header>
+          
+          <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
+            <h1 style={{color: '#111827', marginBottom: '1rem'}}>{category.name}</h1>
+            <p style={{color: '#6b7280', marginBottom: '2rem'}}>Unable to load backgrounds at the moment.</p>
+            <button 
+              onClick={() => {
+                setError(false);
+                setLoading(true);
+                loadMetadata();
+              }}
+              style={{
+                background: '#2563eb',
+                color: 'white',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '0.5rem',
+                border: 'none',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                marginRight: '1rem'
+              }}
+            >
+              Try Again
+            </button>
+            <Link href="/" style={{color: '#2563eb'}}>← Back to Home</Link>
+          </div>
+          
+          <Footer />
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -302,8 +360,9 @@ export default function CategoryPage() {
               </div>
             ) : categoryImages.length === 0 ? (
               <div style={{textAlign: 'center', padding: '3rem 0'}}>
-                <p style={{color: '#6b7280'}}>No backgrounds found.</p>
-                <Link href="/" style={{color: '#2563eb'}}>← Back to Home</Link>
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>No backgrounds available yet.</p>
+                <p style={{color: '#6b7280', marginBottom: '2rem'}}>Check back soon or browse other categories.</p>
+                <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>← Back to Home</Link>
               </div>
             ) : (
               <div className="image-grid">
@@ -320,8 +379,8 @@ export default function CategoryPage() {
                           height: '100%',
                           objectFit: 'cover'
                         }}
-                        loading="lazy" // ALL images lazy load for better performance
-                        quality={60} // Even lower quality for better speed
+                        loading="lazy"
+                        quality={60}
                       />
                       
                       {/* SIMPLIFIED BUTTONS */}
