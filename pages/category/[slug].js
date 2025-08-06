@@ -55,9 +55,9 @@ export default function CategoryPage() {
       'cozy-professional-home-office-1'
     ],
     'executive-offices': [
-      'executive-office-with-marble-wall-1',
-      'executive-office-with-dark-wood-1',
       'corner-office-with-city-views-1',
+      'executive-office-with-dark-wood-1',
+      'executive-office-with-marble-wall-1',
       'contemporary-executive-home-office-1',
       'minimalist-executive-office-1'
     ],
@@ -84,62 +84,90 @@ export default function CategoryPage() {
 
   // Memoize filtered and sorted images to prevent recalculation
   const categoryImages = useMemo(() => {
-    const filtered = Object.entries(imageMetadata)
-      .filter(([_, data]) => {
-        if (!data || !slug) return false;
-        return data.category === slug;
-      })
-      .map(([key, data]) => ({ key, ...data }));
-
-    // Get priority list for current category
-    const priorities = priorityImages[slug] || [];
+    if (!imageMetadata || !slug) return [];
     
-    // Sort by priority first, then alphabetically
-    return filtered.sort((a, b) => {
-      const aPriority = priorities.indexOf(a.key);
-      const bPriority = priorities.indexOf(b.key);
+    try {
+      const filtered = Object.entries(imageMetadata)
+        .filter(([_, data]) => {
+          if (!data || typeof data !== 'object') return false;
+          return data.category === slug;
+        })
+        .map(([key, data]) => ({ key, ...data }));
+
+      // Get priority list for current category
+      const priorities = priorityImages[slug] || [];
       
-      // If both are priority images, sort by priority order
-      if (aPriority !== -1 && bPriority !== -1) {
-        return aPriority - bPriority;
-      }
-      
-      // If only one is priority, it goes first
-      if (aPriority !== -1) return -1;
-      if (bPriority !== -1) return 1;
-      
-      // If neither is priority, sort alphabetically by title
-      return a.title.localeCompare(b.title);
-    });
+      // Sort by priority first, then alphabetically
+      return filtered.sort((a, b) => {
+        const aPriority = priorities.indexOf(a.key);
+        const bPriority = priorities.indexOf(b.key);
+        
+        // If both are priority images, sort by priority order
+        if (aPriority !== -1 && bPriority !== -1) {
+          return aPriority - bPriority;
+        }
+        
+        // If only one is priority, it goes first
+        if (aPriority !== -1) return -1;
+        if (bPriority !== -1) return 1;
+        
+        // If neither is priority, sort alphabetically by title
+        const titleA = a.title || '';
+        const titleB = b.title || '';
+        return titleA.localeCompare(titleB);
+      });
+    } catch (error) {
+      console.error('Error filtering images:', error);
+      return [];
+    }
   }, [imageMetadata, slug, priorityImages]);
 
   const loadMetadata = useCallback(async () => {
+    if (!slug) return;
+    
     try {
       setError(false);
-      const response = await fetch('/api/metadata');
+      
+      // Add timeout to prevent hanging requests
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
+      const response = await fetch('/api/metadata', {
+        signal: controller.signal,
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+      
+      clearTimeout(timeoutId);
       
       if (!response.ok) {
-        throw new Error('Failed to load metadata');
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();
-      setImageMetadata(data || {});
+      
+      // Validate the data structure
+      if (typeof data === 'object' && data !== null) {
+        setImageMetadata(data);
+      } else {
+        console.warn('Invalid metadata format received');
+        setImageMetadata({});
+      }
     } catch (error) {
       console.error('Failed to load metadata:', error);
       setImageMetadata({});
       setError(true);
     } finally {
       setLoading(false);
-      // Delay showing images to improve LCP
-      setTimeout(() => setShowImages(true), 500);
+      // Show images after loading completes
+      setShowImages(true);
     }
-  }, []);
+  }, [slug]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && slug) {
-      // Delay metadata loading to prioritize hero rendering
-      const timer = setTimeout(loadMetadata, 300);
-      return () => clearTimeout(timer);
+    if (slug && typeof window !== 'undefined') {
+      loadMetadata();
     }
   }, [slug, loadMetadata]);
 
@@ -172,17 +200,52 @@ export default function CategoryPage() {
     setSelectedImage(image);
   }, []);
 
-  // Don't render anything until router is ready
-  if (!router.isReady || typeof window === 'undefined') {
-    return null;
+  // Early return for invalid categories to prevent 500 errors
+  if (slug && !categoryInfo[slug]) {
+    return (
+      <>
+        <Head>
+          <title>Category Not Found - StreamBackdrops</title>
+          <meta name="description" content="The requested category was not found." />
+        </Head>
+        <div style={{textAlign: 'center', padding: '4rem 2rem', minHeight: '50vh'}}>
+          <h1 style={{color: '#111827', marginBottom: '1rem'}}>Category Not Found</h1>
+          <p style={{color: '#6b7280', marginBottom: '2rem'}}>The category you're looking for doesn't exist.</p>
+          <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>← Back to Home</Link>
+        </div>
+      </>
+    );
   }
 
-  if (!categoryInfo[slug]) {
+  // Don't render anything until router is ready and we have a valid slug
+  if (!router.isReady || !slug || typeof window === 'undefined') {
     return (
-      <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
-        <h1>Category Not Found</h1>
-        <Link href="/" style={{color: '#2563eb'}}>← Back to Home</Link>
-      </div>
+      <>
+        <Head>
+          <title>Loading... - StreamBackdrops</title>
+        </Head>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '50vh'
+        }}>
+          <div style={{
+            width: '24px',
+            height: '24px',
+            border: '2px solid #e5e7eb',
+            borderTop: '2px solid #2563eb',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite'
+          }} />
+        </div>
+        <style jsx>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </>
     );
   }
 
@@ -604,5 +667,37 @@ export default function CategoryPage() {
 }
 
 export async function getServerSideProps(context) {
-  return { props: {} };
+  const { slug } = context.query;
+  
+  // Valid category slugs
+  const validCategories = [
+    'home-offices',
+    'executive-offices', 
+    'minimalist',
+    'lobbies',
+    'private-offices'
+  ];
+  
+  // Check if slug is valid
+  if (!slug || !validCategories.includes(slug)) {
+    return {
+      notFound: true
+    };
+  }
+  
+  // Handle premium redirect at server level
+  if (slug === 'premium') {
+    return {
+      redirect: {
+        destination: '/premium',
+        permanent: false
+      }
+    };
+  }
+  
+  return { 
+    props: {
+      slug
+    } 
+  };
 }
