@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -11,27 +11,10 @@ export default function CategoryPage() {
   const [imageMetadata, setImageMetadata] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [imagesLoaded, setImagesLoaded] = useState(0);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined' && slug) {
-      loadMetadata();
-    }
-  }, [slug]);
-
-  const loadMetadata = async () => {
-    try {
-      const response = await fetch('/api/metadata');
-      const data = await response.json();
-      setImageMetadata(data || {});
-    } catch (error) {
-      console.error('Failed to load metadata:', error);
-      setImageMetadata({});
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const categoryInfo = {
+  // Memoize category info to prevent recreating on each render
+  const categoryInfo = useMemo(() => ({
     'home-offices': {
       name: 'Home Offices',
       description: 'Professional home office backgrounds perfect for remote work and video calls'
@@ -52,17 +35,39 @@ export default function CategoryPage() {
       name: 'Private Offices',
       description: 'Specialized private office backgrounds for professional consultations and meetings'
     }
-  };
+  }), []);
 
-  const categoryImages = Object.entries(imageMetadata)
-    .filter(([_, data]) => {
-      if (!data || !slug) return false;
-      return data.category === slug;
-    })
-    .map(([key, data]) => ({ key, ...data }))
-    .sort((a, b) => a.title.localeCompare(b.title));
+  // Memoize filtered images to prevent recalculation
+  const categoryImages = useMemo(() => {
+    return Object.entries(imageMetadata)
+      .filter(([_, data]) => {
+        if (!data || !slug) return false;
+        return data.category === slug;
+      })
+      .map(([key, data]) => ({ key, ...data }))
+      .sort((a, b) => a.title.localeCompare(b.title));
+  }, [imageMetadata, slug]);
 
-  const handleDownload = async (image) => {
+  const loadMetadata = useCallback(async () => {
+    try {
+      const response = await fetch('/api/metadata');
+      const data = await response.json();
+      setImageMetadata(data || {});
+    } catch (error) {
+      console.error('Failed to load metadata:', error);
+      setImageMetadata({});
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && slug) {
+      loadMetadata();
+    }
+  }, [slug, loadMetadata]);
+
+  const handleDownload = useCallback(async (image) => {
     if (typeof window === 'undefined') return;
     
     try {
@@ -85,7 +90,11 @@ export default function CategoryPage() {
       link.click();
       document.body.removeChild(link);
     }
-  };
+  }, []);
+
+  const handleImageLoad = useCallback(() => {
+    setImagesLoaded(prev => prev + 1);
+  }, []);
 
   // Don't render anything until router is ready
   if (!router.isReady || typeof window === 'undefined') {
@@ -112,28 +121,85 @@ export default function CategoryPage() {
       <Head>
         <title>{category.name} Virtual Backgrounds - StreamBackdrops</title>
         <meta name="description" content={`Download ${category.description.toLowerCase()}.`} />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        
+        {/* Preload critical resources */}
+        {categoryImages.length > 0 && (
+          <link 
+            rel="preload" 
+            href={`/images/${categoryImages[0].filename}`} 
+            as="image" 
+            fetchPriority="high"
+          />
+        )}
+        
+        {/* Critical CSS for mobile */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            .mobile-grid { 
+              display: grid; 
+              grid-template-columns: 1fr;
+              gap: 1.5rem;
+              contain: layout;
+            }
+            @media (min-width: 768px) { 
+              .mobile-grid { grid-template-columns: repeat(2, 1fr); } 
+            }
+            @media (min-width: 1024px) { 
+              .mobile-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); } 
+            }
+            .image-card {
+              transform: translateZ(0);
+              will-change: transform;
+              contain: layout style paint;
+            }
+            .image-placeholder {
+              background: #f3f4f6;
+              aspect-ratio: 16/9;
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: #9ca3af;
+            }
+          `
+        }} />
       </Head>
 
       <div style={{minHeight: '100vh', background: '#f9fafb'}}>
+        {/* Simplified header for mobile */}
         <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '1rem 0'}}>
-          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
+          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 1rem'}}>
             <Link href="/" style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', textDecoration: 'none'}}>
               Stream<span style={{color: '#2563eb'}}>Backdrops</span>
             </Link>
             
-            <nav style={{marginTop: '1rem', display: 'flex', gap: '1rem', flexWrap: 'wrap'}}>
+            {/* Horizontal scrolling nav for mobile */}
+            <nav style={{
+              marginTop: '1rem', 
+              display: 'flex', 
+              gap: '1rem', 
+              overflowX: 'auto',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              paddingBottom: '0.5rem'
+            }}>
               {Object.entries(categoryInfo).map(([key, info]) => (
                 <Link
                   key={key}
                   href={`/category/${key}`}
                   style={{
-                    fontSize: '1rem',
+                    fontSize: '0.9rem',
                     fontWeight: '600',
                     color: key === slug ? '#2563eb' : '#6b7280',
                     textDecoration: 'none',
                     padding: '0.5rem 1rem',
-                    borderRadius: '0.5rem',
-                    background: key === slug ? 'rgba(37, 99, 235, 0.1)' : 'transparent'
+                    borderRadius: '1rem',
+                    background: key === slug ? 'rgba(37, 99, 235, 0.1)' : 'white',
+                    border: key === slug ? 'none' : '1px solid #e5e7eb',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0
                   }}
                 >
                   {info.name}
@@ -143,24 +209,35 @@ export default function CategoryPage() {
           </div>
         </header>
 
-        <section style={{background: '#2563eb', color: 'white', padding: '4rem 0', textAlign: 'center'}}>
-          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
-            <h1 style={{fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem'}}>
+        {/* Compressed hero section for mobile */}
+        <section style={{background: '#2563eb', color: 'white', padding: '3rem 0', textAlign: 'center'}}>
+          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 1rem'}}>
+            <h1 style={{fontSize: 'clamp(2rem, 8vw, 3rem)', fontWeight: 'bold', marginBottom: '1rem'}}>
               {category.name}
             </h1>
-            <p style={{fontSize: '1.2rem', marginBottom: '0.5rem'}}>
+            <p style={{fontSize: 'clamp(1rem, 4vw, 1.2rem)', marginBottom: '0.5rem', opacity: 0.95}}>
               {category.description}
             </p>
-            <p style={{opacity: 0.9}}>
-              {loading ? 'Loading...' : `${categoryImages.length} professional backgrounds available`}
+            <p style={{opacity: 0.9, fontSize: '0.9rem'}}>
+              {loading ? 'Loading...' : `${categoryImages.length} backgrounds available`}
             </p>
           </div>
         </section>
 
-        <section style={{padding: '3rem 0'}}>
-          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
+        {/* Optimized images section */}
+        <section style={{padding: '2rem 0'}}>
+          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 1rem'}}>
             {loading ? (
               <div style={{textAlign: 'center', padding: '3rem 0'}}>
+                <div style={{
+                  width: '40px',
+                  height: '40px',
+                  border: '3px solid #e5e7eb',
+                  borderTop: '3px solid #2563eb',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite',
+                  margin: '0 auto 1rem'
+                }} />
                 <p>Loading backgrounds...</p>
               </div>
             ) : categoryImages.length === 0 ? (
@@ -171,20 +248,16 @@ export default function CategoryPage() {
                 </Link>
               </div>
             ) : (
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                gap: '2rem'
-              }}>
+              <div className="mobile-grid">
                 {categoryImages.map((image, index) => (
                   <div 
                     key={image.key} 
+                    className="image-card"
                     style={{
                       background: 'white',
                       borderRadius: '0.75rem',
-                      boxShadow: '0 8px 20px rgba(0,0,0,0.12)',
-                      overflow: 'hidden',
-                      transition: 'transform 0.3s ease'
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                      overflow: 'hidden'
                     }}
                   >
                     <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
@@ -200,8 +273,13 @@ export default function CategoryPage() {
                           cursor: 'pointer'
                         }}
                         onClick={() => setSelectedImage(image)}
-                        loading={index < 4 ? "eager" : "lazy"}
-                        priority={index < 2}
+                        loading={index < 2 ? "eager" : "lazy"}
+                        priority={index === 0}
+                        onLoad={handleImageLoad}
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        quality={75}
                       />
                       
                       <div style={{
@@ -222,7 +300,9 @@ export default function CategoryPage() {
                             borderRadius: '0.5rem',
                             fontSize: '0.9rem',
                             fontWeight: '600',
-                            cursor: 'pointer'
+                            cursor: 'pointer',
+                            minHeight: '44px', // Better touch target
+                            minWidth: '80px'
                           }}
                         >
                           Download
@@ -245,6 +325,7 @@ export default function CategoryPage() {
           </div>
         </section>
 
+        {/* Optimized modal */}
         {selectedImage && (
           <div 
             style={{
@@ -258,7 +339,7 @@ export default function CategoryPage() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: '20px'
+              padding: '1rem'
             }}
             onClick={() => setSelectedImage(null)}
           >
@@ -266,10 +347,11 @@ export default function CategoryPage() {
               style={{
                 backgroundColor: 'white',
                 borderRadius: '8px',
-                padding: '20px',
-                maxWidth: '90vw',
+                padding: '1rem',
+                maxWidth: '95vw',
                 maxHeight: '95vh',
-                position: 'relative'
+                position: 'relative',
+                overflow: 'hidden'
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -277,18 +359,22 @@ export default function CategoryPage() {
                 onClick={() => setSelectedImage(null)}
                 style={{
                   position: 'absolute',
-                  top: '10px',
-                  right: '15px',
+                  top: '0.5rem',
+                  right: '0.75rem',
                   background: 'none',
                   border: 'none',
                   fontSize: '24px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  zIndex: 10,
+                  minHeight: '44px',
+                  minWidth: '44px'
                 }}
+                aria-label="Close"
               >
                 ×
               </button>
               
-              <h3 style={{ marginBottom: '15px', paddingRight: '30px' }}>
+              <h3 style={{ marginBottom: '1rem', paddingRight: '2rem', fontSize: '1.1rem' }}>
                 {selectedImage.title || 'Virtual Background'}
               </h3>
               
@@ -300,11 +386,12 @@ export default function CategoryPage() {
                 style={{
                   width: '100%',
                   height: 'auto',
-                  maxHeight: '70vh',
+                  maxHeight: '60vh',
                   objectFit: 'contain',
                   borderRadius: '4px',
-                  marginBottom: '15px'
+                  marginBottom: '1rem'
                 }}
+                priority
               />
               
               <button
@@ -317,7 +404,9 @@ export default function CategoryPage() {
                   borderRadius: '6px',
                   fontSize: '16px',
                   cursor: 'pointer',
-                  fontWeight: '600'
+                  fontWeight: '600',
+                  minHeight: '44px',
+                  width: '100%'
                 }}
               >
                 Download PNG
@@ -328,6 +417,17 @@ export default function CategoryPage() {
 
         <Footer />
       </div>
+
+      {/* Add loading animation CSS */}
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        nav::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </>
   );
 }
