@@ -1,4 +1,4 @@
-// CREATE a new file: components/PremiumGallery.js
+// UPDATE components/PremiumGallery.js - Fix pricing to $7.99
 
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
@@ -220,7 +220,7 @@ export default function PremiumGallery() {
                         minHeight: '44px'
                       }}
                     >
-                      💎 Buy $4.99
+                      💎 Buy $7.99
                     </button>
                   </div>
                 </div>
@@ -254,7 +254,7 @@ export default function PremiumGallery() {
                         fontWeight: 'bold',
                         fontSize: 'clamp(1.1rem, 2vw, 1.25rem)'
                       }}>
-                        $4.99
+                        $7.99
                       </div>
                       <div style={{
                         color: '#6b7280',
@@ -318,7 +318,7 @@ export default function PremiumGallery() {
               marginBottom: '1.5rem',
               fontSize: 'clamp(0.9rem, 1.5vw, 1rem)'
             }}>
-              {selectedImage.title} - $4.99
+              {selectedImage.title} - $7.99
             </p>
             
             <input
@@ -371,7 +371,7 @@ export default function PremiumGallery() {
                   minHeight: '44px'
                 }}
               >
-                Purchase $4.99
+                Purchase $7.99
               </button>
             </div>
           </div>
@@ -466,7 +466,7 @@ export default function PremiumGallery() {
                   minHeight: '44px'
                 }}
               >
-                💎 Purchase 4K Version - $4.99
+                💎 Purchase 4K Version - $7.99
               </button>
               
               <button

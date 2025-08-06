@@ -1,4 +1,4 @@
-// REPLACE your pages/premium.js with this SSR-safe version
+// UPDATE pages/premium.js - Fix static pricing section to $7.99
 
 import Head from 'next/head';
 import Link from 'next/link';
@@ -181,7 +181,7 @@ export default function Premium() {
           </div>
         </header>
 
-        {/* PRICING SECTION */}
+        {/* PRICING SECTION - UPDATED TO $7.99 */}
         <section style={{
           padding: 'clamp(3rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem)', 
           background: 'white'
@@ -216,7 +216,7 @@ export default function Premium() {
                 fontWeight: 'bold', 
                 marginBottom: '0.5rem'
               }}>
-                $4.99 per image
+                $7.99 per image
               </h3>
               <p style={{
                 fontSize: 'clamp(1rem, 2vw, 1.1rem)', 

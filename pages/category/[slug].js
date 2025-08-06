@@ -1,4 +1,4 @@
-// REPLACE your pages/category/[slug].js file completely
+// REPLACE your pages/category/[slug].js to fix hard refresh errors completely
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Head from 'next/head';
@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
 import Image from 'next/image';
 
-export default function CategoryPage() {
+export default function CategoryPage({ slug: initialSlug }) {
   const router = useRouter();
   const { slug } = router.query;
   const [imageMetadata, setImageMetadata] = useState({});
@@ -16,6 +16,9 @@ export default function CategoryPage() {
   const [showImages, setShowImages] = useState(false);
   const [error, setError] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  // Use initialSlug from SSR if available, fallback to router
+  const currentSlug = initialSlug || slug;
 
   // Only mount on client to prevent SSR issues
   useEffect(() => {
@@ -84,17 +87,17 @@ export default function CategoryPage() {
   }), []);
 
   const categoryImages = useMemo(() => {
-    if (!imageMetadata || !slug) return [];
+    if (!imageMetadata || !currentSlug) return [];
     
     try {
       const filtered = Object.entries(imageMetadata)
         .filter(([_, data]) => {
           if (!data || typeof data !== 'object') return false;
-          return data.category === slug;
+          return data.category === currentSlug;
         })
         .map(([key, data]) => ({ key, ...data }));
 
-      const priorities = priorityImages[slug] || [];
+      const priorities = priorityImages[currentSlug] || [];
       
       return filtered.sort((a, b) => {
         const aPriority = priorities.indexOf(a.key);
@@ -115,20 +118,23 @@ export default function CategoryPage() {
       console.error('Error filtering images:', error);
       return [];
     }
-  }, [imageMetadata, slug, priorityImages]);
+  }, [imageMetadata, currentSlug, priorityImages]);
 
   const loadMetadata = useCallback(async () => {
-    if (!slug || !mounted) return;
+    if (!currentSlug || !mounted) return;
     
     try {
       setError(false);
       
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       
       const response = await fetch('/api/metadata', {
         signal: controller.signal,
-        headers: { 'Cache-Control': 'no-cache' }
+        headers: { 
+          'Cache-Control': 'no-cache',
+          'Accept': 'application/json'
+        }
       });
       
       clearTimeout(timeoutId);
@@ -153,13 +159,14 @@ export default function CategoryPage() {
       setLoading(false);
       setShowImages(true);
     }
-  }, [slug, mounted]);
+  }, [currentSlug, mounted]);
 
   useEffect(() => {
-    if (slug && mounted) {
-      loadMetadata();
+    if (currentSlug && mounted) {
+      const timer = setTimeout(loadMetadata, 100);
+      return () => clearTimeout(timer);
     }
-  }, [slug, mounted, loadMetadata]);
+  }, [currentSlug, mounted, loadMetadata]);
 
   const handleDownload = useCallback(async (image) => {
     try {
@@ -187,7 +194,7 @@ export default function CategoryPage() {
   }, []);
 
   // Early return for invalid categories
-  if (mounted && slug && !categoryInfo[slug]) {
+  if (mounted && currentSlug && !categoryInfo[currentSlug]) {
     return (
       <>
         <Head>
@@ -202,8 +209,8 @@ export default function CategoryPage() {
     );
   }
 
-  // Loading state while router initializes
-  if (!mounted || !router.isReady || !slug) {
+  // Loading state while router initializes or during SSR
+  if (!mounted || !router.isReady || !currentSlug) {
     return (
       <>
         <Head>
@@ -213,7 +220,8 @@ export default function CategoryPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          minHeight: '50vh'
+          minHeight: '50vh',
+          background: '#f9fafb'
         }}>
           <div style={{
             width: '24px',
@@ -224,11 +232,17 @@ export default function CategoryPage() {
             animation: 'spin 1s linear infinite'
           }} />
         </div>
+        <style jsx>{`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
       </>
     );
   }
 
-  const category = categoryInfo[slug];
+  const category = categoryInfo[currentSlug];
 
   return (
     <>
@@ -238,7 +252,7 @@ export default function CategoryPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div>
+      <div data-mounted={mounted}>
         {/* HEADER WITH CLICKABLE LOGO */}
         <header>
           <div className="container">
@@ -288,10 +302,10 @@ export default function CategoryPage() {
                   href={`/category/${key}`}
                   style={{
                     padding: '0.5rem 1rem',
-                    background: key === slug ? '#2563eb' : 'white',
+                    background: key === currentSlug ? '#2563eb' : 'white',
                     border: '1px solid #e5e7eb',
                     borderRadius: '1rem',
-                    color: key === slug ? 'white' : '#6b7280',
+                    color: key === currentSlug ? 'white' : '#6b7280',
                     textDecoration: 'none',
                     fontSize: '0.9rem',
                     fontWeight: '600'
@@ -325,7 +339,8 @@ export default function CategoryPage() {
           <div className="container">
             {error ? (
               <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
-                <h1 style={{color: '#111827', marginBottom: '1rem'}}>Unable to load backgrounds</h1>
+                <h2 style={{color: '#111827', marginBottom: '1rem'}}>Unable to load backgrounds</h2>
+                <p style={{color: '#6b7280', marginBottom: '2rem'}}>There was an issue loading the images. Please try again.</p>
                 <button 
                   onClick={() => {
                     setError(false);
@@ -346,7 +361,7 @@ export default function CategoryPage() {
                 >
                   Try Again
                 </button>
-                <Link href="/" style={{color: '#2563eb'}}>← Back to Home</Link>
+                <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>← Back to Home</Link>
               </div>
             ) : !showImages || loading ? (
               <div style={{textAlign: 'center', padding: '2rem 0'}}>
@@ -359,6 +374,7 @@ export default function CategoryPage() {
                   animation: 'spin 1s linear infinite',
                   margin: '0 auto'
                 }} />
+                <p style={{color: '#6b7280', marginTop: '1rem'}}>Loading backgrounds...</p>
               </div>
             ) : categoryImages.length === 0 ? (
               <div style={{textAlign: 'center', padding: '3rem 0'}}>
@@ -378,12 +394,16 @@ export default function CategoryPage() {
                     minHeight: '350px'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-8px)';
-                    e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.2)';
+                    if (window.innerWidth > 768) {
+                      e.currentTarget.style.transform = 'translateY(-8px)';
+                      e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.2)';
+                    }
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
+                    if (window.innerWidth > 768) {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
+                    }
                   }}
                   >
                     <div style={{position: 'relative', height: '250px', overflow: 'hidden', borderRadius: '1rem 1rem 0 0'}}>
@@ -592,6 +612,7 @@ export default function CategoryPage() {
   );
 }
 
+// CRITICAL: Server-side props to prevent hard refresh errors
 export async function getServerSideProps(context) {
   const { slug } = context.query;
   
@@ -607,5 +628,9 @@ export async function getServerSideProps(context) {
     return { notFound: true };
   }
   
-  return { props: { slug } };
+  return { 
+    props: { 
+      slug // Pass slug as prop for SSR safety
+    } 
+  };
 }
