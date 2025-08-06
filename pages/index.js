@@ -42,7 +42,11 @@ export default function Home() {
       image: 'professional-consultation-office-1.webp'
     }
   ];
-
+const safeCategories = categories.map(category => ({
+    ...category,
+    // Fallback image path if the main image doesn't exist
+    image: category.image || 'placeholder.jpg'
+  }));
   return (
     <>
       <Head>
