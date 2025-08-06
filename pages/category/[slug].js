@@ -50,7 +50,13 @@ export default function CategoryPage() {
 
   const loadMetadata = useCallback(async () => {
     try {
-      const response = await fetch('/api/metadata');
+      // Use fetch with cache control for faster loading
+      const response = await fetch('/api/metadata', {
+        cache: 'force-cache',
+        headers: {
+          'Cache-Control': 'max-age=3600'
+        }
+      });
       const data = await response.json();
       setImageMetadata(data || {});
     } catch (error) {
@@ -63,6 +69,7 @@ export default function CategoryPage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && slug) {
+      // Start loading metadata immediately
       loadMetadata();
     }
   }, [slug, loadMetadata]);
@@ -96,6 +103,10 @@ export default function CategoryPage() {
     setImagesLoaded(prev => prev + 1);
   }, []);
 
+  const handlePreview = useCallback((image) => {
+    setSelectedImage(image);
+  }, []);
+
   // Don't render anything until router is ready
   if (!router.isReady || typeof window === 'undefined') {
     return (
@@ -123,17 +134,28 @@ export default function CategoryPage() {
         <meta name="description" content={`Download ${category.description.toLowerCase()}.`} />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         
-        {/* Preload critical resources */}
+        {/* Critical performance optimizations */}
+        <link rel="preconnect" href={typeof window !== 'undefined' ? window.location.origin : ''} />
+        <link rel="dns-prefetch" href={typeof window !== 'undefined' ? window.location.origin : ''} />
+        
+        {/* Preload critical resources - FIRST IMAGE ONLY */}
         {categoryImages.length > 0 && (
-          <link 
-            rel="preload" 
-            href={`/images/${categoryImages[0].filename}`} 
-            as="image" 
-            fetchPriority="high"
-          />
+          <>
+            <link 
+              rel="preload" 
+              href={`/images/${categoryImages[0].filename}`} 
+              as="image" 
+              fetchPriority="high"
+            />
+            <link 
+              rel="prefetch" 
+              href={`/images/${categoryImages[1]?.filename || categoryImages[0].filename}`} 
+              as="image"
+            />
+          </>
         )}
         
-        {/* Critical CSS for mobile */}
+        {/* Critical CSS - SMALLER AND MORE FOCUSED */}
         <style dangerouslySetInnerHTML={{
           __html: `
             .mobile-grid { 
@@ -143,64 +165,79 @@ export default function CategoryPage() {
               contain: layout;
             }
             @media (min-width: 768px) { 
-              .mobile-grid { grid-template-columns: repeat(2, 1fr); } 
+              .mobile-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; } 
             }
             @media (min-width: 1024px) { 
-              .mobile-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); } 
+              .mobile-grid { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; } 
             }
             .image-card {
               transform: translateZ(0);
               will-change: transform;
               contain: layout style paint;
+              background: white;
+              border-radius: 0.75rem;
+              box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+              overflow: hidden;
+              transition: transform 0.2s ease;
             }
-            .image-placeholder {
-              background: #f3f4f6;
-              aspect-ratio: 16/9;
-              width: 100%;
+            .image-card:hover {
+              transform: translateY(-4px);
+              box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            }
+            .category-nav {
               display: flex;
-              align-items: center;
-              justify-content: center;
-              color: #9ca3af;
+              gap: 0.5rem;
+              overflow-x: auto;
+              padding: 1rem 0;
+              scrollbar-width: none;
+              -ms-overflow-style: none;
+              -webkit-overflow-scrolling: touch;
+            }
+            .category-nav::-webkit-scrollbar { display: none; }
+            .nav-tab {
+              padding: 0.75rem 1.5rem;
+              border-radius: 2rem;
+              font-weight: 600;
+              text-decoration: none;
+              white-space: nowrap;
+              flex-shrink: 0;
+              transition: all 0.2s ease;
+              border: 2px solid transparent;
+            }
+            .nav-tab.active {
+              background: linear-gradient(135deg, #2563eb, #1d4ed8);
+              color: white;
+              box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            }
+            .nav-tab.inactive {
+              background: white;
+              color: #6b7280;
+              border: 2px solid #e5e7eb;
+            }
+            .nav-tab.inactive:hover {
+              border-color: #2563eb;
+              color: #2563eb;
+              background: rgba(37, 99, 235, 0.05);
             }
           `
         }} />
       </Head>
 
       <div style={{minHeight: '100vh', background: '#f9fafb'}}>
-        {/* Simplified header for mobile */}
-        <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '1rem 0'}}>
+        {/* IMPROVED HEADER WITH NICE TABS */}
+        <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '1rem 0', position: 'sticky', top: 0, zIndex: 100}}>
           <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 1rem'}}>
-            <Link href="/" style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', textDecoration: 'none'}}>
+            <Link href="/" style={{fontSize: '1.75rem', fontWeight: 'bold', color: '#111827', textDecoration: 'none', display: 'block', marginBottom: '1rem'}}>
               Stream<span style={{color: '#2563eb'}}>Backdrops</span>
             </Link>
             
-            {/* Horizontal scrolling nav for mobile */}
-            <nav style={{
-              marginTop: '1rem', 
-              display: 'flex', 
-              gap: '1rem', 
-              overflowX: 'auto',
-              WebkitOverflowScrolling: 'touch',
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              paddingBottom: '0.5rem'
-            }}>
+            {/* BEAUTIFUL NAVIGATION TABS */}
+            <nav className="category-nav">
               {Object.entries(categoryInfo).map(([key, info]) => (
                 <Link
                   key={key}
                   href={`/category/${key}`}
-                  style={{
-                    fontSize: '0.9rem',
-                    fontWeight: '600',
-                    color: key === slug ? '#2563eb' : '#6b7280',
-                    textDecoration: 'none',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '1rem',
-                    background: key === slug ? 'rgba(37, 99, 235, 0.1)' : 'white',
-                    border: key === slug ? 'none' : '1px solid #e5e7eb',
-                    whiteSpace: 'nowrap',
-                    flexShrink: 0
-                  }}
+                  className={`nav-tab ${key === slug ? 'active' : 'inactive'}`}
                 >
                   {info.name}
                 </Link>
@@ -209,36 +246,36 @@ export default function CategoryPage() {
           </div>
         </header>
 
-        {/* Compressed hero section for mobile */}
-        <section style={{background: '#2563eb', color: 'white', padding: '3rem 0', textAlign: 'center'}}>
+        {/* COMPRESSED HERO - FASTER LCP */}
+        <section style={{background: 'linear-gradient(135deg, #2563eb, #1d4ed8)', color: 'white', padding: '2rem 0', textAlign: 'center'}}>
           <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 1rem'}}>
-            <h1 style={{fontSize: 'clamp(2rem, 8vw, 3rem)', fontWeight: 'bold', marginBottom: '1rem'}}>
+            <h1 style={{fontSize: 'clamp(1.75rem, 6vw, 2.5rem)', fontWeight: 'bold', marginBottom: '0.75rem', lineHeight: 1.2}}>
               {category.name}
             </h1>
-            <p style={{fontSize: 'clamp(1rem, 4vw, 1.2rem)', marginBottom: '0.5rem', opacity: 0.95}}>
+            <p style={{fontSize: 'clamp(0.9rem, 3vw, 1rem)', opacity: 0.95, marginBottom: '0.5rem'}}>
               {category.description}
             </p>
-            <p style={{opacity: 0.9, fontSize: '0.9rem'}}>
-              {loading ? 'Loading...' : `${categoryImages.length} backgrounds available`}
+            <p style={{opacity: 0.8, fontSize: '0.85rem'}}>
+              {loading ? 'Loading...' : `${categoryImages.length} backgrounds • Free downloads`}
             </p>
           </div>
         </section>
 
-        {/* Optimized images section */}
-        <section style={{padding: '2rem 0'}}>
+        {/* OPTIMIZED IMAGES SECTION */}
+        <section style={{padding: '1.5rem 0'}}>
           <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 1rem'}}>
             {loading ? (
-              <div style={{textAlign: 'center', padding: '3rem 0'}}>
+              <div style={{textAlign: 'center', padding: '2rem 0'}}>
                 <div style={{
-                  width: '40px',
-                  height: '40px',
+                  width: '32px',
+                  height: '32px',
                   border: '3px solid #e5e7eb',
                   borderTop: '3px solid #2563eb',
                   borderRadius: '50%',
                   animation: 'spin 1s linear infinite',
                   margin: '0 auto 1rem'
                 }} />
-                <p>Loading backgrounds...</p>
+                <p style={{color: '#6b7280'}}>Loading backgrounds...</p>
               </div>
             ) : categoryImages.length === 0 ? (
               <div style={{textAlign: 'center', padding: '3rem 0'}}>
@@ -250,43 +287,58 @@ export default function CategoryPage() {
             ) : (
               <div className="mobile-grid">
                 {categoryImages.map((image, index) => (
-                  <div 
-                    key={image.key} 
-                    className="image-card"
-                    style={{
-                      background: 'white',
-                      borderRadius: '0.75rem',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                      overflow: 'hidden'
-                    }}
-                  >
+                  <div key={image.key} className="image-card">
                     <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
                       <Image
                         src={`/images/${image.filename}`}
-                        alt={image.alt || 'Virtual background'}
+                        alt={image.alt || image.title || 'Virtual background'}
                         width={400}
                         height={225}
                         style={{
                           width: '100%',
                           height: '100%',
-                          objectFit: 'cover',
-                          cursor: 'pointer'
+                          objectFit: 'cover'
                         }}
-                        onClick={() => setSelectedImage(image)}
-                        loading={index < 2 ? "eager" : "lazy"}
+                        loading={index === 0 ? "eager" : "lazy"}
                         priority={index === 0}
                         onLoad={handleImageLoad}
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        quality={75}
+                        quality={index === 0 ? 85 : 75} // Higher quality for first image
                       />
                       
+                      {/* RESTORED BUTTON OVERLAY */}
                       <div style={{
                         position: 'absolute',
-                        bottom: '1rem',
-                        right: '1rem'
+                        bottom: '0.75rem',
+                        left: '0.75rem',
+                        right: '0.75rem',
+                        display: 'flex',
+                        gap: '0.5rem'
                       }}>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handlePreview(image);
+                          }}
+                          style={{
+                            background: 'rgba(0, 0, 0, 0.8)',
+                            color: 'white',
+                            padding: '0.5rem 0.75rem',
+                            border: 'none',
+                            borderRadius: '0.5rem',
+                            fontSize: '0.85rem',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            minHeight: '40px',
+                            flex: 1,
+                            backdropFilter: 'blur(4px)'
+                          }}
+                        >
+                          👁️ Preview
+                        </button>
+                        
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -295,27 +347,27 @@ export default function CategoryPage() {
                           style={{
                             background: '#2563eb',
                             color: 'white',
-                            padding: '0.5rem 1rem',
+                            padding: '0.5rem 0.75rem',
                             border: 'none',
                             borderRadius: '0.5rem',
-                            fontSize: '0.9rem',
+                            fontSize: '0.85rem',
                             fontWeight: '600',
                             cursor: 'pointer',
-                            minHeight: '44px', // Better touch target
-                            minWidth: '80px'
+                            minHeight: '40px',
+                            flex: 1
                           }}
                         >
-                          Download
+                          📥 Download
                         </button>
                       </div>
                     </div>
 
-                    <div style={{padding: '1.5rem'}}>
-                      <h3 style={{fontWeight: '600', color: '#111827', fontSize: '1.1rem', marginBottom: '0.5rem'}}>
+                    <div style={{padding: '1.25rem'}}>
+                      <h3 style={{fontWeight: '600', color: '#111827', fontSize: '1rem', marginBottom: '0.5rem', lineHeight: 1.3}}>
                         {image.title || 'Virtual Background'}
                       </h3>
-                      <p style={{color: '#6b7280', fontSize: '0.95rem'}}>
-                        {image.description || 'Professional virtual background'}
+                      <p style={{color: '#6b7280', fontSize: '0.875rem', lineHeight: 1.4}}>
+                        {image.description || 'Professional virtual background for video calls'}
                       </p>
                     </div>
                   </div>
@@ -325,7 +377,7 @@ export default function CategoryPage() {
           </div>
         </section>
 
-        {/* Optimized modal */}
+        {/* OPTIMIZED MODAL */}
         {selectedImage && (
           <div 
             style={{
@@ -334,7 +386,7 @@ export default function CategoryPage() {
               left: 0,
               width: '100vw',
               height: '100vh',
-              backgroundColor: 'rgba(0, 0, 0, 0.9)',
+              backgroundColor: 'rgba(0, 0, 0, 0.95)',
               zIndex: 9999,
               display: 'flex',
               alignItems: 'center',
@@ -346,8 +398,8 @@ export default function CategoryPage() {
             <div 
               style={{
                 backgroundColor: 'white',
-                borderRadius: '8px',
-                padding: '1rem',
+                borderRadius: '12px',
+                padding: '1.5rem',
                 maxWidth: '95vw',
                 maxHeight: '95vh',
                 position: 'relative',
@@ -359,28 +411,33 @@ export default function CategoryPage() {
                 onClick={() => setSelectedImage(null)}
                 style={{
                   position: 'absolute',
-                  top: '0.5rem',
-                  right: '0.75rem',
-                  background: 'none',
+                  top: '1rem',
+                  right: '1rem',
+                  background: 'rgba(0, 0, 0, 0.1)',
+                  color: '#374151',
                   border: 'none',
-                  fontSize: '24px',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  fontSize: '20px',
                   cursor: 'pointer',
                   zIndex: 10,
-                  minHeight: '44px',
-                  minWidth: '44px'
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
-                aria-label="Close"
+                aria-label="Close preview"
               >
-                ×
+                ✕
               </button>
               
-              <h3 style={{ marginBottom: '1rem', paddingRight: '2rem', fontSize: '1.1rem' }}>
-                {selectedImage.title || 'Virtual Background'}
+              <h3 style={{ marginBottom: '1rem', paddingRight: '3rem', fontSize: '1.25rem', fontWeight: '600', color: '#111827' }}>
+                {selectedImage.title || 'Virtual Background Preview'}
               </h3>
               
               <Image
                 src={`/images/${selectedImage.filename}`}
-                alt={selectedImage.alt || 'Virtual background'}
+                alt={selectedImage.alt || selectedImage.title || 'Virtual background preview'}
                 width={800}
                 height={450}
                 style={{
@@ -388,29 +445,49 @@ export default function CategoryPage() {
                   height: 'auto',
                   maxHeight: '60vh',
                   objectFit: 'contain',
-                  borderRadius: '4px',
+                  borderRadius: '8px',
                   marginBottom: '1rem'
                 }}
                 priority
+                quality={90}
               />
               
-              <button
-                onClick={() => handleDownload(selectedImage)}
-                style={{
-                  backgroundColor: '#2563eb',
-                  color: 'white',
-                  border: 'none',
-                  padding: '12px 24px',
-                  borderRadius: '6px',
-                  fontSize: '16px',
-                  cursor: 'pointer',
-                  fontWeight: '600',
-                  minHeight: '44px',
-                  width: '100%'
-                }}
-              >
-                Download PNG
-              </button>
+              <div style={{display: 'flex', gap: '1rem'}}>
+                <button
+                  onClick={() => handleDownload(selectedImage)}
+                  style={{
+                    backgroundColor: '#2563eb',
+                    color: 'white',
+                    border: 'none',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    fontWeight: '600',
+                    minHeight: '44px',
+                    flex: 1
+                  }}
+                >
+                  📥 Download PNG
+                </button>
+                
+                <button
+                  onClick={() => setSelectedImage(null)}
+                  style={{
+                    backgroundColor: '#f3f4f6',
+                    color: '#374151',
+                    border: 'none',
+                    padding: '12px 24px',
+                    borderRadius: '8px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    fontWeight: '600',
+                    minHeight: '44px'
+                  }}
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -418,23 +495,20 @@ export default function CategoryPage() {
         <Footer />
       </div>
 
-      {/* Add loading animation CSS */}
+      {/* MINIMAL CSS ANIMATIONS */}
       <style jsx>{`
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
-        }
-        nav::-webkit-scrollbar {
-          display: none;
         }
       `}</style>
     </>
   );
 }
 
-// This tells Next.js to use server-side rendering instead of static generation
+// Server-side rendering for better performance
 export async function getServerSideProps(context) {
   return {
-    props: {}, // Will be passed to the page component as props
+    props: {}
   };
 }
