@@ -11,7 +11,6 @@ export default function CategoryPage() {
   const [imageMetadata, setImageMetadata] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [imagesLoaded, setImagesLoaded] = useState(0);
 
   // Memoize category info to prevent recreating on each render
   const categoryInfo = useMemo(() => ({
@@ -63,7 +62,9 @@ export default function CategoryPage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined' && slug) {
-      loadMetadata();
+      // Delay metadata loading slightly to prioritize initial render
+      const timer = setTimeout(loadMetadata, 100);
+      return () => clearTimeout(timer);
     }
   }, [slug, loadMetadata]);
 
@@ -92,17 +93,13 @@ export default function CategoryPage() {
     }
   }, []);
 
-  const handleImageLoad = useCallback(() => {
-    setImagesLoaded(prev => prev + 1);
-  }, []);
-
   const handlePreview = useCallback((image) => {
     setSelectedImage(image);
   }, []);
 
   // Don't render anything until router is ready
   if (!router.isReady || typeof window === 'undefined') {
-    return null; // Return null instead of loading div for faster initial render
+    return null;
   }
 
   if (!categoryInfo[slug]) {
@@ -123,112 +120,88 @@ export default function CategoryPage() {
         <meta name="description" content={`Download ${category.description.toLowerCase()}.`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
-        {/* CRITICAL PERFORMANCE FIXES */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        
-        {/* Preload ONLY the hero section - not images */}
+        {/* AGGRESSIVE MOBILE PERFORMANCE */}
         <style dangerouslySetInnerHTML={{
           __html: `
-            /* MOBILE-FIRST CRITICAL CSS */
+            /* MOBILE CRITICAL CSS - ULTRA FAST */
             .image-grid { 
               display: grid; 
               grid-template-columns: 1fr;
-              gap: 2rem;
+              gap: 1.5rem;
               contain: layout;
-              max-width: 1400px;
-              margin: 0 auto;
               padding: 0 1rem;
-            }
-            /* BIGGER IMAGES ON TABLET+ */
-            @media (min-width: 768px) { 
-              .image-grid { 
-                grid-template-columns: repeat(2, 1fr);
-                gap: 3rem;
-                padding: 0 2rem;
-              } 
-            }
-            /* EVEN BIGGER ON DESKTOP */
-            @media (min-width: 1200px) { 
-              .image-grid { 
-                grid-template-columns: repeat(2, 1fr);
-                gap: 4rem;
-                padding: 0 3rem;
-              } 
             }
             .image-card {
               background: white;
-              border-radius: 1rem;
-              box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+              border-radius: 0.75rem;
+              box-shadow: 0 4px 12px rgba(0,0,0,0.1);
               overflow: hidden;
-              transition: all 0.3s ease;
               contain: layout style paint;
               transform: translateZ(0);
             }
-            .image-card:hover {
-              transform: translateY(-8px);
-              box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            }
-            .category-nav {
-              display: flex;
-              gap: 0.75rem;
-              overflow-x: auto;
-              padding: 1.5rem 0;
-              scrollbar-width: none;
-              -ms-overflow-style: none;
-              -webkit-overflow-scrolling: touch;
-            }
-            .category-nav::-webkit-scrollbar { display: none; }
             .nav-tab {
-              padding: 1rem 2rem;
-              border-radius: 2rem;
+              padding: 0.75rem 1.25rem;
+              border-radius: 1.5rem;
               font-weight: 600;
               text-decoration: none;
               white-space: nowrap;
               flex-shrink: 0;
-              transition: all 0.3s ease;
-              border: 2px solid transparent;
-              font-size: 1rem;
+              font-size: 0.9rem;
             }
             .nav-tab.active {
               background: linear-gradient(135deg, #2563eb, #1d4ed8);
               color: white;
-              box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-              transform: translateY(-2px);
+              box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
             }
             .nav-tab.inactive {
               background: white;
               color: #6b7280;
-              border: 2px solid #e5e7eb;
+              border: 1px solid #e5e7eb;
             }
-            .nav-tab.inactive:hover {
-              border-color: #2563eb;
-              color: #2563eb;
-              background: rgba(37, 99, 235, 0.05);
-              transform: translateY(-1px);
+            
+            /* TABLET+ BIGGER IMAGES */
+            @media (min-width: 768px) { 
+              .image-grid { 
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+                padding: 0 2rem;
+              }
+              .image-card {
+                transition: transform 0.3s ease;
+              }
+              .image-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+              }
+              .nav-tab {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+              }
             }
-            /* PERFORMANCE: Contain expensive operations */
-            .hero { contain: layout style paint; }
-            .image-container { contain: layout; }
+            
+            /* DESKTOP EVEN BIGGER */
+            @media (min-width: 1200px) { 
+              .image-grid { 
+                gap: 3rem;
+                padding: 0 3rem;
+                max-width: 1400px;
+                margin: 0 auto;
+              }
+            }
           `
         }} />
       </Head>
 
       <div style={{minHeight: '100vh', background: '#f8fafc'}}>
-        {/* STREAMLINED HEADER - FASTER RENDER */}
+        {/* MINIMAL HEADER FOR MOBILE */}
         <header style={{
           background: 'white', 
           borderBottom: '1px solid #e5e7eb', 
-          padding: '1.5rem 0',
-          position: 'sticky',
-          top: 0,
-          zIndex: 100,
-          backdropFilter: 'blur(10px)',
-          backgroundColor: 'rgba(255, 255, 255, 0.95)'
+          padding: '1rem 0'
         }}>
-          <div style={{maxWidth: '1400px', margin: '0 auto', padding: '0 2rem'}}>
+          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 1rem'}}>
             <Link href="/" style={{
-              fontSize: '2rem', 
+              fontSize: '1.5rem', 
               fontWeight: 'bold', 
               color: '#111827', 
               textDecoration: 'none', 
@@ -238,8 +211,16 @@ export default function CategoryPage() {
               Stream<span style={{color: '#2563eb'}}>Backdrops</span>
             </Link>
             
-            {/* ENHANCED NAVIGATION TABS */}
-            <nav className="category-nav">
+            {/* HORIZONTAL SCROLLING NAV - MOBILE OPTIMIZED */}
+            <nav style={{
+              display: 'flex',
+              gap: '0.75rem',
+              overflowX: 'auto',
+              padding: '0.5rem 0',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch'
+            }}>
               {Object.entries(categoryInfo).map(([key, info]) => (
                 <Link
                   key={key}
@@ -253,89 +234,84 @@ export default function CategoryPage() {
           </div>
         </header>
 
-        {/* MINIMAL HERO - FASTEST LCP */}
-        <section className="hero" style={{
-          background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)', 
+        {/* COMPRESSED HERO - FASTEST POSSIBLE LCP */}
+        <section style={{
+          background: 'linear-gradient(135deg, #2563eb, #1d4ed8)', 
           color: 'white', 
-          padding: '3rem 0', 
+          padding: '2rem 0', 
           textAlign: 'center'
         }}>
-          <div style={{maxWidth: '1400px', margin: '0 auto', padding: '0 2rem'}}>
+          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 1rem'}}>
             <h1 style={{
-              fontSize: 'clamp(2rem, 8vw, 3.5rem)', 
+              fontSize: 'clamp(1.75rem, 6vw, 2.5rem)', 
               fontWeight: 'bold', 
-              marginBottom: '1rem', 
-              lineHeight: 1.2
+              marginBottom: '0.75rem'
             }}>
               {category.name}
             </h1>
             <p style={{
-              fontSize: 'clamp(1rem, 4vw, 1.25rem)', 
-              opacity: 0.9, 
-              marginBottom: '0.5rem'
+              fontSize: 'clamp(0.9rem, 3vw, 1.1rem)', 
+              opacity: 0.9
             }}>
-              {category.description}
-            </p>
-            <p style={{opacity: 0.8, fontSize: '1rem'}}>
-              {loading ? 'Loading...' : `${categoryImages.length} backgrounds • Free downloads`}
+              {loading ? 'Loading backgrounds...' : `${categoryImages.length} backgrounds available`}
             </p>
           </div>
         </section>
 
-        {/* BIGGER IMAGES SECTION */}
-        <section style={{padding: '3rem 0'}}>
+        {/* IMAGES - MOBILE FIRST SIZING */}
+        <section style={{padding: '2rem 0'}}>
           {loading ? (
-            <div style={{textAlign: 'center', padding: '3rem 0'}}>
+            <div style={{textAlign: 'center', padding: '2rem 0'}}>
               <div style={{
-                width: '40px',
-                height: '40px',
-                border: '3px solid #e5e7eb',
-                borderTop: '3px solid #2563eb',
+                width: '32px',
+                height: '32px',
+                border: '2px solid #e5e7eb',
+                borderTop: '2px solid #2563eb',
                 borderRadius: '50%',
                 animation: 'spin 1s linear infinite',
-                margin: '0 auto 1rem'
+                margin: '0 auto'
               }} />
-              <p style={{color: '#6b7280'}}>Loading backgrounds...</p>
             </div>
           ) : categoryImages.length === 0 ? (
             <div style={{textAlign: 'center', padding: '3rem 0'}}>
-              <p style={{color: '#6b7280', fontSize: '1.1rem'}}>No backgrounds found in this category.</p>
-              <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>
-                ← Browse All Categories
-              </Link>
+              <p style={{color: '#6b7280'}}>No backgrounds found.</p>
+              <Link href="/" style={{color: '#2563eb'}}>← Back to Home</Link>
             </div>
           ) : (
             <div className="image-grid">
               {categoryImages.map((image, index) => (
                 <div key={image.key} className="image-card">
-                  <div className="image-container" style={{
+                  <div style={{
                     position: 'relative', 
                     aspectRatio: '16/9', 
-                    overflow: 'hidden',
-                    minHeight: '250px' // Ensure minimum size
+                    overflow: 'hidden'
                   }}>
                     <Image
                       src={`/images/${image.filename}`}
                       alt={image.alt || image.title || 'Virtual background'}
-                      fill
+                      width={400}
+                      height={225}
                       style={{
+                        width: '100%',
+                        height: '100%',
                         objectFit: 'cover'
                       }}
-                      loading={index < 4 ? "eager" : "lazy"}
-                      priority={index < 2}
-                      onLoad={handleImageLoad}
+                      loading={index < 3 ? "eager" : "lazy"}
+                      priority={index === 0}
+                      placeholder="blur"
+                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
-                      quality={index < 2 ? 90 : 80}
+                      quality={index === 0 ? 85 : 70} // Lower quality for better performance
                     />
                     
-                    {/* IMPROVED BUTTON OVERLAY */}
+                    {/* MOBILE-OPTIMIZED BUTTONS */}
                     <div style={{
                       position: 'absolute',
-                      bottom: '1rem',
-                      left: '1rem',
-                      right: '1rem',
+                      bottom: '0.75rem',
+                      left: '0.75rem',
+                      right: '0.75rem',
                       display: 'flex',
-                      gap: '0.75rem'
+                      gap: '0.5rem'
                     }}>
                       <button
                         onClick={(e) => {
@@ -345,25 +321,15 @@ export default function CategoryPage() {
                         style={{
                           background: 'rgba(255, 255, 255, 0.95)',
                           color: '#374151',
-                          padding: '0.75rem 1.25rem',
+                          padding: '0.5rem 0.75rem',
                           border: 'none',
-                          borderRadius: '0.75rem',
-                          fontSize: '0.9rem',
+                          borderRadius: '0.5rem',
+                          fontSize: '0.8rem',
                           fontWeight: '600',
                           cursor: 'pointer',
-                          minHeight: '48px',
+                          minHeight: '44px',
                           flex: 1,
-                          backdropFilter: 'blur(8px)',
-                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                          transition: 'all 0.2s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.transform = 'translateY(-2px)';
-                          e.target.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.2)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.transform = 'translateY(0)';
-                          e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+                          backdropFilter: 'blur(4px)'
                         }}
                       >
                         👁️ Preview
@@ -377,26 +343,14 @@ export default function CategoryPage() {
                         style={{
                           background: '#2563eb',
                           color: 'white',
-                          padding: '0.75rem 1.25rem',
+                          padding: '0.5rem 0.75rem',
                           border: 'none',
-                          borderRadius: '0.75rem',
-                          fontSize: '0.9rem',
+                          borderRadius: '0.5rem',
+                          fontSize: '0.8rem',
                           fontWeight: '600',
                           cursor: 'pointer',
-                          minHeight: '48px',
-                          flex: 1,
-                          boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)',
-                          transition: 'all 0.2s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.transform = 'translateY(-2px)';
-                          e.target.style.backgroundColor = '#1d4ed8';
-                          e.target.style.boxShadow = '0 8px 20px rgba(37, 99, 235, 0.4)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.transform = 'translateY(0)';
-                          e.target.style.backgroundColor = '#2563eb';
-                          e.target.style.boxShadow = '0 4px 12px rgba(37, 99, 235, 0.3)';
+                          minHeight: '44px',
+                          flex: 1
                         }}
                       >
                         📥 Download
@@ -404,20 +358,19 @@ export default function CategoryPage() {
                     </div>
                   </div>
 
-                  <div style={{padding: '2rem'}}>
+                  <div style={{padding: window.innerWidth > 768 ? '1.5rem' : '1rem'}}>
                     <h3 style={{
                       fontWeight: '600', 
                       color: '#111827', 
-                      fontSize: '1.25rem', 
-                      marginBottom: '0.75rem', 
-                      lineHeight: 1.3
+                      fontSize: window.innerWidth > 768 ? '1.1rem' : '1rem',
+                      marginBottom: '0.5rem'
                     }}>
                       {image.title || 'Virtual Background'}
                     </h3>
                     <p style={{
                       color: '#6b7280', 
-                      fontSize: '1rem', 
-                      lineHeight: 1.5
+                      fontSize: window.innerWidth > 768 ? '0.95rem' : '0.85rem',
+                      lineHeight: 1.4
                     }}>
                       {image.description || 'Professional virtual background for video calls'}
                     </p>
@@ -428,7 +381,7 @@ export default function CategoryPage() {
           )}
         </section>
 
-        {/* OPTIMIZED MODAL */}
+        {/* LIGHTWEIGHT MODAL */}
         {selectedImage && (
           <div 
             style={{
@@ -437,24 +390,23 @@ export default function CategoryPage() {
               left: 0,
               width: '100vw',
               height: '100vh',
-              backgroundColor: 'rgba(0, 0, 0, 0.95)',
+              backgroundColor: 'rgba(0, 0, 0, 0.9)',
               zIndex: 9999,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: '2rem'
+              padding: '1rem'
             }}
             onClick={() => setSelectedImage(null)}
           >
             <div 
               style={{
                 backgroundColor: 'white',
-                borderRadius: '16px',
-                padding: '2rem',
+                borderRadius: '12px',
+                padding: '1.5rem',
                 maxWidth: '95vw',
-                maxHeight: '95vh',
-                position: 'relative',
-                overflow: 'hidden'
+                maxHeight: '90vh',
+                position: 'relative'
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -468,54 +420,43 @@ export default function CategoryPage() {
                   color: '#374151',
                   border: 'none',
                   borderRadius: '50%',
-                  width: '48px',
-                  height: '48px',
-                  fontSize: '24px',
+                  width: '40px',
+                  height: '40px',
+                  fontSize: '20px',
                   cursor: 'pointer',
-                  zIndex: 10,
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'all 0.2s ease'
+                  justifyContent: 'center'
                 }}
-                onMouseEnter={(e) => {
-                  e.target.style.background = 'rgba(0, 0, 0, 0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.background = 'rgba(0, 0, 0, 0.1)';
-                }}
-                aria-label="Close preview"
               >
                 ✕
               </button>
               
               <h3 style={{ 
-                marginBottom: '1.5rem', 
-                paddingRight: '4rem', 
-                fontSize: '1.5rem', 
-                fontWeight: '600', 
-                color: '#111827' 
+                marginBottom: '1rem', 
+                paddingRight: '3rem', 
+                fontSize: '1.2rem', 
+                fontWeight: '600'
               }}>
-                {selectedImage.title || 'Virtual Background Preview'}
+                {selectedImage.title || 'Preview'}
               </h3>
               
-              <div style={{position: 'relative', marginBottom: '1.5rem'}}>
-                <Image
-                  src={`/images/${selectedImage.filename}`}
-                  alt={selectedImage.alt || selectedImage.title || 'Virtual background preview'}
-                  width={900}
-                  height={506}
-                  style={{
-                    width: '100%',
-                    height: 'auto',
-                    maxHeight: '65vh',
-                    objectFit: 'contain',
-                    borderRadius: '12px'
-                  }}
-                  priority
-                  quality={95}
-                />
-              </div>
+              <Image
+                src={`/images/${selectedImage.filename}`}
+                alt={selectedImage.alt || 'Preview'}
+                width={600}
+                height={338}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  maxHeight: '60vh',
+                  objectFit: 'contain',
+                  borderRadius: '8px',
+                  marginBottom: '1rem'
+                }}
+                priority
+                quality={90}
+              />
               
               <div style={{display: 'flex', gap: '1rem'}}>
                 <button
@@ -524,25 +465,15 @@ export default function CategoryPage() {
                     backgroundColor: '#2563eb',
                     color: 'white',
                     border: 'none',
-                    padding: '1rem 2rem',
-                    borderRadius: '12px',
-                    fontSize: '1.1rem',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '8px',
+                    fontSize: '1rem',
                     cursor: 'pointer',
                     fontWeight: '600',
-                    minHeight: '52px',
-                    flex: 1,
-                    transition: 'all 0.2s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#1d4ed8';
-                    e.target.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#2563eb';
-                    e.target.style.transform = 'translateY(0)';
+                    flex: 1
                   }}
                 >
-                  📥 Download PNG
+                  📥 Download
                 </button>
                 
                 <button
@@ -551,21 +482,11 @@ export default function CategoryPage() {
                     backgroundColor: '#f3f4f6',
                     color: '#374151',
                     border: 'none',
-                    padding: '1rem 2rem',
-                    borderRadius: '12px',
-                    fontSize: '1.1rem',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '8px',
+                    fontSize: '1rem',
                     cursor: 'pointer',
-                    fontWeight: '600',
-                    minHeight: '52px',
-                    transition: 'all 0.2s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = '#e5e7eb';
-                    e.target.style.transform = 'translateY(-2px)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = '#f3f4f6';
-                    e.target.style.transform = 'translateY(0)';
+                    fontWeight: '600'
                   }}
                 >
                   Close
@@ -578,19 +499,17 @@ export default function CategoryPage() {
         <Footer />
       </div>
 
-      {/* MINIMAL CSS ANIMATIONS */}
       <style jsx>{`
         @keyframes spin {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
+        nav::-webkit-scrollbar { display: none; }
       `}</style>
     </>
   );
 }
 
 export async function getServerSideProps(context) {
-  return {
-    props: {}
-  };
+  return { props: {} };
 }
