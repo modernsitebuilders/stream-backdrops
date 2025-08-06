@@ -11,6 +11,7 @@ export default function CategoryPage() {
   const [imageMetadata, setImageMetadata] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showImages, setShowImages] = useState(false);
 
   // Memoize category info to prevent recreating on each render
   const categoryInfo = useMemo(() => ({
@@ -40,16 +41,74 @@ export default function CategoryPage() {
     }
   }), []);
 
-  // Memoize filtered images to prevent recalculation
+  // Define priority images for each category (your best 10/10 images)
+  const priorityImages = useMemo(() => ({
+    'home-offices': [
+      'clean-scandinavian-home-office-2',
+      'biophilic-home-office-with-plants-2',
+      'clean-modern-home-office-1',
+      'scandinavian-home-office-1',
+      'home-office-with-wood-accent-wall-1',
+      'cozy-professional-home-office-1'
+    ],
+    'executive-offices': [
+      'executive-office-with-marble-wall-1',
+      'executive-office-with-dark-wood-1',
+      'corner-office-with-city-views-1',
+      'contemporary-executive-home-office-1',
+      'minimalist-executive-office-1'
+    ],
+    'private-offices': [
+      'private-office-with-bookshelf-1',
+      'professional-consultation-office-1',
+      'warm-therapy-office-1',
+      'contemporary-physicians-office-1',
+      'upscale-real-estate-office-1'
+    ],
+    'lobbies': [
+      'modern-glass-lobby-3',
+      'corporate-lobby-with-reception-1',
+      'modern-glass-lobby-1',
+      'modern-office-lobby-1'
+    ],
+    'minimalist': [
+      'minimalist-executive-office-1',
+      'minimalist-consultant-office-1',
+      'minimalist-medical-lobby-1',
+      'japandi-minimalist-home-office-1'
+    ]
+  }), []);
+
+  // Memoize filtered and sorted images to prevent recalculation
   const categoryImages = useMemo(() => {
-    return Object.entries(imageMetadata)
+    const filtered = Object.entries(imageMetadata)
       .filter(([_, data]) => {
         if (!data || !slug) return false;
         return data.category === slug;
       })
-      .map(([key, data]) => ({ key, ...data }))
-      .sort((a, b) => a.title.localeCompare(b.title));
-  }, [imageMetadata, slug]);
+      .map(([key, data]) => ({ key, ...data }));
+
+    // Get priority list for current category
+    const priorities = priorityImages[slug] || [];
+    
+    // Sort by priority first, then alphabetically
+    return filtered.sort((a, b) => {
+      const aPriority = priorities.indexOf(a.key);
+      const bPriority = priorities.indexOf(b.key);
+      
+      // If both are priority images, sort by priority order
+      if (aPriority !== -1 && bPriority !== -1) {
+        return aPriority - bPriority;
+      }
+      
+      // If only one is priority, it goes first
+      if (aPriority !== -1) return -1;
+      if (bPriority !== -1) return 1;
+      
+      // If neither is priority, sort alphabetically by title
+      return a.title.localeCompare(b.title);
+    });
+  }, [imageMetadata, slug, priorityImages]);
 
   const loadMetadata = useCallback(async () => {
     try {
@@ -61,13 +120,15 @@ export default function CategoryPage() {
       setImageMetadata({});
     } finally {
       setLoading(false);
+      // Delay showing images to improve LCP
+      setTimeout(() => setShowImages(true), 500);
     }
   }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined' && slug) {
-      // Delay metadata loading slightly to prioritize initial render
-      const timer = setTimeout(loadMetadata, 100);
+      // Delay metadata loading to prioritize hero rendering
+      const timer = setTimeout(loadMetadata, 300);
       return () => clearTimeout(timer);
     }
   }, [slug, loadMetadata]);
@@ -132,107 +193,64 @@ export default function CategoryPage() {
         <meta name="description" content={`Download ${category.description.toLowerCase()}.`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
-        {/* AGGRESSIVE MOBILE PERFORMANCE */}
+        {/* CRITICAL PERFORMANCE - MINIMAL CSS */}
         <style dangerouslySetInnerHTML={{
           __html: `
-            /* MOBILE CRITICAL CSS - ULTRA FAST */
+            /* MOBILE CRITICAL CSS - ABSOLUTE MINIMUM */
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: system-ui, sans-serif; background: #f8fafc; }
+            .container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+            .hero { background: #2563eb; color: white; padding: 1.5rem 0; text-align: center; }
             .image-grid { 
               display: grid; 
               grid-template-columns: 1fr;
               gap: 1.5rem;
-              contain: layout;
-              padding: 0 1rem;
             }
             .image-card {
               background: white;
               border-radius: 0.75rem;
               box-shadow: 0 4px 12px rgba(0,0,0,0.1);
               overflow: hidden;
-              contain: layout style paint;
-              transform: translateZ(0);
             }
             .nav-tab {
-              padding: 0.75rem 1.25rem;
-              border-radius: 1.5rem;
+              padding: 0.5rem 1rem;
+              border-radius: 1rem;
               font-weight: 600;
               text-decoration: none;
+              font-size: 0.8rem;
               white-space: nowrap;
               flex-shrink: 0;
-              font-size: 0.9rem;
             }
             .nav-tab.active {
-              background: linear-gradient(135deg, #2563eb, #1d4ed8);
+              background: #2563eb;
               color: white;
-              box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
             }
             .nav-tab.inactive {
               background: white;
               color: #6b7280;
               border: 1px solid #e5e7eb;
             }
-            
-            /* TABLET+ BIGGER IMAGES */
+            /* TABLET+ ONLY */
             @media (min-width: 768px) { 
-              .image-grid { 
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-                padding: 0 2rem;
-              }
-              .image-card {
-                transition: transform 0.3s ease;
-              }
-              .image-card:hover {
-                transform: translateY(-8px);
-                box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-              }
-              .nav-tab {
-                padding: 1rem 2rem;
-                font-size: 1rem;
-              }
-            }
-            
-            /* DESKTOP EVEN BIGGER */
-            @media (min-width: 1200px) { 
-              .image-grid { 
-                gap: 3rem;
-                padding: 0 3rem;
-                max-width: 1400px;
-                margin: 0 auto;
-              }
+              .image-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+              .hero { padding: 2.5rem 0; }
+              .nav-tab { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+              .image-card:hover { transform: translateY(-4px); }
             }
           `
         }} />
       </Head>
 
-      <div style={{minHeight: '100vh', background: '#f8fafc'}}>
-        {/* MINIMAL HEADER FOR MOBILE */}
-        <header style={{
-          background: 'white', 
-          borderBottom: '1px solid #e5e7eb', 
-          padding: '1rem 0'
-        }}>
-          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 1rem'}}>
-            <Link href="/" style={{
-              fontSize: '1.5rem', 
-              fontWeight: 'bold', 
-              color: '#111827', 
-              textDecoration: 'none', 
-              display: 'block', 
-              marginBottom: '1rem'
-            }}>
+      <div>
+        {/* ULTRA MINIMAL HEADER */}
+        <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '0.75rem 0'}}>
+          <div className="container">
+            <Link href="/" style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', textDecoration: 'none', display: 'block', marginBottom: '0.75rem'}}>
               Stream<span style={{color: '#2563eb'}}>Backdrops</span>
             </Link>
             
-            {/* HORIZONTAL SCROLLING NAV - MOBILE OPTIMIZED */}
-            <nav style={{
-              display: 'flex',
-              gap: '0.75rem',
-              overflowX: 'auto',
-              padding: '0.5rem 0',
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              WebkitOverflowScrolling: 'touch'
-            }}>
+            {/* MINIMAL NAV */}
+            <nav style={{display: 'flex', gap: '0.5rem', overflowX: 'auto', padding: '0.25rem 0'}}>
               {Object.entries(categoryInfo).map(([key, info]) => (
                 <Link
                   key={key}
@@ -244,161 +262,141 @@ export default function CategoryPage() {
                     border: 'none'
                   } : {}}
                 >
-                  {info.name}
+                  {key === 'premium' ? '✨ 4K' : info.name}
                 </Link>
               ))}
             </nav>
           </div>
         </header>
 
-        {/* COMPRESSED HERO - FASTEST POSSIBLE LCP */}
-        <section style={{
-          background: 'linear-gradient(135deg, #2563eb, #1d4ed8)', 
-          color: 'white', 
-          padding: '2rem 0', 
-          textAlign: 'center'
-        }}>
-          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 1rem'}}>
-            <h1 style={{
-              fontSize: 'clamp(1.75rem, 6vw, 2.5rem)', 
-              fontWeight: 'bold', 
-              marginBottom: '0.75rem'
-            }}>
+        {/* MINIMAL HERO - FASTEST LCP */}
+        <section className="hero">
+          <div className="container">
+            <h1 style={{fontSize: 'clamp(1.5rem, 6vw, 2rem)', fontWeight: 'bold', marginBottom: '0.5rem'}}>
               {category.name}
             </h1>
-            <p style={{
-              fontSize: 'clamp(0.9rem, 3vw, 1.1rem)', 
-              opacity: 0.9
-            }}>
-              {loading ? 'Loading backgrounds...' : `${categoryImages.length} backgrounds available`}
+            <p style={{fontSize: 'clamp(0.8rem, 3vw, 0.9rem)', opacity: 0.9}}>
+              {loading ? 'Loading...' : `${categoryImages.length} backgrounds`}
             </p>
           </div>
         </section>
 
-        {/* IMAGES - MOBILE FIRST SIZING */}
-        <section style={{padding: '2rem 0'}}>
-          {loading ? (
-            <div style={{textAlign: 'center', padding: '2rem 0'}}>
-              <div style={{
-                width: '32px',
-                height: '32px',
-                border: '2px solid #e5e7eb',
-                borderTop: '2px solid #2563eb',
-                borderRadius: '50%',
-                animation: 'spin 1s linear infinite',
-                margin: '0 auto'
-              }} />
-            </div>
-          ) : categoryImages.length === 0 ? (
-            <div style={{textAlign: 'center', padding: '3rem 0'}}>
-              <p style={{color: '#6b7280'}}>No backgrounds found.</p>
-              <Link href="/" style={{color: '#2563eb'}}>← Back to Home</Link>
-            </div>
-          ) : (
-            <div className="image-grid">
-              {categoryImages.map((image, index) => (
-                <div key={image.key} className="image-card">
-                  <div style={{
-                    position: 'relative', 
-                    aspectRatio: '16/9', 
-                    overflow: 'hidden'
-                  }}>
-                    <Image
-                      src={`/images/${image.filename}`}
-                      alt={image.alt || image.title || 'Virtual background'}
-                      width={400}
-                      height={225}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover'
-                      }}
-                      loading={index < 3 ? "eager" : "lazy"}
-                      priority={index === 0}
-                      placeholder="blur"
-                      blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
-                      quality={index === 0 ? 85 : 70} // Lower quality for better performance
-                    />
-                    
-                    {/* MOBILE-OPTIMIZED BUTTONS */}
-                    <div style={{
-                      position: 'absolute',
-                      bottom: '0.75rem',
-                      left: '0.75rem',
-                      right: '0.75rem',
-                      display: 'flex',
-                      gap: '0.5rem'
-                    }}>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handlePreview(image);
-                        }}
+        {/* DELAYED IMAGES SECTION */}
+        <section style={{padding: '1.5rem 0'}}>
+          <div className="container">
+            {!showImages ? (
+              <div style={{textAlign: 'center', padding: '2rem 0'}}>
+                <div style={{
+                  width: '24px',
+                  height: '24px',
+                  border: '2px solid #e5e7eb',
+                  borderTop: '2px solid #2563eb',
+                  borderRadius: '50%',
+                  animation: 'spin 1s linear infinite',
+                  margin: '0 auto'
+                }} />
+              </div>
+            ) : loading ? (
+              <div style={{textAlign: 'center', padding: '2rem 0'}}>
+                <p style={{color: '#6b7280'}}>Loading backgrounds...</p>
+              </div>
+            ) : categoryImages.length === 0 ? (
+              <div style={{textAlign: 'center', padding: '3rem 0'}}>
+                <p style={{color: '#6b7280'}}>No backgrounds found.</p>
+                <Link href="/" style={{color: '#2563eb'}}>← Back to Home</Link>
+              </div>
+            ) : (
+              <div className="image-grid">
+                {categoryImages.map((image, index) => (
+                  <div key={image.key} className="image-card">
+                    <div style={{position: 'relative', aspectRatio: '16/9', overflow: 'hidden'}}>
+                      <Image
+                        src={`/images/${image.filename}`}
+                        alt={image.alt || image.title || 'Virtual background'}
+                        width={400}
+                        height={225}
                         style={{
-                          background: 'rgba(255, 255, 255, 0.95)',
-                          color: '#374151',
-                          padding: '0.5rem 0.75rem',
-                          border: 'none',
-                          borderRadius: '0.5rem',
-                          fontSize: '0.8rem',
-                          fontWeight: '600',
-                          cursor: 'pointer',
-                          minHeight: '44px',
-                          flex: 1,
-                          backdropFilter: 'blur(4px)'
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
                         }}
-                      >
-                        👁️ Preview
-                      </button>
+                        loading={index < 2 ? "eager" : "lazy"} // First 2 images eager (your best ones)
+                        priority={index === 0} // Only first image gets priority
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        quality={65} // Lower quality for faster loading
+                      />
                       
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDownload(image);
-                        }}
-                        style={{
-                          background: '#2563eb',
-                          color: 'white',
-                          padding: '0.5rem 0.75rem',
-                          border: 'none',
-                          borderRadius: '0.5rem',
-                          fontSize: '0.8rem',
-                          fontWeight: '600',
-                          cursor: 'pointer',
-                          minHeight: '44px',
-                          flex: 1
-                        }}
-                      >
-                        📥 Download
-                      </button>
+                      {/* SIMPLIFIED BUTTONS */}
+                      <div style={{
+                        position: 'absolute',
+                        bottom: '0.5rem',
+                        left: '0.5rem',
+                        right: '0.5rem',
+                        display: 'flex',
+                        gap: '0.5rem'
+                      }}>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handlePreview(image);
+                          }}
+                          style={{
+                            background: 'rgba(255, 255, 255, 0.9)',
+                            color: '#374151',
+                            padding: '0.5rem',
+                            border: 'none',
+                            borderRadius: '0.5rem',
+                            fontSize: '0.75rem',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            minHeight: '36px',
+                            flex: 1
+                          }}
+                        >
+                          👁️ Preview
+                        </button>
+                        
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDownload(image);
+                          }}
+                          style={{
+                            background: '#2563eb',
+                            color: 'white',
+                            padding: '0.5rem',
+                            border: 'none',
+                            borderRadius: '0.5rem',
+                            fontSize: '0.75rem',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            minHeight: '36px',
+                            flex: 1
+                          }}
+                        >
+                          📥 Download
+                        </button>
+                      </div>
+                    </div>
+
+                    <div style={{padding: '0.75rem'}}>
+                      <h3 style={{fontWeight: '600', color: '#111827', fontSize: '0.9rem', marginBottom: '0.25rem'}}>
+                        {image.title || 'Virtual Background'}
+                      </h3>
+                      <p style={{color: '#6b7280', fontSize: '0.75rem', lineHeight: 1.3}}>
+                        {image.description || 'Professional virtual background'}
+                      </p>
                     </div>
                   </div>
-
-                  <div style={{padding: window.innerWidth > 768 ? '1.5rem' : '1rem'}}>
-                    <h3 style={{
-                      fontWeight: '600', 
-                      color: '#111827', 
-                      fontSize: window.innerWidth > 768 ? '1.1rem' : '1rem',
-                      marginBottom: '0.5rem'
-                    }}>
-                      {image.title || 'Virtual Background'}
-                    </h3>
-                    <p style={{
-                      color: '#6b7280', 
-                      fontSize: window.innerWidth > 768 ? '0.95rem' : '0.85rem',
-                      lineHeight: 1.4
-                    }}>
-                      {image.description || 'Professional virtual background for video calls'}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </section>
 
-        {/* LIGHTWEIGHT MODAL */}
+        {/* MINIMAL MODAL */}
         {selectedImage && (
           <div 
             style={{
@@ -419,8 +417,8 @@ export default function CategoryPage() {
             <div 
               style={{
                 backgroundColor: 'white',
-                borderRadius: '12px',
-                padding: '1.5rem',
+                borderRadius: '8px',
+                padding: '1rem',
                 maxWidth: '95vw',
                 maxHeight: '90vh',
                 position: 'relative'
@@ -431,60 +429,50 @@ export default function CategoryPage() {
                 onClick={() => setSelectedImage(null)}
                 style={{
                   position: 'absolute',
-                  top: '1rem',
-                  right: '1rem',
-                  background: 'rgba(0, 0, 0, 0.1)',
-                  color: '#374151',
+                  top: '0.5rem',
+                  right: '0.5rem',
+                  background: 'none',
                   border: 'none',
-                  borderRadius: '50%',
-                  width: '40px',
-                  height: '40px',
-                  fontSize: '20px',
+                  fontSize: '18px',
                   cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  width: '32px',
+                  height: '32px'
                 }}
               >
                 ✕
               </button>
               
-              <h3 style={{ 
-                marginBottom: '1rem', 
-                paddingRight: '3rem', 
-                fontSize: '1.2rem', 
-                fontWeight: '600'
-              }}>
+              <h3 style={{marginBottom: '0.75rem', paddingRight: '2rem', fontSize: '1rem', fontWeight: '600'}}>
                 {selectedImage.title || 'Preview'}
               </h3>
               
               <Image
                 src={`/images/${selectedImage.filename}`}
                 alt={selectedImage.alt || 'Preview'}
-                width={600}
-                height={338}
+                width={500}
+                height={281}
                 style={{
                   width: '100%',
                   height: 'auto',
-                  maxHeight: '60vh',
+                  maxHeight: '50vh',
                   objectFit: 'contain',
-                  borderRadius: '8px',
-                  marginBottom: '1rem'
+                  borderRadius: '4px',
+                  marginBottom: '0.75rem'
                 }}
                 priority
-                quality={90}
+                quality={85}
               />
               
-              <div style={{display: 'flex', gap: '1rem'}}>
+              <div style={{display: 'flex', gap: '0.75rem'}}>
                 <button
                   onClick={() => handleDownload(selectedImage)}
                   style={{
                     backgroundColor: '#2563eb',
                     color: 'white',
                     border: 'none',
-                    padding: '0.75rem 1.5rem',
-                    borderRadius: '8px',
-                    fontSize: '1rem',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    fontSize: '0.9rem',
                     cursor: 'pointer',
                     fontWeight: '600',
                     flex: 1
@@ -499,9 +487,9 @@ export default function CategoryPage() {
                     backgroundColor: '#f3f4f6',
                     color: '#374151',
                     border: 'none',
-                    padding: '0.75rem 1.5rem',
-                    borderRadius: '8px',
-                    fontSize: '1rem',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    fontSize: '0.9rem',
                     cursor: 'pointer',
                     fontWeight: '600'
                   }}
