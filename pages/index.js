@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Footer from '../components/Footer';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
 export default function Home() {
   const categories = [
@@ -48,24 +49,36 @@ export default function Home() {
   return (
     <>
       <Head>
-  <title>StreamBackdrops - Professional Virtual Backgrounds for Video Calls</title>
-  <meta name="description" content="Download high-quality professional virtual backgrounds for Zoom, Teams, and video calls. Perfect for remote work, home offices, executive meetings, and professional presentations." />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-  {/* Preload critical images for homepage only */}
-  <link
-    rel="preload"
-    as="image"
-    href="/images/clean-scandinavian-home-office-2.webp"
-    fetchPriority="high"
-  />
-  <link
-    rel="preload"
-    as="image"
-    href="/images/executive-office-with-marble-wall-1.webp"
-    fetchPriority="high"
-  />
-</Head>
+        <title>StreamBackdrops - Professional Virtual Backgrounds for Video Calls</title>
+        <meta name="description" content="Download high-quality professional virtual backgrounds for Zoom, Teams, and video calls. Perfect for remote work, home offices, executive meetings, and professional presentations." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        {/* Resource hints for critical resources */}
+        <link rel="preload" href="/images/clean-scandinavian-home-office-2.webp" as="image" fetchPriority="high" />
+        <link rel="preload" href="/images/executive-office-with-marble-wall-1.webp" as="image" />
+        
+        {/* Preconnect to external domains */}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        
+        {/* Prevent layout shift */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            .category-grid { 
+              display: grid; 
+              grid-template-columns: 1fr; 
+              gap: 1rem; 
+              contain: layout;
+            }
+            @media (min-width: 640px) { 
+              .category-grid { grid-template-columns: repeat(2, 1fr); } 
+            }
+            @media (min-width: 1024px) { 
+              .category-grid { grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); } 
+            }
+          `
+        }} />
+      </Head>
 
       <div>
         <header>
@@ -146,10 +159,11 @@ export default function Home() {
                         height: '100%',
                         objectFit: 'cover'
                       }}
-                      priority={index < 2}
-                      loading={index < 2 ? "eager" : "lazy"}
+                      priority={index === 0}
+                      loading="eager"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      quality={index < 2 ? 85 : 75}
+                      quality={90}
+                      fetchPriority={index === 0 ? "high" : "auto"}
                     />
                   </div>
                   
@@ -233,71 +247,23 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="features">
-          <div className="container">
-            <div style={{textAlign: 'center', marginBottom: '3rem'}}>
-              <h2 style={{fontSize: '2rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem'}}>
-                Why Choose StreamBackdrops?
-              </h2>
-            </div>
-            <div className="features-grid">
-              <div className="feature">
-                <div className="feature-icon">
-                  <span style={{fontSize: '2rem'}}>🖼️</span>
-                </div>
-                <h3>High Quality</h3>
-                <p>Optimized for all video platforms and calling apps</p>
-              </div>
-              <div className="feature">
-                <div className="feature-icon">
-                  <span style={{fontSize: '2rem'}}>💼</span>
-                </div>
-                <h3>Professional</h3>
-                <p>Designed for business meetings and professional calls</p>
-              </div>
-              <div className="feature">
-                <div className="feature-icon">
-                  <span style={{fontSize: '2rem'}}>⬇️</span>
-                </div>
-                <h3>Free Download</h3>
-                <p>All backgrounds are completely free to download and use</p>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section style={{
-  background: '#f8fafc',
-  padding: '4rem 0',
-  margin: '4rem 0',
-  textAlign: 'center'
-}}>
-  <div className="container">
-    <h2 style={{fontSize: '2rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem'}}>
-      Expert Tips & Guides
-    </h2>
-    <p style={{fontSize: '1.1rem', color: '#6b7280', marginBottom: '2rem'}}>
-      Learn professional video call techniques, setup guides, and industry best practices
-    </p>
-    <Link href="/blog" style={{
-      background: '#2563eb',
-      color: 'white',
-      padding: '1rem 2rem',
-      borderRadius: '0.75rem',
-      textDecoration: 'none',
-      fontSize: '1.1rem',
-      fontWeight: '600',
-      display: 'inline-block',
-      transition: 'background-color 0.2s ease'
-    }}
-    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1d4ed8'}
-    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
-    >
-      Read Our Blog →
-    </Link>
-  </div>
-</section>
+        {/* Lazy load non-critical sections */}
+        <LazyFeatures />
+        <LazyBlogSection />
+        
         <Footer />
       </div>
     </>
   );
 }
+
+// Lazy loaded components
+const LazyFeatures = dynamic(() => import('../components/FeaturesSection'), {
+  loading: () => <div style={{ height: '400px', background: '#f3f4f6' }} />,
+  ssr: false
+});
+
+const LazyBlogSection = dynamic(() => import('../components/BlogSection'), {
+  loading: () => <div style={{ height: '200px', background: '#f8fafc' }} />,
+  ssr: false
+});

@@ -1,13 +1,16 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 
-export default function Document() {
+function MyDocument() {
   return (
     <Html lang="en">
       <Head>
-        {/* Note: Removed preload tags from here - they cause warnings on non-homepage */}
-        {/* We'll add dynamic preloading in individual pages instead */}
+        {/* Preconnect to external domains */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
 
-        {/* Google Analytics - optimized */}
+        {/* Google Analytics - deferred */}
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-QMD6NEPFWR"
@@ -28,7 +31,6 @@ export default function Document() {
         
         {/* Google AdSense - deferred */}
         <script 
-          async 
           defer
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2391004325385163"
           crossOrigin="anonymous"
@@ -42,8 +44,26 @@ export default function Document() {
       </Head>
       <body>
         <Main />
-        <NextScript />
+        <DeferredNextScript />
       </body>
     </Html>
   )
 }
+
+// Custom NextScript component that uses defer instead of async
+function DeferredNextScript() {
+  return (
+    <>
+      {process.env.NODE_ENV === 'development' ? (
+        <NextScript />
+      ) : (
+        <script
+          defer
+          src="/_next/static/chunks/webpack.js"
+        />
+      )}
+    </>
+  )
+}
+
+export default MyDocument
