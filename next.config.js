@@ -58,7 +58,16 @@ const nextConfig = {
 
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
-      config.optimization.splitChunks.cacheGroups.commons.minChunks = 2;
+      // Ensure splitChunks exists and has the expected structure
+      if (config.optimization && config.optimization.splitChunks) {
+        if (!config.optimization.splitChunks.cacheGroups) {
+          config.optimization.splitChunks.cacheGroups = {};
+        }
+        if (!config.optimization.splitChunks.cacheGroups.commons) {
+          config.optimization.splitChunks.cacheGroups.commons = {};
+        }
+        config.optimization.splitChunks.cacheGroups.commons.minChunks = 2;
+      }
     }
     return config;
   },
