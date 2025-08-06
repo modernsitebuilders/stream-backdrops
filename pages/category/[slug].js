@@ -33,6 +33,10 @@ export default function CategoryPage() {
     'private-offices': {
       name: 'Private Offices',
       description: 'Specialized private office backgrounds for professional consultations and meetings'
+    },
+    'premium': {
+      name: 'Premium 4K',
+      description: 'Ultra high-quality 4K virtual backgrounds for professional meetings'
     }
   }), []);
 
@@ -109,6 +113,14 @@ export default function CategoryPage() {
         <Link href="/" style={{color: '#2563eb'}}>← Back to Home</Link>
       </div>
     );
+  }
+
+  // Handle premium redirect
+  if (slug === 'premium') {
+    if (typeof window !== 'undefined') {
+      window.location.href = '/premium';
+    }
+    return null;
   }
 
   const category = categoryInfo[slug];
@@ -224,8 +236,13 @@ export default function CategoryPage() {
               {Object.entries(categoryInfo).map(([key, info]) => (
                 <Link
                   key={key}
-                  href={`/category/${key}`}
+                  href={key === 'premium' ? '/premium' : `/category/${key}`}
                   className={`nav-tab ${key === slug ? 'active' : 'inactive'}`}
+                  style={key === 'premium' ? {
+                    background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                    color: 'white',
+                    border: 'none'
+                  } : {}}
                 >
                   {info.name}
                 </Link>
