@@ -1,133 +1,179 @@
+// REPLACE your pages/premium.js with this SSR-safe version
+
 import Head from 'next/head';
 import Link from 'next/link';
 import Footer from '../components/Footer';
-import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
-export default function PremiumPage() {
-  // Premium 4K images showcase
-  const premiumImages = [
-    {
-      title: 'Executive Corner Office 4K',
-      filename: 'corner-office-with-city-views-1.webp',
-      description: 'Ultra-high resolution corner office with panoramic city views'
-    },
-    {
-      title: 'Luxury Marble Executive Suite 4K',
-      filename: 'executive-office-with-marble-wall-1.webp',
-      description: 'Premium executive office with marble accents'
-    },
-    {
-      title: 'Modern Glass Lobby 4K',
-      filename: 'modern-glass-lobby-3.webp',
-      description: 'Contemporary glass lobby with premium finishes'
-    },
-    {
-      title: 'Minimalist Executive Office 4K',
-      filename: 'minimalist-executive-office-1.webp',
-      description: 'Clean, minimal executive workspace in 4K'
-    },
-    {
-      title: 'Corporate Reception 4K',
-      filename: 'corporate-lobby-with-reception-1.webp',
-      description: 'Professional corporate lobby in ultra-high definition'
-    },
-    {
-      title: 'Scandinavian Home Office 4K',
-      filename: 'clean-scandinavian-home-office-2.webp',
-      description: 'Premium Scandinavian-style home office'
-    }
-  ];
+// Dynamic component that loads only on client side
+const DynamicPremiumGallery = dynamic(() => import('../components/PremiumGallery'), {
+  ssr: false,
+  loading: () => (
+    <section style={{padding: '2rem'}}>
+      <div style={{maxWidth: '1200px', margin: '0 auto'}}>
+        <div style={{textAlign: 'center', padding: '4rem 0'}}>
+          <div style={{
+            width: '32px',
+            height: '32px',
+            border: '3px solid #e5e7eb',
+            borderTop: '3px solid #2563eb',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto'
+          }} />
+          <p style={{color: '#6b7280', marginTop: '1rem'}}>Loading premium collection...</p>
+        </div>
+      </div>
+    </section>
+  )
+});
 
+// Main component - NO HOOKS HERE
+export default function Premium() {
   return (
     <>
       <Head>
         <title>Premium 4K Virtual Backgrounds - StreamBackdrops</title>
-        <meta name="description" content="Ultra high-quality 4K virtual backgrounds coming soon. Premium professional backgrounds for the most important video calls and presentations." />
+        <meta name="description" content="Premium professional backgrounds for the most important video calls and presentations." />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="theme-color" content="#2563eb" />
       </Head>
 
       <div style={{minHeight: '100vh', background: '#f9fafb'}}>
-        <header style={{background: 'white', borderBottom: '1px solid #e5e7eb', padding: '1rem 0'}}>
-          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
-            <Link href="/" style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', textDecoration: 'none'}}>
-              Stream<span style={{color: '#2563eb'}}>Backdrops</span>
+        {/* HEADER WITH CENTERED NAVIGATION */}
+        <header style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
+          textAlign: 'center',
+          padding: 'clamp(3rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem)'
+        }}>
+          <div style={{maxWidth: '1200px', margin: '0 auto'}}>
+            {/* CLICKABLE LOGO */}
+            <Link 
+              href="/" 
+              style={{
+                textDecoration: 'none',
+                display: 'inline-block',
+                marginBottom: '1rem'
+              }}
+            >
+              <h1 style={{
+                fontSize: 'clamp(2rem, 5vw, 3rem)',
+                fontWeight: 'bold',
+                color: 'white',
+                cursor: 'pointer',
+                lineHeight: 1.1
+              }}>
+                Stream<span style={{ color: '#60a5fa' }}>Backdrops</span>
+              </h1>
             </Link>
             
-            {/* Category Navigation */}
-            <nav style={{display: 'flex', gap: '0.5rem', overflowX: 'auto', padding: '1rem 0'}}>
+            <h2 style={{
+              fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+              fontWeight: 'bold',
+              marginBottom: '1rem',
+              background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
+              ✨ Premium 4K Collection
+            </h2>
+            
+            <p style={{
+              fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
+              opacity: 0.9,
+              marginBottom: '2rem',
+              maxWidth: '600px',
+              margin: '0 auto 2rem'
+            }}>
+              Ultra high-resolution backgrounds for the most important meetings and presentations
+            </p>
+            
+            {/* CENTERED NAVIGATION */}
+            <nav style={{
+              display: 'flex',
+              gap: 'clamp(0.5rem, 2vw, 1rem)',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              marginTop: '2rem'
+            }}>
               <Link href="/category/home-offices" style={{
-                padding: '0.5rem 1rem',
-                background: 'white',
-                border: '1px solid #e5e7eb',
+                padding: 'clamp(0.5rem 0.75rem, 2vw, 0.75rem 1rem)',
+                background: 'rgba(255, 255, 255, 0.2)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: '1rem',
-                color: '#6b7280',
+                color: 'white',
                 textDecoration: 'none',
-                fontSize: '0.9rem',
+                fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
                 fontWeight: '600',
                 whiteSpace: 'nowrap'
               }}>
                 Home Offices
               </Link>
               <Link href="/category/executive-offices" style={{
-                padding: '0.5rem 1rem',
-                background: 'white',
-                border: '1px solid #e5e7eb',
+                padding: 'clamp(0.5rem 0.75rem, 2vw, 0.75rem 1rem)',
+                background: 'rgba(255, 255, 255, 0.2)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: '1rem',
-                color: '#6b7280',
+                color: 'white',
                 textDecoration: 'none',
-                fontSize: '0.9rem',
+                fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
                 fontWeight: '600',
                 whiteSpace: 'nowrap'
               }}>
-                Executive
+                Executive Offices
               </Link>
               <Link href="/category/minimalist" style={{
-                padding: '0.5rem 1rem',
-                background: 'white',
-                border: '1px solid #e5e7eb',
+                padding: 'clamp(0.5rem 0.75rem, 2vw, 0.75rem 1rem)',
+                background: 'rgba(255, 255, 255, 0.2)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: '1rem',
-                color: '#6b7280',
+                color: 'white',
                 textDecoration: 'none',
-                fontSize: '0.9rem',
+                fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
                 fontWeight: '600',
                 whiteSpace: 'nowrap'
               }}>
                 Minimalist
               </Link>
               <Link href="/category/lobbies" style={{
-                padding: '0.5rem 1rem',
-                background: 'white',
-                border: '1px solid #e5e7eb',
+                padding: 'clamp(0.5rem 0.75rem, 2vw, 0.75rem 1rem)',
+                background: 'rgba(255, 255, 255, 0.2)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: '1rem',
-                color: '#6b7280',
+                color: 'white',
                 textDecoration: 'none',
-                fontSize: '0.9rem',
+                fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
                 fontWeight: '600',
                 whiteSpace: 'nowrap'
               }}>
                 Lobbies
               </Link>
               <Link href="/category/private-offices" style={{
-                padding: '0.5rem 1rem',
-                background: 'white',
-                border: '1px solid #e5e7eb',
+                padding: 'clamp(0.5rem 0.75rem, 2vw, 0.75rem 1rem)',
+                background: 'rgba(255, 255, 255, 0.2)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: '1rem',
-                color: '#6b7280',
+                color: 'white',
                 textDecoration: 'none',
-                fontSize: '0.9rem',
+                fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
                 fontWeight: '600',
                 whiteSpace: 'nowrap'
               }}>
                 Private Offices
               </Link>
               <Link href="/premium" style={{
-                padding: '0.5rem 1rem',
+                padding: 'clamp(0.5rem 0.75rem, 2vw, 0.75rem 1rem)',
                 background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                border: 'none',
                 borderRadius: '1rem',
                 color: 'white',
                 textDecoration: 'none',
-                fontSize: '0.9rem',
-                fontWeight: '600',
-                whiteSpace: 'nowrap'
+                fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)',
+                fontWeight: '700',
+                whiteSpace: 'nowrap',
+                boxShadow: '0 4px 12px rgba(251, 191, 36, 0.4)'
               }}>
                 ✨ Premium 4K
               </Link>
@@ -135,192 +181,86 @@ export default function PremiumPage() {
           </div>
         </header>
 
+        {/* PRICING SECTION */}
         <section style={{
-          background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)',
-          color: 'white',
-          padding: '4rem 0',
-          textAlign: 'center'
+          padding: 'clamp(3rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem)', 
+          background: 'white'
         }}>
-          <div style={{maxWidth: '600px', margin: '0 auto', padding: '0 2rem'}}>
-            <h1 style={{fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem', color: 'white'}}>
-              Premium 4K Collection
-            </h1>
-            <p style={{fontSize: '1.2rem', marginBottom: '2rem'}}>
-              Ultra high-quality 4K virtual backgrounds for the most important meetings
-            </p>
-            <div style={{
-              background: 'rgba(255,255,255,0.2)',
-              padding: '1rem',
-              borderRadius: '1rem',
-              marginBottom: '2rem'
-            }}>
-              <p style={{fontSize: '1.1rem', fontWeight: 'bold'}}>
-                🎉 Coming Soon: Full 4K Collection
-              </p>
-              <p style={{fontSize: '0.9rem', marginTop: '0.5rem'}}>
-                Preview our premium quality below
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Premium Images Grid */}
-        <section style={{padding: '3rem 0'}}>
-          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
+          <div style={{maxWidth: '800px', margin: '0 auto', textAlign: 'center'}}>
             <h2 style={{
-              fontSize: '2rem',
-              fontWeight: 'bold',
-              color: '#111827',
-              textAlign: 'center',
+              fontSize: 'clamp(2rem, 4vw, 2.5rem)', 
+              fontWeight: 'bold', 
+              marginBottom: '1rem', 
+              color: '#111827'
+            }}>
+              Premium 4K Quality
+            </h2>
+            <p style={{
+              fontSize: 'clamp(1rem, 2vw, 1.25rem)', 
+              color: '#6b7280', 
               marginBottom: '3rem'
             }}>
-              Premium 4K Preview
-            </h2>
+              Ultra high-resolution backgrounds for executives and professionals who demand the best
+            </p>
             
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-              gap: '2.5rem',
+              background: 'linear-gradient(135deg, #667eea, #764ba2)',
+              borderRadius: '1.5rem',
+              padding: 'clamp(2rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem)',
+              color: 'white',
               marginBottom: '3rem'
             }}>
-              {premiumImages.map((image, index) => (
-                <div key={index} style={{
-                  background: 'white',
-                  borderRadius: '1rem',
-                  overflow: 'hidden',
-                  boxShadow: '0 6px 12px rgba(0,0,0,0.15)',
-                  position: 'relative',
-                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                  cursor: 'pointer'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
-                }}
-                >
-                  {/* 4K Badge */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '1rem',
-                    right: '1rem',
-                    background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                    color: 'white',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '2rem',
-                    fontSize: '0.8rem',
-                    fontWeight: 'bold',
-                    zIndex: 10,
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
-                  }}>
-                    4K ULTRA HD
-                  </div>
-                  
-                  <div style={{
-                    position: 'relative',
-                    height: '250px',
-                    overflow: 'hidden',
-                    background: '#f3f4f6'
-                  }}>
-                    <Image
-                      src={`/images/${image.filename}`}
-                      alt={image.title}
-                      width={800}
-                      height={450}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover'
-                      }}
-                      loading={index === 0 ? "eager" : "lazy"}
-                      priority={index === 0}
-                      quality={85}
-                    />
-                  </div>
-                  
-                  <div style={{padding: '1.5rem'}}>
-                    <h3 style={{
-                      fontSize: '1.25rem',
-                      fontWeight: 'bold',
-                      color: '#111827',
-                      marginBottom: '0.5rem'
-                    }}>
-                      {image.title}
-                    </h3>
-                    <p style={{
-                      color: '#6b7280',
-                      marginBottom: '1rem'
-                    }}>
-                      {image.description}
-                    </p>
-                    
-                    <div style={{
-                      display: 'flex',
-                      gap: '1rem',
-                      alignItems: 'center'
-                    }}>
-                      <button style={{
-                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                        color: 'white',
-                        padding: '0.75rem 1.5rem',
-                        borderRadius: '0.5rem',
-                        border: 'none',
-                        fontSize: '1rem',
-                        fontWeight: '600',
-                        cursor: 'not-allowed',
-                        opacity: 0.7,
-                        flex: 1
-                      }} disabled>
-                        Coming Soon
-                      </button>
-                      <span style={{
-                        color: '#f59e0b',
-                        fontWeight: 'bold',
-                        fontSize: '1.2rem'
-                      }}>
-                        $7.99
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Call to Action */}
-            <div style={{
-              background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
-              borderRadius: '1rem',
-              padding: '3rem',
-              textAlign: 'center',
-              color: 'white'
-            }}>
-              <h2 style={{fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem'}}>
-                Get Notified When Premium Launches
-              </h2>
-              <p style={{fontSize: '1.1rem', marginBottom: '2rem', opacity: 0.9}}>
-                Be the first to access our complete 4K collection
-              </p>
-              <Link href="/" style={{
-                background: 'white',
-                color: '#2563eb',
-                padding: '1rem 2rem',
-                borderRadius: '0.75rem',
-                textDecoration: 'none',
-                fontSize: '1.1rem',
-                fontWeight: 'bold',
-                display: 'inline-block'
+              <div style={{fontSize: 'clamp(2.5rem, 4vw, 3rem)', marginBottom: '1rem'}}>💎</div>
+              <h3 style={{
+                fontSize: 'clamp(1.5rem, 3vw, 2rem)', 
+                fontWeight: 'bold', 
+                marginBottom: '0.5rem'
               }}>
-                Browse Free Collection Now
-              </Link>
+                $4.99 per image
+              </h3>
+              <p style={{
+                fontSize: 'clamp(1rem, 2vw, 1.1rem)', 
+                opacity: 0.9, 
+                marginBottom: '2rem'
+              }}>
+                4K resolution (3840×2160) • Perfect for large displays • Commercial license included
+              </p>
+              <ul style={{
+                listStyle: 'none',
+                padding: 0,
+                fontSize: 'clamp(1rem, 2vw, 1.1rem)',
+                lineHeight: 2
+              }}>
+                <li>✓ Ultra-high 4K resolution</li>
+                <li>✓ Perfect for 4K monitors and projectors</li>
+                <li>✓ Commercial use license included</li>
+                <li>✓ Instant download after purchase</li>
+                <li>✓ No watermarks or branding</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        <Footer />
+        {/* DYNAMIC PREMIUM GALLERY - Only loads on client */}
+        <DynamicPremiumGallery />
       </div>
+
+      <Footer />
+
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
     </>
   );
+}
+
+// Tell Next.js this can be statically generated
+export async function getStaticProps() {
+  return {
+    props: {},
+    revalidate: 3600 // Revalidate every hour
+  };
 }

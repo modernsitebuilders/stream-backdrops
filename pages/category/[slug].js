@@ -1,4 +1,4 @@
-// This is the COMPLETE pages/category/[slug].js file with the beautiful homepage header
+// REPLACE your pages/category/[slug].js file completely
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Head from 'next/head';
@@ -15,8 +15,13 @@ export default function CategoryPage() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [showImages, setShowImages] = useState(false);
   const [error, setError] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  // Memoize category info to prevent recreating on each render
+  // Only mount on client to prevent SSR issues
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const categoryInfo = useMemo(() => ({
     'home-offices': {
       name: 'Home Offices',
@@ -37,14 +42,10 @@ export default function CategoryPage() {
     'private-offices': {
       name: 'Private Offices',
       description: 'Specialized private office backgrounds for professional consultations and meetings'
-    },
-    'premium': {
-      name: 'Premium 4K',
-      description: 'Ultra high-quality 4K virtual backgrounds for professional meetings'
     }
   }), []);
 
-  // Define priority images for each category (your best 10/10 images)
+  // FIXED: Priority images with correct executive office order
   const priorityImages = useMemo(() => ({
     'home-offices': [
       'clean-scandinavian-home-office-2',
@@ -55,8 +56,8 @@ export default function CategoryPage() {
       'cozy-professional-home-office-1'
     ],
     'executive-offices': [
-      'corner-office-with-city-views-1',
-      'executive-office-with-dark-wood-1',
+      'corner-office-with-city-views-1',        // FIRST as requested
+      'executive-office-with-dark-wood-1',      // SECOND as requested  
       'executive-office-with-marble-wall-1',
       'contemporary-executive-home-office-1',
       'minimalist-executive-office-1'
@@ -82,7 +83,6 @@ export default function CategoryPage() {
     ]
   }), []);
 
-  // Memoize filtered and sorted images to prevent recalculation
   const categoryImages = useMemo(() => {
     if (!imageMetadata || !slug) return [];
     
@@ -94,24 +94,19 @@ export default function CategoryPage() {
         })
         .map(([key, data]) => ({ key, ...data }));
 
-      // Get priority list for current category
       const priorities = priorityImages[slug] || [];
       
-      // Sort by priority first, then alphabetically
       return filtered.sort((a, b) => {
         const aPriority = priorities.indexOf(a.key);
         const bPriority = priorities.indexOf(b.key);
         
-        // If both are priority images, sort by priority order
         if (aPriority !== -1 && bPriority !== -1) {
           return aPriority - bPriority;
         }
         
-        // If only one is priority, it goes first
         if (aPriority !== -1) return -1;
         if (bPriority !== -1) return 1;
         
-        // If neither is priority, sort alphabetically by title
         const titleA = a.title || '';
         const titleB = b.title || '';
         return titleA.localeCompare(titleB);
@@ -123,20 +118,17 @@ export default function CategoryPage() {
   }, [imageMetadata, slug, priorityImages]);
 
   const loadMetadata = useCallback(async () => {
-    if (!slug) return;
+    if (!slug || !mounted) return;
     
     try {
       setError(false);
       
-      // Add timeout to prevent hanging requests
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
       
       const response = await fetch('/api/metadata', {
         signal: controller.signal,
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
+        headers: { 'Cache-Control': 'no-cache' }
       });
       
       clearTimeout(timeoutId);
@@ -147,7 +139,6 @@ export default function CategoryPage() {
       
       const data = await response.json();
       
-      // Validate the data structure
       if (typeof data === 'object' && data !== null) {
         setImageMetadata(data);
       } else {
@@ -160,20 +151,17 @@ export default function CategoryPage() {
       setError(true);
     } finally {
       setLoading(false);
-      // Show images after loading completes
       setShowImages(true);
     }
-  }, [slug]);
+  }, [slug, mounted]);
 
   useEffect(() => {
-    if (slug && typeof window !== 'undefined') {
+    if (slug && mounted) {
       loadMetadata();
     }
-  }, [slug, loadMetadata]);
+  }, [slug, mounted, loadMetadata]);
 
   const handleDownload = useCallback(async (image) => {
-    if (typeof window === 'undefined') return;
-    
     try {
       const response = await fetch(`/images/${image.filename}`);
       const blob = await response.blob();
@@ -190,9 +178,7 @@ export default function CategoryPage() {
       const link = document.createElement('a');
       link.href = `/images/${image.filename}`;
       link.download = image.filename;
-      document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
     }
   }, []);
 
@@ -200,13 +186,12 @@ export default function CategoryPage() {
     setSelectedImage(image);
   }, []);
 
-  // Early return for invalid categories to prevent 500 errors
-  if (slug && !categoryInfo[slug]) {
+  // Early return for invalid categories
+  if (mounted && slug && !categoryInfo[slug]) {
     return (
       <>
         <Head>
           <title>Category Not Found - StreamBackdrops</title>
-          <meta name="description" content="The requested category was not found." />
         </Head>
         <div style={{textAlign: 'center', padding: '4rem 2rem', minHeight: '50vh'}}>
           <h1 style={{color: '#111827', marginBottom: '1rem'}}>Category Not Found</h1>
@@ -217,8 +202,8 @@ export default function CategoryPage() {
     );
   }
 
-  // Don't render anything until router is ready and we have a valid slug
-  if (!router.isReady || !slug || typeof window === 'undefined') {
+  // Loading state while router initializes
+  if (!mounted || !router.isReady || !slug) {
     return (
       <>
         <Head>
@@ -239,119 +224,11 @@ export default function CategoryPage() {
             animation: 'spin 1s linear infinite'
           }} />
         </div>
-        <style jsx>{`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}</style>
       </>
     );
-  }
-
-  // Handle premium redirect
-  if (slug === 'premium') {
-    if (typeof window !== 'undefined') {
-      window.location.href = '/premium';
-    }
-    return null;
   }
 
   const category = categoryInfo[slug];
-
-  // Show error state if metadata failed to load
-  if (error) {
-    return (
-      <>
-        <Head>
-          <title>{category.name} Virtual Backgrounds - StreamBackdrops</title>
-          <meta name="description" content={category.description} />
-        </Head>
-        
-        <div>
-          {/* KEEP THE BEAUTIFUL HOMEPAGE HEADER */}
-          <header>
-            <div className="container">
-              <h1>Stream<span className="logo-blue">Backdrops</span></h1>
-              <p className="subtitle">{category.name}</p>
-              <p className="description">
-                {category.description} • <span style={{
-                  background: '#16a34a',
-                  color: 'white',
-                  padding: '0.25rem 0.75rem',
-                  borderRadius: '1rem',
-                  fontWeight: 'bold',
-                  fontSize: '1rem'
-                }}>FREE</span> downloads • Perfect for Zoom, Teams & more
-              </p>
-              
-              {/* Category Navigation */}
-              <nav style={{
-                display: 'flex',
-                gap: '0.5rem',
-                justifyContent: 'center',
-                flexWrap: 'wrap',
-                marginTop: '1.5rem',
-                paddingBottom: '0.5rem'
-              }}>
-                {Object.entries(categoryInfo).map(([key, info]) => (
-                  <Link 
-                    key={key} 
-                    href={key === 'premium' ? '/premium' : `/category/${key}`}
-                    style={{
-                      padding: '0.5rem 1rem',
-                      background: key === slug ? '#2563eb' : 'white',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '1rem',
-                      color: key === slug ? 'white' : '#6b7280',
-                      textDecoration: 'none',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
-                      ...(key === 'premium' ? {
-                        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                        color: 'white',
-                        border: 'none'
-                      } : {})
-                    }}
-                  >
-                    {key === 'premium' ? '✨ Premium 4K' : info.name}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-          </header>
-          
-          <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
-            <h1 style={{color: '#111827', marginBottom: '1rem'}}>{category.name}</h1>
-            <p style={{color: '#6b7280', marginBottom: '2rem'}}>Unable to load backgrounds at the moment.</p>
-            <button 
-              onClick={() => {
-                setError(false);
-                setLoading(true);
-                loadMetadata();
-              }}
-              style={{
-                background: '#2563eb',
-                color: 'white',
-                padding: '0.75rem 1.5rem',
-                borderRadius: '0.5rem',
-                border: 'none',
-                fontSize: '1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                marginRight: '1rem'
-              }}
-            >
-              Try Again
-            </button>
-            <Link href="/" style={{color: '#2563eb'}}>← Back to Home</Link>
-          </div>
-          
-          <Footer />
-        </div>
-      </>
-    );
-  }
 
   return (
     <>
@@ -362,10 +239,28 @@ export default function CategoryPage() {
       </Head>
 
       <div>
-        {/* KEEP THE BEAUTIFUL HOMEPAGE HEADER */}
+        {/* HEADER WITH CLICKABLE LOGO */}
         <header>
           <div className="container">
-            <h1>Stream<span className="logo-blue">Backdrops</span></h1>
+            {/* CLICKABLE LOGO - FIXED */}
+            <Link 
+              href="/" 
+              style={{
+                textDecoration: 'none',
+                display: 'inline-block',
+                marginBottom: '1rem'
+              }}
+            >
+              <h1 style={{
+                fontSize: 'clamp(2rem, 4vw, 3rem)',
+                fontWeight: 'bold',
+                color: '#111827',
+                cursor: 'pointer'
+              }}>
+                Stream<span className="logo-blue">Backdrops</span>
+              </h1>
+            </Link>
+            
             <p className="subtitle">{category.name}</p>
             <p className="description">
               {category.description} • <span style={{
@@ -390,7 +285,7 @@ export default function CategoryPage() {
               {Object.entries(categoryInfo).map(([key, info]) => (
                 <Link 
                   key={key} 
-                  href={key === 'premium' ? '/premium' : `/category/${key}`}
+                  href={`/category/${key}`}
                   style={{
                     padding: '0.5rem 1rem',
                     background: key === slug ? '#2563eb' : 'white',
@@ -399,17 +294,28 @@ export default function CategoryPage() {
                     color: key === slug ? 'white' : '#6b7280',
                     textDecoration: 'none',
                     fontSize: '0.9rem',
-                    fontWeight: '600',
-                    ...(key === 'premium' ? {
-                      background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                      color: 'white',
-                      border: 'none'
-                    } : {})
+                    fontWeight: '600'
                   }}
                 >
-                  {key === 'premium' ? '✨ Premium 4K' : info.name}
+                  {info.name}
                 </Link>
               ))}
+              
+              <Link 
+                href="/premium"
+                style={{
+                  padding: '0.5rem 1rem',
+                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '1rem',
+                  textDecoration: 'none',
+                  fontSize: '0.9rem',
+                  fontWeight: '600'
+                }}
+              >
+                ✨ Premium 4K
+              </Link>
             </nav>
           </div>
         </header>
@@ -417,7 +323,32 @@ export default function CategoryPage() {
         {/* IMAGES SECTION */}
         <section style={{padding: '1.5rem 0'}}>
           <div className="container">
-            {!showImages ? (
+            {error ? (
+              <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
+                <h1 style={{color: '#111827', marginBottom: '1rem'}}>Unable to load backgrounds</h1>
+                <button 
+                  onClick={() => {
+                    setError(false);
+                    setLoading(true);
+                    loadMetadata();
+                  }}
+                  style={{
+                    background: '#2563eb',
+                    color: 'white',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '0.5rem',
+                    border: 'none',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    cursor: 'pointer',
+                    marginRight: '1rem'
+                  }}
+                >
+                  Try Again
+                </button>
+                <Link href="/" style={{color: '#2563eb'}}>← Back to Home</Link>
+              </div>
+            ) : !showImages || loading ? (
               <div style={{textAlign: 'center', padding: '2rem 0'}}>
                 <div style={{
                   width: '24px',
@@ -428,10 +359,6 @@ export default function CategoryPage() {
                   animation: 'spin 1s linear infinite',
                   margin: '0 auto'
                 }} />
-              </div>
-            ) : loading ? (
-              <div style={{textAlign: 'center', padding: '2rem 0'}}>
-                <p style={{color: '#6b7280'}}>Loading backgrounds...</p>
               </div>
             ) : categoryImages.length === 0 ? (
               <div style={{textAlign: 'center', padding: '3rem 0'}}>
@@ -474,7 +401,6 @@ export default function CategoryPage() {
                         quality={60}
                       />
                       
-                      {/* BUTTONS */}
                       <div style={{
                         position: 'absolute',
                         bottom: '0.5rem',
@@ -669,7 +595,6 @@ export default function CategoryPage() {
 export async function getServerSideProps(context) {
   const { slug } = context.query;
   
-  // Valid category slugs
   const validCategories = [
     'home-offices',
     'executive-offices', 
@@ -678,26 +603,9 @@ export async function getServerSideProps(context) {
     'private-offices'
   ];
   
-  // Check if slug is valid
   if (!slug || !validCategories.includes(slug)) {
-    return {
-      notFound: true
-    };
+    return { notFound: true };
   }
   
-  // Handle premium redirect at server level
-  if (slug === 'premium') {
-    return {
-      redirect: {
-        destination: '/premium',
-        permanent: false
-      }
-    };
-  }
-  
-  return { 
-    props: {
-      slug
-    } 
-  };
+  return { props: { slug } };
 }

@@ -1,4 +1,4 @@
-// REPLACE your pages/index.js with this version that has NO HOOKS during SSR
+// REPLACE your pages/index.js with this fixed version
 
 import Head from 'next/head';
 import Link from 'next/link';
@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
-// Static category info - safe for SSR
+// Static category info
 const categoryInfo = {
   'home-offices': {
     name: 'Home Offices',
@@ -35,16 +35,109 @@ const categoryInfo = {
   }
 };
 
-// Static structured data
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "StreamBackdrops",
-  "description": "Professional virtual backgrounds for video calls",
-  "url": "https://streambackdrops.com"
-};
+// Dynamic component for image counts
+const DynamicCategoryCards = dynamic(() => import('../components/CategoryCards'), {
+  ssr: false,
+  loading: () => (
+    <div className="category-grid">
+      {Object.entries(categoryInfo).map(([key, info], index) => (
+        <Link 
+          key={key}
+          href={`/category/${key}`}
+          className="category-card"
+        >
+          <div style={{
+            position: 'relative',
+            height: 'clamp(200px, 25vw, 280px)',
+            overflow: 'hidden',
+            background: '#f3f4f6'
+          }}>
+            <Image
+              src={`/images/${info.image}.webp`}
+              alt={info.name}
+              fill
+              style={{ objectFit: 'cover' }}
+              loading={index === 0 ? "eager" : "lazy"}
+              priority={index === 0}
+              quality={75}
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+            />
+            
+            <div style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              background: 'linear-gradient(transparent, rgba(0,0,0,0.6))',
+              color: 'white',
+              padding: 'clamp(1rem, 3vw, 2rem) clamp(1rem, 2vw, 1.5rem) clamp(0.5rem, 2vw, 1rem)',
+              textAlign: 'left'
+            }}>
+              <h3 style={{
+                fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
+                fontWeight: 'bold',
+                marginBottom: '0.5rem',
+                textShadow: '0 1px 3px rgba(0,0,0,0.5)'
+              }}>
+                {info.name}
+              </h3>
+              <p style={{
+                fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
+                opacity: 0.9,
+                textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                lineHeight: 1.4,
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden'
+              }}>
+                {info.description}
+              </p>
+            </div>
+          </div>
 
-// Dynamic component that loads only on client side
+          <div style={{
+            padding: 'clamp(1.5rem, 3vw, 2rem)'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <p style={{
+                  color: '#16a34a',
+                  fontWeight: 'bold',
+                  fontSize: 'clamp(1rem, 2vw, 1.1rem)',
+                  marginBottom: '0.5rem'
+                }}>
+                  Loading...
+                </p>
+                <p style={{
+                  color: '#6b7280',
+                  fontSize: 'clamp(0.85rem, 1.5vw, 0.9rem)'
+                }}>
+                  HD • Ready for video calls
+                </p>
+              </div>
+              
+              <div style={{
+                background: '#2563eb',
+                color: 'white',
+                padding: '0.75rem',
+                borderRadius: '50%',
+                fontSize: 'clamp(1.2rem, 2vw, 1.5rem)'
+              }}>
+                →
+              </div>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  )
+});
+
 const DynamicImageGallery = dynamic(() => import('../components/ImageGallery'), {
   ssr: false,
   loading: () => (
@@ -67,7 +160,6 @@ const DynamicImageGallery = dynamic(() => import('../components/ImageGallery'), 
   )
 });
 
-// Main component - NO HOOKS HERE
 export default function Home() {
   return (
     <>
@@ -78,11 +170,7 @@ export default function Home() {
         <meta name="theme-color" content="#2563eb" />
         <meta name="format-detection" content="telephone=no" />
         
-        {/* Preconnect for performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        
-        {/* Preload hero image */}
+        {/* CRITICAL: Preload LCP image */}
         <link 
           rel="preload" 
           href="/images/clean-scandinavian-home-office-2.webp" 
@@ -91,10 +179,30 @@ export default function Home() {
           fetchPriority="high"
         />
         
+        {/* Preload other hero images */}
+        <link 
+          rel="preload" 
+          href="/images/corner-office-with-city-views-1.webp" 
+          as="image" 
+          type="image/webp"
+        />
+        
+        {/* Preconnect for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        
         {/* Structured data */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          dangerouslySetInnerHTML={{ 
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "StreamBackdrops",
+              "description": "Professional virtual backgrounds for video calls",
+              "url": "https://streambackdrops.com"
+            })
+          }}
         />
       </Head>
 
@@ -104,25 +212,33 @@ export default function Home() {
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white',
           textAlign: 'center',
-          padding: '4rem 2rem',
-          minHeight: '60vh',
+          padding: 'clamp(3rem, 6vw, 4rem) clamp(1rem, 3vw, 2rem)',
+          minHeight: 'clamp(auto, 50vh, 60vh)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center'
         }}>
           <div className="container">
-            <h1 style={{
-              fontSize: 'clamp(2.5rem, 4vw, 4rem)',
-              fontWeight: 'bold',
-              marginBottom: '1rem',
-              textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-              lineHeight: 1.1
-            }}>
-              Stream<span style={{ color: '#60a5fa' }}>Backdrops</span>
-            </h1>
+            {/* CLICKABLE LOGO */}
+            <Link 
+              href="/" 
+              style={{ textDecoration: 'none' }}
+            >
+              <h1 style={{
+                fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+                fontWeight: 'bold',
+                marginBottom: '1rem',
+                textShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                lineHeight: 1.1,
+                color: 'white',
+                cursor: 'pointer'
+              }}>
+                Stream<span style={{ color: '#60a5fa' }}>Backdrops</span>
+              </h1>
+            </Link>
             
             <p style={{
-              fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+              fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
               marginBottom: '0.5rem',
               fontWeight: 600,
               opacity: 0.95
@@ -131,7 +247,7 @@ export default function Home() {
             </p>
             
             <p style={{
-              fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+              fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
               marginBottom: '2rem',
               opacity: 0.9,
               maxWidth: '600px',
@@ -171,7 +287,7 @@ export default function Home() {
                     borderRadius: '2rem',
                     color: 'white',
                     textDecoration: 'none',
-                    fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+                    fontSize: 'clamp(0.8rem, 1.8vw, 1rem)',
                     fontWeight: '600',
                     whiteSpace: 'nowrap',
                     transition: 'all 0.3s ease'
@@ -189,7 +305,7 @@ export default function Home() {
                   borderRadius: '2rem',
                   color: 'white',
                   textDecoration: 'none',
-                  fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+                  fontSize: 'clamp(0.8rem, 1.8vw, 1rem)',
                   fontWeight: '700',
                   boxShadow: '0 4px 12px rgba(251, 191, 36, 0.4)',
                   whiteSpace: 'nowrap'
@@ -208,7 +324,7 @@ export default function Home() {
         }}>
           <div className="container">
             <h2 style={{
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              fontSize: 'clamp(2rem, 5vw, 3rem)',
               fontWeight: 'bold',
               textAlign: 'center',
               marginBottom: '1rem',
@@ -218,7 +334,7 @@ export default function Home() {
             </h2>
             
             <p style={{
-              fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+              fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
               textAlign: 'center',
               color: '#6b7280',
               marginBottom: 'clamp(2rem, 4vw, 4rem)',
@@ -228,106 +344,8 @@ export default function Home() {
               Each category features carefully curated backgrounds optimized for video calls
             </p>
 
-            {/* CATEGORY GRID */}
-            <div className="category-grid">
-              {Object.entries(categoryInfo).map(([key, info], index) => (
-                <Link 
-                  key={key}
-                  href={`/category/${key}`}
-                  className="category-card"
-                >
-                  {/* HERO IMAGE */}
-                  <div style={{
-                    position: 'relative',
-                    height: 'clamp(200px, 25vw, 280px)',
-                    overflow: 'hidden',
-                    background: '#f3f4f6'
-                  }}>
-                    <Image
-                      src={`/images/${info.image}.webp`}
-                      alt={info.name}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      loading={index === 0 ? "eager" : "lazy"}
-                      priority={index === 0}
-                      quality={75}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
-                    />
-                    
-                    {/* OVERLAY */}
-                    <div style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      background: 'linear-gradient(transparent, rgba(0,0,0,0.6))',
-                      color: 'white',
-                      padding: 'clamp(1rem, 3vw, 2rem) clamp(1rem, 2vw, 1.5rem) clamp(0.5rem, 2vw, 1rem)',
-                      textAlign: 'left'
-                    }}>
-                      <h3 style={{
-                        fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
-                        fontWeight: 'bold',
-                        marginBottom: '0.5rem',
-                        textShadow: '0 1px 3px rgba(0,0,0,0.5)'
-                      }}>
-                        {info.name}
-                      </h3>
-                      <p style={{
-                        fontSize: 'clamp(0.9rem, 1.5vw, 1rem)',
-                        opacity: 0.9,
-                        textShadow: '0 1px 2px rgba(0,0,0,0.5)',
-                        lineHeight: 1.4,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden'
-                      }}>
-                        {info.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* CARD CONTENT */}
-                  <div style={{
-                    padding: 'clamp(1.5rem, 3vw, 2rem)'
-                  }}>
-                    <div style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between'
-                    }}>
-                      <div>
-                        <p style={{
-                          color: '#16a34a',
-                          fontWeight: 'bold',
-                          fontSize: 'clamp(1rem, 2vw, 1.1rem)',
-                          marginBottom: '0.5rem'
-                        }}>
-                          6+ Free Backgrounds
-                        </p>
-                        <p style={{
-                          color: '#6b7280',
-                          fontSize: 'clamp(0.85rem, 1.5vw, 0.9rem)'
-                        }}>
-                          HD • Ready for video calls
-                        </p>
-                      </div>
-                      
-                      <div style={{
-                        background: '#2563eb',
-                        color: 'white',
-                        padding: '0.75rem',
-                        borderRadius: '50%',
-                        fontSize: 'clamp(1.2rem, 2vw, 1.5rem)'
-                      }}>
-                        →
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+            {/* DYNAMIC CATEGORY GRID WITH REAL COUNTS */}
+            <DynamicCategoryCards />
           </div>
         </section>
 
@@ -376,7 +394,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* DYNAMIC IMAGE GALLERY - Only loads on client */}
+        {/* DYNAMIC IMAGE GALLERY */}
         <DynamicImageGallery />
       </div>
 
@@ -392,10 +410,9 @@ export default function Home() {
   );
 }
 
-// Tell Next.js this can be statically generated
 export async function getStaticProps() {
   return {
     props: {},
-    revalidate: 3600 // Revalidate every hour
+    revalidate: 3600
   };
 }
