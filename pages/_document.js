@@ -4,19 +4,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        {/* PRELOAD THE LARGEST IMAGES FIRST - CRITICAL FOR LCP */}
-        <link
-          rel="preload"
-          as="image"
-          href="/images/clean-scandinavian-home-office-2.webp"
-          fetchPriority="high"
-        />
-        <link
-          rel="preload"
-          as="image" 
-          href="/images/executive-office-with-marble-wall-1.webp"
-          fetchPriority="high"
-        />
+        {/* Note: Removed preload tags from here - they cause warnings on non-homepage */}
+        {/* We'll add dynamic preloading in individual pages instead */}
 
         {/* Google Analytics - optimized */}
         <script

@@ -1,4 +1,4 @@
-// Update your components/Footer.js file with this:
+// components/Footer.js - REPLACE YOUR ENTIRE FILE WITH THIS
 
 import Link from 'next/link';
 

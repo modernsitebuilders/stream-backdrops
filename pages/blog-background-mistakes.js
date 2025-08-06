@@ -113,8 +113,49 @@ export default function BlogBackgroundMistakes() {
                   </div>
                 </div>
 
-                {/* Additional mistakes would follow the same pattern */}
-                {/* For brevity, I'm showing 3 examples - the full implementation would have all 15 */}
+                {/* Mistake 4 */}
+                <div className="border-l-4 border-red-500 pl-4 bg-red-50 p-4 rounded-r-lg">
+                  <h2 className="text-2xl font-bold text-red-900 mb-3">4. Not Testing Before Important Calls</h2>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h3 className="font-semibold text-red-800 mb-2">The Problem:</h3>
+                      <p className="text-red-700">
+                        Discovering technical issues during live calls makes you appear unprepared and unprofessional.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-green-800 mb-2">The Fix:</h3>
+                      <ul className="list-disc pl-6 text-green-700">
+                        <li>Test background 15 minutes before calls</li>
+                        <li>Check edge detection and lighting</li>
+                        <li>Have backup options ready</li>
+                        <li>Practice using platform controls</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mistake 5 */}
+                <div className="border-l-4 border-red-500 pl-4 bg-red-50 p-4 rounded-r-lg">
+                  <h2 className="text-2xl font-bold text-red-900 mb-3">5. Using Low-Quality Images</h2>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h3 className="font-semibold text-red-800 mb-2">The Problem:</h3>
+                      <p className="text-red-700">
+                        Pixelated, blurry, or incorrectly sized backgrounds look unprofessional and suggest lack of attention to detail.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-green-800 mb-2">The Fix:</h3>
+                      <ul className="list-disc pl-6 text-green-700">
+                        <li>Use 1920x1080 resolution minimum</li>
+                        <li>Ensure 16:9 aspect ratio</li>
+                        <li>Choose PNG format for best quality</li>
+                        <li>Keep file size under 15MB</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
 
                 {/* Quick Fix Checklist */}
                 <div className="bg-blue-50 rounded-lg p-6 mt-8">
@@ -150,6 +191,43 @@ export default function BlogBackgroundMistakes() {
                   </div>
                 </div>
 
+                {/* Additional Mistakes */}
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">More Common Mistakes to Avoid</h2>
+                  
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                      <h3 className="font-semibold text-red-900 mb-2">6. Wrong Clothing Colors</h3>
+                      <p className="text-red-700 text-sm">Wearing colors that match your background causes you to disappear.</p>
+                    </div>
+                    
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                      <h3 className="font-semibold text-red-900 mb-2">7. Backlighting Issues</h3>
+                      <p className="text-red-700 text-sm">Sitting with bright windows behind you creates silhouette effects.</p>
+                    </div>
+                    
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                      <h3 className="font-semibold text-red-900 mb-2">8. Moving Too Much</h3>
+                      <p className="text-red-700 text-sm">Excessive movement causes background glitches and distractions.</p>
+                    </div>
+                    
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                      <h3 className="font-semibold text-red-900 mb-2">9. No Backup Plan</h3>
+                      <p className="text-red-700 text-sm">Technical failures during important calls with no alternatives ready.</p>
+                    </div>
+                    
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                      <h3 className="font-semibold text-red-900 mb-2">10. Forgetting Mobile Differences</h3>
+                      <p className="text-red-700 text-sm">Not testing how backgrounds work on phone vs desktop platforms.</p>
+                    </div>
+                    
+                    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                      <h3 className="font-semibold text-red-900 mb-2">11. Ignoring Audio Impact</h3>
+                      <p className="text-red-700 text-sm">Virtual backgrounds can affect processing power and audio quality.</p>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Conclusion */}
                 <div className="mt-8">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">Conclusion</h2>
@@ -166,6 +244,20 @@ export default function BlogBackgroundMistakes() {
                   </div>
                 </div>
 
+                <div className="bg-gray-50 rounded-lg p-6 mt-8">
+                  <h3 className="text-xl font-bold text-gray-900 mb-4">Related Articles</h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <Link href="/blog-backgrounds-by-industry" className="block p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
+                      <h4 className="font-semibold text-blue-600 mb-2">Virtual Backgrounds by Industry</h4>
+                      <p className="text-gray-600 text-sm">Choose the perfect background for your profession</p>
+                    </Link>
+                    <Link href="/blog-lighting-tips" className="block p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
+                      <h4 className="font-semibold text-blue-600 mb-2">Perfect Lighting Setup</h4>
+                      <p className="text-gray-600 text-sm">Master video call lighting for virtual backgrounds</p>
+                    </Link>
+                  </div>
+                </div>
+
                 {/* CTA */}
                 <div className="bg-green-50 rounded-lg p-6 mt-8">
                   <p className="text-green-800 font-medium">
@@ -175,13 +267,3 @@ export default function BlogBackgroundMistakes() {
                     Get Professional Backgrounds →
                   </Link>
                 </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </div>
-      
-      <Footer />
-    </>
-  );
-}

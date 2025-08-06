@@ -83,7 +83,19 @@ export default function BlogLightingTips() {
                   <li>Schedule important calls during optimal lighting hours</li>
                 </ul>
               </div>
-
+<div className="bg-gray-50 rounded-lg p-6 mt-8">
+  <h3 className="text-xl font-bold text-gray-900 mb-4">Related Articles</h3>
+  <div className="grid md:grid-cols-2 gap-4">
+    <Link href="/blog-professional-video-calls" className="block p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
+      <h4 className="font-semibold text-blue-600 mb-2">Professional Video Call Tips</h4>
+      <p className="text-gray-600 text-sm">Master 10 essential video call techniques</p>
+    </Link>
+    <Link href="/blog-virtual-background-guide" className="block p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
+      <h4 className="font-semibold text-blue-600 mb-2">Technical Background Guide</h4>
+      <p className="text-gray-600 text-sm">Complete technical setup and troubleshooting</p>
+    </Link>
+  </div>
+  </div>
               <div className="bg-blue-50 rounded-lg p-6 mb-6">
                 <h3 className="text-xl font-semibold text-blue-900 mb-3">Mid-Range Setup ($25-$100)</h3>
                 <p className="text-blue-800 mb-2"><strong>LED desk lamp + ring light combination:</strong></p>

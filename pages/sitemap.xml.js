@@ -82,6 +82,30 @@ function generateSiteMap() {
      
      <!-- Blog Posts (only the working ones) -->
      <url>
+  <loc>https://streambackdrops.com/blog</loc>
+  <lastmod>${new Date().toISOString()}</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://streambackdrops.com/blog-backgrounds-by-industry</loc>
+  <lastmod>${new Date().toISOString()}</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+<url>
+  <loc>https://streambackdrops.com/blog-background-mistakes</loc>
+  <lastmod>${new Date().toISOString()}</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+<url>
+  <loc>https://streambackdrops.com/blog-zoom-teams-google</loc>
+  <lastmod>${new Date().toISOString()}</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+     <url>
        <loc>https://streambackdrops.com/blog-professional-video-calls</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>monthly</changefreq>

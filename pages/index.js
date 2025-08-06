@@ -7,51 +7,65 @@ import Image from 'next/image';
 
 export default function Home() {
   const categories = [
-  {
-    name: 'Home Offices',
-    slug: 'home-offices',
-    description: 'Professional home office backgrounds perfect for remote work',
-    image: 'clean-scandinavian-home-office-2.webp', 
-    featured: true
-  },
-  {
-    name: 'Executive Offices',
-    slug: 'executive-offices', 
-    description: 'Luxury executive office backgrounds for leadership calls',
-    image: 'executive-office-with-marble-wall-1.webp',
-    featured: true,
-    premiumAvailable: true
-  },
-  {
-    name: 'Minimalist',
-    slug: 'minimalist',
-    description: 'Clean, minimalist backgrounds for modern professionals',
-    image: 'minimalist-executive-office-1.webp',
-    premiumAvailable: true
-  }, 
-  {
-    name: 'Lobbies',
-    slug: 'lobbies',
-    description: 'Professional lobby backgrounds for client meetings',
-    image: 'modern-glass-lobby-3.webp',
-    featured: true,
-    premiumAvailable: true
-  },
-  {
-    name: 'Private Offices',
-    slug: 'private-offices',
-    description: 'Specialized private office backgrounds for consultations',
-    image: 'professional-consultation-office-1.webp'
-  }
-];
+    {
+      name: 'Home Offices',
+      slug: 'home-offices',
+      description: 'Professional home office backgrounds perfect for remote work',
+      image: 'clean-scandinavian-home-office-2.webp', 
+      featured: true
+    },
+    {
+      name: 'Executive Offices',
+      slug: 'executive-offices', 
+      description: 'Luxury executive office backgrounds for leadership calls',
+      image: 'executive-office-with-marble-wall-1.webp',
+      featured: true,
+      premiumAvailable: true
+    },
+    {
+      name: 'Minimalist',
+      slug: 'minimalist',
+      description: 'Clean, minimalist backgrounds for modern professionals',
+      image: 'minimalist-executive-office-1.webp',
+      premiumAvailable: true
+    }, 
+    {
+      name: 'Lobbies',
+      slug: 'lobbies',
+      description: 'Professional lobby backgrounds for client meetings',
+      image: 'modern-glass-lobby-3.webp',
+      featured: true,
+      premiumAvailable: true
+    },
+    {
+      name: 'Private Offices',
+      slug: 'private-offices',
+      description: 'Specialized private office backgrounds for consultations',
+      image: 'professional-consultation-office-1.webp'
+    }
+  ];
 
   return (
     <>
       <Head>
-        <title>StreamBackdrops - Professional Virtual Backgrounds for Video Calls</title>
-        <meta name="description" content="Download high-quality professional virtual backgrounds for Zoom, Teams, and video calls. Perfect for remote work, home offices, executive meetings, and professional presentations." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
+  <title>StreamBackdrops - Professional Virtual Backgrounds for Video Calls</title>
+  <meta name="description" content="Download high-quality professional virtual backgrounds for Zoom, Teams, and video calls. Perfect for remote work, home offices, executive meetings, and professional presentations." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  {/* Preload critical images for homepage only */}
+  <link
+    rel="preload"
+    as="image"
+    href="/images/clean-scandinavian-home-office-2.webp"
+    fetchPriority="high"
+  />
+  <link
+    rel="preload"
+    as="image"
+    href="/images/executive-office-with-marble-wall-1.webp"
+    fetchPriority="high"
+  />
+</Head>
 
       <div>
         <header>
@@ -251,7 +265,37 @@ export default function Home() {
             </div>
           </div>
         </section>
-
+        <section style={{
+  background: '#f8fafc',
+  padding: '4rem 0',
+  margin: '4rem 0',
+  textAlign: 'center'
+}}>
+  <div className="container">
+    <h2 style={{fontSize: '2rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem'}}>
+      Expert Tips & Guides
+    </h2>
+    <p style={{fontSize: '1.1rem', color: '#6b7280', marginBottom: '2rem'}}>
+      Learn professional video call techniques, setup guides, and industry best practices
+    </p>
+    <Link href="/blog" style={{
+      background: '#2563eb',
+      color: 'white',
+      padding: '1rem 2rem',
+      borderRadius: '0.75rem',
+      textDecoration: 'none',
+      fontSize: '1.1rem',
+      fontWeight: '600',
+      display: 'inline-block',
+      transition: 'background-color 0.2s ease'
+    }}
+    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1d4ed8'}
+    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
+    >
+      Read Our Blog →
+    </Link>
+  </div>
+</section>
         <Footer />
       </div>
     </>

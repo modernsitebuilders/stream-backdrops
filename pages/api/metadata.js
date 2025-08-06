@@ -1,57 +1,35 @@
-// pages/api/metadata.js - Debug version
-
+// pages/api/metadata.js
 import fs from 'fs';
 import path from 'path';
 
 export default function handler(req, res) {
   try {
-    console.log('API called - starting debug...');
-    console.log('Current working directory:', process.cwd());
+    // Try to load from the public/data folder
+   const filePath = path.join(process.cwd(), 'public', 'data', 'image-metadata-cleaned.json');
     
-    // Try both locations - public folder and root data folder
-    const possiblePaths = [
-      path.join(process.cwd(), 'public', 'data', 'image-metadata.json'),
-      path.join(process.cwd(), 'data', 'image-metadata.json')
-    ];
+    console.log('Loading metadata from:', filePath);
     
-    console.log('Checking paths:', possiblePaths);
-    
-    let filePath = null;
-    for (const testPath of possiblePaths) {
-      console.log(`Checking: ${testPath}`);
-      console.log(`Exists: ${fs.existsSync(testPath)}`);
-      if (fs.existsSync(testPath)) {
-        filePath = testPath;
-        console.log(`Found file at: ${filePath}`);
-        break;
-      }
-    }
-    
-    if (!filePath) {
-      console.log('No metadata file found!');
-      
-      // Let's also check what files ARE in the data directory
-      const dataDir = path.join(process.cwd(), 'public', 'data');
-      if (fs.existsSync(dataDir)) {
-        const files = fs.readdirSync(dataDir);
-        console.log('Files in public/data:', files);
-      } else {
-        console.log('public/data directory does not exist');
-      }
-      
+    if (!fs.existsSync(filePath)) {
+      console.error('Metadata file not found at:', filePath);
       return res.status(404).json({ 
         error: 'Metadata file not found',
-        searchedPaths: possiblePaths,
-        cwd: process.cwd()
+        path: filePath
       });
     }
 
     const jsonData = fs.readFileSync(filePath, 'utf8');
-    console.log('File content length:', jsonData.length);
-    console.log('First 100 chars:', jsonData.substring(0, 100));
-    
     const data = JSON.parse(jsonData);
-    console.log(`Loaded ${Object.keys(data).length} images from metadata`);
+    
+    // Log the actual count
+    const imageCount = Object.keys(data).length;
+    console.log(`Loaded ${imageCount} images from metadata file`);
+    
+    // Debug: Show category breakdown
+    const categories = {};
+    Object.values(data).forEach(item => {
+      categories[item.category] = (categories[item.category] || 0) + 1;
+    });
+    console.log('Category breakdown:', categories);
     
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 'public, max-age=3600');
@@ -60,8 +38,7 @@ export default function handler(req, res) {
     console.error('Error loading metadata:', error);
     res.status(500).json({ 
       error: 'Failed to load metadata', 
-      details: error.message,
-      stack: error.stack
+      details: error.message
     });
   }
 }
