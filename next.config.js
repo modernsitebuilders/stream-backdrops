@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true
+  swcMinify: true,
   poweredByHeader: false,
   
   images: {
@@ -13,6 +13,13 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
+  compress: true,
+  
+  experimental: {
+    optimizePackageImports: ['react', 'react-dom'],
+    scrollRestoration: true,
+  },
+
   async headers() {
     return [
       {
@@ -49,16 +56,8 @@ const nextConfig = {
     ];
   },
 
-  compress: true,
-  
-  experimental: {
-    optimizePackageImports: ['react', 'react-dom'],
-    scrollRestoration: true,
-  },
-
   webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
-      // Ensure splitChunks exists and has the expected structure
       if (config.optimization && config.optimization.splitChunks) {
         if (!config.optimization.splitChunks.cacheGroups) {
           config.optimization.splitChunks.cacheGroups = {};
