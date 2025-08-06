@@ -1,10 +1,7 @@
-// COMPLETE pages/index.js with LCP FIX - COPY THIS ENTIRE FILE
-
 import Head from 'next/head';
 import Link from 'next/link';
 import Footer from '../components/Footer';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 
 export default function Home() {
   const categories = [
@@ -247,23 +244,73 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Lazy load non-critical sections */}
-        <LazyFeatures />
-        <LazyBlogSection />
-        
+        <section className="features">
+          <div className="container">
+            <div style={{textAlign: 'center', marginBottom: '3rem'}}>
+              <h2 style={{fontSize: '2rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem'}}>
+                Why Choose StreamBackdrops?
+              </h2>
+            </div>
+            <div className="features-grid">
+              <div className="feature">
+                <div className="feature-icon">
+                  <span style={{fontSize: '2rem'}}>🖼️</span>
+                </div>
+                <h3>High Quality</h3>
+                <p>Optimized for all video platforms and calling apps</p>
+              </div>
+              <div className="feature">
+                <div className="feature-icon">
+                  <span style={{fontSize: '2rem'}}>💼</span>
+                </div>
+                <h3>Professional</h3>
+                <p>Designed for business meetings and professional calls</p>
+              </div>
+              <div className="feature">
+                <div className="feature-icon">
+                  <span style={{fontSize: '2rem'}}>⬇️</span>
+                </div>
+                <h3>Free Download</h3>
+                <p>All backgrounds are completely free to download and use</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section style={{
+          background: '#f8fafc',
+          padding: '4rem 0',
+          margin: '4rem 0',
+          textAlign: 'center'
+        }}>
+          <div className="container">
+            <h2 style={{fontSize: '2rem', fontWeight: 'bold', color: '#111827', marginBottom: '1rem'}}>
+              Expert Tips & Guides
+            </h2>
+            <p style={{fontSize: '1.1rem', color: '#6b7280', marginBottom: '2rem'}}>
+              Learn professional video call techniques, setup guides, and industry best practices
+            </p>
+            <Link href="/blog" style={{
+              background: '#2563eb',
+              color: 'white',
+              padding: '1rem 2rem',
+              borderRadius: '0.75rem',
+              textDecoration: 'none',
+              fontSize: '1.1rem',
+              fontWeight: '600',
+              display: 'inline-block',
+              transition: 'background-color 0.2s ease'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1d4ed8'}
+            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
+            >
+              Read Our Blog →
+            </Link>
+          </div>
+        </section>
+
         <Footer />
       </div>
     </>
   );
 }
-
-// Lazy loaded components
-const LazyFeatures = dynamic(() => import('../components/FeaturesSection'), {
-  loading: () => <div style={{ height: '400px', background: '#f3f4f6' }} />,
-  ssr: false
-});
-
-const LazyBlogSection = dynamic(() => import('../components/BlogSection'), {
-  loading: () => <div style={{ height: '200px', background: '#f8fafc' }} />,
-  ssr: false
-});

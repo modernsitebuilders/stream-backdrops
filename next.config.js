@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   poweredByHeader: false,
   
   images: {
@@ -54,21 +53,6 @@ const nextConfig = {
         ],
       },
     ];
-  },
-
-  webpack: (config, { dev, isServer }) => {
-    if (!dev && !isServer) {
-      if (config.optimization && config.optimization.splitChunks) {
-        if (!config.optimization.splitChunks.cacheGroups) {
-          config.optimization.splitChunks.cacheGroups = {};
-        }
-        if (!config.optimization.splitChunks.cacheGroups.commons) {
-          config.optimization.splitChunks.cacheGroups.commons = {};
-        }
-        config.optimization.splitChunks.cacheGroups.commons.minChunks = 2;
-      }
-    }
-    return config;
   },
 }
 
