@@ -1,6 +1,14 @@
-/* Critical Above-the-fold Styles - Load First */
+/* REPLACE your entire styles/globals.css with this cleaned version */
+
+/* ==============================================
+   CRITICAL ABOVE-THE-FOLD STYLES - LOAD FIRST
+   ============================================== */
+
 .critical-above-fold {
   contain: layout style paint;
+  background: #f9fafb;
+  min-height: 100vh;
+  will-change: auto;
 }
 
 /* Prevent layout shift during font loading */
@@ -9,22 +17,31 @@
   font-display: swap;
 }
 
-/* Critical homepage styles */
-header {
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
-  padding: 2rem 0;
-  text-align: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  contain: layout style;
+/* ==============================================
+   BASE STYLES
+   ============================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  contain: layout;
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f9fafb;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* ==============================================
+   TYPOGRAPHY
+   ============================================== */
 
 h1 {
   font-size: clamp(2rem, 4vw, 3rem);
@@ -34,35 +51,33 @@ h1 {
   contain: layout style;
 }
 
-.category-card img {
-  background-color: #f3f4f6;
-  min-height: 200px;
-  width: 100%;
-  height: auto;
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  contain: layout style;
 }
 
-html {
-  font-size: 16px; 
+h3 {
+  contain: layout style;
 }
 
-body {
-  font-family: system-ui, -apple-system, sans-serif;
-  background: #f9fafb;
-  line-height: 1.6;
-  font-size: 1rem; /* Explicit base font size */
+.logo-blue {
+  color: #2563eb;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.subtitle {
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  color: #6b7280;
+  margin-bottom: 0.5rem;
 }
 
-body {
-  font-family: system-ui, -apple-system, sans-serif;
-  background: #f9fafb;
-  line-height: 1.6;
+.description {
+  font-size: clamp(1rem, 2vw, 1.1rem);
+  color: #9ca3af;
 }
+
+/* ==============================================
+   LAYOUT COMPONENTS
+   ============================================== */
 
 .container {
   max-width: 1200px;
@@ -77,34 +92,12 @@ header {
   padding: 2rem 0;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-h1 {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #111827;
-  margin-bottom: 1rem;
   contain: layout style;
 }
 
-h2, h3 {
-  contain: layout style;
-}
-
-.logo-blue {
-  color: #2563eb;
-}
-
-.subtitle {
-  font-size: 1.5rem;
-  color: #6b7280;
-  margin-bottom: 0.5rem;
-}
-
-.description {
-  font-size: 1.1rem;
-  color: #9ca3af;
-}
+/* ==============================================
+   CATEGORY GRID & CARDS
+   ============================================== */
 
 .category-grid {
   display: grid;
@@ -133,20 +126,58 @@ h2, h3 {
   box-shadow: 0 15px 35px rgba(0,0,0,0.2);
 }
 
-/* CRITICAL LCP FIX - Ensure images don't cause layout shift */
+/* CRITICAL: Image container to prevent layout shift */
 .category-card > div > div {
   min-height: 200px;
   position: relative;
   overflow: hidden;
   border-radius: 1rem 1rem 0 0;
-  background: #f3f4f6; /* Light gray placeholder while loading */
+  background: #f3f4f6;
 }
 
-/* OPTIMIZE IMAGE RENDERING FOR LCP */
 .category-card img {
+  background-color: #f3f4f6;
+  min-height: 200px;
+  width: 100%;
+  height: auto;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
 }
+
+/* ==============================================
+   IMAGE COMPONENTS
+   ============================================== */
+
+.image-grid {
+  contain: layout;
+}
+
+.image-card {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  background: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  contain: layout style paint;
+}
+
+.image-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.image-preview {
+  aspect-ratio: 16/9;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* ==============================================
+   FEATURES SECTION
+   ============================================== */
 
 .features {
   background: #f3f4f6;
@@ -188,6 +219,10 @@ h2, h3 {
   color: #6b7280;
 }
 
+/* ==============================================
+   FOOTER
+   ============================================== */
+
 footer {
   background: #111827;
   color: white;
@@ -202,238 +237,86 @@ footer h3 {
   color: white;
 }
 
-/* Mobile-first responsive improvements */
-@media (min-width: 640px) {
-  .category-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-  
-  .container {
-    padding: 1.5rem;
-  }
+/* ==============================================
+   NAVIGATION
+   ============================================== */
+
+.category-nav {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
 }
 
-@media (min-width: 1024px) {
-  .category-grid {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2.5rem;
-    padding: 2rem;
-  }
-  
-  .container {
-    padding: 20px;
-  }
+.category-nav a {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  background: white;
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  text-decoration: none;
+  color: #6b7280;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
-/* CRITICAL MOBILE OPTIMIZATIONS - These will dramatically improve performance */
-@media (max-width: 768px) {
-  /* Reduce font sizes to improve rendering */
-  h1 {
-    font-size: 2rem;
-  }
-  
-  .subtitle {
-    font-size: 1.2rem;
-  }
-  
-  /* Optimize category grid for mobile */
-  .category-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1.5rem !important;
-    margin: 2rem 0 !important;
-    contain: layout !important;
-  }
-  
-  .container {
-    padding: 1rem !important;
-  }
-  
-  /* Better mobile navigation */
-  .category-nav {
-    display: flex;
-    overflow-x: auto;
-    gap: 1rem;
-    padding: 1rem;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .category-nav a {
-    flex-shrink: 0;
-    padding: 0.5rem 1rem;
-    background: white;
-    border-radius: 1rem;
-    border: 1px solid #e5e7eb;
-    text-decoration: none;
-    color: #6b7280;
-    font-weight: 600;
-    transition: all 0.2s ease;
-  }
-  
-  .category-nav a:hover,
-  .category-nav a.active {
-    background: #2563eb;
-    color: white;
-    border-color: #2563eb;
-  }
-  
-  /* Larger touch targets for mobile */
-  button {
-    min-height: 44px;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-  }
-  
-  /* Better image cards on mobile */
-  .image-card {
-    border-radius: 0.75rem;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    background: white;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    contain: layout style paint;
-  }
-  
-  .image-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  }
-  
-  .image-preview {
-    aspect-ratio: 16/9;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    user-select: none;
-    -webkit-user-drag: none;
-  }
-  
-  /* Improve modal on mobile */
-  .modal {
-    position: fixed;
-    inset: 0;
-    padding: 1rem;
-    background: rgba(0,0,0,0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
-  }
-  
-  .modal-content {
-    background: white;
-    border-radius: 0.5rem;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-  }
-
-  .image-grid {
-    contain: layout;
-  }
-
-  /* MOBILE PERFORMANCE OPTIMIZATIONS - CRITICAL FOR SPEED */
-  /* Reduce animations on mobile to save CPU */
-  * {
-    animation-duration: 0.1s !important;
-    transition-duration: 0.1s !important;
-  }
-  
-  /* Optimize images for mobile */
-  img {
-    image-rendering: auto;
-    image-rendering: crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-  }
-  
-  /* Reduce box shadows on mobile to improve rendering */
-  .category-card,
-  .image-card {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-  }
-  
-  .category-card:hover,
-  .image-card:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-    transform: translateY(-2px) !important;
-  }
-  
-  /* Simplify gradients on mobile to reduce GPU load */
-  [style*="linear-gradient"] {
-    background: #2563eb !important; /* Fallback solid color */
-  }
-  
-  /* Use system fonts for better performance */
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-  
-  /* Force hardware acceleration for smooth scrolling */
-  .category-card,
-  .image-card {
-    transform: translateZ(0);
-    will-change: transform;
-  }
-  
-  /* Reduce repaints */
-  * {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-  
-  /* Hide heavy elements on mobile initially */
-  .features {
-    display: none;
-  }
-  
-  /* Show features only when scrolled into view */
-  .features.visible {
-    display: block;
-  }
+.category-nav a:hover,
+.category-nav a.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
 }
 
-/* Tablet styles */
-@media (min-width: 641px) and (max-width: 1023px) {
-  .image-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
+/* ==============================================
+   MODAL
+   ============================================== */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  padding: 1rem;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
 }
 
-/* Desktop styles */
-@media (min-width: 1024px) {
-  .image-grid {
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
-  }
+.modal-content {
+  background: white;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
 }
 
-/* Orientation-specific styles */
-@media (orientation: portrait) and (max-width: 768px) {
-  .orientation-warning {
-    display: block;
-    background: #fef3c7;
-    border: 1px solid #f59e0b;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    margin: 1rem 0;
-    text-align: center;
-    color: #92400e;
-    font-size: 0.9rem;
-  }
-  
-  .orientation-warning strong {
-    font-weight: 600;
-  }
+/* ==============================================
+   LOADING & ANIMATIONS
+   ============================================== */
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-/* Premium image protection */
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.image-placeholder {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+/* ==============================================
+   UTILITY CLASSES
+   ============================================== */
+
 .premium-image {
   user-select: none;
   -webkit-user-drag: none;
@@ -444,8 +327,323 @@ footer h3 {
   -ms-user-select: none;
 }
 
-/* Accessibility improvements */
+/* CRITICAL: Reserve space for images to prevent CLS */
+[style*="aspectRatio: '16/9'"],
+[style*="aspect-ratio: 16/9"] {
+  aspect-ratio: 16/9;
+  width: 100%;
+  height: auto;
+}
+
+img[loading="lazy"] {
+  content-visibility: auto;
+}
+
+.category-grid .category-card img,
+.image-grid .image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ==============================================
+   RESPONSIVE DESIGN - MOBILE FIRST
+   ============================================== */
+
+/* Small screens (phones) */
+@media (max-width: 768px) {
+  /* CRITICAL: Performance optimizations for mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+    animation-duration: 0.2s !important;
+    transition-duration: 0.2s !important;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html {
+    scroll-behavior: auto; /* Disable smooth scrolling on mobile */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* CRITICAL: Hardware acceleration */
+  header,
+  section,
+  .container,
+  .category-card,
+  .image-card {
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* CRITICAL: Layout optimizations */
+  .container {
+    padding: 1rem !important;
+    max-width: 100% !important;
+    text-align: center;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    margin: 2rem 0 !important;
+    padding: 1rem !important;
+  }
+
+  .image-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    padding: 0 1rem !important;
+    justify-items: center !important;
+    width: 100% !important;
+  }
+
+  .image-card {
+    width: 100% !important;
+    max-width: 350px !important;
+    margin: 0 auto !important;
+    justify-self: center !important;
+  }
+
+  /* CRITICAL: Typography optimizations */
+  h1 {
+    font-size: 2.5rem !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+  }
+
+  h2 {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+  }
+
+  h3 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  /* CRITICAL: Touch optimizations */
+  button,
+  a {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    touch-action: manipulation !important;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  /* CRITICAL: Navigation optimizations */
+  nav {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  nav::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* CRITICAL: Performance optimizations */
+  .category-card,
+  .image-card {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    contain: layout style paint !important;
+    will-change: auto !important;
+  }
+
+  .category-card:hover,
+  .image-card:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+  }
+
+  /* CRITICAL: Disable hover effects on touch devices */
+  *:hover {
+    transform: none !important;
+    box-shadow: inherit !important;
+  }
+
+  /* CRITICAL: Image optimizations */
+  img {
+    height: auto;
+    width: 100%;
+    display: block;
+    max-width: 100%;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  img[loading="eager"],
+  img[priority="true"] {
+    content-visibility: auto !important;
+    contain-intrinsic-size: 400px 225px !important;
+  }
+
+  /* CRITICAL: Modal optimizations */
+  div[style*="position: fixed"][style*="zIndex: 9999"] {
+    padding: 0.5rem !important;
+  }
+
+  div[style*="position: fixed"][style*="zIndex: 9999"] > div {
+    max-width: 95vw !important;
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+  }
+
+  div[style*="position: fixed"][style*="zIndex: 99999"] {
+    padding: 1rem !important;
+  }
+
+  div[style*="position: fixed"][style*="zIndex: 99999"] > div {
+    max-width: 95vw !important;
+    max-height: 90vh !important;
+  }
+
+  div[style*="position: fixed"][style*="zIndex: 99999"] img {
+    max-height: 60vh !important;
+  }
+
+  /* CRITICAL: Gradient fallbacks for performance */
+  [style*="linear-gradient"],
+  header[style*="linear-gradient"] {
+    background: #2563eb !important;
+  }
+
+  /* CRITICAL: Text rendering optimizations */
+  p, span, div {
+    text-rendering: optimizeSpeed !important;
+    -webkit-font-smoothing: subpixel-antialiased !important;
+  }
+
+  /* Hide features section initially on mobile */
+  .features {
+    display: none;
+  }
+
+  .features.visible {
+    display: block;
+  }
+}
+
+/* Very small screens (iPhone SE, etc.) */
+@media (max-width: 375px) {
+  .container {
+    padding: 0.75rem !important;
+  }
+
+  h1 {
+    font-size: 2rem !important;
+  }
+
+  nav {
+    gap: 0.25rem !important;
+  }
+
+  nav a {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.75rem !important;
+  }
+}
+
+/* Tablets */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .image-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .container {
+    padding: 1.5rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .category-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2.5rem;
+    padding: 2rem;
+  }
+  
+  .image-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+}
+
+/* Landscape mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  header {
+    padding: 2rem 1rem !important;
+    min-height: auto !important;
+  }
+
+  section {
+    padding: 2rem 1rem !important;
+  }
+}
+
+/* Portrait mobile specific */
+@media (max-width: 768px) and (orientation: portrait) {
+  .image-grid {
+    grid-template-columns: 1fr !important;
+    justify-items: center !important;
+    padding: 0 0.5rem !important;
+  }
+  
+  .image-card {
+    max-width: 300px !important;
+  }
+  
+  div[style*="maxHeight: 70vh"] {
+    max-height: 50vh !important;
+  }
+}
+
+/* ==============================================
+   ACCESSIBILITY & PREFERENCES
+   ============================================== */
+
 @media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
   .category-card,
   .image-card,
   button {
@@ -458,141 +656,23 @@ footer h3 {
   }
 }
 
-/* Mobile responsive fixes for category pages */
-@media (max-width: 768px) {
-  /* Force center alignment for category page grids */
-  .image-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 1.5rem !important;
-    padding: 0 1rem !important;
-    justify-items: center !important;
-    width: 100% !important;
-  }
-  
-  .image-card {
-    width: 100% !important;
-    max-width: 350px !important;
-    margin: 0 auto !important;
-    justify-self: center !important;
-  }
-  
-  /* Fix container centering on mobile */
-  .container {
-    padding: 1rem !important;
-    text-align: center !important;
-  }
-  
-  /* Larger preview modal on mobile */
-  div[style*="position: fixed"][style*="zIndex: 99999"] {
-    padding: 1rem !important;
-  }
-  
-  div[style*="position: fixed"][style*="zIndex: 99999"] > div {
-    max-width: 95vw !important;
-    max-height: 90vh !important;
-  }
-  
-  div[style*="position: fixed"][style*="zIndex: 99999"] img {
-    max-height: 60vh !important;
-  }
-}
-
-/* Portrait mode specific fixes */
-@media (max-width: 768px) and (orientation: portrait) {
-  .image-grid {
-    grid-template-columns: 1fr !important;
-    justify-items: center !important;
-    padding: 0 0.5rem !important;
-  }
-  
-  .image-card {
-    max-width: 300px !important;
-  }
-  
-  /* Better modal sizing in portrait */
-  div[style*="maxHeight: 70vh"] {
-    max-height: 50vh !important;
-  }
-}
-
-/* High contrast mode support */
 @media (prefers-contrast: high) {
-  .category-card {
-    border: 2px solid #000;
-  }
-  
+  .category-card,
   .feature-icon {
     border: 2px solid #000;
   }
 }
 
-/* CRITICAL CLS FIXES */
-/* Ensure image containers maintain aspect ratio */
-[style*="aspectRatio: '16/9'"],
-[style*="aspect-ratio: 16/9"] {
-  aspect-ratio: 16/9;
-  width: 100%;
-  height: auto;
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  img {
+    image-rendering: -webkit-optimize-contrast !important;
+    image-rendering: crisp-edges !important;
+  }
 }
 
-/* Prevent layout shift during image loading */
-img[loading="lazy"] {
-  content-visibility: auto;
-}
-
-/* CRITICAL: Reserve space for images before they load */
-.category-grid .category-card img,
-.image-grid .image-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Loading spinner animation for image placeholders */
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Critical inline styles for above-the-fold content */
-.critical-above-fold {
-  background: #f9fafb;
-  min-height: 100vh;
-}
-
-/* Preload placeholder styles */
-.image-placeholder {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-/* Add to globals.css */
-h1 {
-  font-size: clamp(2rem, 4vw, 3rem); /* Responsive font size with minimums */
-  font-weight: bold;
-  color: #111827;
-  margin-bottom: 1rem;
-  contain: layout style;
-}
-
-h2 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-}
-
-.subtitle {
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-  color: #6b7280;
-  margin-bottom: 0.5rem;
-}
-
-.description {
-  font-size: clamp(1rem, 2vw, 1.1rem);
-  color: #9ca3af;
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #111827 !important;
+    color: #f9fafb !important;
+  }
 }
