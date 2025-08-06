@@ -7,12 +7,14 @@ export default function Premium4KRedirect() {
   const router = useRouter();
   
   useEffect(() => {
-    // Redirect to /premium page after a short delay
-    const timer = setTimeout(() => {
-      router.replace('/premium');
-    }, 2000);
-    
-    return () => clearTimeout(timer);
+    // Only run on client side
+    if (typeof window !== 'undefined') {
+      const timer = setTimeout(() => {
+        router.replace('/premium');
+      }, 2000);
+      
+      return () => clearTimeout(timer);
+    }
   }, [router]);
 
   return (
@@ -49,4 +51,11 @@ export default function Premium4KRedirect() {
       </div>
     </>
   );
+}
+
+// Add server-side rendering to prevent static generation issues
+export async function getServerSideProps(context) {
+  return {
+    props: {}
+  };
 }
