@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Professional Virtual Backgrounds - Free HD Backgrounds for Video Calls</title>
+        <title>StreamBackdrops - Professional Virtual Backgrounds for Video Calls</title>
         <meta name="description" content="Download free professional virtual backgrounds for Zoom, Teams, and video calls. HD quality backgrounds for home offices, executive offices, and more." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -54,33 +54,31 @@ export default function Home() {
           textAlign: 'center',
           padding: '4rem 2rem'
         }}>
-          <div style={{maxWidth: '1200px', margin: '0 auto'}}>
-            <h1 style={{
-              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-              fontWeight: 'bold',
-              marginBottom: '1rem',
-              textShadow: '0 2px 4px rgba(0,0,0,0.1)'
-            }}>
-              Professional <span style={{color: '#fbbf24'}}>Virtual Backgrounds</span>
-            </h1>
-            
-            <p style={{
-              fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
-              marginBottom: '0.5rem',
-              opacity: '0.95'
-            }}>
-              Choose Your Professional Setting
-            </p>
-            
-            <p style={{
-              fontSize: 'clamp(1rem, 2vw, 1.1rem)',
-              opacity: '0.8',
-              maxWidth: '600px',
-              margin: '0 auto'
-            }}>
-              Each category features carefully curated backgrounds optimized for video calls
-            </p>
-          </div>
+          <h1 style={{
+            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+            fontWeight: 'bold',
+            marginBottom: '1rem',
+            textShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          }}>
+            <span style={{color: '#fbbf24'}}>Stream</span>Backdrops
+          </h1>
+              
+          <p style={{
+            fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
+            marginBottom: '0.5rem',
+            opacity: '0.95'
+          }}>
+            Choose Your Professional Setting
+          </p>
+              
+          <p style={{
+            fontSize: 'clamp(1rem, 2vw, 1.1rem)',
+            opacity: '0.8',
+            maxWidth: '600px',
+            margin: '0 auto'
+          }}>
+            Each category features carefully curated backgrounds optimized for video calls
+          </p>
         </header>
 
         {/* Categories Grid */}
@@ -96,12 +94,12 @@ export default function Home() {
                 >
                   <div>
                     <div style={{
-  position: 'relative',
-  width: '100%',
-  aspectRatio: '16/9',
-  overflow: 'hidden',
-  background: '#f3f4f6'
-}}>
+                      position: 'relative',
+                      width: '100%',
+                      aspectRatio: '16/9',
+                      overflow: 'hidden',
+                      background: '#f3f4f6'
+                    }}>
                       <Image
                         src={`/images/${info.image}.webp`}
                         alt={info.name}
