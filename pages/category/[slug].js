@@ -398,6 +398,19 @@ export default function CategoryPage({ slug }) {
 export async function getServerSideProps(context) {
   const { slug } = context.query;
   
+  // Small safety check for valid categories
+  const validCategories = [
+    'home-offices',
+    'executive-offices', 
+    'minimalist',
+    'lobbies',
+    'private-offices'
+  ];
+  
+  if (!validCategories.includes(slug)) {
+    return { notFound: true };
+  }
+  
   return {
     props: {
       slug
