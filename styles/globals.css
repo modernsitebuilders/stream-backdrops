@@ -694,7 +694,7 @@ article li {
   }
   
   .image-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+   grid-template-columns: repeat(2, 1fr) !important;
     gap: 2rem !important;
   }
   
@@ -716,7 +716,7 @@ article li {
   }
   
   .image-grid {
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+   grid-template-columns: repeat(2, 1fr) !important;
     gap: 2.5rem !important;
   }
   
