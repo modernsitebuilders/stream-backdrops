@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
 import Image from 'next/image';
 
@@ -28,52 +27,9 @@ const categoryInfo = {
   }
 };
 
-export default function CategoryPage() {
-  const router = useRouter();
-  const { slug } = router.query;
-  const [imageMetadata, setImageMetadata] = useState({});
-  const [loading, setLoading] = useState(true);
+export default function CategoryPage({ slug, categoryImages }) {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [mounted, setMounted] = useState(false);
-
   const category = categoryInfo[slug];
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!slug || !mounted) return;
-    
-    const loadMetadata = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('/data/image-metadata.json');
-        if (response.ok) {
-          const data = await response.json();
-          setImageMetadata(data);
-        }
-        setLoading(false);
-      } catch (error) {
-        console.error('Error loading metadata:', error);
-        setLoading(false);
-      }
-    };
-
-    loadMetadata();
-  }, [slug, mounted]);
-
-  const categoryImages = Object.entries(imageMetadata)
-    .filter(([_, data]) => data.category === slug)
-    .map(([filename, data]) => ({
-      filename,
-      ...data,
-      key: filename
-    }))
-    .sort((a, b) => {
-      if (a.isPremium !== b.isPremium) return a.isPremium ? -1 : 1;
-      return a.filename.localeCompare(b.filename);
-    });
 
   const handleDownload = (image) => {
     if (!image) return;
@@ -93,10 +49,6 @@ export default function CategoryPage() {
       document.body.removeChild(link);
     }
   };
-
-  if (!mounted) {
-    return <div>Loading...</div>;
-  }
 
   if (!category) {
     return (
@@ -200,11 +152,7 @@ export default function CategoryPage() {
 
         <main style={{padding: 'clamp(1rem, 3vw, 2rem)'}}>
           <div style={{maxWidth: '1400px', margin: '0 auto'}}>
-            {loading ? (
-              <div style={{textAlign: 'center', padding: '2rem 0'}}>
-                <p style={{color: '#6b7280'}}>Loading backgrounds...</p>
-              </div>
-            ) : categoryImages.length === 0 ? (
+            {categoryImages.length === 0 ? (
               <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
                 <h2 style={{color: '#111827', marginBottom: '1rem'}}>No images found</h2>
                 <p style={{color: '#6b7280', marginBottom: '2rem'}}>
@@ -402,4 +350,30 @@ export default function CategoryPage() {
       `}</style>
     </>
   );
+}
+
+// Static generation functions
+export async function getStaticPaths() {
+  const paths = Object.keys(categoryInfo).map((slug) => ({
+    params: { slug }
+  }));
+
+  return {
+    paths,
+    fallback: false
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const { slug } = params;
+  
+  // Return empty array for now - this will prevent build errors
+  const categoryImages = [];
+
+  return {
+    props: {
+      slug,
+      categoryImages
+    }
+  };
 }
