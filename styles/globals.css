@@ -717,10 +717,8 @@ article li {
 @media (min-width: 1200px) {
   .category-grid {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-    gap: 2.5rem !important;
-        display: grid !important;
-
-  }
+  gap: 2.5rem !important;
+ }
   
   .image-grid {
    grid-template-columns: repeat(2, 1fr) !important;
@@ -754,11 +752,7 @@ article li {
     justify-items: center !important;
     padding: 0 0.5rem !important;
   }
-  
-  .image-card {
-    max-width: 300px !important;
-  }
-  
+
   div[style*="maxHeight: 70vh"] {
     max-height: 50vh !important;
   }
