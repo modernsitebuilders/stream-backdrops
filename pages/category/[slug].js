@@ -1,9 +1,32 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
 import Image from 'next/image';
+
+const categoryInfo = {
+  'home-offices': {
+    name: 'Home Offices',
+    description: 'Professional home office backgrounds perfect for remote work and video calls'
+  },
+  'executive-offices': {
+    name: 'Executive Offices', 
+    description: 'Luxury executive office backgrounds for leadership meetings and professional calls'
+  },
+  'minimalist': {
+    name: 'Minimalist',
+    description: 'Clean, minimalist backgrounds for modern professionals'
+  },
+  'lobbies': {
+    name: 'Lobbies',
+    description: 'Professional lobby backgrounds for corporate meetings and client calls'
+  },
+  'private-offices': {
+    name: 'Private Offices',
+    description: 'Elegant private office backgrounds for confidential meetings'
+  }
+};
 
 export default function CategoryPage() {
   const router = useRouter();
@@ -11,86 +34,48 @@ export default function CategoryPage() {
   const [imageMetadata, setImageMetadata] = useState({});
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [showImages, setShowImages] = useState(false);
-  const [error, setError] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  const category = categoryInfo[slug];
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const categoryInfo = useMemo(() => ({
-    'home-offices': {
-      name: 'Home Offices',
-      description: 'Professional home office backgrounds perfect for remote work and video calls'
-    },
-    'executive-offices': {
-      name: 'Executive Offices', 
-      description: 'Luxury executive office backgrounds for leadership meetings and professional calls'
-    },
-    'minimalist': {
-      name: 'Minimalist',
-      description: 'Clean, minimalist backgrounds for modern professionals'
-    },
-    'lobbies': {
-      name: 'Lobbies',
-      description: 'Professional lobby backgrounds for corporate meetings and client calls'
-    },
-    'private-offices': {
-      name: 'Private Offices',
-      description: 'Elegant private office backgrounds for confidential meetings'
-    }
-  }), []);
-
-  const category = categoryInfo[slug];
-
-  const loadMetadata = useCallback(async () => {
+  useEffect(() => {
     if (!slug || !mounted) return;
     
-    try {
-      setLoading(true);
-      setError(false);
-      
-      const response = await fetch('/data/image-metadata.json');
-      if (!response.ok) throw new Error('Failed to load metadata');
-      
-      const data = await response.json();
-      setImageMetadata(data);
-      
-      setTimeout(() => {
-        setShowImages(true);
+    const loadMetadata = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/data/image-metadata.json');
+        if (response.ok) {
+          const data = await response.json();
+          setImageMetadata(data);
+        }
         setLoading(false);
-      }, 300);
-    } catch (error) {
-      console.error('Error loading metadata:', error);
-      setError(true);
-      setLoading(false);
-    }
+      } catch (error) {
+        console.error('Error loading metadata:', error);
+        setLoading(false);
+      }
+    };
+
+    loadMetadata();
   }, [slug, mounted]);
 
-  useEffect(() => {
-    if (mounted && slug) {
-      loadMetadata();
-    }
-  }, [loadMetadata, mounted, slug]);
+  const categoryImages = Object.entries(imageMetadata)
+    .filter(([_, data]) => data.category === slug)
+    .map(([filename, data]) => ({
+      filename,
+      ...data,
+      key: filename
+    }))
+    .sort((a, b) => {
+      if (a.isPremium !== b.isPremium) return a.isPremium ? -1 : 1;
+      return a.filename.localeCompare(b.filename);
+    });
 
-  const categoryImages = useMemo(() => {
-    if (!imageMetadata || !slug) return [];
-    
-    return Object.entries(imageMetadata)
-      .filter(([_, data]) => data.category === slug)
-      .map(([filename, data]) => ({
-        filename,
-        ...data,
-        key: filename
-      }))
-      .sort((a, b) => {
-        if (a.isPremium !== b.isPremium) return a.isPremium ? -1 : 1;
-        return a.filename.localeCompare(b.filename);
-      });
-  }, [imageMetadata, slug]);
-
-  const handleDownload = useCallback((image) => {
+  const handleDownload = (image) => {
     if (!image) return;
     
     const downloadUrl = image.isPremium && image.gumroadPermalink
@@ -107,27 +92,10 @@ export default function CategoryPage() {
       link.click();
       document.body.removeChild(link);
     }
-  }, []);
+  };
 
   if (!mounted) {
-    return (
-      <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#f9fafb'
-      }}>
-        <div style={{
-          width: '24px',
-          height: '24px',
-          border: '2px solid #e5e7eb',
-          borderTop: '2px solid #2563eb',
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite'
-        }} />
-      </div>
-    );
+    return <div>Loading...</div>;
   }
 
   if (!category) {
@@ -232,44 +200,9 @@ export default function CategoryPage() {
 
         <main style={{padding: 'clamp(1rem, 3vw, 2rem)'}}>
           <div style={{maxWidth: '1400px', margin: '0 auto'}}>
-            {error ? (
-              <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
-                <h2 style={{color: '#111827', marginBottom: '1rem'}}>Unable to load backgrounds</h2>
-                <p style={{color: '#6b7280', marginBottom: '2rem'}}>There was an issue loading the images. Please try again.</p>
-                <button 
-                  onClick={() => {
-                    setError(false);
-                    setLoading(true);
-                    loadMetadata();
-                  }}
-                  style={{
-                    background: '#2563eb',
-                    color: 'white',
-                    padding: '0.75rem 1.5rem',
-                    borderRadius: '0.5rem',
-                    border: 'none',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    marginRight: '1rem'
-                  }}
-                >
-                  Try Again
-                </button>
-                <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>← Back to Home</Link>
-              </div>
-            ) : !showImages || loading ? (
+            {loading ? (
               <div style={{textAlign: 'center', padding: '2rem 0'}}>
-                <div style={{
-                  width: '24px',
-                  height: '24px',
-                  border: '2px solid #e5e7eb',
-                  borderTop: '2px solid #2563eb',
-                  borderRadius: '50%',
-                  animation: 'spin 1s linear infinite',
-                  margin: '0 auto'
-                }} />
-                <p style={{color: '#6b7280', marginTop: '1rem'}}>Loading backgrounds...</p>
+                <p style={{color: '#6b7280'}}>Loading backgrounds...</p>
               </div>
             ) : categoryImages.length === 0 ? (
               <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
