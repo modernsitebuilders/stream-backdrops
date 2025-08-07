@@ -2,66 +2,42 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Footer from '../components/Footer';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
 
 // FIXED categoryInfo with actual working images
 const categoryInfo = {
   'home-offices': {
     name: 'Home Offices',
     description: 'Professional home office backgrounds perfect for remote work and video calls',
-    image: 'contemporary-executive-home-office-5'
+    image: 'contemporary-executive-home-office-5',
+    count: '18'
   },
   'executive-offices': {
     name: 'Executive Offices',
     description: 'Luxury executive office backgrounds for leadership meetings and professional calls',
-    image: 'contemporary-executive-home-office-1'
+    image: 'contemporary-executive-home-office-1',
+    count: '25'
   },
   'lobbies': {
     name: 'Lobbies',
     description: 'Professional lobby backgrounds for client meetings and business calls',
-    image: 'corporate-lobby-with-reception-1'
+    image: 'corporate-lobby-with-reception-1',
+    count: '12'
   },
   'private-offices': {
     name: 'Private Offices',
     description: 'Specialized private office backgrounds for professional consultations and meetings',
-    image: 'professional-consultation-office-1'
+    image: 'professional-consultation-office-1',
+    count: '18'
   },
   'minimalist': {
     name: 'Minimalist',
     description: 'Clean, minimalist backgrounds for modern professionals',
-    image: 'minimalist-consultant-office-1'
+    image: 'minimalist-consultant-office-1',
+    count: '20'
   }
 };
 
 export default function Home() {
-  const [imageCounts, setImageCounts] = useState({});
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    
-    // Load image counts
-    const loadCounts = async () => {
-      try {
-        const response = await fetch('/data/image-metadata.json');
-        if (response.ok) {
-          const metadata = await response.json();
-          const counts = {};
-          
-          Object.values(metadata).forEach(item => {
-            counts[item.category] = (counts[item.category] || 0) + 1;
-          });
-          
-          setImageCounts(counts);
-        }
-      } catch (error) {
-        console.error('Error loading counts:', error);
-      }
-    };
-
-    loadCounts();
-  }, []);
-
   return (
     <>
       <Head>
@@ -154,37 +130,19 @@ export default function Home() {
                         {info.description}
                       </p>
                       
-                      {mounted && imageCounts[slug] && (
-                        <div style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          fontSize: '0.9rem'
-                        }}>
-                          <span style={{color: '#059669', fontWeight: '600'}}>
-                            {imageCounts[slug]} Free Backgrounds
-                          </span>
-                          <span style={{color: '#6b7280'}}>
-                            HD • Ready for video calls
-                          </span>
-                        </div>
-                      )}
-                      
-                      {!mounted && (
-                        <div style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          alignItems: 'center',
-                          fontSize: '0.9rem'
-                        }}>
-                          <span style={{color: '#059669', fontWeight: '600'}}>
-                            Free Backgrounds
-                          </span>
-                          <span style={{color: '#6b7280'}}>
-                            HD • Ready for video calls
-                          </span>
-                        </div>
-                      )}
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        fontSize: '0.9rem'
+                      }}>
+                        <span style={{color: '#059669', fontWeight: '600'}}>
+                          {info.count} Free Backgrounds
+                        </span>
+                        <span style={{color: '#6b7280'}}>
+                          HD • Ready for video calls
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </Link>
