@@ -1,5 +1,3 @@
-// UPDATE pages/premium.js - Fix static pricing section to $7.99
-
 import Head from 'next/head';
 import Link from 'next/link';
 import Footer from '../components/Footer';
