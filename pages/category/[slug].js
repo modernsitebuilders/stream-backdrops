@@ -220,7 +220,7 @@ export default function CategoryPage({ slug }) {
                     onClick={() => setSelectedImage(image)}
                     style={{cursor: 'pointer'}}
                   >
-                    <div style={{position: 'relative', height: '200px'}}>
+                   <div style={{position: 'relative', aspectRatio: '16/9', width: '100%'}}>
                       <Image
                         src={`/images/${image.filename}`}
                         alt={image.title || `${category.name} background ${index + 1}`}

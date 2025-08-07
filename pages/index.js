@@ -96,11 +96,12 @@ export default function Home() {
                 >
                   <div>
                     <div style={{
-                      position: 'relative',
-                      height: 'clamp(200px, 25vw, 280px)',
-                      overflow: 'hidden',
-                      background: '#f3f4f6'
-                    }}>
+  position: 'relative',
+  width: '100%',
+  aspectRatio: '16/9',
+  overflow: 'hidden',
+  background: '#f3f4f6'
+}}>
                       <Image
                         src={`/images/${info.image}.webp`}
                         alt={info.name}
