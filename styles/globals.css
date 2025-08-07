@@ -686,7 +686,7 @@ article li {
 /* Desktop */
 @media (min-width: 1024px) {
   .category-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
     gap: 2rem !important;
     padding: 2rem !important;
   }
@@ -709,7 +709,7 @@ article li {
 /* Large Desktop */
 @media (min-width: 1200px) {
   .category-grid {
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
     gap: 2.5rem !important;
   }
   
