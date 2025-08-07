@@ -3,37 +3,32 @@ import Link from 'next/link';
 import Footer from '../components/Footer';
 import Image from 'next/image';
 
-// FIXED categoryInfo with actual working images
+// WORKING IMAGES - Replace your categoryInfo with this
 const categoryInfo = {
   'home-offices': {
     name: 'Home Offices',
     description: 'Professional home office backgrounds perfect for remote work and video calls',
-    image: 'contemporary-executive-home-office-5',
-    count: '18'
+    image: 'scandinavian-home-office-1'  // This image exists
   },
   'executive-offices': {
     name: 'Executive Offices',
     description: 'Luxury executive office backgrounds for leadership meetings and professional calls',
-    image: 'contemporary-executive-home-office-1',
-    count: '25'
-  },
-  'lobbies': {
-    name: 'Lobbies',
-    description: 'Professional lobby backgrounds for client meetings and business calls',
-    image: 'corporate-lobby-with-reception-1',
-    count: '12'
-  },
-  'private-offices': {
-    name: 'Private Offices',
-    description: 'Specialized private office backgrounds for professional consultations and meetings',
-    image: 'professional-consultation-office-1',
-    count: '18'
+    image: 'luxury-ceo-corner-office-4'  // This image exists
   },
   'minimalist': {
     name: 'Minimalist',
     description: 'Clean, minimalist backgrounds for modern professionals',
-    image: 'minimalist-consultant-office-1',
-    count: '20'
+    image: 'minimalist-consultant-office-1'  // This image exists
+  },
+  'lobbies': {
+    name: 'Lobbies',
+    description: 'Professional lobby backgrounds for corporate meetings and client calls',
+    image: 'corporate-lobby-with-reception-1'  // This image exists
+  },
+  'private-offices': {
+    name: 'Private Offices',
+    description: 'Elegant private office backgrounds for confidential meetings',
+    image: 'professional-consultation-office-1'  // This image exists
   }
 };
 
@@ -79,6 +74,86 @@ export default function Home() {
           }}>
             Each category features carefully curated backgrounds optimized for video calls
           </p>
+          <nav style={{
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  gap: '1rem',
+  marginTop: '2rem'
+}}>
+  <Link href="/category/home-offices" style={{
+    padding: '0.5rem 1rem',
+    borderRadius: '0.5rem',
+    textDecoration: 'none',
+    color: 'white',
+    fontWeight: '500',
+    fontSize: '0.9rem',
+    background: 'rgba(255, 255, 255, 0.2)'
+  }}>
+    Home Offices
+  </Link>
+  
+  <Link href="/category/executive-offices" style={{
+    padding: '0.5rem 1rem',
+    borderRadius: '0.5rem',
+    textDecoration: 'none',
+    color: 'white',
+    fontWeight: '500',
+    fontSize: '0.9rem',
+    background: 'rgba(255, 255, 255, 0.2)'
+  }}>
+    Executive Offices
+  </Link>
+  
+  <Link href="/category/minimalist" style={{
+    padding: '0.5rem 1rem',
+    borderRadius: '0.5rem',
+    textDecoration: 'none',
+    color: 'white',
+    fontWeight: '500',
+    fontSize: '0.9rem',
+    background: 'rgba(255, 255, 255, 0.2)'
+  }}>
+    Minimalist
+  </Link>
+  
+  <Link href="/category/lobbies" style={{
+    padding: '0.5rem 1rem',
+    borderRadius: '0.5rem',
+    textDecoration: 'none',
+    color: 'white',
+    fontWeight: '500',
+    fontSize: '0.9rem',
+    background: 'rgba(255, 255, 255, 0.2)'
+  }}>
+    Lobbies
+  </Link>
+  
+  <Link href="/category/private-offices" style={{
+    padding: '0.5rem 1rem',
+    borderRadius: '0.5rem',
+    textDecoration: 'none',
+    color: 'white',
+    fontWeight: '500',
+    fontSize: '0.9rem',
+    background: 'rgba(255, 255, 255, 0.2)'
+  }}>
+    Private Offices
+  </Link>
+  
+  <Link href="/premium" style={{
+    padding: '0.5rem 1rem',
+    borderRadius: '0.5rem',
+    textDecoration: 'none',
+    color: 'white',
+    fontWeight: '600',
+    fontSize: '0.9rem',
+    background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+    boxShadow: '0 4px 12px rgba(251, 191, 36, 0.3)'
+  }}>
+    ✨ Premium 4K
+  </Link>
+</nav>
         </header>
 
         {/* Categories Grid */}
