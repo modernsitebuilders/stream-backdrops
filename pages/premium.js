@@ -8,39 +8,164 @@ export default function Premium() {
       <Head>
         <title>Premium 4K Virtual Backgrounds - StreamBackdrops</title>
         <meta name="description" content="Premium 4K virtual backgrounds for professionals" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div style={{minHeight: '100vh', background: '#f9fafb'}}>
+      <div style={{
+        minHeight: '100vh', 
+        background: '#f9fafb',
+        width: '100%',
+        overflowX: 'hidden'
+      }}>
         <header style={{
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white',
           textAlign: 'center',
-          padding: '4rem 2rem'
+          padding: '4rem 2rem',
+          width: '100%',
+          boxSizing: 'border-box'
         }}>
-          <h1 style={{fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem'}}>
-            Premium 4K Collection
-          </h1>
-          <p style={{fontSize: '1.25rem', opacity: 0.9}}>
-            Ultra high-resolution backgrounds for professionals
-          </p>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            width: '100%'
+          }}>
+            <h1 style={{
+              fontSize: 'clamp(2rem, 5vw, 3rem)',
+              fontWeight: 'bold',
+              marginBottom: '1rem',
+              lineHeight: '1.2'
+            }}>
+              Premium 4K Collection
+            </h1>
+            <p style={{
+              fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+              opacity: 0.9,
+              maxWidth: '600px',
+              margin: '0 auto'
+            }}>
+              Ultra high-resolution backgrounds for professionals
+            </p>
+          </div>
         </header>
 
-        <main style={{padding: '2rem'}}>
-          <div style={{maxWidth: '1200px', margin: '0 auto', textAlign: 'center'}}>
-            <h2 style={{fontSize: '2rem', marginBottom: '2rem'}}>Coming Soon</h2>
-            <p style={{fontSize: '1.1rem', color: '#6b7280', marginBottom: '2rem'}}>
-              Premium 4K backgrounds are being prepared for launch
-            </p>
-            <Link href="/" style={{
-              background: '#2563eb',
-              color: 'white',
-              padding: '1rem 2rem',
-              borderRadius: '0.5rem',
-              textDecoration: 'none',
-              fontWeight: '600'
+        <main style={{
+          padding: '4rem 2rem',
+          width: '100%',
+          boxSizing: 'border-box'
+        }}>
+          <div style={{
+            maxWidth: '800px',
+            margin: '0 auto',
+            textAlign: 'center',
+            width: '100%'
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+              marginBottom: '2rem',
+              color: '#111827'
             }}>
-              Browse Free Backgrounds
-            </Link>
+              Coming Soon
+            </h2>
+            
+            <div style={{
+              background: 'white',
+              padding: '3rem 2rem',
+              borderRadius: '1rem',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+              marginBottom: '3rem'
+            }}>
+              <div style={{
+                fontSize: '4rem',
+                marginBottom: '1rem'
+              }}>
+                ✨
+              </div>
+              
+              <p style={{
+                fontSize: '1.1rem',
+                color: '#6b7280',
+                marginBottom: '2rem',
+                lineHeight: '1.6'
+              }}>
+                Premium 4K backgrounds are being prepared for launch. Get ready for ultra high-resolution virtual backgrounds with exclusive designs, enhanced details, and professional licensing.
+              </p>
+              
+              <div style={{
+                background: '#f3f4f6',
+                padding: '1.5rem',
+                borderRadius: '0.5rem',
+                marginBottom: '2rem'
+              }}>
+                <h3 style={{
+                  fontSize: '1.2rem',
+                  fontWeight: '600',
+                  marginBottom: '1rem',
+                  color: '#374151'
+                }}>
+                  What to expect:
+                </h3>
+                <ul style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: 0,
+                  textAlign: 'left',
+                  maxWidth: '400px',
+                  margin: '0 auto'
+                }}>
+                  <li style={{marginBottom: '0.5rem', color: '#6b7280'}}>
+                    🎯 4K resolution (3840×2160)
+                  </li>
+                  <li style={{marginBottom: '0.5rem', color: '#6b7280'}}>
+                    🏢 Exclusive professional designs
+                  </li>
+                  <li style={{marginBottom: '0.5rem', color: '#6b7280'}}>
+                    📄 Commercial usage rights
+                  </li>
+                  <li style={{marginBottom: '0.5rem', color: '#6b7280'}}>
+                    ⚡ Instant download access
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div style={{
+              display: 'flex',
+              gap: '1rem',
+              justifyContent: 'center',
+              flexWrap: 'wrap'
+            }}>
+              <Link href="/" style={{
+                background: '#2563eb',
+                color: 'white',
+                padding: '1rem 2rem',
+                borderRadius: '0.5rem',
+                textDecoration: 'none',
+                fontWeight: '600',
+                fontSize: '1rem',
+                transition: 'all 0.2s ease',
+                display: 'inline-block',
+                minWidth: '200px'
+              }}>
+                Browse Free Backgrounds
+              </Link>
+              
+              <Link href="/contact" style={{
+                background: 'transparent',
+                color: '#2563eb',
+                padding: '1rem 2rem',
+                borderRadius: '0.5rem',
+                textDecoration: 'none',
+                fontWeight: '600',
+                fontSize: '1rem',
+                border: '2px solid #2563eb',
+                transition: 'all 0.2s ease',
+                display: 'inline-block',
+                minWidth: '200px'
+              }}>
+                Get Notified
+              </Link>
+            </div>
           </div>
         </main>
 

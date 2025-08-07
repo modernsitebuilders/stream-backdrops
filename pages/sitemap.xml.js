@@ -24,6 +24,12 @@ function generateSiteMap() {
        <priority>0.8</priority>
      </url>
      <url>
+       <loc>https://streambackdrops.com/premium</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.9</priority>
+     </url>
+     <url>
        <loc>https://streambackdrops.com/privacy</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>yearly</changefreq>
@@ -50,13 +56,7 @@ function generateSiteMap() {
        <priority>0.9</priority>
      </url>
      <url>
-       <loc>https://streambackdrops.com/category/conference-rooms</loc>
-       <lastmod>${new Date().toISOString()}</lastmod>
-       <changefreq>weekly</changefreq>
-       <priority>0.9</priority>
-     </url>
-     <url>
-       <loc>https://streambackdrops.com/category/open-offices</loc>
+       <loc>https://streambackdrops.com/category/minimalist</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.9</priority>
@@ -73,64 +73,7 @@ function generateSiteMap() {
        <changefreq>weekly</changefreq>
        <priority>0.9</priority>
      </url>
-     <url>
-       <loc>https://streambackdrops.com/category/premium-4k</loc>
-       <lastmod>${new Date().toISOString()}</lastmod>
-       <changefreq>weekly</changefreq>
-       <priority>0.9</priority>
-     </url>
-     
-     <!-- Blog Posts (only the working ones) -->
-     <url>
-  <loc>https://streambackdrops.com/blog</loc>
-  <lastmod>${new Date().toISOString()}</lastmod>
-  <changefreq>weekly</changefreq>
-  <priority>0.8</priority>
-</url>
-<url>
-  <loc>https://streambackdrops.com/blog-backgrounds-by-industry</loc>
-  <lastmod>${new Date().toISOString()}</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://streambackdrops.com/blog-background-mistakes</loc>
-  <lastmod>${new Date().toISOString()}</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://streambackdrops.com/blog-zoom-teams-google</loc>
-  <lastmod>${new Date().toISOString()}</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
-     <url>
-       <loc>https://streambackdrops.com/blog-professional-video-calls</loc>
-       <lastmod>${new Date().toISOString()}</lastmod>
-       <changefreq>monthly</changefreq>
-       <priority>0.8</priority>
-     </url>
-     <url>
-       <loc>https://streambackdrops.com/blog-lighting-tips</loc>
-       <lastmod>${new Date().toISOString()}</lastmod>
-       <changefreq>monthly</changefreq>
-       <priority>0.8</priority>
-     </url>
-     <url>
-       <loc>https://streambackdrops.com/blog-remote-work-productivity</loc>
-       <lastmod>${new Date().toISOString()}</lastmod>
-       <changefreq>monthly</changefreq>
-       <priority>0.8</priority>
-     </url>
-     <url>
-       <loc>https://streambackdrops.com/blog-virtual-background-guide</loc>
-       <lastmod>${new Date().toISOString()}</lastmod>
-       <changefreq>monthly</changefreq>
-       <priority>0.8</priority>
-     </url>
-   </urlset>
- `;
+   </urlset>`;
 }
 
 function SiteMap() {
@@ -138,16 +81,21 @@ function SiteMap() {
 }
 
 export async function getServerSideProps({ res }) {
-  // Generate the XML sitemap
+  // Generate the XML sitemap with the posts data
   const sitemap = generateSiteMap();
 
-  res.setHeader('Content-Type', 'text/xml');
-  res.write(sitemap);
-  res.end();
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=86400, stale-while-revalidate'
+  )
+  res.setHeader('Content-Type', 'text/xml')
+  // Send the XML to the browser
+  res.write(sitemap)
+  res.end()
 
   return {
     props: {},
-  };
+  }
 }
 
-export default SiteMap;
+export default SiteMap
