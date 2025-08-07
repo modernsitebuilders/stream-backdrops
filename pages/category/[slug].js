@@ -61,7 +61,7 @@ export default function CategoryPage({ slug }) {
   }, [slug, mounted]);
 
   const categoryImages = Object.entries(imageMetadata)
-    .filter(([_, data]) => data.category === slug)
+  .filter(([_, data]) => data.category === slug && !data.isPremium)  // ONLY FREE IMAGES
     .map(([filename, data]) => ({
       filename,
       ...data,
@@ -227,7 +227,7 @@ export default function CategoryPage({ slug }) {
                     className="image-card"
                     style={{}}
                   >
-                    <div style={{position: 'relative', aspectRatio: '16/9', width: '100%', maxHeight: '200px'}}>
+                    <div style={{position: 'relative', width: '100%', height: '200px', overflow: 'hidden'}}>
                       <Image
                         src={`/images/${image.filename}`}
                         alt={image.title || `${category.name} background ${index + 1}`}
