@@ -107,16 +107,16 @@ header {
 }
 
 .category-card {
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  border-radius: 0.75rem;
   overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  background: white;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-decoration: none;
   color: inherit;
   display: block;
-  min-height: 350px;
   contain: layout style paint;
+  height: fit-content; /* Remove fixed height */
 }
 
 .category-card:hover {
@@ -704,16 +704,13 @@ article li {
     padding: 20px;
   }
 
-  /* Bigger image cards on desktop */
-  .category-card,
-  .image-card {
-    min-height: 400px !important;
+  /* Remove fixed heights that cause blank areas */
+  .category-card {
+    height: auto !important; /* Let content determine height */
   }
   
-  /* Bigger image preview areas */
-  .category-card > div > div,
-  .image-card > div:first-child {
-    min-height: 280px !important;
+  .category-card > div > div {
+    aspect-ratio: 16/9 !important; /* Keep 16:9 images */
   }
 
   /* Blog specific desktop styles */
@@ -733,27 +730,25 @@ article li {
 /* Large Desktop */
 @media (min-width: 1200px) {
   .category-grid {
-    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)) !important;
     gap: 4rem !important;
   }
   
   .image-grid {
-    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)) !important;
     gap: 4rem !important;
   }
   
-  .category-card,
-  .image-card {
-    min-height: 600px !important;
+  .category-card {
+    height: auto !important; /* Remove fixed height */
   }
   
-  .category-card > div > div,
-  .image-card > div:first-child {
-    min-height: 400px !important;
+  .category-card > div > div {
+    aspect-ratio: 16/9 !important; /* Keep 16:9 images */
   }
 
   .premium-grid {
-    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)) !important;
     gap: 4rem !important;
   }
 }
