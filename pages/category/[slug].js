@@ -227,7 +227,7 @@ export default function CategoryPage({ slug }) {
                     className="image-card"
                     style={{}}
                   >
-                    <div style={{position: 'relative', aspectRatio: '16/9', width: '100%'}}>
+                    <div style={{position: 'relative', aspectRatio: '16/9', width: '100%', maxHeight: '200px'}}>
                       <Image
                         src={`/images/${image.filename}`}
                         alt={image.title || `${category.name} background ${index + 1}`}
@@ -264,40 +264,35 @@ export default function CategoryPage({ slug }) {
                         {image.title || `Professional ${category.name.slice(0, -1)} ${index + 1}`}
                       </h3>
                       
-// REPLACE the price display section with this:
-<div style={{
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginTop: '0.75rem'
-}}>
-  <span style={{
-    color: '#6b7280',
-    fontSize: '0.9rem'
-  }}>
-    {image.isPremium ? '4K Quality' : '2K Quality'}
-  </span>
-  
-  {/* ONLY show price for premium images */}
-  {image.isPremium ? (
-    <span style={{
-      fontWeight: 'bold',
-      color: '#f59e0b'
-    }}>
-      ${image.price || '9.99'}
-    </span>
-  ) : (
-    <span style={{
-      fontWeight: 'bold',
-      color: '#059669',
-      background: '#f0fdf4',
-      padding: '0.25rem 0.5rem',
-      borderRadius: '0.25rem'
-    }}>
-      FREE
-    </span>
-  )}
-</div>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginTop: '0.75rem'
+                      }}>
+                        <span style={{
+                          color: '#6b7280',
+                          fontSize: '0.9rem'
+                        }}>
+                          {image.isPremium ? '4K Quality' : '2K Quality'}
+                        </span>
+                        
+                        {image.isPremium ? (
+                          <span style={{
+                            fontWeight: 'bold',
+                            color: '#f59e0b'
+                          }}>
+                            ${image.price || '7.99'}
+                          </span>
+                        ) : (
+                          <span style={{
+                            fontWeight: 'bold',
+                            color: '#059669'
+                          }}>
+                            FREE
+                          </span>
+                        )}
+                      </div>
                       
                       <button
                         onClick={() => handleDownload(image)}
