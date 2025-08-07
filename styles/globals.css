@@ -1,5 +1,3 @@
-/* REPLACE your entire styles/globals.css with this cleaned version */
-
 /* ==============================================
    CRITICAL ABOVE-THE-FOLD STYLES - LOAD FIRST
    ============================================== */
@@ -691,13 +689,13 @@ article li {
 /* Desktop */
 @media (min-width: 1024px) {
   .category-grid {
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)) !important;
     gap: 3rem !important;
     padding: 3rem !important;
   }
   
   .image-grid {
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)) !important;
     gap: 3rem !important;
   }
   
@@ -705,16 +703,16 @@ article li {
     padding: 20px;
   }
 
-  /* Bigger image cards on desktop */
+  /* MUCH bigger image cards on desktop */
   .category-card,
   .image-card {
-    min-height: 400px !important;
+    min-height: 500px !important;
   }
   
-  /* Bigger image preview areas */
+  /* MUCH bigger image preview areas */
   .category-card > div > div,
   .image-card > div:first-child {
-    min-height: 280px !important;
+    min-height: 350px !important;
   }
 
   /* Blog specific desktop styles */
@@ -726,7 +724,7 @@ article li {
 
   /* Premium gallery larger images on desktop */
   .premium-grid {
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)) !important;
     gap: 3rem !important;
   }
 }
@@ -734,27 +732,27 @@ article li {
 /* Large Desktop */
 @media (min-width: 1200px) {
   .category-grid {
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)) !important;
     gap: 4rem !important;
   }
   
   .image-grid {
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)) !important;
     gap: 4rem !important;
   }
   
   .category-card,
   .image-card {
-    min-height: 450px !important;
+    min-height: 600px !important;
   }
   
   .category-card > div > div,
   .image-card > div:first-child {
-    min-height: 320px !important;
+    min-height: 400px !important;
   }
 
   .premium-grid {
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)) !important;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)) !important;
     gap: 4rem !important;
   }
 }

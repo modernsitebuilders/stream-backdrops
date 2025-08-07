@@ -1,5 +1,3 @@
-// REPLACE your pages/category/[slug].js to fix hard refresh errors completely
-
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -40,303 +38,170 @@ export default function CategoryPage({ slug: initialSlug }) {
     },
     'lobbies': {
       name: 'Lobbies',
-      description: 'Professional lobby backgrounds for client meetings and business calls'
+      description: 'Professional lobby backgrounds for corporate meetings and client calls'
     },
     'private-offices': {
       name: 'Private Offices',
-      description: 'Specialized private office backgrounds for professional consultations and meetings'
+      description: 'Elegant private office backgrounds for confidential meetings'
     }
   }), []);
 
-  // FIXED: Priority images with correct executive office order
-  const priorityImages = useMemo(() => ({
-    'home-offices': [
-      'clean-scandinavian-home-office-2',
-      'biophilic-home-office-with-plants-2',
-      'clean-modern-home-office-1',
-      'scandinavian-home-office-1',
-      'home-office-with-wood-accent-wall-1',
-      'cozy-professional-home-office-1'
-    ],
-    'executive-offices': [
-      'corner-office-with-city-views-1',        // FIRST as requested
-      'executive-office-with-dark-wood-1',      // SECOND as requested  
-      'executive-office-with-marble-wall-1',
-      'contemporary-executive-home-office-1',
-      'minimalist-executive-office-1'
-    ],
-    'private-offices': [
-      'private-office-with-bookshelf-1',
-      'professional-consultation-office-1',
-      'warm-therapy-office-1',
-      'contemporary-physicians-office-1',
-      'upscale-real-estate-office-1'
-    ],
-    'lobbies': [
-      'modern-glass-lobby-3',
-      'corporate-lobby-with-reception-1',
-      'modern-glass-lobby-1',
-      'modern-office-lobby-1'
-    ],
-    'minimalist': [
-      'minimalist-executive-office-1',
-      'minimalist-consultant-office-1',
-      'minimalist-medical-lobby-1',
-      'japandi-minimalist-home-office-1'
-    ]
-  }), []);
-
-  const categoryImages = useMemo(() => {
-    if (!imageMetadata || !currentSlug) return [];
-    
-    try {
-      const filtered = Object.entries(imageMetadata)
-        .filter(([_, data]) => {
-          if (!data || typeof data !== 'object') return false;
-          return data.category === currentSlug;
-        })
-        .map(([key, data]) => ({ key, ...data }));
-
-      const priorities = priorityImages[currentSlug] || [];
-      
-      return filtered.sort((a, b) => {
-        const aPriority = priorities.indexOf(a.key);
-        const bPriority = priorities.indexOf(b.key);
-        
-        if (aPriority !== -1 && bPriority !== -1) {
-          return aPriority - bPriority;
-        }
-        
-        if (aPriority !== -1) return -1;
-        if (bPriority !== -1) return 1;
-        
-        const titleA = a.title || '';
-        const titleB = b.title || '';
-        return titleA.localeCompare(titleB);
-      });
-    } catch (error) {
-      console.error('Error filtering images:', error);
-      return [];
-    }
-  }, [imageMetadata, currentSlug, priorityImages]);
+  const category = categoryInfo[currentSlug];
 
   const loadMetadata = useCallback(async () => {
     if (!currentSlug || !mounted) return;
     
     try {
+      setLoading(true);
       setError(false);
       
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
-      
-      const response = await fetch('/api/metadata', {
-        signal: controller.signal,
-        headers: { 
-          'Cache-Control': 'no-cache',
-          'Accept': 'application/json'
-        }
-      });
-      
-      clearTimeout(timeoutId);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      const response = await fetch('/data/image-metadata.json');
+      if (!response.ok) throw new Error('Failed to load metadata');
       
       const data = await response.json();
+      setImageMetadata(data);
       
-      if (typeof data === 'object' && data !== null) {
-        setImageMetadata(data);
-      } else {
-        console.warn('Invalid metadata format received');
-        setImageMetadata({});
-      }
+      setTimeout(() => {
+        setShowImages(true);
+        setLoading(false);
+      }, 300);
     } catch (error) {
-      console.error('Failed to load metadata:', error);
-      setImageMetadata({});
+      console.error('Error loading metadata:', error);
       setError(true);
-    } finally {
       setLoading(false);
-      setShowImages(true);
     }
   }, [currentSlug, mounted]);
 
   useEffect(() => {
-    if (currentSlug && mounted) {
-      const timer = setTimeout(loadMetadata, 100);
-      return () => clearTimeout(timer);
+    if (mounted && currentSlug) {
+      loadMetadata();
     }
-  }, [currentSlug, mounted, loadMetadata]);
+  }, [loadMetadata, mounted, currentSlug]);
 
-  const handleDownload = useCallback(async (image) => {
-    try {
-      const response = await fetch(`/images/${image.filename}`);
-      const blob = await response.blob();
-      
+  const categoryImages = useMemo(() => {
+    if (!imageMetadata || !currentSlug) return [];
+    
+    return Object.entries(imageMetadata)
+      .filter(([_, data]) => data.category === currentSlug)
+      .map(([filename, data]) => ({
+        filename,
+        ...data,
+        key: filename
+      }))
+      .sort((a, b) => {
+        if (a.isPremium !== b.isPremium) return a.isPremium ? -1 : 1;
+        return a.filename.localeCompare(b.filename);
+      });
+  }, [imageMetadata, currentSlug]);
+
+  const handleDownload = useCallback((image) => {
+    if (!image) return;
+    
+    const downloadUrl = image.isPremium && image.gumroadPermalink
+      ? image.gumroadPermalink
+      : `/images/${image.filename}`;
+    
+    if (image.isPremium && image.gumroadPermalink) {
+      window.open(downloadUrl, '_blank');
+    } else {
       const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = image.filename.replace('.webp', '.png');
+      link.href = downloadUrl;
+      link.download = image.filename;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      URL.revokeObjectURL(link.href);
-    } catch (error) {
-      console.error('Download failed:', error);
-      const link = document.createElement('a');
-      link.href = `/images/${image.filename}`;
-      link.download = image.filename;
-      link.click();
     }
   }, []);
 
-  const handlePreview = useCallback((image) => {
-    setSelectedImage(image);
-  }, []);
-
-  // Early return for invalid categories
-  if (mounted && currentSlug && !categoryInfo[currentSlug]) {
+  if (!mounted) {
     return (
-      <>
-        <Head>
-          <title>Category Not Found - StreamBackdrops</title>
-        </Head>
-        <div style={{textAlign: 'center', padding: '4rem 2rem', minHeight: '50vh'}}>
-          <h1 style={{color: '#111827', marginBottom: '1rem'}}>Category Not Found</h1>
-          <p style={{color: '#6b7280', marginBottom: '2rem'}}>The category you're looking for doesn't exist.</p>
-          <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>← Back to Home</Link>
-        </div>
-      </>
-    );
-  }
-
-  // Loading state while router initializes or during SSR
-  if (!mounted || !router.isReady || !currentSlug) {
-    return (
-      <>
-        <Head>
-          <title>Loading... - StreamBackdrops</title>
-        </Head>
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: '#f9fafb'
+      }}>
         <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minHeight: '50vh',
-          background: '#f9fafb'
-        }}>
-          <div style={{
-            width: '24px',
-            height: '24px',
-            border: '2px solid #e5e7eb',
-            borderTop: '2px solid #2563eb',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite'
-          }} />
-        </div>
-        <style jsx>{`
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}</style>
-      </>
+          width: '24px',
+          height: '24px',
+          border: '2px solid #e5e7eb',
+          borderTop: '2px solid #2563eb',
+          borderRadius: '50%',
+          animation: 'spin 1s linear infinite'
+        }} />
+      </div>
     );
   }
 
-  const category = categoryInfo[currentSlug];
+  if (!category) {
+    return (
+      <div style={{minHeight: '100vh', background: '#f9fafb'}}>
+        <Head>
+          <title>Category Not Found - Virtual Backgrounds</title>
+        </Head>
+        <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
+          <h1>Category Not Found</h1>
+          <p style={{color: '#6b7280', marginBottom: '2rem'}}>
+            The category you're looking for doesn't exist.
+          </p>
+          <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>
+            ← Back to Home
+          </Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <>
       <Head>
-        <title>{category.name} Virtual Backgrounds - StreamBackdrops</title>
-        <meta name="description" content={`Download ${category.description.toLowerCase()}.`} />
+        <title>{category.name} Virtual Backgrounds - Free Download</title>
+        <meta name="description" content={category.description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div data-mounted={mounted}>
-        {/* HEADER WITH CLICKABLE LOGO */}
-        <header>
-          <div className="container">
-            {/* CLICKABLE LOGO - FIXED */}
-            <Link 
-              href="/" 
-              style={{
-                textDecoration: 'none',
-                display: 'inline-block',
-                marginBottom: '1rem'
-              }}
-            >
-              <h1 style={{
-                fontSize: 'clamp(2rem, 4vw, 3rem)',
-                fontWeight: 'bold',
-                color: '#111827',
-                cursor: 'pointer'
-              }}>
-                Stream<span className="logo-blue">Backdrops</span>
-              </h1>
+      <div style={{minHeight: '100vh', background: '#f9fafb'}}>
+        <header style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
+          textAlign: 'center',
+          padding: '4rem 2rem'
+        }}>
+          <div style={{maxWidth: '1200px', margin: '0 auto'}}>
+            <Link href="/" style={{
+              color: 'white',
+              textDecoration: 'none',
+              fontSize: '0.9rem',
+              opacity: '0.9',
+              marginBottom: '1rem',
+              display: 'inline-block'
+            }}>
+              ← Back to All Categories
             </Link>
             
-            <p className="subtitle">{category.name}</p>
-            <p className="description">
-              {category.description} • <span style={{
-                background: '#16a34a',
-                color: 'white',
-                padding: '0.25rem 0.75rem',
-                borderRadius: '1rem',
-                fontWeight: 'bold',
-                fontSize: '1rem'
-              }}>FREE</span> downloads • Perfect for Zoom, Teams & more
-            </p>
-            
-            {/* Category Navigation */}
-            <nav style={{
-              display: 'flex',
-              gap: '0.5rem',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              marginTop: '1.5rem',
-              paddingBottom: '0.5rem'
+            <h1 style={{
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              fontWeight: 'bold',
+              marginBottom: '1rem'
             }}>
-              {Object.entries(categoryInfo).map(([key, info]) => (
-                <Link 
-                  key={key} 
-                  href={`/category/${key}`}
-                  style={{
-                    padding: '0.5rem 1rem',
-                    background: key === currentSlug ? '#2563eb' : 'white',
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '1rem',
-                    color: key === currentSlug ? 'white' : '#6b7280',
-                    textDecoration: 'none',
-                    fontSize: '0.9rem',
-                    fontWeight: '600'
-                  }}
-                >
-                  {info.name}
-                </Link>
-              ))}
-              
-              <Link 
-                href="/premium"
-                style={{
-                  padding: '0.5rem 1rem',
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '1rem',
-                  textDecoration: 'none',
-                  fontSize: '0.9rem',
-                  fontWeight: '600'
-                }}
-              >
-                ✨ Premium 4K
-              </Link>
-            </nav>
+              {category.name}
+            </h1>
+            
+            <p style={{
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+              opacity: '0.9',
+              maxWidth: '600px',
+              margin: '0 auto'
+            }}>
+              {category.description}
+            </p>
           </div>
         </header>
 
-        {/* IMAGES SECTION */}
-        <section style={{padding: '1.5rem 0'}}>
-          <div className="container">
+        <main style={{padding: 'clamp(1rem, 3vw, 2rem)'}}>
+          <div style={{maxWidth: '1400px', margin: '0 auto'}}>
             {error ? (
               <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
                 <h2 style={{color: '#111827', marginBottom: '1rem'}}>Unable to load backgrounds</h2>
@@ -377,114 +242,93 @@ export default function CategoryPage({ slug: initialSlug }) {
                 <p style={{color: '#6b7280', marginTop: '1rem'}}>Loading backgrounds...</p>
               </div>
             ) : categoryImages.length === 0 ? (
-              <div style={{textAlign: 'center', padding: '3rem 0'}}>
-                <p style={{color: '#6b7280', marginBottom: '1rem'}}>No backgrounds available yet.</p>
-                <p style={{color: '#6b7280', marginBottom: '2rem'}}>Check back soon or browse other categories.</p>
-                <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>← Back to Home</Link>
+              <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
+                <h2 style={{color: '#111827', marginBottom: '1rem'}}>No images found</h2>
+                <p style={{color: '#6b7280', marginBottom: '2rem'}}>
+                  No images are available for this category yet.
+                </p>
+                <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>
+                  ← Browse Other Categories
+                </Link>
               </div>
             ) : (
-              <div className="category-grid">
+              <div className="image-grid" style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+                gap: '2rem',
+                padding: '1rem 0'
+              }}>
                 {categoryImages.map((image, index) => (
-                  <div key={image.key} style={{
-                    background: 'white',
-                    borderRadius: '1rem',
-                    boxShadow: '0 6px 12px rgba(0,0,0,0.15)',
-                    overflow: 'hidden',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    minHeight: '350px'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (window.innerWidth > 768) {
-                      e.currentTarget.style.transform = 'translateY(-8px)';
-                      e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.2)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (window.innerWidth > 768) {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
-                    }
-                  }}
+                  <div
+                    key={image.key}
+                    className="image-card"
+                    onClick={() => setSelectedImage(image)}
+                    style={{
+                      background: 'white',
+                      borderRadius: '1rem',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                      overflow: 'hidden',
+                      cursor: 'pointer',
+                      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                      position: 'relative'
+                    }}
                   >
-                    <div style={{position: 'relative', height: '250px', overflow: 'hidden', borderRadius: '1rem 1rem 0 0'}}>
+                    <div style={{position: 'relative', height: '250px'}}>
                       <Image
                         src={`/images/${image.filename}`}
-                        alt={image.alt || image.title || 'Virtual background'}
-                        width={400}
-                        height={225}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover'
-                        }}
-                        loading="lazy"
-                        quality={60}
+                        alt={image.title || `${category.name} background ${index + 1}`}
+                        fill
+                        style={{objectFit: 'cover'}}
+                        loading={index < 6 ? 'eager' : 'lazy'}
+                        priority={index < 3}
                       />
+                      {image.isPremium && (
+                        <div style={{
+                          position: 'absolute',
+                          top: '0.5rem',
+                          right: '0.5rem',
+                          background: 'linear-gradient(45deg, #fbbf24, #f59e0b)',
+                          color: 'white',
+                          padding: '0.25rem 0.5rem',
+                          borderRadius: '0.5rem',
+                          fontSize: '0.75rem',
+                          fontWeight: 'bold',
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                        }}>
+                          4K Premium
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div style={{padding: '1rem'}}>
+                      <h3 style={{
+                        fontSize: '1.1rem',
+                        fontWeight: '600',
+                        color: '#111827',
+                        marginBottom: '0.5rem'
+                      }}>
+                        {image.title || `Professional ${category.name.slice(0, -1)} ${index + 1}`}
+                      </h3>
                       
                       <div style={{
-                        position: 'absolute',
-                        bottom: '0.5rem',
-                        left: '0.5rem',
-                        right: '0.5rem',
                         display: 'flex',
-                        gap: '0.5rem'
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginTop: '0.75rem'
                       }}>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handlePreview(image);
-                          }}
-                          style={{
-                            background: 'rgba(255, 255, 255, 0.9)',
-                            color: '#374151',
-                            padding: '0.5rem',
-                            border: 'none',
-                            borderRadius: '0.5rem',
-                            fontSize: '0.75rem',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                            minHeight: '36px',
-                            flex: 1
-                          }}
-                        >
-                          👁️ Preview
-                        </button>
+                        <span style={{
+                          color: '#6b7280',
+                          fontSize: '0.9rem'
+                        }}>
+                          {image.isPremium ? '4K Quality' : '2K Quality'}
+                        </span>
                         
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDownload(image);
-                          }}
-                          style={{
-                            background: '#2563eb',
-                            color: 'white',
-                            padding: '0.5rem',
-                            border: 'none',
-                            borderRadius: '0.5rem',
-                            fontSize: '0.75rem',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                            minHeight: '36px',
-                            flex: 1
-                          }}
-                        >
-                          📥 Download
-                        </button>
-                      </div>
-                    </div>
-
-                    <div style={{padding: '1.5rem'}}>
-                      <h3 style={{fontSize: '1.25rem', fontWeight: 'bold', color: '#111827', marginBottom: '0.5rem'}}>
-                        {image.title || 'Virtual Background'}
-                      </h3>
-                      <p style={{color: '#6b7280', marginBottom: '1rem'}}>
-                        {image.description || 'Professional virtual background'}
-                      </p>
-                      
-                      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                        <div style={{color: '#2563eb', fontWeight: '600', display: 'flex', alignItems: 'center'}}>
-                          <span>Free Download</span>
-                        </div>
+                        <span style={{
+                          fontWeight: 'bold',
+                          color: image.isPremium ? '#f59e0b' : '#059669'
+                        }}>
+                          {image.isPremium ? `$${image.price || '9.99'}` : 'Free'}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -492,76 +336,74 @@ export default function CategoryPage({ slug: initialSlug }) {
               </div>
             )}
           </div>
-        </section>
+        </main>
 
-        {/* MODAL */}
         {selectedImage && (
-          <div 
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100vw',
-              height: '100vh',
-              backgroundColor: 'rgba(0, 0, 0, 0.9)',
-              zIndex: 9999,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1rem'
-            }}
-            onClick={() => setSelectedImage(null)}
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 99999,
+            padding: '1rem'
+          }}
+          onClick={() => setSelectedImage(null)}
           >
-            <div 
-              style={{
-                backgroundColor: 'white',
-                borderRadius: '8px',
-                padding: '1rem',
-                maxWidth: '95vw',
-                maxHeight: '90vh',
-                position: 'relative'
-              }}
-              onClick={(e) => e.stopPropagation()}
+            <div style={{
+              background: 'white',
+              borderRadius: '1rem',
+              overflow: 'hidden',
+              maxWidth: '90vw',
+              maxHeight: '90vh',
+              position: 'relative'
+            }}
+            onClick={(e) => e.stopPropagation()}
             >
-              <button
-                onClick={() => setSelectedImage(null)}
-                style={{
-                  position: 'absolute',
-                  top: '0.5rem',
-                  right: '0.5rem',
-                  background: 'none',
-                  border: 'none',
-                  fontSize: '18px',
-                  cursor: 'pointer',
-                  width: '32px',
-                  height: '32px'
-                }}
-              >
-                ✕
-              </button>
+              <div style={{position: 'relative', maxHeight: '70vh', overflow: 'hidden'}}>
+                <Image
+                  src={`/images/${selectedImage.filename}`}
+                  alt={selectedImage.title || 'Background preview'}
+                  width={800}
+                  height={450}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: '70vh',
+                    objectFit: 'contain'
+                  }}
+                />
+              </div>
               
-              <h3 style={{marginBottom: '0.75rem', paddingRight: '2rem', fontSize: '1rem', fontWeight: '600'}}>
-                {selectedImage.title || 'Preview'}
-              </h3>
+              <div style={{padding: '1.5rem'}}>
+                <h3 style={{
+                  fontSize: '1.25rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '0.5rem'
+                }}>
+                  {selectedImage.title || 'Professional Background'}
+                </h3>
+                
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  {selectedImage.isPremium ? '4K Premium Quality' : '2K Free Quality'} • 
+                  Perfect for video calls and streaming
+                </p>
+                
+                <div style={{color: '#059669', fontWeight: 'bold', marginBottom: '1rem'}}>
+                  {selectedImage.isPremium ? `$${selectedImage.price || '9.99'}` : 'Free Download'}
+                </div>
+              </div>
               
-              <Image
-                src={`/images/${selectedImage.filename}`}
-                alt={selectedImage.alt || 'Preview'}
-                width={500}
-                height={281}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  maxHeight: '50vh',
-                  objectFit: 'contain',
-                  borderRadius: '4px',
-                  marginBottom: '0.75rem'
-                }}
-                priority
-                quality={85}
-              />
-              
-              <div style={{display: 'flex', gap: '0.75rem'}}>
+              <div style={{
+                padding: '0 1.5rem 1.5rem',
+                display: 'flex',
+                gap: '0.75rem'
+              }}>
                 <button
                   onClick={() => handleDownload(selectedImage)}
                   style={{
