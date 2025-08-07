@@ -30,7 +30,6 @@ const categoryInfo = {
 export default function CategoryPage({ slug }) {
   const [imageMetadata, setImageMetadata] = useState({});
   const [loading, setLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState(null);
   const [mounted, setMounted] = useState(false);
 
   const category = categoryInfo[slug];
@@ -60,18 +59,25 @@ export default function CategoryPage({ slug }) {
     loadMetadata();
   }, [slug, mounted]);
 
-  const categoryImages = Object.entries(imageMetadata)
-    .filter(([_, data]) => data.category === slug)
-    .map(([filename, data]) => ({
-      filename,
-      ...data,
-      key: filename
-    }))
-    .sort((a, b) => {
-      if (a.isPremium !== b.isPremium) return a.isPremium ? -1 : 1;
-      return a.filename.localeCompare(b.filename);
-    });
-
+const categoryImages = Object.entries(imageMetadata)
+  .filter(([_, data]) => data.category === slug)
+  .map(([filename, data]) => ({
+    filename,
+    ...data,
+    key: filename
+  }))
+  .sort((a, b) => {
+    // First sort by priority (wood accent images first)
+    if (a.sortPriority && !b.sortPriority) return -1;
+    if (!a.sortPriority && b.sortPriority) return 1;
+    if (a.sortPriority && b.sortPriority) return a.sortPriority - b.sortPriority;
+    
+    // Then by premium status
+    if (a.isPremium !== b.isPremium) return a.isPremium ? -1 : 1;
+    
+    // Finally by filename
+    return a.filename.localeCompare(b.filename);
+  });
   const handleDownload = (image) => {
     if (!image) return;
     
@@ -215,11 +221,10 @@ export default function CategoryPage({ slug }) {
               <div className="image-grid">
                 {categoryImages.map((image, index) => (
                   <div
-                    key={image.key}
-                    className="image-card"
-                    onClick={() => setSelectedImage(image)}
-                    style={{cursor: 'pointer'}}
-                  >
+  key={image.key}
+  className="image-card"
+  style={{}}
+>
                    <div style={{position: 'relative', aspectRatio: '16/9', width: '100%'}}>
                       <Image
                         src={`/images/${image.filename}`}
@@ -277,6 +282,24 @@ export default function CategoryPage({ slug }) {
                           {image.isPremium ? `$${image.price || '9.99'}` : 'Free'}
                         </span>
                       </div>
+                      
+                      <button
+                        onClick={() => handleDownload(image)}
+                        style={{
+                          width: '100%',
+                          backgroundColor: '#2563eb',
+                          color: 'white',
+                          border: 'none',
+                          padding: '0.75rem',
+                          borderRadius: '6px',
+                          fontSize: '0.9rem',
+                          cursor: 'pointer',
+                          fontWeight: '600',
+                          marginTop: '1rem'
+                        }}
+                      >
+                        📥 Download
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -284,109 +307,6 @@ export default function CategoryPage({ slug }) {
             )}
           </div>
         </main>
-
-        {selectedImage && (
-          <div style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'rgba(0, 0, 0, 0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 99999,
-            padding: '1rem'
-          }}
-          onClick={() => setSelectedImage(null)}
-          >
-            <div style={{
-              background: 'white',
-              borderRadius: '1rem',
-              overflow: 'hidden',
-              maxWidth: '90vw',
-              maxHeight: '90vh',
-              position: 'relative'
-            }}
-            onClick={(e) => e.stopPropagation()}
-            >
-              <div style={{position: 'relative', maxHeight: '70vh', overflow: 'hidden'}}>
-                <Image
-                  src={`/images/${selectedImage.filename}`}
-                  alt={selectedImage.title || 'Background preview'}
-                  width={800}
-                  height={450}
-                  style={{
-                    width: '100%',
-                    height: 'auto',
-                    maxHeight: '70vh',
-                    objectFit: 'contain'
-                  }}
-                />
-              </div>
-              
-              <div style={{padding: '1.5rem'}}>
-                <h3 style={{
-                  fontSize: '1.25rem',
-                  fontWeight: 'bold',
-                  color: '#111827',
-                  marginBottom: '0.5rem'
-                }}>
-                  {selectedImage.title || 'Professional Background'}
-                </h3>
-                
-                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
-                  {selectedImage.isPremium ? '4K Premium Quality' : '2K Free Quality'} • 
-                  Perfect for video calls and streaming
-                </p>
-                
-                <div style={{color: '#059669', fontWeight: 'bold', marginBottom: '1rem'}}>
-                  {selectedImage.isPremium ? `$${selectedImage.price || '9.99'}` : 'Free Download'}
-                </div>
-              </div>
-              
-              <div style={{
-                padding: '0 1.5rem 1.5rem',
-                display: 'flex',
-                gap: '0.75rem'
-              }}>
-                <button
-                  onClick={() => handleDownload(selectedImage)}
-                  style={{
-                    backgroundColor: '#2563eb',
-                    color: 'white',
-                    border: 'none',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '6px',
-                    fontSize: '0.9rem',
-                    cursor: 'pointer',
-                    fontWeight: '600',
-                    flex: 1
-                  }}
-                >
-                  📥 Download
-                </button>
-                
-                <button
-                  onClick={() => setSelectedImage(null)}
-                  style={{
-                    backgroundColor: '#f3f4f6',
-                    color: '#374151',
-                    border: 'none',
-                    padding: '0.5rem 1rem',
-                    borderRadius: '6px',
-                    fontSize: '0.9rem',
-                    cursor: 'pointer',
-                    fontWeight: '600'
-                  }}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
 
         <Footer />
       </div>

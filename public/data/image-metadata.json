@@ -324,7 +324,7 @@
   },
   "home-office-with-wood-accent-wall-1": {
     "filename": "home-office-with-wood-accent-wall-1.webp",
-    "title": "Minimalist Home Office With Wood Accent",
+    "title": "Minimalist Home Office With Wood Accent 1",
     "description": "Professional home office with wood accent wall virtual background perfect for remote work and video calls",
     "category": "minimalist",
     "keywords": [
@@ -337,11 +337,12 @@
       "office",
       "with"
     ],
-    "alt": "Home Office With Wood Accent Wall virtual background for professional video calls"
+    "alt": "Home Office With Wood Accent Wall virtual background for professional video calls",
+    "sortPriority": 1
   },
   "home-office-with-wood-accent-wall-2": {
     "filename": "home-office-with-wood-accent-wall-2.webp",
-    "title": "Minimalist Home Office With Wood Accent",
+    "title": "Minimalist Home Office With Wood Accent 2",
     "description": "Professional home office with wood accent wall virtual background perfect for remote work and video calls",
     "category": "minimalist",
     "keywords": [
@@ -354,11 +355,12 @@
       "office",
       "with"
     ],
-    "alt": "Home Office With Wood Accent Wall virtual background for professional video calls"
+    "alt": "Home Office With Wood Accent Wall virtual background for professional video calls",
+    "sortPriority": 2
   },
   "home-office-with-wood-accent-wall-3": {
     "filename": "home-office-with-wood-accent-wall-3.webp",
-    "title": "Minimalist Home Office With Wood Accent",
+    "title": "Minimalist Home Office With Wood Accent 3",
     "description": "Professional home office with wood accent wall virtual background perfect for remote work and video calls",
     "category": "minimalist",
     "keywords": [
@@ -371,7 +373,8 @@
       "office",
       "with"
     ],
-    "alt": "Home Office With Wood Accent Wall virtual background for professional video calls"
+    "alt": "Home Office With Wood Accent Wall virtual background for professional video calls",
+    "sortPriority": 3
   },
   "professional-consultation-office-1": {
     "filename": "professional-consultation-office-1.webp",
@@ -1266,7 +1269,7 @@
   },
   "premium-4k-scandinavian-home-office-with-wood-accent-5": {
     "filename": "premium-4k-scandinavian-home-office-with-wood-accent-5.webp",
-    "title": "Minimalist Scandinavian Home Office - Premium 4K",
+    "title": "Minimalist Home Office With Wood Accent 4",
     "description": "Ultra high-definition scandinavian home office with wood accent virtual background in stunning 4K quality. Perfect for executive video calls and professional remote work presentations.",
     "category": "minimalist",
     "keywords": [
@@ -1285,7 +1288,8 @@
     "isPremium": true,
     "price": "7.99",
     "resolution": "4K (3840x2160)",
-    "gumroadPermalink": "scandinavian-home-office-with-wood-accent-4k-premium"
+    "gumroadPermalink": "scandinavian-home-office-with-wood-accent-4k-premium",
+    "sortPriority": 4
   },
   "premium-4k-executive-office-with-marble-accent-wall-6": {
     "filename": "premium-4k-executive-office-with-marble-accent-wall-6.webp",
