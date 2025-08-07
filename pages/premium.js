@@ -18,29 +18,145 @@ export default function Premium() {
         overflowX: 'hidden'
       }}>
         <header style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white',
+          background: 'white',
+          borderBottom: '1px solid #e5e7eb',
+          padding: '2rem 0',
           textAlign: 'center',
-          padding: '4rem 2rem',
-          width: '100%',
-          boxSizing: 'border-box'
+          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
         }}>
-          <div style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
-            width: '100%'
-          }}>
+          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
+            <nav style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: '1rem',
+              marginBottom: '2rem'
+            }}>
+              <Link 
+                href="/" 
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#6b7280',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  transition: 'all 0.2s',
+                  background: '#f3f4f6'
+                }}
+              >
+                🏠 Home
+              </Link>
+              
+              <Link 
+                href="/category/home-offices"
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#6b7280',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  transition: 'all 0.2s',
+                  background: '#f3f4f6'
+                }}
+              >
+                Home Offices
+              </Link>
+              
+              <Link 
+                href="/category/executive-offices"
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#6b7280',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  transition: 'all 0.2s',
+                  background: '#f3f4f6'
+                }}
+              >
+                Executive Offices
+              </Link>
+              
+              <Link 
+                href="/category/minimalist"
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#6b7280',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  transition: 'all 0.2s',
+                  background: '#f3f4f6'
+                }}
+              >
+                Minimalist
+              </Link>
+              
+              <Link 
+                href="/category/lobbies"
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#6b7280',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  transition: 'all 0.2s',
+                  background: '#f3f4f6'
+                }}
+              >
+                Lobbies
+              </Link>
+              
+              <Link 
+                href="/category/private-offices"
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#6b7280',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  transition: 'all 0.2s',
+                  background: '#f3f4f6'
+                }}
+              >
+                Private Offices
+              </Link>
+              
+              <Link 
+                href="/premium"
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: 'white',
+                  fontWeight: '600',
+                  fontSize: '0.9rem',
+                  transition: 'all 0.2s',
+                  background: '#2563eb'
+                }}
+              >
+                ✨ Premium 4K
+              </Link>
+            </nav>
+            
             <h1 style={{
-              fontSize: 'clamp(2rem, 5vw, 3rem)',
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
               fontWeight: 'bold',
               marginBottom: '1rem',
-              lineHeight: '1.2'
+              color: '#111827'
             }}>
               Premium 4K Collection
             </h1>
+            
             <p style={{
-              fontSize: 'clamp(1rem, 2vw, 1.25rem)',
-              opacity: 0.9,
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+              color: '#6b7280',
               maxWidth: '600px',
               margin: '0 auto'
             }}>
@@ -114,7 +230,7 @@ export default function Premium() {
                   margin: '0 auto'
                 }}>
                   <li style={{marginBottom: '0.5rem', color: '#6b7280'}}>
-                    🎯 4K resolution (3840×2160)
+                    🎯 Ultra high-resolution 4K quality
                   </li>
                   <li style={{marginBottom: '0.5rem', color: '#6b7280'}}>
                     🏢 Exclusive professional designs
