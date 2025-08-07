@@ -227,7 +227,7 @@ export default function CategoryPage({ slug }) {
                     className="image-card"
                     style={{}}
                   >
-                  <div style={{position: 'relative', width: '100%', height: '225px', overflow: 'hidden'}}>
+ <div style={{position: 'relative', width: '100%', aspectRatio: '16/9', overflow: 'hidden'}}>
                       <Image
                         src={`/images/${image.filename}`}
                         alt={image.title || `${category.name} background ${index + 1}`}
