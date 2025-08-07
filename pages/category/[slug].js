@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Footer from '../../components/Footer';
@@ -27,7 +28,72 @@ const categoryInfo = {
 };
 
 export default function CategoryPage({ slug }) {
+  const [imageMetadata, setImageMetadata] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
   const category = categoryInfo[slug];
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted || !slug) return;
+    
+    const loadMetadata = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/data/image-metadata.json');
+        if (response.ok) {
+          const data = await response.json();
+          setImageMetadata(data);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error loading metadata:', error);
+        setLoading(false);
+      }
+    };
+
+    loadMetadata();
+  }, [slug, mounted]);
+
+  const categoryImages = Object.entries(imageMetadata)
+    .filter(([_, data]) => data.category === slug)
+    .map(([filename, data]) => ({
+      filename,
+      ...data,
+      key: filename
+    }))
+    .sort((a, b) => {
+      if (a.isPremium !== b.isPremium) return a.isPremium ? -1 : 1;
+      return a.filename.localeCompare(b.filename);
+    });
+
+  const handleDownload = (image) => {
+    if (!image) return;
+    
+    const downloadUrl = image.isPremium && image.gumroadPermalink
+      ? image.gumroadPermalink
+      : `/images/${image.filename}`;
+    
+    if (image.isPremium && image.gumroadPermalink) {
+      window.open(downloadUrl, '_blank');
+    } else {
+      const link = document.createElement('a');
+      link.href = downloadUrl;
+      link.download = image.filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
+  if (!mounted) {
+    return <div>Loading...</div>;
+  }
 
   if (!category) {
     return (
@@ -131,17 +197,196 @@ export default function CategoryPage({ slug }) {
 
         <main style={{padding: 'clamp(1rem, 3vw, 2rem)'}}>
           <div style={{maxWidth: '1400px', margin: '0 auto'}}>
-            <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
-              <h2 style={{color: '#111827', marginBottom: '1rem'}}>Loading backgrounds...</h2>
-              <p style={{color: '#6b7280', marginBottom: '2rem'}}>
-                Images are being loaded dynamically.
-              </p>
-              <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>
-                ← Back to Home
-              </Link>
-            </div>
+            {loading ? (
+              <div style={{textAlign: 'center', padding: '2rem 0'}}>
+                <p style={{color: '#6b7280'}}>Loading backgrounds...</p>
+              </div>
+            ) : categoryImages.length === 0 ? (
+              <div style={{textAlign: 'center', padding: '4rem 2rem'}}>
+                <h2 style={{color: '#111827', marginBottom: '1rem'}}>No images found</h2>
+                <p style={{color: '#6b7280', marginBottom: '2rem'}}>
+                  No images are available for this category yet.
+                </p>
+                <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>
+                  ← Browse Other Categories
+                </Link>
+              </div>
+            ) : (
+              <div className="image-grid">
+                {categoryImages.map((image, index) => (
+                  <div
+                    key={image.key}
+                    className="image-card"
+                    onClick={() => setSelectedImage(image)}
+                    style={{cursor: 'pointer'}}
+                  >
+                    <div style={{position: 'relative', height: '200px'}}>
+                      <Image
+                        src={`/images/${image.filename}`}
+                        alt={image.title || `${category.name} background ${index + 1}`}
+                        fill
+                        style={{objectFit: 'cover'}}
+                        loading={index < 6 ? 'eager' : 'lazy'}
+                        priority={index < 3}
+                      />
+                      {image.isPremium && (
+                        <div style={{
+                          position: 'absolute',
+                          top: '0.5rem',
+                          right: '0.5rem',
+                          background: 'linear-gradient(45deg, #fbbf24, #f59e0b)',
+                          color: 'white',
+                          padding: '0.25rem 0.5rem',
+                          borderRadius: '0.5rem',
+                          fontSize: '0.75rem',
+                          fontWeight: 'bold',
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                        }}>
+                          4K Premium
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div style={{padding: '1rem'}}>
+                      <h3 style={{
+                        fontSize: '1.1rem',
+                        fontWeight: '600',
+                        color: '#111827',
+                        marginBottom: '0.5rem'
+                      }}>
+                        {image.title || `Professional ${category.name.slice(0, -1)} ${index + 1}`}
+                      </h3>
+                      
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginTop: '0.75rem'
+                      }}>
+                        <span style={{
+                          color: '#6b7280',
+                          fontSize: '0.9rem'
+                        }}>
+                          {image.isPremium ? '4K Quality' : '2K Quality'}
+                        </span>
+                        
+                        <span style={{
+                          fontWeight: 'bold',
+                          color: image.isPremium ? '#f59e0b' : '#059669'
+                        }}>
+                          {image.isPremium ? `$${image.price || '9.99'}` : 'Free'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </main>
+
+        {selectedImage && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 99999,
+            padding: '1rem'
+          }}
+          onClick={() => setSelectedImage(null)}
+          >
+            <div style={{
+              background: 'white',
+              borderRadius: '1rem',
+              overflow: 'hidden',
+              maxWidth: '90vw',
+              maxHeight: '90vh',
+              position: 'relative'
+            }}
+            onClick={(e) => e.stopPropagation()}
+            >
+              <div style={{position: 'relative', maxHeight: '70vh', overflow: 'hidden'}}>
+                <Image
+                  src={`/images/${selectedImage.filename}`}
+                  alt={selectedImage.title || 'Background preview'}
+                  width={800}
+                  height={450}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: '70vh',
+                    objectFit: 'contain'
+                  }}
+                />
+              </div>
+              
+              <div style={{padding: '1.5rem'}}>
+                <h3 style={{
+                  fontSize: '1.25rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '0.5rem'
+                }}>
+                  {selectedImage.title || 'Professional Background'}
+                </h3>
+                
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  {selectedImage.isPremium ? '4K Premium Quality' : '2K Free Quality'} • 
+                  Perfect for video calls and streaming
+                </p>
+                
+                <div style={{color: '#059669', fontWeight: 'bold', marginBottom: '1rem'}}>
+                  {selectedImage.isPremium ? `$${selectedImage.price || '9.99'}` : 'Free Download'}
+                </div>
+              </div>
+              
+              <div style={{
+                padding: '0 1.5rem 1.5rem',
+                display: 'flex',
+                gap: '0.75rem'
+              }}>
+                <button
+                  onClick={() => handleDownload(selectedImage)}
+                  style={{
+                    backgroundColor: '#2563eb',
+                    color: 'white',
+                    border: 'none',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    fontSize: '0.9rem',
+                    cursor: 'pointer',
+                    fontWeight: '600',
+                    flex: 1
+                  }}
+                >
+                  📥 Download
+                </button>
+                
+                <button
+                  onClick={() => setSelectedImage(null)}
+                  style={{
+                    backgroundColor: '#f3f4f6',
+                    color: '#374151',
+                    border: 'none',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    fontSize: '0.9rem',
+                    cursor: 'pointer',
+                    fontWeight: '600'
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <Footer />
       </div>
@@ -149,21 +394,13 @@ export default function CategoryPage({ slug }) {
   );
 }
 
-export async function getStaticPaths() {
-  const paths = Object.keys(categoryInfo).map((slug) => ({
-    params: { slug }
-  }));
-
-  return {
-    paths,
-    fallback: false
-  };
-}
-
-export async function getStaticProps({ params }) {
+// Use the EXACT same pattern as your working premium page
+export async function getServerSideProps(context) {
+  const { slug } = context.query;
+  
   return {
     props: {
-      slug: params.slug
+      slug
     }
   };
 }
