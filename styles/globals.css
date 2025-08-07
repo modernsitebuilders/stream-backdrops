@@ -699,7 +699,10 @@ article li {
         display: grid !important;
 
   }
-  
+  .image-card {
+    max-width: none !important;
+  }
+
   .category-card {
     height: auto !important;
   }
@@ -723,7 +726,10 @@ article li {
    grid-template-columns: repeat(2, 1fr) !important;
     gap: 2.5rem !important;
   }
-  
+  .image-card {
+    max-width: none !important;
+  }
+
   .category-card > div > div {
     height: 220px !important;
   }
