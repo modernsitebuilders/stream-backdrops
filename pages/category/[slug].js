@@ -43,6 +43,7 @@ function CategoryContent({ slug }) {
         
         const categoryImages = Object.entries(metadata)
           .filter(([_, data]) => data.category === slug)
+          .filter(([_, data]) => !data.isPremium)
           .map(([key, data]) => ({
             id: key,
             ...data
