@@ -158,7 +158,7 @@ header {
   background: white;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   contain: layout style paint;
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
 }
 
