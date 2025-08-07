@@ -701,6 +701,7 @@ article li {
   }
   .image-card {
     max-width: none !important;
+      width: 100% !important;
   }
 
   .category-card {
@@ -726,6 +727,7 @@ article li {
   }
   .image-card {
     max-width: none !important;
+      width: 100% !important;
   }
 
   .category-card > div > div {
