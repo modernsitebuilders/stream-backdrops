@@ -158,6 +158,8 @@ header {
   background: white;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   contain: layout style paint;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .image-card:hover {
