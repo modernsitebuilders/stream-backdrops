@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
 import Image from 'next/image';
 
-export default function CategoryPage({ slug: initialSlug }) {
+export default function CategoryPage() {
   const router = useRouter();
   const { slug } = router.query;
   const [imageMetadata, setImageMetadata] = useState({});
@@ -15,10 +15,6 @@ export default function CategoryPage({ slug: initialSlug }) {
   const [error, setError] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  // Use initialSlug from SSR if available, fallback to router
-  const currentSlug = initialSlug || slug;
-
-  // Only mount on client to prevent SSR issues
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -46,10 +42,10 @@ export default function CategoryPage({ slug: initialSlug }) {
     }
   }), []);
 
-  const category = categoryInfo[currentSlug];
+  const category = categoryInfo[slug];
 
   const loadMetadata = useCallback(async () => {
-    if (!currentSlug || !mounted) return;
+    if (!slug || !mounted) return;
     
     try {
       setLoading(true);
@@ -70,19 +66,19 @@ export default function CategoryPage({ slug: initialSlug }) {
       setError(true);
       setLoading(false);
     }
-  }, [currentSlug, mounted]);
+  }, [slug, mounted]);
 
   useEffect(() => {
-    if (mounted && currentSlug) {
+    if (mounted && slug) {
       loadMetadata();
     }
-  }, [loadMetadata, mounted, currentSlug]);
+  }, [loadMetadata, mounted, slug]);
 
   const categoryImages = useMemo(() => {
-    if (!imageMetadata || !currentSlug) return [];
+    if (!imageMetadata || !slug) return [];
     
     return Object.entries(imageMetadata)
-      .filter(([_, data]) => data.category === currentSlug)
+      .filter(([_, data]) => data.category === slug)
       .map(([filename, data]) => ({
         filename,
         ...data,
@@ -92,7 +88,7 @@ export default function CategoryPage({ slug: initialSlug }) {
         if (a.isPremium !== b.isPremium) return a.isPremium ? -1 : 1;
         return a.filename.localeCompare(b.filename);
       });
-  }, [imageMetadata, currentSlug]);
+  }, [imageMetadata, slug]);
 
   const handleDownload = useCallback((image) => {
     if (!image) return;
@@ -164,34 +160,68 @@ export default function CategoryPage({ slug: initialSlug }) {
 
       <div style={{minHeight: '100vh', background: '#f9fafb'}}>
         <header style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white',
+          background: 'white',
+          borderBottom: '1px solid #e5e7eb',
+          padding: '2rem 0',
           textAlign: 'center',
-          padding: '4rem 2rem'
+          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
         }}>
-          <div style={{maxWidth: '1200px', margin: '0 auto'}}>
-            <Link href="/" style={{
-              color: 'white',
-              textDecoration: 'none',
-              fontSize: '0.9rem',
-              opacity: '0.9',
-              marginBottom: '1rem',
-              display: 'inline-block'
+          <div style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem'}}>
+            <nav style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: '1rem',
+              marginBottom: '2rem'
             }}>
-              ← Back to All Categories
-            </Link>
+              <Link 
+                href="/" 
+                style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#6b7280',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  transition: 'all 0.2s',
+                  background: '#f3f4f6'
+                }}
+              >
+                🏠 Home
+              </Link>
+              
+              {Object.entries(categoryInfo).map(([categorySlug, info]) => (
+                <Link 
+                  key={categorySlug}
+                  href={`/category/${categorySlug}`}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '0.5rem',
+                    textDecoration: 'none',
+                    color: categorySlug === slug ? 'white' : '#6b7280',
+                    fontWeight: '500',
+                    fontSize: '0.9rem',
+                    transition: 'all 0.2s',
+                    background: categorySlug === slug ? '#2563eb' : '#f3f4f6'
+                  }}
+                >
+                  {info.name}
+                </Link>
+              ))}
+            </nav>
             
             <h1 style={{
               fontSize: 'clamp(2rem, 4vw, 3rem)',
               fontWeight: 'bold',
-              marginBottom: '1rem'
+              marginBottom: '1rem',
+              color: '#111827'
             }}>
               {category.name}
             </h1>
             
             <p style={{
               fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-              opacity: '0.9',
+              color: '#6b7280',
               maxWidth: '600px',
               margin: '0 auto'
             }}>
@@ -252,28 +282,15 @@ export default function CategoryPage({ slug: initialSlug }) {
                 </Link>
               </div>
             ) : (
-              <div className="image-grid" style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-                gap: '2rem',
-                padding: '1rem 0'
-              }}>
+              <div className="image-grid">
                 {categoryImages.map((image, index) => (
                   <div
                     key={image.key}
                     className="image-card"
                     onClick={() => setSelectedImage(image)}
-                    style={{
-                      background: 'white',
-                      borderRadius: '1rem',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                      overflow: 'hidden',
-                      cursor: 'pointer',
-                      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                      position: 'relative'
-                    }}
+                    style={{cursor: 'pointer'}}
                   >
-                    <div style={{position: 'relative', height: '250px'}}>
+                    <div style={{position: 'relative', height: '200px'}}>
                       <Image
                         src={`/images/${image.filename}`}
                         alt={image.title || `${category.name} background ${index + 1}`}
@@ -452,27 +469,4 @@ export default function CategoryPage({ slug: initialSlug }) {
       `}</style>
     </>
   );
-}
-
-// CRITICAL: Server-side props to prevent hard refresh errors
-export async function getServerSideProps(context) {
-  const { slug } = context.query;
-  
-  const validCategories = [
-    'home-offices',
-    'executive-offices', 
-    'minimalist',
-    'lobbies',
-    'private-offices'
-  ];
-  
-  if (!slug || !validCategories.includes(slug)) {
-    return { notFound: true };
-  }
-  
-  return { 
-    props: { 
-      slug // Pass slug as prop for SSR safety
-    } 
-  };
 }
