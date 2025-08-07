@@ -71,15 +71,18 @@ export default function CategoryPage() {
 
   const openPreview = (image) => {
     setPreviewImage(image);
-    document.body.style.overflow = 'hidden';
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'hidden';
+    }
   };
 
   const closePreview = () => {
     setPreviewImage(null);
-    document.body.style.overflow = 'unset';
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'unset';
+    }
   };
 
-  // Handle escape key to close preview
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
@@ -87,11 +90,15 @@ export default function CategoryPage() {
       }
     };
 
-    if (previewImage) {
+    if (previewImage && typeof document !== 'undefined') {
       document.addEventListener('keydown', handleEscape);
       return () => document.removeEventListener('keydown', handleEscape);
     }
   }, [previewImage]);
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   if (!category) {
     return (
@@ -99,7 +106,7 @@ export default function CategoryPage() {
         <div style={{textAlign: 'center'}}>
           <h1 style={{fontSize: '2rem', marginBottom: '1rem', color: '#374151'}}>Category Not Found</h1>
           <p style={{color: '#6b7280', marginBottom: '2rem'}}>
-            The category "{slug}" doesn't exist.
+            The category "{slug}" doesn not exist.
           </p>
           <Link href="/" style={{color: '#2563eb', textDecoration: 'none', fontWeight: '600'}}>
             ← Back to Home
@@ -212,9 +219,7 @@ export default function CategoryPage() {
               <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', padding: '2rem 0'}}>
                 {[...Array(6)].map((_, i) => (
                   <div key={i} style={{
-                    background: 'linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%)',
-                    backgroundSize: '200% 100%',
-                    animation: 'loading 1.5s infinite',
+                    background: '#f3f4f6',
                     borderRadius: '1rem',
                     aspectRatio: '16/9'
                   }} />
@@ -366,7 +371,6 @@ export default function CategoryPage() {
           </div>
         </main>
 
-        {/* Preview Modal */}
         {previewImage && (
           <div 
             style={{
@@ -393,7 +397,6 @@ export default function CategoryPage() {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
               <button
                 onClick={closePreview}
                 style={{
@@ -418,7 +421,6 @@ export default function CategoryPage() {
                 ×
               </button>
 
-              {/* Premium Badge */}
               {previewImage.isPremium && (
                 <div style={{
                   position: 'absolute',
@@ -437,7 +439,6 @@ export default function CategoryPage() {
                 </div>
               )}
 
-              {/* Image */}
               <div style={{
                 width: '80vw',
                 height: '80vh',
@@ -454,7 +455,6 @@ export default function CategoryPage() {
                 />
               </div>
 
-              {/* Info Panel */}
               <div style={{
                 padding: '2rem',
                 background: 'white',
@@ -529,4 +529,29 @@ export default function CategoryPage() {
       </div>
     </>
   );
+}
+
+export async function getStaticPaths() {
+  const paths = Object.keys({
+    'home-offices': true,
+    'executive-offices': true,
+    'minimalist': true,
+    'lobbies': true,
+    'private-offices': true
+  }).map(slug => ({
+    params: { slug }
+  }));
+
+  return {
+    paths,
+    fallback: false
+  };
+}
+
+export async function getStaticProps({ params }) {
+  return {
+    props: {
+      slug: params.slug
+    }
+  };
 }
