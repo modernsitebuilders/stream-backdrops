@@ -5,27 +5,27 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 const categoryInfo = {
-  'home-offices': {
+  'home-lifestyle': {
     name: 'Home Offices',
     description: 'Professional home office backgrounds perfect for remote work and video calls',
     image: 'clean-scandinavian-home-office-2'
   },
-  'executive-offices': {
+  'home-lifestyle': {
     name: 'Executive Offices',
     description: 'Luxury executive office backgrounds for leadership meetings and professional calls',
     image: 'corner-office-with-city-views-1'
   },
-  'minimalist': {
+  'professional-shelves': {
     name: 'Minimalist',
     description: 'Clean, minimalist backgrounds for modern professionals',
     image: 'minimalist-executive-office-1'
   },
-  'lobbies': {
+  'professional-shelves': {
     name: 'Lobbies',
     description: 'Professional lobby backgrounds for client meetings and business calls',
     image: 'modern-glass-lobby-3'
   },
-  'private-offices': {
+  'professional-shelves': {
     name: 'Private Offices',
     description: 'Specialized private office backgrounds for professional consultations and meetings',
     image: 'private-office-with-bookshelf-1'
@@ -73,9 +73,9 @@ export default function CategoryCards() {
   return (
     <div className="category-grid">
       {Object.entries(categoryInfo).map(([key, info], index) => (
-        <Link 
+        <Link href="#" 
           key={key}
-          href={`/category/${key}`}
+          href={`/category/${slug}`}
           className="category-card"
         >
           <div style={{

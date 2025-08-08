@@ -44,31 +44,31 @@ function generateSiteMap() {
      
      <!-- Category Pages -->
      <url>
-       <loc>https://streambackdrops.com/category/home-offices</loc>
+       <loc>https://streambackdrops.com/category/home-lifestyle</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.9</priority>
      </url>
      <url>
-       <loc>https://streambackdrops.com/category/executive-offices</loc>
+       <loc>https://streambackdrops.com/category/home-lifestyle</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.9</priority>
      </url>
      <url>
-       <loc>https://streambackdrops.com/category/minimalist</loc>
+       <loc>https://streambackdrops.com/category/professional-shelves</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.9</priority>
      </url>
      <url>
-       <loc>https://streambackdrops.com/category/lobbies</loc>
+       <loc>https://streambackdrops.com/category/professional-shelves</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.9</priority>
      </url>
      <url>
-       <loc>https://streambackdrops.com/category/private-offices</loc>
+       <loc>https://streambackdrops.com/category/professional-shelves</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.9</priority>

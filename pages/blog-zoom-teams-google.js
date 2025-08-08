@@ -1,372 +1,350 @@
+// ===== blog-zoom-teams-google.js =====
 import Head from 'next/head';
 import Link from 'next/link';
 import Footer from '../components/Footer';
 
-export default function BlogPlatformComparison() {
+export default function BlogZoomTeamsGoogle() {
   return (
     <>
       <Head>
-        <title>Zoom vs Teams vs Google Meet Virtual Backgrounds: Complete Setup Guide 2025 - StreamBackdrops</title>
+        <title>Zoom vs Teams vs Google Meet: Virtual Background Setup & Best Practices - StreamBackdrops</title>
         <meta name="description" content="Complete comparison of virtual backgrounds on Zoom, Microsoft Teams, and Google Meet. Setup guides, troubleshooting tips, and platform-specific best practices." />
-        <meta name="keywords" content="zoom virtual backgrounds, teams backgrounds, google meet backgrounds, virtual background comparison, video call setup" />
+        <meta name="keywords" content="zoom backgrounds, teams backgrounds, google meet backgrounds, virtual background comparison, video conferencing" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <div className="min-h-screen bg-gray-50 py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="text-blue-600 hover:text-blue-800 mb-4 inline-block">
-            ← Back to Home
-          </Link>
-          
-          <article className="bg-white rounded-lg shadow-lg p-8">
-            <header className="mb-8">
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                Zoom vs Teams vs Google Meet: Virtual Background Setup & Best Practices
-              </h1>
-              <p className="text-gray-600 italic">Published: August 6, 2025</p>
-            </header>
-
-            <div className="prose prose-lg max-w-none">
-              <p className="text-xl text-gray-700 mb-6">
-                Virtual backgrounds have become essential for professional video calls, but each platform handles them differently. Whether you're using Zoom, Microsoft Teams, or Google Meet, understanding their unique features and limitations will help you look more professional and avoid technical difficulties.
-              </p>
-
-              <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-6 border-b pb-2">Platform Overview: Which Is Best for Virtual Backgrounds?</h2>
-
-              <div className="grid md:grid-cols-3 gap-6 mb-8">
-                {/* Zoom Card */}
-                <div className="bg-blue-50 rounded-xl p-6 border-l-4 border-blue-500">
-                  <h3 className="text-xl font-bold text-blue-900 mb-3">Zoom: The Virtual Background Pioneer</h3>
-                  <p className="text-blue-800 mb-4">
-                    Zoom was the first to popularize virtual backgrounds and still offers the most robust features, supporting both AI-based removal and green screens.
-                  </p>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="font-medium text-blue-800">✓ Strengths:</p>
-                      <ul className="list-disc pl-6 text-blue-700 text-sm">
-                        <li>Most advanced background technology</li>
-                        <li>Best AI-based background removal</li>
-                        <li>Extensive customization options</li>
-                        <li>Green screen support</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-red-800">✗ Weaknesses:</p>
-                      <ul className="list-disc pl-6 text-red-700 text-sm">
-                        <li>Resource-intensive on older devices</li>
-                        <li>Premium features require paid account</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Teams Card */}
-                <div className="bg-purple-50 rounded-xl p-6 border-l-4 border-purple-500">
-                  <h3 className="text-xl font-bold text-purple-900 mb-3">Microsoft Teams: Enterprise-Focused</h3>
-                  <p className="text-purple-800 mb-4">
-                    Teams integrates backgrounds seamlessly with Microsoft 365, prioritizing reliability for corporate environments.
-                  </p>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="font-medium text-purple-800">✓ Strengths:</p>
-                      <ul className="list-disc pl-6 text-purple-700 text-sm">
-                        <li>Excellent Microsoft 365 integration</li>
-                        <li>Reliable corporate network performance</li>
-                        <li>Corporate-approved background collections</li>
-                        <li>Strong enterprise security</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-red-800">✗ Weaknesses:</p>
-                      <ul className="list-disc pl-6 text-red-700 text-sm">
-                        <li>Fewer customization options</li>
-                        <li>Limited device compatibility</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Meet Card */}
-                <div className="bg-green-50 rounded-xl p-6 border-l-4 border-green-500">
-                  <h3 className="text-xl font-bold text-green-900 mb-3">Google Meet: Simple and Accessible</h3>
-                  <p className="text-green-800 mb-4">
-                    Meet emphasizes simplicity with background features that work well across devices and network conditions.
-                  </p>
-                  <div className="space-y-3">
-                    <div>
-                      <p className="font-medium text-green-800">✓ Strengths:</p>
-                      <ul className="list-disc pl-6 text-green-700 text-sm">
-                        <li>Easy to use</li>
-                        <li>Good mobile app support</li>
-                        <li>Free for basic use</li>
-                        <li>Low-bandwidth friendly</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-medium text-red-800">✗ Weaknesses:</p>
-                      <ul className="list-disc pl-6 text-red-700 text-sm">
-                        <li>Limited background options</li>
-                        <li>Basic customization</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+      <header style={{
+        background: 'white',
+        borderBottom: '1px solid #e5e7eb',
+        padding: '1rem 0',
+        position: 'sticky',
+        top: 0,
+        zIndex: 50,
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+          <nav style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '1rem'
+          }}>
+            <Link href="/" style={{
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+              color: '#2563eb',
+              textDecoration: 'none'
+            }}>
+              🎥 StreamBackdrops
+            </Link>
+            
+            <div style={{
+              display: 'flex',
+              gap: '1rem',
+              alignItems: 'center',
+              flexWrap: 'wrap'
+            }}>
+              <Link href="/" style={{
+                color: '#374151',
+                textDecoration: 'none',
+                fontWeight: '500',
+                padding: '0.5rem 1rem',
+                borderRadius: '0.5rem',
+                background: '#f3f4f6',
+                transition: 'all 0.2s'
+              }}>
+                🏠 Home
+              </Link>
+              
+              <Link href="/blog" style={{
+                color: '#374151',
+                textDecoration: 'none',
+                fontWeight: '500',
+                padding: '0.5rem 1rem',
+                borderRadius: '0.5rem',
+                background: '#f3f4f6',
+                transition: 'all 0.2s'
+              }}>
+                📚 All Guides
+              </Link>
+              
+              <div style={{
+                background: 'linear-gradient(135deg, #10b981, #059669)',
+                color: 'white',
+                padding: '0.5rem 1rem',
+                borderRadius: '1.5rem',
+                fontSize: '0.9rem',
+                fontWeight: '600'
+              }}>
+                ✨ 100% FREE
               </div>
+            </div>
+          </nav>
+        </div>
+      </header>
 
-              <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-6 border-b pb-2">Platform-Specific Setup Guides</h2>
+      <div style={{ 
+        background: '#f8fafc', 
+        minHeight: '100vh',
+        paddingLeft: '2rem',
+        paddingRight: '2rem'
+      }}>
+        <div style={{ 
+          maxWidth: '800px', 
+          margin: '0 auto', 
+          padding: '2rem 0'
+        }}>
+          <div style={{
+            background: 'white',
+            borderRadius: '1rem',
+            padding: '3rem',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+            border: '1px solid #e5e7eb'
+          }}>
+            
+            <article>
+              <header style={{marginBottom: '2rem'}}>
+                <h1 style={{
+                  fontSize: '2.5rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '1rem',
+                  lineHeight: '1.2'
+                }}>
+                  Zoom vs Teams vs Google Meet: Virtual Background Setup & Best Practices
+                </h1>
+                <p style={{color: '#6b7280', fontStyle: 'italic'}}>
+                  Published: August 6, 2025
+                </p>
+              </header>
 
-              {/* Zoom Setup */}
-              <div className="bg-blue-50 rounded-xl p-6 mb-8">
-                <h3 className="text-2xl font-bold text-blue-900 mb-4">Zoom Virtual Background Setup</h3>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-semibold text-blue-800 mb-3">System Requirements</h4>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="font-medium text-blue-700">Minimum:</p>
-                        <ul className="list-disc pl-6 text-blue-700 text-sm">
-                          <li>Windows 10 (64-bit) or macOS 10.13</li>
-                          <li>Core i5 dual-core 2.0GHz</li>
-                          <li>4GB RAM (8GB recommended)</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="font-medium text-blue-700">Optimal:</p>
-                        <ul className="list-disc pl-6 text-blue-700 text-sm">
-                          <li>Windows 11/macOS 12+</li>
-                          <li>Core i7 or equivalent</li>
-                          <li>8GB+ RAM</li>
-                          <li>Dedicated graphics card</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-semibold text-blue-800 mb-3">Step-by-Step Setup</h4>
-                    <ol className="list-decimal pl-6 text-blue-700 text-sm space-y-2">
-                      <li>Open Zoom Desktop Client → Settings (gear icon)</li>
-                      <li>Select "Virtual Background" from left menu</li>
-                      <li>Choose from built-in options or click "+" to upload</li>
-                      <li>Enable "I have a green screen" if available</li>
-                      <li>Adjust "Manual select" for difficult lighting</li>
-                    </ol>
-                  </div>
-                </div>
+              <div style={{fontSize: '1.1rem', lineHeight: '1.7', color: '#374151'}}>
+                <p style={{fontSize: '1.25rem', color: '#6b7280', marginBottom: '2rem'}}>
+                  Each major video conferencing platform handles virtual backgrounds differently. Understanding these differences helps you optimize your setup for the best professional appearance across all platforms.
+                </p>
 
-                <div className="mt-6">
-                  <h4 className="font-semibold text-blue-800 mb-3">Zoom-Specific Tips</h4>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-blue-100 rounded-lg p-4">
-                      <p className="font-medium text-blue-800 mb-2">For Best Results:</p>
-                      <ul className="list-disc pl-6 text-blue-700 text-sm">
-                        <li>Use even lighting on your face</li>
-                        <li>Sit 6+ feet from physical background</li>
-                        <li>Avoid matching clothing colors</li>
-                        <li>Use green screen for professional calls</li>
-                      </ul>
-                    </div>
-                    <div className="bg-red-100 rounded-lg p-4">
-                      <p className="font-medium text-red-800 mb-2">Troubleshooting:</p>
-                      <ul className="list-disc pl-6 text-red-700 text-sm">
-                        <li>Fuzzy edges? Improve lighting</li>
-                        <li>Background changing? Update drivers</li>
-                        <li>Feature missing? Check requirements</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', marginTop: '2rem', marginBottom: '1rem'}}>
+                  Platform Comparison Overview
+                </h2>
 
-              {/* Teams Setup */}
-              <div className="bg-purple-50 rounded-xl p-6 mb-8">
-                <h3 className="text-2xl font-bold text-purple-900 mb-4">Microsoft Teams Virtual Background Setup</h3>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-semibold text-purple-800 mb-3">System Requirements</h4>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="font-medium text-purple-700">Windows:</p>
-                        <ul className="list-disc pl-6 text-purple-700 text-sm">
-                          <li>Windows 10 version 1903+</li>
-                          <li>Supported processor</li>
-                          <li>4GB RAM minimum</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="font-medium text-purple-700">Mac:</p>
-                        <ul className="list-disc pl-6 text-purple-700 text-sm">
-                          <li>macOS 10.14+</li>
-                          <li>Intel-based or Apple Silicon</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-semibold text-purple-800 mb-3">Step-by-Step Setup</h4>
-                    <ol className="list-decimal pl-6 text-purple-700 text-sm space-y-2">
-                      <li>Join/start meeting → Click "More actions" (...)</li>
-                      <li>Select "Apply background effects"</li>
-                      <li>Choose from collections or upload custom</li>
-                      <li>Adjust blur intensity if preferred</li>
-                    </ol>
+                <div style={{
+                  background: '#eff6ff',
+                  borderRadius: '1rem',
+                  padding: '1.5rem',
+                  marginBottom: '2rem'
+                }}>
+                  <h3 style={{fontSize: '1.25rem', fontWeight: '600', color: '#1e40af', marginBottom: '1rem'}}>
+                    Zoom Virtual Backgrounds
+                  </h3>
+                  <p style={{color: '#1e40af', marginBottom: '1rem'}}>
+                    Zoom pioneered mainstream virtual backgrounds and offers the most robust implementation.
+                  </p>
+                  <div style={{color: '#1e40af'}}>
+                    <p><strong>Strengths:</strong></p>
+                    <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', marginBottom: '1rem'}}>
+                      <li>Best-in-class edge detection</li>
+                      <li>Green screen support</li>
+                      <li>Custom background uploads</li>
+                      <li>Video backgrounds available</li>
+                    </ul>
+                    <p><strong>System Requirements:</strong> Dual-core 2Ghz+ processor, 4GB RAM minimum</p>
                   </div>
                 </div>
 
-                <div className="mt-6">
-                  <h4 className="font-semibold text-purple-800 mb-3">Teams-Specific Features</h4>
-                  <div className="bg-purple-100 rounded-lg p-4">
-                    <ul className="list-disc pl-6 text-purple-700 text-sm">
+                <div style={{
+                  background: '#faf5ff',
+                  borderRadius: '1rem',
+                  padding: '1.5rem',
+                  marginBottom: '2rem'
+                }}>
+                  <h3 style={{fontSize: '1.25rem', fontWeight: '600', color: '#581c87', marginBottom: '1rem'}}>
+                    Microsoft Teams Virtual Backgrounds
+                  </h3>
+                  <p style={{color: '#581c87', marginBottom: '1rem'}}>
+                    Teams integrates virtual backgrounds with the broader Microsoft ecosystem.
+                  </p>
+                  <div style={{color: '#581c87'}}>
+                    <p><strong>Strengths:</strong></p>
+                    <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', marginBottom: '1rem'}}>
                       <li>Background blur with adjustable intensity</li>
                       <li>OneDrive integration for background storage</li>
                       <li>Corporate-approved background collections</li>
                       <li>IT admin controls for enterprise</li>
                     </ul>
-                  </div>
-                </div>
-              </div>
-
-              {/* Meet Setup */}
-              <div className="bg-green-50 rounded-xl p-6 mb-8">
-                <h3 className="text-2xl font-bold text-green-900 mb-4">Google Meet Virtual Background Setup</h3>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="font-semibold text-green-800 mb-3">System Requirements</h4>
-                    <div className="space-y-3">
-                      <div>
-                        <p className="font-medium text-green-700">Browser:</p>
-                        <ul className="list-disc pl-6 text-green-700 text-sm">
-                          <li>Chrome 88+ (recommended)</li>
-                          <li>Firefox 84+/Safari 14+/Edge 88+</li>
-                        </ul>
-                      </div>
-                      <div>
-                        <p className="font-medium text-green-700">Mobile:</p>
-                        <ul className="list-disc pl-6 text-green-700 text-sm">
-                          <li>Android 8.0+/iOS 12+</li>
-                          <li>Latest Google Meet app</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-semibold text-green-800 mb-3">Step-by-Step Setup</h4>
-                    <ol className="list-decimal pl-6 text-green-700 text-sm space-y-2">
-                      <li>During meeting → Click "More options" (⋮)</li>
-                      <li>Select "Apply visual effects"</li>
-                      <li>Choose background or upload custom</li>
-                      <li>Adjust positioning as needed</li>
-                    </ol>
+                    <p><strong>System Requirements:</strong> Windows 10 v1903+, macOS 10.14+, specific processors required</p>
                   </div>
                 </div>
 
-                <div className="mt-6">
-                  <h4 className="font-semibold text-green-800 mb-3">Meet-Specific Considerations</h4>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="bg-green-100 rounded-lg p-4">
-                      <p className="font-medium text-green-800 mb-2">Advantages:</p>
-                      <ul className="list-disc pl-6 text-green-700 text-sm">
-                        <li>Works entirely in browser</li>
-                        <li>No software installation</li>
-                        <li>Good mobile integration</li>
-                      </ul>
-                    </div>
-                    <div className="bg-red-100 rounded-lg p-4">
-                      <p className="font-medium text-red-800 mb-2">Limitations:</p>
-                      <ul className="list-disc pl-6 text-red-700 text-sm">
-                        <li>Fewer advanced features</li>
-                        <li>Basic customization</li>
-                        <li>Browser-dependent</li>
-                      </ul>
-                    </div>
+                <div style={{
+                  background: '#ecfdf5',
+                  borderRadius: '1rem',
+                  padding: '1.5rem',
+                  marginBottom: '2rem'
+                }}>
+                  <h3 style={{fontSize: '1.25rem', fontWeight: '600', color: '#065f46', marginBottom: '1rem'}}>
+                    Google Meet Virtual Backgrounds
+                  </h3>
+                  <p style={{color: '#065f46', marginBottom: '1rem'}}>
+                    Meet focuses on simplicity and browser-based functionality.
+                  </p>
+                  <div style={{color: '#065f46'}}>
+                    <p><strong>Strengths:</strong></p>
+                    <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', marginBottom: '1rem'}}>
+                      <li>Works in web browsers</li>
+                      <li>Simple, clean interface</li>
+                      <li>Automatic lighting adjustment</li>
+                      <li>Low system requirements</li>
+                    </ul>
+                    <p><strong>System Requirements:</strong> Chrome 88+, Firefox 84+, Safari 14+, or mobile apps</p>
                   </div>
                 </div>
-              </div>
 
-              <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-6 border-b pb-2">Platform Comparison: Feature by Feature</h2>
+                <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', marginTop: '2rem', marginBottom: '1rem'}}>
+                  Setup Instructions by Platform
+                </h2>
 
-              <div className="overflow-x-auto mb-8">
-                <table className="min-w-full border border-gray-200">
-                  <thead className="bg-gray-100">
-                    <tr>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-gray-700 border-b">Feature</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-blue-700 border-b">Zoom</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-purple-700 border-b">Teams</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-green-700 border-b">Meet</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b">
-                      <td className="px-4 py-3 text-sm font-medium text-gray-900">Background Quality</td>
-                      <td className="px-4 py-3 text-sm text-blue-700">Best AI, clean edges</td>
-                      <td className="px-4 py-3 text-sm text-purple-700">Good, reliable</td>
-                      <td className="px-4 py-3 text-sm text-green-700">Basic but functional</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="px-4 py-3 text-sm font-medium text-gray-900">Customization</td>
-                      <td className="px-4 py-3 text-sm text-blue-700">Extensive options</td>
-                      <td className="px-4 py-3 text-sm text-purple-700">Moderate</td>
-                      <td className="px-4 py-3 text-sm text-green-700">Basic</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="px-4 py-3 text-sm font-medium text-gray-900">Performance</td>
-                      <td className="px-4 py-3 text-sm text-blue-700">Resource-intensive</td>
-                      <td className="px-4 py-3 text-sm text-purple-700">Enterprise optimized</td>
-                      <td className="px-4 py-3 text-sm text-green-700">Most efficient</td>
-                    </tr>
-                    <tr>
-                      <td className="px-4 py-3 text-sm font-medium text-gray-900">Ease of Use</td>
-                      <td className="px-4 py-3 text-sm text-blue-700">Complex but powerful</td>
-                      <td className="px-4 py-3 text-sm text-purple-700">Intuitive for Microsoft users</td>
-                      <td className="px-4 py-3 text-sm text-green-700">Simplest</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                <h3 style={{fontSize: '1.25rem', fontWeight: '600', color: '#111827', marginTop: '1.5rem', marginBottom: '0.75rem'}}>
+                  Zoom Detailed Setup
+                </h3>
+                <ol style={{listStyle: 'decimal', paddingLeft: '1.5rem', color: '#6b7280', marginBottom: '1.5rem'}}>
+                  <li>Open Zoom desktop client and sign in</li>
+                  <li>Click the gear icon (Settings) in the top right</li>
+                  <li>Select "Virtual Background" from the left menu</li>
+                  <li>Download the smart virtual background package if prompted</li>
+                  <li>Choose from preset backgrounds or click "+" to upload your own</li>
+                  <li>Check "I have a green screen" if you're using one</li>
+                  <li>Test different backgrounds and lighting conditions</li>
+                </ol>
 
-              <h2 className="text-2xl font-bold text-gray-900 mt-10 mb-6">Conclusion</h2>
-              
-              <div className="space-y-4 mb-6">
-                <p className="text-gray-700">
-                  Each platform has distinct strengths: Zoom leads in features, Teams excels in enterprise integration, and Meet offers simplicity. Your choice should align with your technical requirements and organizational ecosystem.
+                <h3 style={{fontSize: '1.25rem', fontWeight: '600', color: '#111827', marginTop: '1.5rem', marginBottom: '0.75rem'}}>
+                  Microsoft Teams Detailed Setup
+                </h3>
+                <ol style={{listStyle: 'decimal', paddingLeft: '1.5rem', color: '#6b7280', marginBottom: '1.5rem'}}>
+                  <li>Join or start a meeting in Teams</li>
+                  <li>Click the three dots (More actions) in the meeting toolbar</li>
+                  <li>Select "Apply background effects"</li>
+                  <li>Choose from background blur, preset backgrounds, or upload custom</li>
+                  <li>Click "Apply and turn on camera" or "Preview" to test first</li>
+                  <li>Adjust background during calls by clicking the camera icon</li>
+                </ol>
+
+                <h3 style={{fontSize: '1.25rem', fontWeight: '600', color: '#111827', marginTop: '1.5rem', marginBottom: '0.75rem'}}>
+                  Google Meet Detailed Setup
+                </h3>
+                <ol style={{listStyle: 'decimal', paddingLeft: '1.5rem', color: '#6b7280', marginBottom: '1.5rem'}}>
+                  <li>Join a meeting or start a new one in Google Meet</li>
+                  <li>Click the three dots (More options) in the bottom toolbar</li>
+                  <li>Select "Apply visual effects"</li>
+                  <li>Choose from available backgrounds or slight blur options</li>
+                  <li>Click "Apply" to activate the background</li>
+                  <li>Note: Custom uploads may require Google Workspace account</li>
+                </ol>
+
+                <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', marginTop: '2rem', marginBottom: '1rem'}}>
+                  Platform-Specific Best Practices
+                </h2>
+
+                <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem'}}>
+                  <div style={{
+                    borderLeft: '4px solid #2563eb',
+                    paddingLeft: '1rem',
+                    background: '#f8fafc',
+                    padding: '1rem',
+                    borderRadius: '0 0.5rem 0.5rem 0'
+                  }}>
+                    <h4 style={{fontWeight: '600', color: '#1e40af', marginBottom: '0.5rem'}}>Zoom Tips</h4>
+                    <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', color: '#6b7280'}}>
+                      <li>Use "Touch up my appearance" for better results</li>
+                      <li>Enable "Mirror my video" to avoid confusion</li>
+                      <li>Test backgrounds before important meetings</li>
+                    </ul>
+                  </div>
+
+                  <div style={{
+                    borderLeft: '4px solid #7c3aed',
+                    paddingLeft: '1rem',
+                    background: '#f8fafc',
+                    padding: '1rem',
+                    borderRadius: '0 0.5rem 0.5rem 0'
+                  }}>
+                    <h4 style={{fontWeight: '600', color: '#581c87', marginBottom: '0.5rem'}}>Teams Tips</h4>
+                    <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', color: '#6b7280'}}>
+                      <li>Use background blur for professional calls</li>
+                      <li>Upload backgrounds to OneDrive for easy access</li>
+                      <li>Check with IT for approved corporate backgrounds</li>
+                    </ul>
+                  </div>
+
+                  <div style={{
+                    borderLeft: '4px solid #059669',
+                    paddingLeft: '1rem',
+                    background: '#f8fafc',
+                    padding: '1rem',
+                    borderRadius: '0 0.5rem 0.5rem 0'
+                  }}>
+                    <h4 style={{fontWeight: '600', color: '#065f46', marginBottom: '0.5rem'}}>Google Meet Tips</h4>
+                    <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', color: '#6b7280'}}>
+                      <li>Keep backgrounds simple due to limited processing</li>
+                      <li>Use Chrome browser for best performance</li>
+                      <li>Consider lighting carefully as detection is less sophisticated</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', marginTop: '2rem', marginBottom: '1rem'}}>
+                  Performance Comparison
+                </h2>
+                <div style={{
+                  background: '#f8fafc',
+                  borderRadius: '0.5rem',
+                  padding: '1.5rem',
+                  marginBottom: '1.5rem'
+                }}>
+                  <h4 style={{fontWeight: '600', color: '#111827', marginBottom: '1rem'}}>System Impact (CPU Usage)</h4>
+                  <ul style={{listStyle: 'none', color: '#6b7280'}}>
+                    <li><strong>Zoom:</strong> Medium-high (advanced AI processing)</li>
+                    <li><strong>Teams:</strong> Medium (optimized for Microsoft ecosystem)</li>
+                    <li><strong>Google Meet:</strong> Low-medium (browser-based efficiency)</li>
+                  </ul>
+                </div>
+
+                <h2 style={{fontSize: '1.5rem', fontWeight: 'bold', color: '#111827', marginTop: '2rem', marginBottom: '1rem'}}>
+                  Conclusion
+                </h2>
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  Each platform has its strengths. Zoom offers the most features and best quality, Teams excels in enterprise environments, and Google Meet provides simplicity and accessibility. Choose based on your primary use case and system capabilities.
                 </p>
-                <p className="text-gray-700 font-medium">
-                  The key to professional virtual backgrounds is preparation: test your setup, understand platform capabilities, and always have a backup plan.
+                <p style={{color: '#6b7280', marginBottom: '1.5rem'}}>
+                  Regardless of platform, proper lighting and appropriate background choices matter more than the specific technology used.
                 </p>
-                <p className="text-gray-700">
-                  With proper implementation, virtual backgrounds can enhance your professionalism and engagement in any virtual meeting environment.
-                </p>
-              </div>
 
-              <div className="bg-gray-50 rounded-lg p-6 mt-8">
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Related Articles</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <Link href="/blog-virtual-background-guide" className="block p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
-                    <h4 className="font-semibold text-blue-600 mb-2">Complete Technical Guide</h4>
-                    <p className="text-gray-600 text-sm">Master virtual background technology</p>
+                <div style={{
+                  background: '#eff6ff',
+                  borderRadius: '0.5rem',
+                  padding: '1.5rem',
+                  marginTop: '2rem'
+                }}>
+                  <p style={{color: '#1e40af', fontWeight: '500', marginBottom: '1rem'}}>
+                    Get platform-optimized virtual backgrounds designed to work perfectly across Zoom, Teams, and Google Meet.
+                  </p>
+                  <Link href="/" style={{
+                    background: '#2563eb',
+                    color: 'white',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '0.5rem',
+                    fontWeight: '500',
+                    textDecoration: 'none',
+                    display: 'inline-block',
+                    transition: 'background-color 0.2s'
+                  }}>
+                    Browse Backgrounds →
                   </Link>
-                  <Link href="/blog-background-mistakes" className="block p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
-                    <h4 className="font-semibold text-blue-600 mb-2">Common Background Mistakes</h4>
-                    <p className="text-gray-600 text-sm">Avoid these professional image killers</p>
-                  </Link>
                 </div>
               </div>
-
-              <div className="bg-blue-50 rounded-lg p-6 mt-8">
-                <p className="text-blue-800 font-medium">
-                  Download our platform-optimized virtual backgrounds, professionally designed for flawless performance on Zoom, Teams, and Google Meet.
-                </p>
-                <Link href="/" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors inline-block mt-4">
-                  Get Professional Backgrounds →
-                </Link>
-              </div>
-            </div>
-          </article>
+            </article>
+            
+          </div>
         </div>
       </div>
       

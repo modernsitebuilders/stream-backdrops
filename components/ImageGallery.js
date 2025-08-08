@@ -52,7 +52,7 @@ export default function ImageGallery() {
   const getFeaturedImages = useCallback(() => {
     if (!imageMetadata) return [];
 
-    const categories = ['home-offices', 'executive-offices', 'minimalist', 'lobbies', 'private-offices'];
+    const categories = ['home-lifestyle', 'home-lifestyle', 'professional-shelves', 'professional-shelves', 'professional-shelves'];
     const featured = [];
 
     categories.forEach(category => {

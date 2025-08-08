@@ -1,104 +1,306 @@
+// ===== pages/privacy.js =====
 import Head from 'next/head';
 import Link from 'next/link';
+import Footer from '../components/Footer';
 
 export default function Privacy() {
   return (
     <>
       <Head>
         <title>Privacy Policy - StreamBackdrops</title>
-        <meta name="description" content="StreamBackdrops Privacy Policy - Learn how we collect, use, and protect your personal information when using our virtual background service." />
+        <meta name="description" content="StreamBackdrops Privacy Policy - Learn how we protect your privacy and handle your data." />
         <meta name="robots" content="index, follow" />
       </Head>
 
-      <div className="min-h-screen bg-gray-50 py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            {/* Header */}
-            <div className="mb-8">
-              <Link href="/" className="text-blue-600 hover:text-blue-800 mb-4 inline-block">
-                ← Back to Home
-              </Link>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
-              <p className="text-gray-600">Last updated: August 02, 2025</p>
+      <header style={{
+        background: 'white',
+        borderBottom: '1px solid #e5e7eb',
+        padding: '1rem 0',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+      }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+          <Link href="/" style={{
+            color: '#2563eb',
+            textDecoration: 'none',
+            fontWeight: '600',
+            fontSize: '1.1rem'
+          }}>
+            ← Back to StreamBackdrops
+          </Link>
+        </div>
+      </header>
+
+      <div style={{ 
+        background: '#f8fafc', 
+        minHeight: '100vh',
+        paddingLeft: '2rem',
+        paddingRight: '2rem'
+      }}>
+        <div style={{ 
+          maxWidth: '800px', 
+          margin: '0 auto', 
+          padding: '3rem 0'
+        }}>
+          <div style={{
+            background: 'white',
+            borderRadius: '1rem',
+            padding: '3rem',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+            border: '1px solid #e5e7eb'
+          }}>
+            
+            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+              <h1 style={{
+                fontSize: '2.5rem',
+                fontWeight: 'bold',
+                color: '#111827',
+                marginBottom: '1rem'
+              }}>
+                Privacy Policy
+              </h1>
+              <p style={{
+                color: '#6b7280',
+                fontSize: '1.1rem'
+              }}>
+                Last updated: August 7, 2025
+              </p>
             </div>
 
-            {/* Content */}
-            <div className="prose prose-lg max-w-none">
-              <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
+            <div style={{fontSize: '1rem', lineHeight: '1.7', color: '#374151'}}>
               
-              <p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy.</p>
+              <section style={{marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '1rem'
+                }}>
+                  Introduction
+                </h2>
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  StreamBackdrops ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your information when you visit our website streambackdrops.com (the "Service").
+                </p>
+                <p style={{color: '#6b7280'}}>
+                  By using our Service, you agree to the collection and use of information in accordance with this policy.
+                </p>
+              </section>
 
-              <h2>Interpretation and Definitions</h2>
-              
-              <h3>Interpretation</h3>
-              <p>The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
+              <section style={{marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '1rem'
+                }}>
+                  Information We Collect
+                </h2>
+                
+                <h3 style={{
+                  fontSize: '1.2rem',
+                  fontWeight: '600',
+                  color: '#111827',
+                  marginBottom: '0.5rem'
+                }}>
+                  Information You Provide
+                </h3>
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  We may collect information you provide directly to us, such as when you contact us through email or contact forms:
+                </p>
+                <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', color: '#6b7280', marginBottom: '1rem'}}>
+                  <li>Name and email address when contacting support</li>
+                  <li>Messages and feedback you send to us</li>
+                  <li>Any other information you choose to provide</li>
+                </ul>
 
-              <h3>Definitions</h3>
-              <p>For the purposes of this Privacy Policy:</p>
-              <ul>
-                <li><strong>Account</strong> means a unique account created for You to access our Service or parts of our Service.</li>
-                <li><strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</li>
-                <li><strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to StreamBackdrops.</li>
-                <li><strong>Cookies</strong> are small files that are placed on Your computer, mobile device or any other device by a website, containing the details of Your browsing history on that website among its many uses.</li>
-                <li><strong>Country</strong> refers to: Pennsylvania, United States</li>
-                <li><strong>Device</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</li>
-                <li><strong>Personal Data</strong> is any information that relates to an identified or identifiable individual.</li>
-                <li><strong>Service</strong> refers to the Website.</li>
-                <li><strong>Service Provider</strong> means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used.</li>
-                <li><strong>Usage Data</strong> refers to data collected automatically, either generated by the use of the Service or from the Service infrastructure itself (for example, the duration of a page visit).</li>
-                <li><strong>Website</strong> refers to StreamBackdrops, accessible from <a href="https://streambackdrops.com" target="_blank" rel="noopener noreferrer">streambackdrops.com</a></li>
-                <li><strong>You</strong> means the individual accessing or using the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</li>
-              </ul>
+                <h3 style={{
+                  fontSize: '1.2rem',
+                  fontWeight: '600',
+                  color: '#111827',
+                  marginBottom: '0.5rem'
+                }}>
+                  Automatically Collected Information
+                </h3>
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  When you visit our website, we may automatically collect certain information:
+                </p>
+                <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', color: '#6b7280', marginBottom: '1rem'}}>
+                  <li>IP address and location information</li>
+                  <li>Browser type and version</li>
+                  <li>Pages you visit and time spent on our site</li>
+                  <li>Referring website information</li>
+                  <li>Device information (mobile, desktop, etc.)</li>
+                </ul>
+              </section>
 
-              <h2>Collecting and Using Your Personal Data</h2>
-              
-              <h3>Types of Data Collected</h3>
-              
-              <h4>Personal Data</h4>
-              <p>While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be used to contact or identify You. Personally identifiable information may include, but is not limited to:</p>
-              <ul>
-                <li>Email address</li>
-                <li>First name and last name</li>
-                <li>Phone number</li>
-                <li>Address, State, Province, ZIP/Postal code, City</li>
-                <li>Usage Data</li>
-              </ul>
+              <section style={{marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '1rem'
+                }}>
+                  How We Use Your Information
+                </h2>
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  We use the information we collect to:
+                </p>
+                <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', color: '#6b7280', marginBottom: '1rem'}}>
+                  <li>Provide and maintain our Service</li>
+                  <li>Respond to your inquiries and provide customer support</li>
+                  <li>Improve our website and user experience</li>
+                  <li>Analyze usage patterns and site performance</li>
+                  <li>Comply with legal obligations</li>
+                  <li>Protect against fraud and abuse</li>
+                </ul>
+              </section>
 
-              <h4>Usage Data</h4>
-              <p>Usage Data is collected automatically when using the Service.</p>
-              <p>Usage Data may include information such as Your Device's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that You visit, the time and date of Your visit, the time spent on those pages, unique device identifiers and other diagnostic data.</p>
-              <p>When You access the Service by or through a mobile device, We may collect certain information automatically, including, but not limited to, the type of mobile device You use, Your mobile device unique ID, the IP address of Your mobile device, Your mobile operating system, the type of mobile Internet browser You use, unique device identifiers and other diagnostic data.</p>
-              <p>We may also collect information that Your browser sends whenever You visit our Service or when You access the Service by or through a mobile device.</p>
+              <section style={{marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '1rem'
+                }}>
+                  Information Sharing
+                </h2>
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  We do not sell, trade, or otherwise transfer your personal information to third parties, except in the following circumstances:
+                </p>
+                <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', color: '#6b7280', marginBottom: '1rem'}}>
+                  <li><strong>Service Providers:</strong> We may share information with trusted third-party service providers who assist us in operating our website (hosting, analytics, etc.)</li>
+                  <li><strong>Legal Requirements:</strong> We may disclose information when required by law or to protect our rights</li>
+                  <li><strong>Business Transfers:</strong> In the event of a merger or acquisition, your information may be transferred</li>
+                </ul>
+              </section>
 
-              <h4>Tracking Technologies and Cookies</h4>
-              <p>We use Cookies and similar tracking technologies to track the activity on Our Service and store certain information. Tracking technologies used are beacons, tags, and scripts to collect and track information and to improve and analyze Our Service.</p>
+              <section style={{marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '1rem'
+                }}>
+                  Cookies and Tracking
+                </h2>
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  We use cookies and similar tracking technologies to enhance your experience on our website:
+                </p>
+                <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', color: '#6b7280', marginBottom: '1rem'}}>
+                  <li><strong>Essential Cookies:</strong> Required for basic website functionality</li>
+                  <li><strong>Analytics Cookies:</strong> Help us understand how visitors use our site</li>
+                  <li><strong>Preference Cookies:</strong> Remember your settings and preferences</li>
+                </ul>
+                <p style={{color: '#6b7280'}}>
+                  You can control cookies through your browser settings, though this may affect site functionality.
+                </p>
+              </section>
 
-              <h3>Use of Your Personal Data</h3>
-              <p>The Company may use Personal Data for the following purposes:</p>
-              <ul>
-                <li><strong>To provide and maintain our Service</strong>, including to monitor the usage of our Service.</li>
-                <li><strong>To manage Your Account:</strong> to manage Your registration as a user of the Service.</li>
-                <li><strong>For the performance of a contract:</strong> the development, compliance and undertaking of the purchase contract for the products, items or services You have purchased.</li>
-                <li><strong>To contact You:</strong> To contact You by email, telephone calls, SMS, or other equivalent forms of electronic communication regarding updates or informative communications related to the functionalities, products or contracted services.</li>
-                <li><strong>To provide You</strong> with news, special offers and general information about other goods, services and events which we offer.</li>
-                <li><strong>To manage Your requests:</strong> To attend and manage Your requests to Us.</li>
-              </ul>
+              <section style={{marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '1rem'
+                }}>
+                  Data Security
+                </h2>
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  We implement appropriate security measures to protect your personal information:
+                </p>
+                <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', color: '#6b7280', marginBottom: '1rem'}}>
+                  <li>SSL encryption for data transmission</li>
+                  <li>Secure hosting infrastructure</li>
+                  <li>Regular security audits and updates</li>
+                  <li>Limited access to personal information</li>
+                </ul>
+                <p style={{color: '#6b7280'}}>
+                  However, no method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.
+                </p>
+              </section>
 
-              <h3>Security of Your Personal Data</h3>
-              <p>The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While We strive to use commercially acceptable means to protect Your Personal Data, We cannot guarantee its absolute security.</p>
+              <section style={{marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '1rem'
+                }}>
+                  Your Rights
+                </h2>
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  Depending on your location, you may have certain rights regarding your personal information:
+                </p>
+                <ul style={{listStyle: 'disc', paddingLeft: '1.5rem', color: '#6b7280', marginBottom: '1rem'}}>
+                  <li><strong>Access:</strong> Request information about the personal data we hold about you</li>
+                  <li><strong>Correction:</strong> Request correction of inaccurate personal information</li>
+                  <li><strong>Deletion:</strong> Request deletion of your personal information</li>
+                  <li><strong>Portability:</strong> Request a copy of your data in a structured format</li>
+                  <li><strong>Objection:</strong> Object to certain types of processing</li>
+                </ul>
+                <p style={{color: '#6b7280'}}>
+                  To exercise these rights, please contact us at the information provided below.
+                </p>
+              </section>
 
-              <h2>Children's Privacy</h2>
-              <p>Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13.</p>
+              <section style={{marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '1rem'
+                }}>
+                  Children's Privacy
+                </h2>
+                <p style={{color: '#6b7280'}}>
+                  Our Service is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe your child has provided us with personal information, please contact us.
+                </p>
+              </section>
 
-              <h2>Changes to this Privacy Policy</h2>
-              <p>We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.</p>
+              <section style={{marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '1rem'
+                }}>
+                  Changes to This Policy
+                </h2>
+                <p style={{color: '#6b7280'}}>
+                  We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date. We encourage you to review this Privacy Policy periodically.
+                </p>
+              </section>
 
-              <h2>Contact Us</h2>
-              <p>If you have any questions about this Privacy Policy, You can contact us by visiting our website: <a href="https://streambackdrops.com" target="_blank" rel="noopener noreferrer">streambackdrops.com</a></p>
+              <section style={{marginBottom: '2rem'}}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginBottom: '1rem'
+                }}>
+                  Contact Us
+                </h2>
+                <p style={{color: '#6b7280', marginBottom: '1rem'}}>
+                  If you have any questions about this Privacy Policy, please contact us:
+                </p>
+                <div style={{
+                  background: '#f8fafc',
+                  padding: '1rem',
+                  borderRadius: '0.5rem',
+                  border: '1px solid #e5e7eb'
+                }}>
+                  <ul style={{listStyle: 'none', color: '#374151'}}>
+                    <li>📧 Email: privacy@streambackdrops.com</li>
+                    <li>📝 Contact Form: <Link href="/contact" style={{color: '#2563eb'}}>streambackdrops.com/contact</Link></li>
+                  </ul>
+                </div>
+              </section>
             </div>
+            
           </div>
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }
