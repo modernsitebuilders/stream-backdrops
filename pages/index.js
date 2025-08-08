@@ -1,4 +1,4 @@
-// pages/index.js - COMPLETE UPDATED VERSION with Inter font, real images, purple button
+// pages/index.js - FIXED VERSION with Office Spaces
 
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
@@ -14,6 +14,12 @@ const categoryInfo = {
   'professional-shelves': {
     name: 'Professional', 
     description: 'Executive backgrounds for business meetings and presentations',
+    count: 0
+  },
+  'office-spaces': {
+    name: 'Office Spaces',
+    description: 'Professional office environments and workspace backgrounds for business video calls',
+    image: 'minimalist-executive-office-1',
     count: 0
   }
 };
@@ -95,59 +101,49 @@ export default function Home() {
                 🎥 StreamBackdrops
               </div>
               
-              {/* Category Navigation */}
+              {/* Navigation Links */}
               <div style={{
                 display: 'flex',
                 gap: '1rem',
-                alignItems: 'center',
                 flexWrap: 'wrap'
               }}>
-                {Object.entries(categoryInfo).map(([categorySlug, info]) => (
-                  <Link 
-                    key={categorySlug}
-                    href={`/category/${categorySlug}`}
-                    style={{
-                      padding: '0.5rem 1rem',
-                      borderRadius: '0.5rem',
-                      textDecoration: 'none',
-                      color: '#374151',
-                      fontWeight: '500',
-                      background: '#f3f4f6',
-                      transition: 'all 0.2s',
-                      fontFamily: "'Inter', sans-serif"
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.background = '#2563eb';
-                      e.target.style.color = 'white';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.background = '#f3f4f6';
-                      e.target.style.color = '#374151';
-                    }}
-                  >
-                    {info.name}
-                  </Link>
-                ))}
-                
-                <Link href="/blog" style={{
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
-                  color: 'white',
+                <Link href="/category/professional-shelves" style={{
                   padding: '0.5rem 1rem',
                   borderRadius: '0.5rem',
                   textDecoration: 'none',
-                  fontWeight: '600',
-                  transition: 'all 0.2s',
-                  fontFamily: "'Inter', sans-serif"
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'translateY(-1px)';
-                  e.target.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = 'none';
+                  color: '#374151',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  background: '#f9fafb',
+                  border: '1px solid #d1d5db'
                 }}>
-                  📚 Setup Guides
+                  Professional Shelves
+                </Link>
+                
+                <Link href="/category/home-lifestyle" style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#374151',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  background: '#f9fafb',
+                  border: '1px solid #d1d5db'
+                }}>
+                  Home & Lifestyle
+                </Link>
+                
+                <Link href="/category/office-spaces" style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#374151',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  background: '#f9fafb',
+                  border: '1px solid #d1d5db'
+                }}>
+                  Office Spaces
                 </Link>
               </div>
             </nav>
@@ -212,15 +208,16 @@ export default function Home() {
             Browse Categories
           </h2>
           
+          {/* 3-Column Grid for All Categories */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '3rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '2rem',
             marginBottom: '4rem',
-            maxWidth: '800px',
+            maxWidth: '1000px',
             margin: '0 auto 4rem auto'
           }}>
-            {/* Home Lifestyle with Real Image */}
+            {/* Home Lifestyle */}
             <Link href="/category/home-lifestyle" style={{ textDecoration: 'none' }}>
               <div style={{
                 background: 'white',
@@ -238,9 +235,8 @@ export default function Home() {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
               }}>
-                {/* Real Home Lifestyle Image */}
                 <div style={{
-                  height: '250px',
+                  height: '200px',
                   position: 'relative',
                   overflow: 'hidden'
                 }}>
@@ -255,23 +251,18 @@ export default function Home() {
                     loading="eager"
                   />
                 </div>
-                <div style={{ 
-                  padding: '1.5rem',
-                  fontFamily: "'Inter', sans-serif"
-                }}>
+                <div style={{ padding: '1.5rem' }}>
                   <h3 style={{
-                    fontSize: '1.5rem',
+                    fontSize: '1.3rem',
                     fontWeight: '600',
                     color: '#111827',
-                    marginBottom: '0.75rem',
-                    fontFamily: "'Inter', sans-serif"
+                    marginBottom: '0.75rem'
                   }}>
                     Home Lifestyle
                   </h3>
                   <p style={{
                     color: '#6b7280',
-                    fontSize: '1rem',
-                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '0.95rem',
                     lineHeight: '1.5'
                   }}>
                     Comfortable backgrounds perfect for remote work and personal video calls
@@ -280,7 +271,7 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* Professional with Real Image */}
+            {/* Professional */}
             <Link href="/category/professional-shelves" style={{ textDecoration: 'none' }}>
               <div style={{
                 background: 'white',
@@ -298,9 +289,8 @@ export default function Home() {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
               }}>
-                {/* Real Professional Image */}
                 <div style={{
-                  height: '250px',
+                  height: '200px',
                   position: 'relative',
                   overflow: 'hidden'
                 }}>
@@ -315,26 +305,75 @@ export default function Home() {
                     loading="eager"
                   />
                 </div>
-                <div style={{ 
-                  padding: '1.5rem',
-                  fontFamily: "'Inter', sans-serif"
-                }}>
+                <div style={{ padding: '1.5rem' }}>
                   <h3 style={{
-                    fontSize: '1.5rem',
+                    fontSize: '1.3rem',
                     fontWeight: '600',
                     color: '#111827',
-                    marginBottom: '0.75rem',
-                    fontFamily: "'Inter', sans-serif"
+                    marginBottom: '0.75rem'
                   }}>
                     Professional
                   </h3>
                   <p style={{
                     color: '#6b7280',
-                    fontSize: '1rem',
-                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '0.95rem',
                     lineHeight: '1.5'
                   }}>
                     Executive backgrounds for business meetings and professional presentations
+                  </p>
+                </div>
+              </div>
+            </Link>
+
+            {/* Office Spaces - NEW CATEGORY */}
+            <Link href="/category/office-spaces" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'white',
+                borderRadius: '1rem',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                overflow: 'hidden',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+              }}>
+                <div style={{
+                  height: '200px',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  <img
+                    src="/images/office-spaces/minimalist-executive-office-1.webp"
+                    alt="Office Spaces executive office background"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                    loading="eager"
+                  />
+                </div>
+                <div style={{ padding: '1.5rem' }}>
+                  <h3 style={{
+                    fontSize: '1.3rem',
+                    fontWeight: '600',
+                    color: '#111827',
+                    marginBottom: '0.75rem'
+                  }}>
+                    Office Spaces
+                  </h3>
+                  <p style={{
+                    color: '#6b7280',
+                    fontSize: '0.95rem',
+                    lineHeight: '1.5'
+                  }}>
+                    Professional office environments and workspace backgrounds for business video calls
                   </p>
                 </div>
               </div>
