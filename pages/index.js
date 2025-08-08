@@ -166,13 +166,17 @@ export default function Home() {
   alignItems: 'center',
   justifyContent: 'center'
 }}>
- <video 
+<video 
   autoPlay 
   muted 
   playsInline 
   preload="auto"
-  onEnded={(e) => {
-    e.target.currentTime = e.target.duration; // Stay on last frame
+  onTimeUpdate={(e) => {
+    // Stop video just before it ends
+    if (e.target.currentTime >= e.target.duration - 0.1) {
+      e.target.pause();
+      e.target.currentTime = e.target.duration - 0.1;
+    }
   }}
   style={{
     position: 'absolute',
