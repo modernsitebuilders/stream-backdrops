@@ -1,46 +1,51 @@
-// REPLACE your pages/api/metadata.js file with this code
+// pages/api/metadata.js - Updated with cache busting
 import fs from 'fs';
 import path from 'path';
 
 export default function handler(req, res) {
-  // Set CORS headers and disable caching
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.setHeader('Pragma', 'no-cache');
-  res.setHeader('Expires', '0');
-  
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-
   try {
-    const metadataPath = path.join(process.cwd(), 'public', 'data', 'image-metadata-cleaned.json');
-    console.log('Loading metadata from:', metadataPath);
+    // Prevent all caching
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    res.setHeader('Last-Modified', new Date().toUTCString());
+    
+    console.log('🔍 API called at:', new Date().toISOString());
+    
+    const metadataPath = path.join(process.cwd(), 'public', 'data', 'image-metadata.json');
+    console.log('📁 Reading from:', metadataPath);
     
     if (!fs.existsSync(metadataPath)) {
-      console.error('Metadata file not found:', metadataPath);
+      console.log('❌ Metadata file not found');
       return res.status(404).json({ error: 'Metadata file not found' });
     }
-
-    const fileContent = fs.readFileSync(metadataPath, 'utf8');
-    const metadata = JSON.parse(fileContent);
     
-    console.log(`Successfully loaded ${Object.keys(metadata).length} images from metadata file`);
+    // Read fresh data every time
+    const rawData = fs.readFileSync(metadataPath, 'utf8');
+    const metadata = JSON.parse(rawData);
     
-    // Add timestamp to force refresh
-    const response = {
-      ...metadata,
-      _timestamp: Date.now(),
-      _total: Object.keys(metadata).length
-    };
+    // Count categories
+    const categoryCounts = {};
+    Object.values(metadata).forEach(item => {
+      if (item.category) {
+        categoryCounts[item.category] = (categoryCounts[item.category] || 0) + 1;
+      }
+    });
     
-    res.status(200).json(response);
+    console.log('📊 Serving categories:', categoryCounts);
+    
+    const totalImages = Object.keys(metadata).length;
+    console.log(`✅ Serving ${totalImages} total images`);
+    
+    // Return fresh data
+    res.status(200).json(metadata);
+    
   } catch (error) {
-    console.error('Error loading metadata:', error);
-    res.status(500).json({ error: 'Failed to load metadata' });
+    console.error('❌ API Error:', error);
+    res.status(500).json({ 
+      error: 'Failed to load metadata',
+      details: error.message,
+      timestamp: new Date().toISOString()
+    });
   }
 }
