@@ -240,7 +240,7 @@ export default function Home() {
               }}>
                 {/* Real Home Lifestyle Image */}
                 <div style={{
-                  height: '200px',
+                  height: '250px',
                   position: 'relative',
                   overflow: 'hidden'
                 }}>
@@ -299,7 +299,7 @@ export default function Home() {
               }}>
                 {/* Real Professional Image */}
                 <div style={{
-                  height: '200px',
+                  height: '250px',
                   position: 'relative',
                   overflow: 'hidden'
                 }}>
