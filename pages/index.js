@@ -47,7 +47,7 @@ export default function Home() {
           categoryInfo[cat].count = counts[cat] || 0;
         });
 
-        setTotalImages(Object.values(counts).reduce((sum, count) => sum + count, 0));
+        setTotalImages(Object.values(counts).reduce((sum, count) => sum + count, 0);
       } catch (error) {
         console.error('Error loading image counts:', error);
       } finally {
@@ -190,240 +190,229 @@ export default function Home() {
           </p>
         </div>
 
-     {/* 3-Column Grid for All Categories */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem',
-            marginBottom: '4rem',
-            maxWidth: '1000px',
-            margin: '0 auto 4rem auto'
-          }}>
-            {/* Home Lifestyle */}
-            <Link href="/category/home-lifestyle" style={{ textDecoration: 'none' }}>
-              <div style={{
-                background: 'white',
-                borderRadius: '1rem',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                overflow: 'hidden',
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-              }}>
-                <div style={{
-                  height: '200px',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}>
-                  <img
-                    src="/images/home-lifestyle-minimalist-home-office-25.webp"
-                    alt="Home Lifestyle minimalist office background"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
-                    loading="eager"
-                  />
-                </div>
-                <div style={{ padding: '1.5rem' }}>
-                  <h3 style={{
-                    fontSize: '1.3rem',
-                    fontWeight: '600',
-                    color: '#111827',
-                    marginBottom: '0.75rem'
-                  }}>
-                    Home Lifestyle
-                  </h3>
-                  <p style={{
-                    color: '#6b7280',
-                    fontSize: '0.95rem',
-                    lineHeight: '1.5'
-                  }}>
-                    Comfortable backgrounds perfect for remote work and personal video calls
-                  </p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Professional */}
-            <Link href="/category/professional-shelves" style={{ textDecoration: 'none' }}>
-              <div style={{
-                background: 'white',
-                borderRadius: '1rem',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                overflow: 'hidden',
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-              }}>
-                <div style={{
-                  height: '200px',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}>
-                  <img
-                    src="/images/professional-shelves-glass-professional-shelves-16.webp"
-                    alt="Professional glass shelves office background"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
-                    loading="eager"
-                  />
-                </div>
-                <div style={{ padding: '1.5rem' }}>
-                  <h3 style={{
-                    fontSize: '1.3rem',
-                    fontWeight: '600',
-                    color: '#111827',
-                    marginBottom: '0.75rem'
-                  }}>
-                    Professional
-                  </h3>
-                  <p style={{
-                    color: '#6b7280',
-                    fontSize: '0.95rem',
-                    lineHeight: '1.5'
-                  }}>
-                    Executive backgrounds for business meetings and professional presentations
-                  </p>
-                </div>
-              </div>
-            </Link>
-
-            {/* Office Spaces - NEW THIRD CATEGORY */}
-            <Link href="/category/office-spaces" style={{ textDecoration: 'none' }}>
-              <div style={{
-                background: 'white',
-                borderRadius: '1rem',
-                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                overflow: 'hidden',
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-              }}>
-                <div style={{
-                  height: '200px',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}>
-                  <img
-                    src="/images/minimalist-executive-office-1.webp"
-                    alt="Office Spaces minimalist executive office background"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
-                    loading="eager"
-                  />
-                </div>
-                <div style={{ padding: '1.5rem' }}>
-                  <h3 style={{
-                    fontSize: '1.3rem',
-                    fontWeight: '600',
-                    color: '#111827',
-                    marginBottom: '0.75rem'
-                  }}>
-                    Office Spaces
-                  </h3>
-                  <p style={{
-                    color: '#6b7280',
-                    fontSize: '0.95rem',
-                    lineHeight: '1.5'
-                  }}>
-                    Professional office environments and workspace backgrounds for business video calls
-                  </p>
-                </div>
-              </div>
-            </Link>
-          </div>
-
-          {/* Call to Action with Purple Button */}
-          <div style={{
-            textAlign: 'center',
-            background: 'white',
-            padding: '2rem',
-            borderRadius: '1rem',
-            border: '1px solid #e5e7eb',
-            fontFamily: "'Inter', sans-serif"
-          }}>
-
-          {/* Call to Action with Purple Button */}
-          <div style={{
-            textAlign: 'center',
-            background: 'white',
-            padding: '2rem',
-            borderRadius: '1rem',
-            border: '1px solid #e5e7eb',
-            fontFamily: "'Inter', sans-serif"
-          }}>
-            <h3 style={{
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-              color: '#111827',
-              marginBottom: '1rem',
-              fontFamily: "'Inter', sans-serif"
-            }}>
-              Need help setting up virtual backgrounds?
-            </h3>
-            <p style={{
-              color: '#6b7280',
-              marginBottom: '1.5rem',
-              fontFamily: "'Inter', sans-serif"
-            }}>
-              Check out our comprehensive setup guides for perfect results every time.
-            </p>
-            <Link href="/blog-virtual-background-guide" style={{
-              background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
-              color: 'white',
-              padding: '1rem 2rem',
-              borderRadius: '2rem',
-              textDecoration: 'none',
-              fontWeight: '600',
-              fontSize: '1.1rem',
-              display: 'inline-block',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 15px rgba(124, 58, 237, 0.3)',
-              fontFamily: "'Inter', sans-serif"
+        {/* 3-Column Grid for All Categories */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '2rem',
+          marginBottom: '4rem',
+          maxWidth: '1000px',
+          margin: '0 auto 4rem auto'
+        }}>
+          {/* Home Lifestyle */}
+          <Link href="/category/home-lifestyle" style={{ textDecoration: 'none' }}>
+            <div style={{
+              background: 'white',
+              borderRadius: '1rem',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              overflow: 'hidden',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              cursor: 'pointer'
             }}
             onMouseEnter={(e) => {
-              e.target.style.background = 'linear-gradient(135deg, #6d28d9 0%, #9333ea 50%, #a855f7 100%)';
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 8px 25px rgba(124, 58, 237, 0.4)';
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
             }}
             onMouseLeave={(e) => {
-              e.target.style.background = 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)';
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 4px 15px rgba(124, 58, 237, 0.3)';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
             }}>
-              📖 View Complete Setup Guide
-            </Link>
-          </div>
-        </main>
+              <div style={{
+                height: '200px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <img
+                  src="/images/home-lifestyle-minimalist-home-office-25.webp"
+                  alt="Home Lifestyle minimalist office background"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                  loading="eager"
+                />
+              </div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+                  fontSize: '1.3rem',
+                  fontWeight: '600',
+                  color: '#111827',
+                  marginBottom: '0.75rem'
+                }}>
+                  Home Lifestyle
+                </h3>
+                <p style={{
+                  color: '#6b7280',
+                  fontSize: '0.95rem',
+                  lineHeight: '1.5'
+                }}>
+                  Comfortable backgrounds perfect for remote work and personal video calls
+                </p>
+              </div>
+            </div>
+          </Link>
+
+          {/* Professional */}
+          <Link href="/category/professional-shelves" style={{ textDecoration: 'none' }}>
+            <div style={{
+              background: 'white',
+              borderRadius: '1rem',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              overflow: 'hidden',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            }}>
+              <div style={{
+                height: '200px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <img
+                  src="/images/professional-shelves-glass-professional-shelves-16.webp"
+                  alt="Professional glass shelves office background"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                  loading="eager"
+                />
+              </div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+                  fontSize: '1.3rem',
+                  fontWeight: '600',
+                  color: '#111827',
+                  marginBottom: '0.75rem'
+                }}>
+                  Professional
+                </h3>
+                <p style={{
+                  color: '#6b7280',
+                  fontSize: '0.95rem',
+                  lineHeight: '1.5'
+                }}>
+                  Executive backgrounds for business meetings and professional presentations
+                </p>
+              </div>
+            </div>
+          </Link>
+
+          {/* Office Spaces - NEW THIRD CATEGORY */}
+          <Link href="/category/office-spaces" style={{ textDecoration: 'none' }}>
+            <div style={{
+              background: 'white',
+              borderRadius: '1rem',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              overflow: 'hidden',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            }}>
+              <div style={{
+                height: '200px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <img
+                  src="/images/minimalist-executive-office-1.webp"
+                  alt="Office Spaces minimalist executive office background"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                  loading="eager"
+                />
+              </div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+                  fontSize: '1.3rem',
+                  fontWeight: '600',
+                  color: '#111827',
+                  marginBottom: '0.75rem'
+                }}>
+                  Office Spaces
+                </h3>
+                <p style={{
+                  color: '#6b7280',
+                  fontSize: '0.95rem',
+                  lineHeight: '1.5'
+                }}>
+                  Professional office environments and workspace backgrounds for business video calls
+                </p>
+              </div>
+            </div>
+          </Link>
+        </div>
+
+        {/* Call to Action with Purple Button */}
+        <div style={{
+          textAlign: 'center',
+          background: 'white',
+          padding: '2rem',
+          borderRadius: '1rem',
+          border: '1px solid #e5e7eb',
+          fontFamily: "'Inter', sans-serif"
+        }}>
+          <h3 style={{
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            color: '#111827',
+            marginBottom: '1rem',
+            fontFamily: "'Inter', sans-serif"
+          }}>
+            Need help setting up virtual backgrounds?
+          </h3>
+          <p style={{
+            color: '#6b7280',
+            marginBottom: '1.5rem',
+            fontFamily: "'Inter', sans-serif"
+          }}>
+            Check out our comprehensive setup guides for perfect results every time.
+          </p>
+          <Link href="/blog-virtual-background-guide" style={{
+            background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
+            color: 'white',
+            padding: '1rem 2rem',
+            borderRadius: '2rem',
+            textDecoration: 'none',
+            fontWeight: '600',
+            fontSize: '1.1rem',
+            display: 'inline-block',
+            transition: 'all 0.3s ease',
+            boxShadow: '0 4px 15px rgba(124, 58, 237, 0.3)',
+            fontFamily: "'Inter', sans-serif"
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = 'linear-gradient(135deg, #6d28d9 0%, #9333ea 50%, #a855f7 100%)';
+            e.target.style.transform = 'translateY(-2px)';
+            e.target.style.boxShadow = '0 8px 25px rgba(124, 58, 237, 0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)';
+            e.target.style.transform = 'translateY(0)';
+            e.target.style.boxShadow = '0 4px 15px rgba(124, 58, 237, 0.3)';
+          }}>
+            📖 View Complete Setup Guide
+          </Link>
+        </div>
 
         <Footer />
       </div>
