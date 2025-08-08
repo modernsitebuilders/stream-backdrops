@@ -166,25 +166,27 @@ export default function Home() {
   alignItems: 'center',
   justifyContent: 'center'
 }}>
-  <video 
-    autoPlay 
-    muted 
-    loop 
-    playsInline 
-    preload="auto"
-    style={{
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      width: '70%',
-      height: '70%',
-      transform: 'translate(-50%, -50%)',
-      objectFit: 'cover',
-      zIndex: 1
-    }}
-  >
-    <source src="https://stream-backdrops-videos.s3.amazonaws.com/hero_video.mp4" type="video/mp4" />
-  </video>
+ <video 
+  autoPlay 
+  muted 
+  playsInline 
+  preload="auto"
+  onEnded={(e) => {
+    e.target.currentTime = e.target.duration; // Stay on last frame
+  }}
+  style={{
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    width: '70%',
+    height: '70%',
+    transform: 'translate(-50%, -50%)',
+    objectFit: 'cover',
+    zIndex: 1
+  }}
+>
+  <source src="https://stream-backdrops-videos.s3.amazonaws.com/hero_video.mp4" type="video/mp4" />
+</video>
 </section>
 
 {/* Text Section - SEPARATE */}
