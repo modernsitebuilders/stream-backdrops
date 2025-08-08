@@ -47,7 +47,7 @@ export default function Home() {
           categoryInfo[cat].count = counts[cat] || 0;
         });
 
-        setTotalImages(Object.values(counts).reduce((sum, count) => sum + count, 0);
+        setTotalImages(Object.values(counts).reduce((sum, count) => sum + count, 0));
       } catch (error) {
         console.error('Error loading image counts:', error);
       } finally {
