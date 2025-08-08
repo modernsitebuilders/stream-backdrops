@@ -190,25 +190,7 @@ export default function Home() {
           </p>
         </div>
 
-        {/* Category Cards with Real Images */}
-        <main style={{ 
-          maxWidth: '1000px', 
-          margin: '0 auto', 
-          padding: '3rem 2rem',
-          fontFamily: "'Inter', sans-serif"
-        }}>
-          <h2 style={{
-            fontSize: '2rem',
-            fontWeight: 'bold',
-            color: '#111827',
-            textAlign: 'center',
-            marginBottom: '2rem',
-            fontFamily: "'Inter', sans-serif"
-          }}>
-            Browse Categories
-          </h2>
-          
-          {/* 3-Column Grid for All Categories */}
+     {/* 3-Column Grid for All Categories */}
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -325,7 +307,7 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* Office Spaces - NEW CATEGORY */}
+            {/* Office Spaces - NEW THIRD CATEGORY */}
             <Link href="/category/office-spaces" style={{ textDecoration: 'none' }}>
               <div style={{
                 background: 'white',
@@ -349,8 +331,8 @@ export default function Home() {
                   overflow: 'hidden'
                 }}>
                   <img
-                    src="/images/office-spaces/minimalist-executive-office-1.webp"
-                    alt="Office Spaces executive office background"
+                    src="/images/minimalist-executive-office-1.webp"
+                    alt="Office Spaces minimalist executive office background"
                     style={{
                       width: '100%',
                       height: '100%',
@@ -379,6 +361,16 @@ export default function Home() {
               </div>
             </Link>
           </div>
+
+          {/* Call to Action with Purple Button */}
+          <div style={{
+            textAlign: 'center',
+            background: 'white',
+            padding: '2rem',
+            borderRadius: '1rem',
+            border: '1px solid #e5e7eb',
+            fontFamily: "'Inter', sans-serif"
+          }}>
 
           {/* Call to Action with Purple Button */}
           <div style={{
