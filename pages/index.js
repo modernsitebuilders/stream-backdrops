@@ -260,18 +260,19 @@ export default function Home() {
                   fontFamily: "'Inter', sans-serif"
                 }}>
                   <h3 style={{
-                    fontSize: '1.25rem',
+                    fontSize: '1.5rem',
                     fontWeight: '600',
                     color: '#111827',
-                    marginBottom: '0.5rem',
+                    marginBottom: '0.75rem',
                     fontFamily: "'Inter', sans-serif"
                   }}>
                     Home Lifestyle
                   </h3>
                   <p style={{
                     color: '#6b7280',
-                    fontSize: '0.9rem',
-                    fontFamily: "'Inter', sans-serif"
+                    fontSize: '1rem',
+                    fontFamily: "'Inter', sans-serif",
+                    lineHeight: '1.5'
                   }}>
                     Comfortable backgrounds perfect for remote work and personal video calls
                   </p>
@@ -319,18 +320,19 @@ export default function Home() {
                   fontFamily: "'Inter', sans-serif"
                 }}>
                   <h3 style={{
-                    fontSize: '1.25rem',
+                    fontSize: '1.5rem',
                     fontWeight: '600',
                     color: '#111827',
-                    marginBottom: '0.5rem',
+                    marginBottom: '0.75rem',
                     fontFamily: "'Inter', sans-serif"
                   }}>
                     Professional
                   </h3>
                   <p style={{
                     color: '#6b7280',
-                    fontSize: '0.9rem',
-                    fontFamily: "'Inter', sans-serif"
+                    fontSize: '1rem',
+                    fontFamily: "'Inter', sans-serif",
+                    lineHeight: '1.5'
                   }}>
                     Executive backgrounds for business meetings and professional presentations
                   </p>
