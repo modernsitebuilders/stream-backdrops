@@ -1,4 +1,4 @@
-// pages/index.js - CORRECTED COMPLETE VERSION
+// pages/index.js - COMPLETE UPDATED VERSION with Inter font, real images, purple button
 
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
@@ -11,7 +11,7 @@ const categoryInfo = {
     description: 'Comfortable backgrounds for remote work and personal calls',
     count: 0
   },
-  'professional': {
+  'professional-shelves': {
     name: 'Professional', 
     description: 'Executive backgrounds for business meetings and presentations',
     count: 0
@@ -58,9 +58,14 @@ export default function Home() {
         <title>StreamBackdrops - Professional Virtual Backgrounds</title>
         <meta name="description" content="Professional virtual backgrounds for Zoom, Teams, Google Meet and more. High-quality backgrounds for video calls and remote work." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
 
-      <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
+      <div style={{ 
+        minHeight: '100vh', 
+        background: '#f8fafc',
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+      }}>
         {/* Clean Navigation Header */}
         <header style={{
           background: 'white',
@@ -69,7 +74,8 @@ export default function Home() {
           position: 'sticky',
           top: 0,
           zIndex: 50,
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+          fontFamily: "'Inter', sans-serif"
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
             <nav style={{
@@ -83,7 +89,8 @@ export default function Home() {
               <div style={{
                 fontSize: '1.5rem',
                 fontWeight: 'bold',
-                color: '#2563eb'
+                color: '#2563eb',
+                fontFamily: "'Inter', sans-serif"
               }}>
                 🎥 StreamBackdrops
               </div>
@@ -106,7 +113,8 @@ export default function Home() {
                       color: '#374151',
                       fontWeight: '500',
                       background: '#f3f4f6',
-                      transition: 'all 0.2s'
+                      transition: 'all 0.2s',
+                      fontFamily: "'Inter', sans-serif"
                     }}
                     onMouseEnter={(e) => {
                       e.target.style.background = '#2563eb';
@@ -128,7 +136,8 @@ export default function Home() {
                   borderRadius: '0.5rem',
                   textDecoration: 'none',
                   fontWeight: '600',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
+                  fontFamily: "'Inter', sans-serif"
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.transform = 'translateY(-1px)';
@@ -150,13 +159,15 @@ export default function Home() {
           background: 'white', 
           textAlign: 'center', 
           padding: '3rem 2rem',
-          borderBottom: '1px solid #e5e7eb'
+          borderBottom: '1px solid #e5e7eb',
+          fontFamily: "'Inter', sans-serif"
         }}>
           <h1 style={{ 
             fontSize: 'clamp(2.5rem, 6vw, 4rem)', 
             fontWeight: 'bold',
             color: '#2563eb',
-            marginBottom: '1rem'
+            marginBottom: '1rem',
+            fontFamily: "'Inter', sans-serif"
           }}>
             StreamBackdrops
           </h1>
@@ -165,7 +176,8 @@ export default function Home() {
             fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
             fontWeight: '600',
             color: '#111827',
-            marginBottom: '1.5rem'
+            marginBottom: '1.5rem',
+            fontFamily: "'Inter', sans-serif"
           }}>
             Professional Virtual Backgrounds
           </h2>
@@ -173,28 +185,29 @@ export default function Home() {
           <p style={{ 
             color: '#6b7280', 
             fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-            maxWidth: '600px',
+            maxWidth: '700px',
             margin: '0 auto',
-            lineHeight: '1.6'
+            lineHeight: '1.6',
+            fontFamily: "'Inter', sans-serif"
           }}>
-            <span style={{color: '#059669', fontWeight: '600'}}>Free</span> high-quality backgrounds for Zoom, Teams, Google Meet & more.
-            <br />
-            <strong style={{color: '#059669'}}> No signup • No watermarks • Instant download</strong>
+            <span style={{color: '#059669', fontWeight: '600'}}>Free</span> high-quality backgrounds for Zoom, Teams, Google Meet & more. <strong style={{color: '#059669'}}>No signup • No watermarks • Instant download</strong>
           </p>
         </div>
 
-        {/* Category Cards - Just Two Categories */}
+        {/* Category Cards with Real Images */}
         <main style={{ 
           maxWidth: '1000px', 
           margin: '0 auto', 
-          padding: '3rem 2rem'
+          padding: '3rem 2rem',
+          fontFamily: "'Inter', sans-serif"
         }}>
           <h2 style={{
             fontSize: '2rem',
             fontWeight: 'bold',
             color: '#111827',
             textAlign: 'center',
-            marginBottom: '2rem'
+            marginBottom: '2rem',
+            fontFamily: "'Inter', sans-serif"
           }}>
             Browse Categories
           </h2>
@@ -207,7 +220,7 @@ export default function Home() {
             maxWidth: '800px',
             margin: '0 auto 4rem auto'
           }}>
-            {/* Home Lifestyle */}
+            {/* Home Lifestyle with Real Image */}
             <Link href="/category/home-lifestyle" style={{ textDecoration: 'none' }}>
               <div style={{
                 background: 'white',
@@ -225,34 +238,40 @@ export default function Home() {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
               }}>
-                {/* Image placeholder */}
+                {/* Real Home Lifestyle Image */}
                 <div style={{
                   height: '200px',
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}>
-                  <div style={{
-                    fontSize: '3rem',
-                    color: 'white',
-                    textAlign: 'center'
-                  }}>
-                    🏠
-                  </div>
+                  <img
+                    src="/images/home-lifestyle-minimalist-home-office-25.webp"
+                    alt="Home Lifestyle minimalist office background"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                    loading="eager"
+                  />
                 </div>
-                <div style={{ padding: '1.5rem' }}>
+                <div style={{ 
+                  padding: '1.5rem',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
                   <h3 style={{
                     fontSize: '1.25rem',
                     fontWeight: '600',
                     color: '#111827',
-                    marginBottom: '0.5rem'
+                    marginBottom: '0.5rem',
+                    fontFamily: "'Inter', sans-serif"
                   }}>
                     Home Lifestyle
                   </h3>
                   <p style={{
                     color: '#6b7280',
-                    fontSize: '0.9rem'
+                    fontSize: '0.9rem',
+                    fontFamily: "'Inter', sans-serif"
                   }}>
                     Comfortable backgrounds perfect for remote work and personal video calls
                   </p>
@@ -260,7 +279,7 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* Professional */}
+            {/* Professional with Real Image */}
             <Link href="/category/professional-shelves" style={{ textDecoration: 'none' }}>
               <div style={{
                 background: 'white',
@@ -278,34 +297,40 @@ export default function Home() {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
               }}>
-                {/* Image placeholder */}
+                {/* Real Professional Image */}
                 <div style={{
                   height: '200px',
-                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}>
-                  <div style={{
-                    fontSize: '3rem',
-                    color: 'white',
-                    textAlign: 'center'
-                  }}>
-                    💼
-                  </div>
+                  <img
+                    src="/images/professional-shelves-glass-professional-shelves-16.webp"
+                    alt="Professional glass shelves office background"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                    loading="eager"
+                  />
                 </div>
-                <div style={{ padding: '1.5rem' }}>
+                <div style={{ 
+                  padding: '1.5rem',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
                   <h3 style={{
                     fontSize: '1.25rem',
                     fontWeight: '600',
                     color: '#111827',
-                    marginBottom: '0.5rem'
+                    marginBottom: '0.5rem',
+                    fontFamily: "'Inter', sans-serif"
                   }}>
                     Professional
                   </h3>
                   <p style={{
                     color: '#6b7280',
-                    fontSize: '0.9rem'
+                    fontSize: '0.9rem',
+                    fontFamily: "'Inter', sans-serif"
                   }}>
                     Executive backgrounds for business meetings and professional presentations
                   </p>
@@ -314,30 +339,33 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Call to Action */}
+          {/* Call to Action with Purple Button */}
           <div style={{
             textAlign: 'center',
             background: 'white',
             padding: '2rem',
             borderRadius: '1rem',
-            border: '1px solid #e5e7eb'
+            border: '1px solid #e5e7eb',
+            fontFamily: "'Inter', sans-serif"
           }}>
             <h3 style={{
               fontSize: '1.5rem',
               fontWeight: 'bold',
               color: '#111827',
-              marginBottom: '1rem'
+              marginBottom: '1rem',
+              fontFamily: "'Inter', sans-serif"
             }}>
               Need help setting up virtual backgrounds?
             </h3>
             <p style={{
               color: '#6b7280',
-              marginBottom: '1.5rem'
+              marginBottom: '1.5rem',
+              fontFamily: "'Inter', sans-serif"
             }}>
               Check out our comprehensive setup guides for perfect results every time.
             </p>
             <Link href="/blog-virtual-background-guide" style={{
-              background: '#2563eb',
+              background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
               color: 'white',
               padding: '1rem 2rem',
               borderRadius: '2rem',
@@ -345,17 +373,19 @@ export default function Home() {
               fontWeight: '600',
               fontSize: '1.1rem',
               display: 'inline-block',
-              transition: 'all 0.3s ease'
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(124, 58, 237, 0.3)',
+              fontFamily: "'Inter', sans-serif"
             }}
             onMouseEnter={(e) => {
-              e.target.style.background = '#1d4ed8';
+              e.target.style.background = 'linear-gradient(135deg, #6d28d9 0%, #9333ea 50%, #a855f7 100%)';
               e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 8px 25px rgba(37, 99, 235, 0.3)';
+              e.target.style.boxShadow = '0 8px 25px rgba(124, 58, 237, 0.4)';
             }}
             onMouseLeave={(e) => {
-              e.target.style.background = '#2563eb';
+              e.target.style.background = 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)';
               e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = 'none';
+              e.target.style.boxShadow = '0 4px 15px rgba(124, 58, 237, 0.3)';
             }}>
               📖 View Complete Setup Guide
             </Link>

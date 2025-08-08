@@ -1,806 +1,401 @@
-/* ==============================================
-   CRITICAL ABOVE-THE-FOLD STYLES - LOAD FIRST
-   ============================================== */
-
-.critical-above-fold {
-  contain: layout style paint;
-  background: #f9fafb;
-  min-height: 100vh;
-  will-change: auto;
-}
-
-/* Prevent layout shift during font loading */
-@font-face {
-  font-family: 'system-ui';
-  font-display: swap;
-}
-
-/* ==============================================
-   BASE STYLES
-   ============================================== */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #f9fafb;
-  line-height: 1.6;
-  font-size: 1rem;
-}
-
-/* ==============================================
-   TYPOGRAPHY
-   ============================================== */
-
-h1 {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: bold;
-  color: #111827;
-  margin-bottom: 1rem;
-  contain: layout style;
-}
-
-h2 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  contain: layout style;
-}
-
-h3 {
-  contain: layout style;
-}
-
-.logo-blue {
-  color: #2563eb;
-}
-
-.subtitle {
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-  color: #6b7280;
-  margin-bottom: 0.5rem;
-}
-
-.description {
-  font-size: clamp(1rem, 2vw, 1.1rem);
-  color: #9ca3af;
-}
-
-/* ==============================================
-   LAYOUT COMPONENTS
-   ============================================== */
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  contain: layout;
-}
-
-header {
-  background: white;
-  border-bottom: '1px solid #e5e7eb';
-  padding: 2rem 0;
-  text-align: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  contain: layout style;
-}
-
-/* ==============================================
-   CATEGORY GRID & CARDS
-   ============================================== */
-
-.category-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  margin: 4rem 0;
-  padding: 1rem;
-  contain: layout;
-}
-
-.category-card {
-  border-radius: 0.75rem;
-  overflow: hidden;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  background: white;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  contain: layout style paint;
-  height: fit-content;
-}
-
-.category-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-}
-
-/* CRITICAL: Image container to prevent layout shift */
-.category-card > div > div {
-  aspect-ratio: 16/9;
-  position: relative;
-  overflow: hidden;
-  border-radius: 1rem 1rem 0 0;
-  background: #f3f4f6;
-  width: 100%;
-}
-
-.category-card img {
-  background-color: #f3f4f6;
-  min-height: 200px;
-  width: 100%;
-  height: auto;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-}
-
-/* ==============================================
-   IMAGE COMPONENTS
-   ============================================== */
-
-.image-grid {
-  contain: layout;
-}
-
-.image-card {
-  border-radius: 0.75rem;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  background: white;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  contain: layout style paint;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.image-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-}
-
-.image-preview {
-  aspect-ratio: 16/9;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-/* ==============================================
-   FEATURES SECTION
-   ============================================== */
-
-.features {
-  background: #f3f4f6;
-  padding: 4rem 0;
-  margin: 4rem 0;
-}
-
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.feature {
-  text-align: center;
-}
-
-.feature-icon {
-  width: 64px !important;
-  height: 64px !important;
-  background: #dbeafe;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1rem;
-  flex-shrink: 0;
-}
-
-.feature h3 {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #111827;
-  margin-bottom: 0.5rem;
-}
-
-.feature p {
-  color: #6b7280;
-}
-
-/* ==============================================
-   FOOTER
-   ============================================== */
-
-footer {
-  background: #111827;
-  color: white;
-  text-align: center;
-  padding: 3rem 0;
-  margin-top: 4rem;
-}
-
-footer h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: white;
-}
-
-/* ==============================================
-   NAVIGATION
-   ============================================== */
-
-.category-nav {
-  display: flex;
-  overflow-x: auto;
-  gap: 1rem;
-  padding: 1rem;
-  white-space: nowrap;
-  -webkit-overflow-scrolling: touch;
-}
-
-.category-nav a {
-  flex-shrink: 0;
-  padding: 0.5rem 1rem;
-  background: white;
-  border-radius: 1rem;
-  border: 1px solid #e5e7eb;
-  text-decoration: none;
-  color: #6b7280;
-  font-weight: 600;
-  transition: all 0.2s ease;
-}
-
-.category-nav a:hover,
-.category-nav a.active {
-  background: #2563eb;
-  color: white;
-  border-color: #2563eb;
-}
-
-/* ==============================================
-   MODAL
-   ============================================== */
-
-.modal {
-  position: fixed;
-  inset: 0;
-  padding: 1rem;
-  background: rgba(0,0,0,0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 50;
-}
-
-.modal-content {
-  background: white;
-  border-radius: 0.5rem;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-}
-
-/* ==============================================
-   LOADING & ANIMATIONS
-   ============================================== */
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-.image-placeholder {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-}
-
-.loading-placeholder {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 0.5rem;
-}
-
-/* ==============================================
-   UTILITY CLASSES
-   ============================================== */
-
-.premium-image {
-  user-select: none;
-  -webkit-user-drag: none;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-/* CRITICAL: Reserve space for images to prevent CLS */
-[style*="aspectRatio: '16/9'"],
-[style*="aspect-ratio: 16/9"] {
-  aspect-ratio: 16/9;
-  width: 100%;
-  height: auto;
-}
-
-img[loading="lazy"] {
-  content-visibility: auto;
-}
-
-.category-grid .category-card img,
-.image-grid .image-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* ==============================================
-   BLOG LAYOUT
-   ============================================== */
-
-.blog-container {
-  max-width: 800px !important;
-  margin: 0 auto !important;
-  padding: 0 clamp(2rem, 5vw, 4rem) !important;
-}
-
-/* Blog article containers */
-article {
-  max-width: 800px !important;
-  margin: 0 auto !important;
-  padding: 0 clamp(2rem, 5vw, 4rem) !important;
-  line-height: 1.7 !important;
-}
-
-/* Blog content wrapper */
-.blog-content {
-  max-width: 800px !important;
-  margin: 0 auto !important;
-  padding: 0 clamp(2rem, 5vw, 4rem) !important;
-}
-
-/* Generic content containers for blogs */
-div[style*="max-width"] {
-  padding-left: clamp(2rem, 5vw, 4rem) !important;
-  padding-right: clamp(2rem, 5vw, 4rem) !important;
-}
-
-/* Better text readability in blogs */
-.blog-container p,
-article p,
-.blog-content p {
-  font-size: clamp(1rem, 2vw, 1.1rem) !important;
-  line-height: 1.7 !important;
-  margin-bottom: 1.5rem !important;
-  color: #374151 !important;
-}
-
-/* Blog headings spacing */
-.blog-container h1,
-.blog-container h2,
-.blog-container h3,
-article h1,
-article h2,
-article h3 {
-  margin: 2rem 0 1rem 0 !important;
-  line-height: 1.3 !important;
-}
-
-/* Blog lists spacing */
-.blog-container ul,
-.blog-container ol,
-article ul,
-article ol {
-  margin: 1.5rem 0 !important;
-  padding-left: 2rem !important;
-}
-
-.blog-container li,
-article li {
-  margin-bottom: 0.5rem !important;
-  line-height: 1.6 !important;
-}
-
-/* ==============================================
-   MOUNTING STATES
-   ============================================== */
-
-[data-mounted="false"] {
-  opacity: 0;
-  pointer-events: none;
-}
-
-[data-mounted="true"] {
-  opacity: 1;
-  pointer-events: auto;
-  transition: opacity 0.3s ease;
-}
-
-/* ==============================================
-   RESPONSIVE DESIGN - MOBILE FIRST
-   ============================================== */
-
-/* Small screens (phones) */
-@media (max-width: 768px) {
-  /* CRITICAL: Performance optimizations for mobile */
-  * {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-drag: none;
-    animation-duration: 0.2s !important;
-    transition-duration: 0.2s !important;
+// pages/index.js - COMPLETE UPDATED VERSION with Inter font, real images, purple button
+
+import { useState, useEffect } from 'react';
+import Head from 'next/head';
+import Link from 'next/link';
+import Footer from '../components/Footer';
+
+const categoryInfo = {
+  'home-lifestyle': {
+    name: 'Home Lifestyle',
+    description: 'Comfortable backgrounds for remote work and personal calls',
+    count: 0
+  },
+  'professional-shelves': {
+    name: 'Professional', 
+    description: 'Executive backgrounds for business meetings and presentations',
+    count: 0
   }
+};
 
-  body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeSpeed;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-  }
+export default function Home() {
+  const [totalImages, setTotalImages] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  html {
-    scroll-behavior: auto;
-    -webkit-text-size-adjust: 100%;
-  }
+  useEffect(() => {
+    async function loadImageCounts() {
+      try {
+        const response = await fetch('/api/metadata');
+        const metadata = await response.json();
+        
+        // Count images by category
+        const counts = {};
+        Object.values(metadata).forEach(data => {
+          if (data.category && !data.isPremium) {
+            counts[data.category] = (counts[data.category] || 0) + 1;
+          }
+        });
 
-  /* CRITICAL: Hardware acceleration */
-  header,
-  section,
-  .container,
-  .category-card,
-  .image-card {
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
+        // Update category info with counts
+        Object.keys(categoryInfo).forEach(cat => {
+          categoryInfo[cat].count = counts[cat] || 0;
+        });
 
-  /* CRITICAL: Layout optimizations */
-  .container {
-    padding: 1rem !important;
-    max-width: 100% !important;
-    text-align: center;
-  }
+        setTotalImages(Object.values(counts).reduce((sum, count) => sum + count, 0));
+      } catch (error) {
+        console.error('Error loading image counts:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  .category-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1.5rem !important;
-    margin: 2rem 0 !important;
-    padding: 1rem !important;
-  }
+    loadImageCounts();
+  }, []);
 
-  .image-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 1.5rem !important;
-    padding: 0 1rem !important;
-    justify-items: center !important;
-    width: 100% !important;
-  }
+  return (
+    <>
+      <Head>
+        <title>StreamBackdrops - Professional Virtual Backgrounds</title>
+        <meta name="description" content="Professional virtual backgrounds for Zoom, Teams, Google Meet and more. High-quality backgrounds for video calls and remote work." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      </Head>
 
-  .image-card {
-    width: 100% !important;
-    max-width: 350px !important;
-    margin: 0 auto !important;
-    justify-self: center !important;
-  }
+      <div style={{ 
+        minHeight: '100vh', 
+        background: '#f8fafc',
+        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+      }}>
+        {/* Clean Navigation Header */}
+        <header style={{
+          background: 'white',
+          borderBottom: '1px solid #e5e7eb',
+          padding: '1rem 0',
+          position: 'sticky',
+          top: 0,
+          zIndex: 50,
+          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+          fontFamily: "'Inter', sans-serif"
+        }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+            <nav style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '1rem'
+            }}>
+              {/* Brand */}
+              <div style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                color: '#2563eb',
+                fontFamily: "'Inter', sans-serif"
+              }}>
+                🎥 StreamBackdrops
+              </div>
+              
+              {/* Category Navigation */}
+              <div style={{
+                display: 'flex',
+                gap: '1rem',
+                alignItems: 'center',
+                flexWrap: 'wrap'
+              }}>
+                {Object.entries(categoryInfo).map(([categorySlug, info]) => (
+                  <Link 
+                    key={categorySlug}
+                    href={`/category/${categorySlug}`}
+                    style={{
+                      padding: '0.5rem 1rem',
+                      borderRadius: '0.5rem',
+                      textDecoration: 'none',
+                      color: '#374151',
+                      fontWeight: '500',
+                      background: '#f3f4f6',
+                      transition: 'all 0.2s',
+                      fontFamily: "'Inter', sans-serif"
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.background = '#2563eb';
+                      e.target.style.color = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.background = '#f3f4f6';
+                      e.target.style.color = '#374151';
+                    }}
+                  >
+                    {info.name}
+                  </Link>
+                ))}
+                
+                <Link href="/blog" style={{
+                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                  color: 'white',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  fontWeight: '600',
+                  transition: 'all 0.2s',
+                  fontFamily: "'Inter', sans-serif"
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'translateY(-1px)';
+                  e.target.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = 'none';
+                }}>
+                  📚 Setup Guides
+                </Link>
+              </div>
+            </nav>
+          </div>
+        </header>
 
-  /* Blog specific mobile styles */
-  .blog-container,
-  article,
-  .blog-content {
-    padding: 0 1.5rem !important;
-  }
+        {/* Hero Section */}
+        <div style={{ 
+          background: 'white', 
+          textAlign: 'center', 
+          padding: '3rem 2rem',
+          borderBottom: '1px solid #e5e7eb',
+          fontFamily: "'Inter', sans-serif"
+        }}>
+          <h1 style={{ 
+            fontSize: 'clamp(2.5rem, 6vw, 4rem)', 
+            fontWeight: 'bold',
+            color: '#2563eb',
+            marginBottom: '1rem',
+            fontFamily: "'Inter', sans-serif"
+          }}>
+            StreamBackdrops
+          </h1>
+          
+          <h2 style={{
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+            fontWeight: '600',
+            color: '#111827',
+            marginBottom: '1.5rem',
+            fontFamily: "'Inter', sans-serif"
+          }}>
+            Professional Virtual Backgrounds
+          </h2>
+          
+          <p style={{ 
+            color: '#6b7280', 
+            fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+            maxWidth: '600px',
+            margin: '0 auto',
+            lineHeight: '1.6',
+            fontFamily: "'Inter', sans-serif"
+          }}>
+            <span style={{color: '#059669', fontWeight: '600'}}>Free</span> high-quality backgrounds for Zoom, Teams, Google Meet & more.
+            <br />
+            <strong style={{color: '#059669'}}> No signup • No watermarks • Instant download</strong>
+          </p>
+        </div>
 
-  /* CRITICAL: Typography optimizations */
-  h1 {
-    font-size: 2.5rem !important;
-    line-height: 1.1 !important;
-    font-weight: 700 !important;
-  }
+        {/* Category Cards with Real Images */}
+        <main style={{ 
+          maxWidth: '1000px', 
+          margin: '0 auto', 
+          padding: '3rem 2rem',
+          fontFamily: "'Inter', sans-serif"
+        }}>
+          <h2 style={{
+            fontSize: '2rem',
+            fontWeight: 'bold',
+            color: '#111827',
+            textAlign: 'center',
+            marginBottom: '2rem',
+            fontFamily: "'Inter', sans-serif"
+          }}>
+            Browse Categories
+          </h2>
+          
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '3rem',
+            marginBottom: '4rem',
+            maxWidth: '800px',
+            margin: '0 auto 4rem auto'
+          }}>
+            {/* Home Lifestyle with Real Image */}
+            <Link href="/category/home-lifestyle" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'white',
+                borderRadius: '1rem',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                overflow: 'hidden',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+              }}>
+                {/* Real Home Lifestyle Image */}
+                <div style={{
+                  height: '200px',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  <img
+                    src="/images/home-lifestyle-minimalist-home-office-25.webp"
+                    alt="Home Lifestyle minimalist office background"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                    loading="eager"
+                  />
+                </div>
+                <div style={{ 
+                  padding: '1.5rem',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  <h3 style={{
+                    fontSize: '1.25rem',
+                    fontWeight: '600',
+                    color: '#111827',
+                    marginBottom: '0.5rem',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    Home Lifestyle
+                  </h3>
+                  <p style={{
+                    color: '#6b7280',
+                    fontSize: '0.9rem',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    Comfortable backgrounds perfect for remote work and personal video calls
+                  </p>
+                </div>
+              </div>
+            </Link>
 
-  h2 {
-    font-size: 2rem !important;
-    line-height: 1.2 !important;
-  }
+            {/* Professional with Real Image */}
+            <Link href="/category/professional-shelves" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'white',
+                borderRadius: '1rem',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                overflow: 'hidden',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+              }}>
+                {/* Real Professional Image */}
+                <div style={{
+                  height: '200px',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  <img
+                    src="/images/professional-shelves-glass-professional-shelves-16.webp"
+                    alt="Professional glass shelves office background"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                    loading="eager"
+                  />
+                </div>
+                <div style={{ 
+                  padding: '1.5rem',
+                  fontFamily: "'Inter', sans-serif"
+                }}>
+                  <h3 style={{
+                    fontSize: '1.25rem',
+                    fontWeight: '600',
+                    color: '#111827',
+                    marginBottom: '0.5rem',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    Professional
+                  </h3>
+                  <p style={{
+                    color: '#6b7280',
+                    fontSize: '0.9rem',
+                    fontFamily: "'Inter', sans-serif"
+                  }}>
+                    Executive backgrounds for business meetings and professional presentations
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </div>
 
-  h3 {
-    font-size: 1.5rem !important;
-    line-height: 1.3 !important;
-  }
+          {/* Call to Action with Purple Button */}
+          <div style={{
+            textAlign: 'center',
+            background: 'white',
+            padding: '2rem',
+            borderRadius: '1rem',
+            border: '1px solid #e5e7eb',
+            fontFamily: "'Inter', sans-serif"
+          }}>
+            <h3 style={{
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+              color: '#111827',
+              marginBottom: '1rem',
+              fontFamily: "'Inter', sans-serif"
+            }}>
+              Need help setting up virtual backgrounds?
+            </h3>
+            <p style={{
+              color: '#6b7280',
+              marginBottom: '1.5rem',
+              fontFamily: "'Inter', sans-serif"
+            }}>
+              Check out our comprehensive setup guides for perfect results every time.
+            </p>
+            <Link href="/blog-virtual-background-guide" style={{
+              background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
+              color: 'white',
+              padding: '1rem 2rem',
+              borderRadius: '2rem',
+              textDecoration: 'none',
+              fontWeight: '600',
+              fontSize: '1.1rem',
+              display: 'inline-block',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 4px 15px rgba(124, 58, 237, 0.3)',
+              fontFamily: "'Inter', sans-serif"
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, #6d28d9 0%, #9333ea 50%, #a855f7 100%)';
+              e.target.style.transform = 'translateY(-2px)';
+              e.target.style.boxShadow = '0 8px 25px rgba(124, 58, 237, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)';
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.boxShadow = '0 4px 15px rgba(124, 58, 237, 0.3)';
+            }}>
+              📖 View Complete Setup Guide
+            </Link>
+          </div>
+        </main>
 
-  /* CRITICAL: Touch optimizations */
-  button,
-  a {
-    min-height: 44px !important;
-    min-width: 44px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    touch-action: manipulation !important;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-  }
-
-  /* CRITICAL: Navigation optimizations */
-  nav {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-  }
-
-  nav::-webkit-scrollbar {
-    display: none !important;
-  }
-
-  /* CRITICAL: Performance optimizations */
-  .category-card,
-  .image-card {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
-    contain: layout style paint !important;
-    will-change: auto !important;
-  }
-
-  .category-card:hover,
-  .image-card:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-  }
-
-  /* CRITICAL: Disable hover effects on touch devices */
-  *:hover {
-    transform: none !important;
-    box-shadow: inherit !important;
-  }
-
-  /* CRITICAL: Image optimizations */
-  img {
-    height: auto;
-    width: 100%;
-    display: block;
-    max-width: 100%;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-  }
-
-  img[loading="eager"],
-  img[priority="true"] {
-    content-visibility: auto !important;
-    contain-intrinsic-size: 400px 225px !important;
-  }
-
-  /* CRITICAL: Modal optimizations */
-  div[style*="position: fixed"][style*="zIndex: 9999"] {
-    padding: 0.5rem !important;
-  }
-
-  div[style*="position: fixed"][style*="zIndex: 9999"] > div {
-    max-width: 95vw !important;
-    max-height: 85vh !important;
-    overflow-y: auto !important;
-  }
-
-  div[style*="position: fixed"][style*="zIndex: 99999"] {
-    padding: 1rem !important;
-  }
-
-  div[style*="position: fixed"][style*="zIndex: 99999"] > div {
-    max-width: 95vw !important;
-    max-height: 90vh !important;
-  }
-
-  div[style*="position: fixed"][style*="zIndex: 99999"] img {
-    max-height: 60vh !important;
-  }
-
-  /* CRITICAL: Gradient fallbacks for performance */
-  [style*="linear-gradient"],
-  header[style*="linear-gradient"] {
-    background: #2563eb !important;
-  }
-
-  /* CRITICAL: Text rendering optimizations */
-  p, span, div {
-    text-rendering: optimizeSpeed !important;
-    -webkit-font-smoothing: subpixel-antialiased !important;
-  }
-
-  /* Hide features section initially on mobile */
-  .features {
-    display: none;
-  }
-
-  .features.visible {
-    display: block;
-  }
-}
-
-/* Very small screens (iPhone SE, etc.) */
-@media (max-width: 375px) {
-  .container {
-    padding: 0.75rem !important;
-  }
-
-  h1 {
-    font-size: 2rem !important;
-  }
-
-  nav {
-    gap: 0.25rem !important;
-  }
-
-  nav a {
-    padding: 0.5rem 0.75rem !important;
-    font-size: 0.75rem !important;
-  }
-}
-
-/* Tablets */
-@media (min-width: 641px) and (max-width: 1023px) {
-  .category-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-  
-  .image-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-  
-  .container {
-    padding: 1.5rem;
-  }
-
-  /* Blog specific tablet styles */
-  .blog-container,
-  article,
-  .blog-content {
-    padding: 0 3rem !important;
-  }
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-  .category-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
-    gap: 2rem !important;
-    padding: 2rem !important;
-  }
-  
-  .image-grid {
-   grid-template-columns: repeat(2, 1fr) !important;
-    gap: 2rem !important;
-        display: grid !important;
-
-  }
-  .image-card {
-    max-width: none !important;
-      width: 100% !important;
-  }
-
-  .category-card {
-    height: auto !important;
-  }
-  
-  .category-card > div > div {
-    aspect-ratio: 16/9 !important;
-    height: 200px !important;
-  }
-}
-
-/* Large Desktop */
-@media (min-width: 1200px) {
-  .category-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-  gap: 2.5rem !important;
- }
-  
-  .image-grid {
-   grid-template-columns: repeat(2, 1fr) !important;
-    gap: 2.5rem !important;
-  }
-  .image-card {
-    max-width: none !important;
-      width: 100% !important;
-  }
-
-  .category-card > div > div {
-    height: 220px !important;
-  }
-}
-
-/* Landscape mobile */
-@media (max-width: 768px) and (orientation: landscape) {
-  header {
-    padding: 2rem 1rem !important;
-    min-height: auto !important;
-  }
-
-  section {
-    padding: 2rem 1rem !important;
-  }
-}
-
-/* Portrait mobile specific */
-@media (max-width: 768px) and (orientation: portrait) {
-  .image-grid {
-    grid-template-columns: 1fr !important;
-    justify-items: center !important;
-    padding: 0 0.5rem !important;
-  }
-
-  div[style*="maxHeight: 70vh"] {
-    max-height: 50vh !important;
-  }
-}
-
-/* ==============================================
-   ACCESSIBILITY & PREFERENCES
-   ============================================== */
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  
-  .category-card,
-  .image-card,
-  button {
-    transition: none;
-  }
-  
-  .category-card:hover,
-  .image-card:hover {
-    transform: none;
-  }
-}
-
-@media (prefers-contrast: high) {
-  .category-card,
-  .feature-icon {
-    border: 2px solid #000;
-  }
-}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  img {
-    image-rendering: -webkit-optimize-contrast !important;
-    image-rendering: crisp-edges !important;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #111827 !important;
-    color: #f9fafb !important;
-  }
+        <Footer />
+      </div>
+    </>
+  );
 }
