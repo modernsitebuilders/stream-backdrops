@@ -261,7 +261,7 @@ export default function Home() {
             </Link>
 
             {/* Professional */}
-            <Link href="/category/professional" style={{ textDecoration: 'none' }}>
+            <Link href="/category/professional-shelves" style={{ textDecoration: 'none' }}>
               <div style={{
                 background: 'white',
                 borderRadius: '1rem',
