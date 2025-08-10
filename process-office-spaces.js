@@ -7,72 +7,37 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-// OFFICE SPACE IMAGES - Your actual 15 files from zoom-images folder
+// CASUAL BACKGROUND IMAGES - Your actual 7 files from zoom-images folder
 const officeSpaceImages = [
-  'u9972584128_Empty_minimalist_high-end_executive_office_with_s_2cab17be-6b5d-4e4b-8470-c2253e75caec_0.png',
-  'u9972584128_Photorealistic_home_office_with_wood_accent_wall__32c2ca0f-782a-461f-bded-72e2b505b001_1.png',
-  'u9972584128_Photorealistic_home_office_with_wood_accent_wall__32c2ca0f-782a-461f-bded-72e2b505b001_2.png',
-  'u9972584128_Professional_consultation_office_interior_photogr_2a8e15a0-46b4-486a-9caa-82efdbe2e6bd_0.png',
-  'u9972584128_Professional_consultation_office_interior_photogr_2a8e15a0-46b4-486a-9caa-82efdbe2e6bd_1.png',
-  'u9972584128_Professional_office_interior_photograph_with_sing_5f03ac15-f293-483c-8324-418ea938c0fa_0.png',
-  'u9972584128_Professional_office_interior_photograph_with_sing_5f03ac15-f293-483c-8324-418ea938c0fa_1.png',
-  'u9972584128_Real_corner_office_photograph_with_floor-to-ceili_b587704b-319b-44a0-a04f-8ba5deb88785_0.png',
-  'u9972584128_Real_home_office_photograph_with_light_wood_accen_697e2714-c527-42a6-8cf3-d1b3c53a275d_1.png',
-  'u9972584128_Real_home_office_photograph_with_single_concrete__f2a938b1-8bbf-4f96-b9f3-5e01d0674dc8_1.png',
-  'u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_0.png',
-  'u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_2.png',
-  'u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_3.png',
-  'u9972584128_Real_office_photograph_with_single_dark_wood_acce_dd48ae64-c8ed-43bc-8c63-3370109d1ff4_0.png',
-  'u9972584128_Real_office_photograph_with_single_dark_wood_acce_dd48ae64-c8ed-43bc-8c63-3370109d1ff4_3.png'
+  'u9972584128_Minimalist_basement_office_wall_with_simple_shelv_c7c866d7-68d8-4ab1-b295-499ff38ca653_1.png',
+  'u9972584128_Minimalist_kitchen_workspace_wall_with_open_shelv_e98908f2-e6e0-4347-a51d-d960a0b365ca_3.png',
+  'u9972584128_Minimalist_spare_room_office_wall_with_basic_shel_162ad3d9-b905-40ab-976a-62eb112dec33_0.png',
+  'u9972584128_Minimalist_student_bedroom_wall_with_simple_wood__211b40d0-57ca-4d59-b208-b11c099824c7_1.png',
+  'u9972584128_Minimalist_student_bedroom_wall_with_simple_wood__211b40d0-57ca-4d59-b208-b11c099824c7_2.png',
+  'u9972584128_Photorealistic_minimalist_cozy_home_office_wall_w_63489c2f-3223-4635-921b-3f6f7581a6fa_3.png',
+  'u9972584128_Photorealistic_minimalist_garden_shed_wall_with_w_ffffdf96-986b-4913-a838-f2e0ab7ac84c_2.png'
 ];
 
-// Function to extract meaningful name from filename
+// Manual mapping for better, descriptive names
 function extractImageType(filename) {
-  // Remove the prefix and UUID parts
-  let name = filename.replace('u9972584128_', '');
-  name = name.replace(/_[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}_\d+\.png$/, '');
+  // Create a mapping of exact filenames to descriptive names
+  const filenameMap = {
+    'u9972584128_Minimalist_basement_office_wall_with_simple_shelv_c7c866d7-68d8-4ab1-b295-499ff38ca653_1.png': 'Casual Basement Office',
+    
+    'u9972584128_Minimalist_kitchen_workspace_wall_with_open_shelv_e98908f2-e6e0-4347-a51d-d960a0b365ca_3.png': 'Kitchen Workspace',
+    
+    'u9972584128_Minimalist_spare_room_office_wall_with_basic_shel_162ad3d9-b905-40ab-976a-62eb112dec33_0.png': 'Spare Room Office',
+    
+    'u9972584128_Minimalist_student_bedroom_wall_with_simple_wood__211b40d0-57ca-4d59-b208-b11c099824c7_1.png': 'Student Bedroom Office',
+    'u9972584128_Minimalist_student_bedroom_wall_with_simple_wood__211b40d0-57ca-4d59-b208-b11c099824c7_2.png': 'Cozy Student Workspace',
+    
+    'u9972584128_Photorealistic_minimalist_cozy_home_office_wall_w_63489c2f-3223-4635-921b-3f6f7581a6fa_3.png': 'Cozy Home Office',
+    
+    'u9972584128_Photorealistic_minimalist_garden_shed_wall_with_w_ffffdf96-986b-4913-a838-f2e0ab7ac84c_2.png': 'Garden Shed Office'
+  };
   
-  // Convert underscores to spaces and clean up
-  name = name.replace(/_/g, ' ');
-  
-  // Handle specific patterns from your office space images
-  if (name.includes('Empty minimalist high-end executive office with s')) {
-    return 'Minimalist Executive Office';
-  }
-  if (name.includes('Photorealistic home office with wood accent wall')) {
-    return 'Home Office with Wood Accent Wall';
-  }
-  if (name.includes('Professional consultation office interior photogr')) {
-    return 'Professional Consultation Office';
-  }
-  if (name.includes('Professional office interior photograph with sing')) {
-    return 'Professional Office Interior';
-  }
-  if (name.includes('Real corner office photograph with floor-to-ceili')) {
-    return 'Corner Office with Floor-to-Ceiling Windows';
-  }
-  if (name.includes('Real home office photograph with light wood accen')) {
-    return 'Home Office with Light Wood Accent';
-  }
-  if (name.includes('Real home office photograph with single concrete')) {
-    return 'Modern Home Office with Concrete Wall';
-  }
-  if (name.includes('Real office photograph with marble accent wall on')) {
-    return 'Office with Marble Accent Wall';
-  }
-  if (name.includes('Real office photograph with single dark wood acce')) {
-    return 'Office with Dark Wood Accent';
-  }
-  
-  // Fallback cleanup
-  if (name.includes(' with ')) {
-    name = name.split(' with ')[0];
-  }
-  
-  // Capitalize properly
-  name = name.replace(/\b\w/g, l => l.toUpperCase());
-  
-  return name || 'Professional Office Space';
+  // Return the mapped name or a fallback
+  return filenameMap[filename] || 'Casual Home Office';
 }
 
 // Function to create SEO-friendly filename
@@ -88,23 +53,23 @@ function createSEOFilename(originalName, index) {
     .replace(/^-|-$/g, '');
     
   // Add index to avoid duplicates
-  return `${cleanName}-${index + 1}.webp`;
+  return `casual-${cleanName}-${index + 1}.webp`;
 }
 
-// Function to generate metadata for office spaces
+// Function to generate metadata for casual backgrounds
 function generateOfficeMetadata(filename) {
   const type = extractImageType(filename);
   
   const title = type;
-  const description = `Professional ${type.toLowerCase()} virtual background perfect for business meetings and video conferences`;
-  const keywords = ['office space', 'virtual background', 'professional', 'business meeting', 'video conference', 'corporate', 'workplace'];
+  const description = `Casual ${type.toLowerCase()} virtual background perfect for relaxed video calls and remote work`;
+  const keywords = ['casual office', 'virtual background', 'home office', 'remote work', 'video call', 'relaxed workspace', 'informal meeting'];
   
   return { title, description, keywords };
 }
 
 // Main processing function
 function processOfficeSpaces() {
-  console.log('🏢 Processing Office Spaces category...\n');
+  console.log('🏠 Processing Casual Backgrounds category...\n');
   
   // Check if source directory exists
   const sourceDir = path.join(__dirname, '..', 'zoom-images');
@@ -115,7 +80,7 @@ function processOfficeSpaces() {
   }
   
   // Create output directories
-  const outputDir = path.join(__dirname, 'public', 'images', 'office-spaces');
+  const outputDir = path.join(__dirname, 'public', 'images');
   const dataDir = path.join(__dirname, 'data');
   
   // Create directories if they don't exist
@@ -126,7 +91,7 @@ function processOfficeSpaces() {
     }
   });
   
-  console.log(`📊 Processing ${officeSpaceImages.length} office space images...\n`);
+  console.log(`📊 Processing ${officeSpaceImages.length} casual background images...\n`);
   
   const processedImages = [];
   const errors = [];
@@ -172,7 +137,7 @@ function processOfficeSpaces() {
         title: metadata.title,
         description: metadata.description,
         keywords: metadata.keywords,
-        category: 'office-spaces'
+        category: 'casual-backgrounds'
       });
       
     } catch (error) {
@@ -181,20 +146,20 @@ function processOfficeSpaces() {
     }
   });
   
-  // Generate data file for office spaces
+  // Generate data file for casual backgrounds
   const officeSpacesData = {
-    category: 'office-spaces',
-    name: 'Office Spaces',
-    description: 'Professional office environments and workspace backgrounds for business video calls',
+    category: 'casual-backgrounds',
+    name: 'Casual Backgrounds',
+    description: 'Relaxed and approachable home office backgrounds for comfortable video calls',
     count: processedImages.length,
     images: processedImages
   };
   
   // Save data file
-  const dataFile = path.join(dataDir, 'office-spaces.json');
+  const dataFile = path.join(dataDir, 'casual-backgrounds.json');
   fs.writeFileSync(dataFile, JSON.stringify(officeSpacesData, null, 2));
   
-  console.log(`\n✅ Office Spaces processing complete!`);
+  console.log(`\n✅ Casual Backgrounds processing complete!`);
   console.log(`📊 Successfully processed: ${processedImages.length} images`);
   console.log(`❌ Errors: ${errors.length}`);
   console.log(`💾 Data saved to: ${dataFile}`);
@@ -205,8 +170,8 @@ function processOfficeSpaces() {
   }
   
   console.log('\n🔄 Next steps:');
-  console.log('1. Update your site configuration to include the "office-spaces" category');
-  console.log('2. Add office-spaces to your navigation menu');
+  console.log('1. Update your homepage to include casual-backgrounds category');
+  console.log('2. Create pages/category/casual-backgrounds.js page');
   console.log('3. Test the category page to ensure images load correctly');
   console.log('4. Upload the processed images to your hosting/CDN');
   
@@ -219,21 +184,68 @@ function processOfficeSpaces() {
 
 // Update category configuration helper
 function generateCategoryUpdate() {
-  console.log('\n📝 Add this to your category configuration:');
+  console.log('\n📝 Add this to your homepage categories:');
   console.log('==========================================');
   console.log(`
-  'office-spaces': {
-    name: 'Office Spaces',
-    description: 'Professional office environments and workspace backgrounds for business video calls',
-    image: 'minimalist-executive-office-1', // Use your first processed image name
-    count: ${officeSpaceImages.length}
-  }`);
+          {/* Casual Backgrounds - NEW THIRD CATEGORY */}
+          <Link href="/category/casual-backgrounds" style={{ textDecoration: 'none' }}>
+            <div style={{
+              background: 'white',
+              borderRadius: '1rem',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              overflow: 'hidden',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            }}>
+              <div style={{
+                height: '200px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <img
+                  src="/images/casual-cozy-home-office-6.webp"
+                  alt="Casual home office background"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                  loading="eager"
+                />
+              </div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+                  fontSize: '1.3rem',
+                  fontWeight: '600',
+                  color: '#111827',
+                  marginBottom: '0.75rem'
+                }}>
+                  Casual Backgrounds
+                </h3>
+                <p style={{
+                  color: '#6b7280',
+                  fontSize: '0.95rem',
+                  lineHeight: '1.5'
+                }}>
+                  Relaxed and approachable home office backgrounds for comfortable video calls
+                </p>
+              </div>
+            </div>
+          </Link>`);
 }
 
 // Run the processing
 if (require.main === module) {
-  console.log('🏢 Office Spaces Image Processor');
-  console.log('================================\n');
+  console.log('🏠 Casual Backgrounds Image Processor');
+  console.log('====================================\n');
   
   const result = processOfficeSpaces();
   generateCategoryUpdate();

@@ -1,42 +1,26 @@
 Office Space Image Files from zoom-images folder
 ================================================
 
-Total files found: 15
+Total files found: 7
 Scanned directory: C:\Users\Dave\Desktop\stream-backdrops\zoom-images
-Generated on: 8/8/2025, 9:51:05 AM
+Generated on: 8/9/2025, 4:55:45 PM
 
 Files:
-1. u9972584128_Empty_minimalist_high-end_executive_office_with_s_2cab17be-6b5d-4e4b-8470-c2253e75caec_0.png
-2. u9972584128_Photorealistic_home_office_with_wood_accent_wall__32c2ca0f-782a-461f-bded-72e2b505b001_1.png
-3. u9972584128_Photorealistic_home_office_with_wood_accent_wall__32c2ca0f-782a-461f-bded-72e2b505b001_2.png
-4. u9972584128_Professional_consultation_office_interior_photogr_2a8e15a0-46b4-486a-9caa-82efdbe2e6bd_0.png
-5. u9972584128_Professional_consultation_office_interior_photogr_2a8e15a0-46b4-486a-9caa-82efdbe2e6bd_1.png
-6. u9972584128_Professional_office_interior_photograph_with_sing_5f03ac15-f293-483c-8324-418ea938c0fa_0.png
-7. u9972584128_Professional_office_interior_photograph_with_sing_5f03ac15-f293-483c-8324-418ea938c0fa_1.png
-8. u9972584128_Real_corner_office_photograph_with_floor-to-ceili_b587704b-319b-44a0-a04f-8ba5deb88785_0.png
-9. u9972584128_Real_home_office_photograph_with_light_wood_accen_697e2714-c527-42a6-8cf3-d1b3c53a275d_1.png
-10. u9972584128_Real_home_office_photograph_with_single_concrete__f2a938b1-8bbf-4f96-b9f3-5e01d0674dc8_1.png
-11. u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_0.png
-12. u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_2.png
-13. u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_3.png
-14. u9972584128_Real_office_photograph_with_single_dark_wood_acce_dd48ae64-c8ed-43bc-8c63-3370109d1ff4_0.png
-15. u9972584128_Real_office_photograph_with_single_dark_wood_acce_dd48ae64-c8ed-43bc-8c63-3370109d1ff4_3.png
+1. u9972584128_Minimalist_basement_office_wall_with_simple_shelv_c7c866d7-68d8-4ab1-b295-499ff38ca653_1.png
+2. u9972584128_Minimalist_kitchen_workspace_wall_with_open_shelv_e98908f2-e6e0-4347-a51d-d960a0b365ca_3.png
+3. u9972584128_Minimalist_spare_room_office_wall_with_basic_shel_162ad3d9-b905-40ab-976a-62eb112dec33_0.png
+4. u9972584128_Minimalist_student_bedroom_wall_with_simple_wood__211b40d0-57ca-4d59-b208-b11c099824c7_1.png
+5. u9972584128_Minimalist_student_bedroom_wall_with_simple_wood__211b40d0-57ca-4d59-b208-b11c099824c7_2.png
+6. u9972584128_Photorealistic_minimalist_cozy_home_office_wall_w_63489c2f-3223-4635-921b-3f6f7581a6fa_3.png
+7. u9972584128_Photorealistic_minimalist_garden_shed_wall_with_w_ffffdf96-986b-4913-a838-f2e0ab7ac84c_2.png
 
 JavaScript Array:
 const officeSpaceImages = [
-  'u9972584128_Empty_minimalist_high-end_executive_office_with_s_2cab17be-6b5d-4e4b-8470-c2253e75caec_0.png'
-  'u9972584128_Photorealistic_home_office_with_wood_accent_wall__32c2ca0f-782a-461f-bded-72e2b505b001_1.png'
-  'u9972584128_Photorealistic_home_office_with_wood_accent_wall__32c2ca0f-782a-461f-bded-72e2b505b001_2.png'
-  'u9972584128_Professional_consultation_office_interior_photogr_2a8e15a0-46b4-486a-9caa-82efdbe2e6bd_0.png'
-  'u9972584128_Professional_consultation_office_interior_photogr_2a8e15a0-46b4-486a-9caa-82efdbe2e6bd_1.png'
-  'u9972584128_Professional_office_interior_photograph_with_sing_5f03ac15-f293-483c-8324-418ea938c0fa_0.png'
-  'u9972584128_Professional_office_interior_photograph_with_sing_5f03ac15-f293-483c-8324-418ea938c0fa_1.png'
-  'u9972584128_Real_corner_office_photograph_with_floor-to-ceili_b587704b-319b-44a0-a04f-8ba5deb88785_0.png'
-  'u9972584128_Real_home_office_photograph_with_light_wood_accen_697e2714-c527-42a6-8cf3-d1b3c53a275d_1.png'
-  'u9972584128_Real_home_office_photograph_with_single_concrete__f2a938b1-8bbf-4f96-b9f3-5e01d0674dc8_1.png'
-  'u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_0.png'
-  'u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_2.png'
-  'u9972584128_Real_office_photograph_with_marble_accent_wall_on_52aa4fce-0760-4034-b21d-1acd6c2938f6_3.png'
-  'u9972584128_Real_office_photograph_with_single_dark_wood_acce_dd48ae64-c8ed-43bc-8c63-3370109d1ff4_0.png'
-  'u9972584128_Real_office_photograph_with_single_dark_wood_acce_dd48ae64-c8ed-43bc-8c63-3370109d1ff4_3.png'
+  'u9972584128_Minimalist_basement_office_wall_with_simple_shelv_c7c866d7-68d8-4ab1-b295-499ff38ca653_1.png'
+  'u9972584128_Minimalist_kitchen_workspace_wall_with_open_shelv_e98908f2-e6e0-4347-a51d-d960a0b365ca_3.png'
+  'u9972584128_Minimalist_spare_room_office_wall_with_basic_shel_162ad3d9-b905-40ab-976a-62eb112dec33_0.png'
+  'u9972584128_Minimalist_student_bedroom_wall_with_simple_wood__211b40d0-57ca-4d59-b208-b11c099824c7_1.png'
+  'u9972584128_Minimalist_student_bedroom_wall_with_simple_wood__211b40d0-57ca-4d59-b208-b11c099824c7_2.png'
+  'u9972584128_Photorealistic_minimalist_cozy_home_office_wall_w_63489c2f-3223-4635-921b-3f6f7581a6fa_3.png'
+  'u9972584128_Photorealistic_minimalist_garden_shed_wall_with_w_ffffdf96-986b-4913-a838-f2e0ab7ac84c_2.png'
 ];
