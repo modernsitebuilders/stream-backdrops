@@ -68,7 +68,7 @@ function generateSiteMap() {
        <priority>0.9</priority>
      </url>
      <url>
-       <loc>https://streambackdrops.com/category/ambiant</loc>
+       <loc>https://streambackdrops.com/category/ambiant-lighting</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.9</priority>
