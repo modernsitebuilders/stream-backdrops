@@ -220,6 +220,11 @@ const categoryInfo = {
 
 function CategoryContent({ slug }) {
   const [previewImage, setPreviewImage] = useState(null);
+    const folderMap = {
+    'well-lit': 'well-lit',
+    'ambiant': 'ambiant', 
+    'office-spaces': 'office-spaces'
+  };
   const category = categoryInfo[slug];
 
   const handleDownload = async (image) => {
@@ -231,7 +236,7 @@ function CategoryContent({ slug }) {
       label: image.filename,
       value: 1
     });
-      const response = await fetch(`/images/${slug}/${image.filename}`);
+      const response = await fetch(`/images/${folderMap[slug]}/${image.filename}`);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
@@ -419,7 +424,7 @@ function CategoryContent({ slug }) {
                   overflow: 'hidden'
                 }}>
                   <Image
-                    src={`/images/${slug}/${image.filename}`}
+                    src={`/images/${folderMap[slug]}/${image.filename}`}
                     alt={image.title}
                     fill
                     style={{ objectFit: 'cover' }}
@@ -559,7 +564,7 @@ function CategoryContent({ slug }) {
                 maxHeight: '70vh'
               }}>
                 <Image
-                  src={`/images/${slug}/${previewImage.filename}`}
+                  src={`/images/${folderMap[slug]}/${previewImage.filename}`}
                   alt={previewImage.title}
                   width={800}
                   height={450}

@@ -179,11 +179,13 @@ export default function Home() {
                 overflow: 'hidden'
               }}>
                 <Image
-                  src="/images/light/home-lifestyle-minimalist-home-office-10.webp"
+                  src="/images/well-lit/home-lifestyle-minimalist-home-office-10.webp"
                   alt="Well Lit"
                   fill
                   style={{ objectFit: 'cover' }}
                   quality={75}
+                  sizes="(max-width: 768px) 100vw, 300px"
+                  priority={true}
                 />
               </div>
               <div style={{ padding: '1.5rem' }}>
@@ -218,11 +220,12 @@ export default function Home() {
                 overflow: 'hidden'
               }}>
                 <Image
-                  src="/images/dark/professional-shelves-industrial-professional-shelves-21.webp"
+                  src="/images/ambiant/professional-shelves-industrial-professional-shelves-21.webp"
                   alt="Ambient"
                   fill
                   style={{ objectFit: 'cover' }}
                   quality={75}
+                  sizes="(max-width: 768px) 100vw, 300px"
                 />
               </div>
               <div style={{ padding: '1.5rem' }}>
@@ -262,6 +265,7 @@ export default function Home() {
                   fill
                   style={{ objectFit: 'cover' }}
                   quality={75}
+                  sizes="(max-width: 768px) 100vw, 300px"
                 />
               </div>
               <div style={{ padding: '1.5rem' }}>
