@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import { event } from '../../lib/gtag';
 
 // Simple SocialShare component
 function SocialShare({ image, title, size = "large", showLabels = false, vertical = true }) {
@@ -223,6 +224,13 @@ function CategoryContent({ slug }) {
 
   const handleDownload = async (image) => {
     try {
+          // Track the download event in Google Analytics
+    event({
+      action: 'download',
+      category: 'Background Download',
+      label: image.filename,
+      value: 1
+    });
       const response = await fetch(`/images/${slug}/${image.filename}`);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
