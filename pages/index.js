@@ -164,14 +164,15 @@ export default function Home() {
         }}>
           
           {/* Well Lit - with REAL IMAGE */}
-          <Link href="/category/well-lit" style={{ textDecoration: 'none' }}>
-            <div style={{
-              background: 'white',
-              borderRadius: '1rem',
-              overflow: 'hidden',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
-            }}>
+           <Link href="/category/well-lit" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'white',
+                borderRadius: '1rem',
+                overflow: 'hidden',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                cursor: 'pointer'
+              }}>
               {/* Real Background Image */}
               <div style={{
                 position: 'relative',
@@ -206,13 +207,14 @@ export default function Home() {
 
           {/* Ambient Lighting - with REAL IMAGE */}
           <Link href="/category/ambient-lighting" style={{ textDecoration: 'none' }}>
-            <div style={{
-              background: 'white',
-              borderRadius: '1rem',
-              overflow: 'hidden',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
-            }}>
+              <div style={{
+                background: 'white',
+                borderRadius: '1rem',
+                overflow: 'hidden',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                cursor: 'pointer'
+              }}>
               {/* Real Background Image */}
               <div style={{
                 position: 'relative',
@@ -246,13 +248,14 @@ export default function Home() {
 
           {/* Office Spaces - with REAL IMAGE */}
           <Link href="/category/office-spaces" style={{ textDecoration: 'none' }}>
-            <div style={{
-              background: 'white',
-              borderRadius: '1rem',
-              overflow: 'hidden',
-              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
-            }}>
+              <div style={{
+                background: 'white',
+                borderRadius: '1rem',
+                overflow: 'hidden',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                cursor: 'pointer'
+              }}>
               {/* Real Background Image */}
               <div style={{
                 position: 'relative',
