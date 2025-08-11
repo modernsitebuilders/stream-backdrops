@@ -68,7 +68,7 @@ export default function Home() {
                   border: '1px solid #d1d5db',
                   transition: 'all 0.3s ease'
                 }}>
-                  Ambient-Lighting
+                  Ambient Lighting
                 </Link>
                 
                 <Link href="/category/office-spaces" style={{
@@ -204,7 +204,7 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* Ambient-Lighting - with REAL IMAGE */}
+          {/* Ambient Lighting - with REAL IMAGE */}
           <Link href="/category/ambient-lighting" style={{ textDecoration: 'none' }}>
             <div style={{
               background: 'white',
@@ -235,7 +235,7 @@ export default function Home() {
                   marginBottom: '0.5rem',
                   color: '#111827'
                 }}>
-                  Ambient-Lighting
+                  Ambient Lighting
                 </h3>
                 <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
                   Atmospheric backgrounds with ambient lighting for sophisticated video calls

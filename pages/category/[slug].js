@@ -139,7 +139,7 @@ const categoryInfo = {
     ]
   },
   'ambient-lighting': {
-    name: 'Ambient-Lighting',
+    name: 'Ambient Lighting',
     description: 'Atmospheric backgrounds with ambient lighting for sophisticated video calls',
     seoDescription: 'Download free ambient virtual backgrounds for video calls. Atmospheric, sophisticated backgrounds.',
     images: [
@@ -335,7 +335,7 @@ function CategoryContent({ slug }) {
                 border: '1px solid #d1d5db',
                 transition: 'all 0.3s ease'
               }}>
-                Ambient-Lighting
+                Ambient Lighting
               </Link>
               
               <Link href="/category/office-spaces" style={{
