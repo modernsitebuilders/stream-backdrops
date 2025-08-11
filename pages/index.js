@@ -57,7 +57,7 @@ export default function Home() {
                   Well Lit
                 </Link>
                 
-                <Link href="/category/ambient" style={{
+                <Link href="/category/ambient-lighting" style={{
                   padding: '0.5rem 1rem',
                   borderRadius: '0.5rem',
                   textDecoration: 'none',
@@ -68,7 +68,7 @@ export default function Home() {
                   border: '1px solid #d1d5db',
                   transition: 'all 0.3s ease'
                 }}>
-                  Ambient
+                  Ambient-Lighting
                 </Link>
                 
                 <Link href="/category/office-spaces" style={{
@@ -204,8 +204,8 @@ export default function Home() {
             </div>
           </Link>
 
-          {/* Ambient - with REAL IMAGE */}
-          <Link href="/category/ambient" style={{ textDecoration: 'none' }}>
+          {/* Ambient-Lighting - with REAL IMAGE */}
+          <Link href="/category/ambient-lighting" style={{ textDecoration: 'none' }}>
             <div style={{
               background: 'white',
               borderRadius: '1rem',
@@ -220,8 +220,8 @@ export default function Home() {
                 overflow: 'hidden'
               }}>
                 <Image
-                  src="/images/ambient/professional-shelves-industrial-professional-shelves-21.webp"
-                  alt="Ambient"
+                  src="/images/ambient-lighting/professional-shelves-industrial-professional-shelves-21.webp"
+                  alt="Ambient-Lighting"
                   fill
                   style={{ objectFit: 'cover' }}
                   quality={75}
@@ -235,7 +235,7 @@ export default function Home() {
                   marginBottom: '0.5rem',
                   color: '#111827'
                 }}>
-                  Ambient
+                  Ambient-Lighting
                 </h3>
                 <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
                   Atmospheric backgrounds with ambient lighting for sophisticated video calls
