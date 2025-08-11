@@ -1,390 +1,279 @@
-// pages/index.js - FIXED VERSION with Office Spaces
-
-import { useState, useEffect } from 'react';
+// Complete pages/index.js - RESTORED to original good design
 import Head from 'next/head';
 import Link from 'next/link';
-import Footer from '../components/Footer';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-const categoryInfo = {
-  'home-lifestyle': {
-    name: 'Home Lifestyle',
-    description: 'Comfortable backgrounds for remote work and personal calls',
-    count: 0
-  },
-  'professional-shelves': {
-    name: 'Professional', 
-    description: 'Executive backgrounds for business meetings and presentations',
-    count: 0
-  },
-  'office-spaces': {
-    name: 'Office Spaces',
-    description: 'Professional office environments and workspace backgrounds for business video calls',
-    image: 'minimalist-executive-office-1',
-    count: 0
-  }
-};
-
 export default function Home() {
-  const [totalImages, setTotalImages] = useState(0);
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
-
-  useEffect(() => {
-    async function loadImageCounts() {
-      try {
-        const response = await fetch('/api/metadata');
-        const metadata = await response.json();
-        
-        // Count images by category
-        const counts = {};
-        Object.values(metadata).forEach(data => {
-          if (data.category && !data.isPremium) {
-            counts[data.category] = (counts[data.category] || 0) + 1;
-          }
-        });
-
-        // Update category info with counts
-        Object.keys(categoryInfo).forEach(cat => {
-          categoryInfo[cat].count = counts[cat] || 0;
-        });
-
-        setTotalImages(Object.values(counts).reduce((sum, count) => sum + count, 0))
-      } catch (error) {
-        console.error('Error loading image counts:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadImageCounts();
-  }, []);
 
   return (
     <>
       <Head>
-        <title>StreamBackdrops - Professional Virtual Backgrounds</title>
-        <meta name="description" content="Professional virtual backgrounds for Zoom, Teams, Google Meet and more. High-quality backgrounds for video calls and remote work." />
+        <title>StreamBackdrops - Professional Virtual Backgrounds for Video Calls</title>
+        <meta name="description" content="Download free professional virtual backgrounds for Zoom, Teams, and video calls. HD quality backgrounds for home offices, executive offices, and more." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
       </Head>
 
-      <div style={{ 
-        minHeight: '100vh', 
-        background: '#f8fafc',
-        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-      }}>
-        {/* Clean Navigation Header */}
+      <div style={{minHeight: '100vh', background: '#f9fafb'}}>
+        {/* Clean White Header - ORIGINAL STYLING */}
         <header style={{
           background: 'white',
           borderBottom: '1px solid #e5e7eb',
-          padding: '1rem 0',
-          position: 'sticky',
-          top: 0,
-          zIndex: 50,
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-          fontFamily: "'Inter', sans-serif"
+          padding: '1rem 0'
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
             <nav style={{
               display: 'flex',
               justifyContent: 'space-between',
-              alignItems: 'center',
-              flexWrap: 'wrap',
-              gap: '1rem'
+              alignItems: 'center'
             }}>
-              {/* Brand */}
+              {/* Logo */}
               <div style={{
                 fontSize: '1.5rem',
                 fontWeight: 'bold',
-                color: '#2563eb',
-                fontFamily: "'Inter', sans-serif"
+                color: '#2563eb'
               }}>
                 🎥 StreamBackdrops
               </div>
               
-              {/* Navigation Links */}
-              
+              {/* Navigation Tabs - ORIGINAL STYLING */}
               <div style={{
-  display: 'flex',
-  gap: '1rem',
-  flexWrap: 'wrap'
-}}>
-  <Link href="/category/professional-shelves" style={{
-    padding: '0.5rem 1rem',
-    borderRadius: '0.5rem',
-    textDecoration: 'none',
-    color: router.pathname === '/category/professional-shelves' ? '#ffffff' : '#374151',
-    fontWeight: '500',
-    fontSize: '0.9rem',
-    background: router.pathname === '/category/professional-shelves' ? '#2563eb' : '#f9fafb',
-    border: router.pathname === '/category/professional-shelves' ? '1px solid #2563eb' : '1px solid #d1d5db',
-    transition: 'all 0.3s ease'
-  }}>
-    Professional
-  </Link>
-  
-  <Link href="/category/home-lifestyle" style={{
-    padding: '0.5rem 1rem',
-    borderRadius: '0.5rem',
-    textDecoration: 'none',
-    color: router.pathname === '/category/home-lifestyle' ? '#ffffff' : '#374151',
-    fontWeight: '500',
-    fontSize: '0.9rem',
-    background: router.pathname === '/category/home-lifestyle' ? '#2563eb' : '#f9fafb',
-    border: router.pathname === '/category/home-lifestyle' ? '1px solid #2563eb' : '1px solid #d1d5db',
-    transition: 'all 0.3s ease'
-  }}>
-    Home & Lifestyle
-  </Link>
-  
-  <Link href="/category/office-spaces" style={{
-    padding: '0.5rem 1rem',
-    borderRadius: '0.5rem',
-    textDecoration: 'none',
-    color: router.pathname === '/category/office-spaces' ? '#ffffff' : '#374151',
-    fontWeight: '500',
-    fontSize: '0.9rem',
-    background: router.pathname === '/category/office-spaces' ? '#2563eb' : '#f9fafb',
-    border: router.pathname === '/category/office-spaces' ? '1px solid #2563eb' : '1px solid #d1d5db',
-    transition: 'all 0.3s ease'
-  }}>
-    Office Spaces
-  </Link>
-</div>
+                display: 'flex',
+                gap: '1.5rem',
+                alignItems: 'center'
+              }}>
+                <Link href="/category/light" style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#374151',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  background: '#f9fafb',
+                  border: '1px solid #d1d5db',
+                  transition: 'all 0.3s ease'
+                }}>
+                  Well Lit
+                </Link>
+                
+                <Link href="/category/dark" style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#374151',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  background: '#f9fafb',
+                  border: '1px solid #d1d5db',
+                  transition: 'all 0.3s ease'
+                }}>
+                  Ambient
+                </Link>
+                
+                <Link href="/category/office-spaces" style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#374151',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  background: '#f9fafb',
+                  border: '1px solid #d1d5db',
+                  transition: 'all 0.3s ease'
+                }}>
+                  Office Spaces
+                </Link>
+              </div>
             </nav>
           </div>
         </header>
 
+        {/* Hero Section - VIDEO ONLY */}
+        <section style={{
+          position: 'relative',
+          height: '80vh',
+          overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <video 
+            autoPlay 
+            muted 
+            playsInline 
+            preload="auto"
+            onTimeUpdate={(e) => {
+              if (e.target.currentTime >= e.target.duration - 0.1) {
+                e.target.pause();
+                e.target.currentTime = e.target.duration - 0.1;
+              }
+            }}
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '55%',
+              height: 'auto',
+              aspectRatio: '16/9',
+              transform: 'translate(-50%, -50%)',
+              objectFit: 'cover',
+              zIndex: 1
+            }}
+          >
+            <source src="https://stream-backdrops-videos.s3.amazonaws.com/u9972584128_Subtle_floating_light_particles_drifting_through__b01c2a5c-5dc6-410a-bbdb-704fa53bf572_0.mp4" type="video/mp4" />
+          </video>
+        </section>
 
-{/* Hero Section - VIDEO ONLY */}
-<section style={{
-  position: 'relative',
-  height: '80vh',
-  overflow: 'hidden',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-}}>
-<video 
-  autoPlay 
-  muted 
-  playsInline 
-  preload="auto"
-  onTimeUpdate={(e) => {
-    // Stop video just before it ends
-    if (e.target.currentTime >= e.target.duration - 0.1) {
-      e.target.pause();
-      e.target.currentTime = e.target.duration - 0.1;
-    }
-  }}
-  style={{
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    width: '70%',
-    height: '70%',
-    transform: 'translate(-50%, -50%)',
-    objectFit: 'cover',
-    zIndex: 1
-  }}
->
-  <source src="https://stream-backdrops-videos.s3.amazonaws.com/u9972584128_Subtle_floating_light_particles_drifting_through__b01c2a5c-5dc6-410a-bbdb-704fa53bf572_0.mp4" type="video/mp4" />
-</video>
-</section>
+        {/* Text Section - SEPARATE */}
+        <section style={{
+          padding: '2rem 2rem',
+          textAlign: 'center',
+          background: 'white',
+          marginTop: '-10vh'
+        }}>
+          <h2 style={{
+            fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
+            fontWeight: '600',
+            marginBottom: '1.5rem',
+            color: '#111827'
+          }}>
+            Professional Virtual Backgrounds
+          </h2>
+          
+          <p style={{ 
+            fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
+            maxWidth: '700px',
+            margin: '0 auto',
+            lineHeight: '1.6',
+            color: '#6b7280'
+          }}>
+            Free high-quality backgrounds • No signup • No watermarks • Instant download
+          </p>
+        </section>
 
-{/* Text Section - SEPARATE */}
-<section style={{
-  padding: '2rem 2rem',
-  textAlign: 'center',
-  background: 'white',
-  marginTop: '-10vh'
-}}>
-  <h2 style={{
-    fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-    fontWeight: '600',
-    marginBottom: '1.5rem',
-    color: '#111827'
-  }}>
-    Professional Virtual Backgrounds
-  </h2>
-  
-  <p style={{ 
-    fontSize: 'clamp(1.1rem, 3vw, 1.3rem)',
-    maxWidth: '700px',
-    margin: '0 auto',
-    lineHeight: '1.6',
-    color: '#6b7280'
-  }}>
-    Free high-quality backgrounds • No signup • No watermarks • Instant download
-  </p>
-</section>
-
-        {/* 3-Column Grid for All Categories */}
+        {/* 3-Column Grid with REAL IMAGES like Image 2 */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
           gap: '2rem',
           marginBottom: '4rem',
-          maxWidth: '1000px',
-          margin: '0 auto 4rem auto'
+          maxWidth: '1200px',
+          margin: '0 auto 4rem auto',
+          padding: '0 2rem'
         }}>
-          {/* Home Lifestyle */}
-          <Link href="/category/home-lifestyle" style={{ textDecoration: 'none' }}>
+          
+          {/* Well Lit - with REAL IMAGE */}
+          <Link href="/category/light" style={{ textDecoration: 'none' }}>
             <div style={{
               background: 'white',
               borderRadius: '1rem',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               overflow: 'hidden',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-              cursor: 'pointer'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
             }}>
+              {/* Real Background Image */}
               <div style={{
-                height: '200px',
                 position: 'relative',
+                height: '200px',
                 overflow: 'hidden'
               }}>
-                <img
-                  src="/images/home-lifestyle-minimalist-home-office-25.webp"
-                  alt="Home Lifestyle minimalist office background"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover'
-                  }}
-                  loading="eager"
+                <Image
+                  src="/images/light/home-lifestyle-minimalist-home-office-10.webp"
+                  alt="Well Lit"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  quality={75}
                 />
               </div>
               <div style={{ padding: '1.5rem' }}>
                 <h3 style={{
-                  fontSize: '1.3rem',
+                  fontSize: '1.25rem',
                   fontWeight: '600',
-                  color: '#111827',
-                  marginBottom: '0.75rem'
+                  marginBottom: '0.5rem',
+                  color: '#111827'
                 }}>
-                  Home Lifestyle
+                  Well Lit
                 </h3>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: '0.95rem',
-                  lineHeight: '1.5'
-                }}>
-                  Comfortable backgrounds perfect for remote work and personal video calls
+                <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
+                  Well-lit, bright backgrounds perfect for professional video calls
                 </p>
               </div>
             </div>
           </Link>
 
-          {/* Professional */}
-          <Link href="/category/professional-shelves" style={{ textDecoration: 'none' }}>
+          {/* Ambient - with REAL IMAGE */}
+          <Link href="/category/dark" style={{ textDecoration: 'none' }}>
             <div style={{
               background: 'white',
               borderRadius: '1rem',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               overflow: 'hidden',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-              cursor: 'pointer'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
             }}>
+              {/* Real Background Image */}
               <div style={{
-                height: '200px',
                 position: 'relative',
+                height: '200px',
                 overflow: 'hidden'
               }}>
-                <img
-                  src="/images/professional-shelves-glass-professional-shelves-16.webp"
-                  alt="Professional glass shelves office background"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover'
-                  }}
-                  loading="eager"
+                <Image
+                  src="/images/dark/professional-shelves-industrial-professional-shelves-21.webp"
+                  alt="Ambient"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  quality={75}
                 />
               </div>
               <div style={{ padding: '1.5rem' }}>
                 <h3 style={{
-                  fontSize: '1.3rem',
+                  fontSize: '1.25rem',
                   fontWeight: '600',
-                  color: '#111827',
-                  marginBottom: '0.75rem'
+                  marginBottom: '0.5rem',
+                  color: '#111827'
                 }}>
-                  Professional
+                  Ambient
                 </h3>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: '0.95rem',
-                  lineHeight: '1.5'
-                }}>
-                  Executive backgrounds for business meetings and professional presentations
+                <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
+                  Atmospheric backgrounds with ambient lighting for sophisticated video calls
                 </p>
               </div>
             </div>
           </Link>
 
-          {/* Office Spaces - NEW THIRD CATEGORY */}
+          {/* Office Spaces - with REAL IMAGE */}
           <Link href="/category/office-spaces" style={{ textDecoration: 'none' }}>
             <div style={{
               background: 'white',
               borderRadius: '1rem',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               overflow: 'hidden',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-              cursor: 'pointer'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease'
             }}>
+              {/* Real Background Image */}
               <div style={{
-                height: '200px',
                 position: 'relative',
+                height: '200px',
                 overflow: 'hidden'
               }}>
-                <img
-                  src="/images/minimalist-executive-office-1.webp"
-                  alt="Office Spaces minimalist executive office background"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover'
-                  }}
-                  loading="eager"
+                <Image
+                  src="/images/office-spaces/minimalist-executive-office-1.webp"
+                  alt="Office Spaces"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  quality={75}
                 />
               </div>
               <div style={{ padding: '1.5rem' }}>
                 <h3 style={{
-                  fontSize: '1.3rem',
+                  fontSize: '1.25rem',
                   fontWeight: '600',
-                  color: '#111827',
-                  marginBottom: '0.75rem'
+                  marginBottom: '0.5rem',
+                  color: '#111827'
                 }}>
                   Office Spaces
                 </h3>
-                <p style={{
-                  color: '#6b7280',
-                  fontSize: '0.95rem',
-                  lineHeight: '1.5'
-                }}>
+                <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
                   Professional office environments and workspace backgrounds for business video calls
                 </p>
               </div>
@@ -392,57 +281,90 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Call to Action with Purple Button */}
-        <div style={{
+        {/* Setup Guide Section - like in Image 2 */}
+        <section style={{
           textAlign: 'center',
+          padding: '4rem 2rem',
           background: 'white',
-          padding: '2rem',
+          margin: '0 2rem',
           borderRadius: '1rem',
-          border: '1px solid #e5e7eb',
-          fontFamily: "'Inter', sans-serif"
+          marginBottom: '4rem'
         }}>
           <h3 style={{
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            color: '#111827',
+            fontSize: '1.75rem',
+            fontWeight: '600',
             marginBottom: '1rem',
-            fontFamily: "'Inter', sans-serif"
+            color: '#111827'
           }}>
             Need help setting up virtual backgrounds?
           </h3>
           <p style={{
             color: '#6b7280',
-            marginBottom: '1.5rem',
-            fontFamily: "'Inter', sans-serif"
+            fontSize: '1.1rem',
+            marginBottom: '2rem'
           }}>
             Check out our comprehensive setup guides for perfect results every time.
           </p>
-          <Link href="/blog-virtual-background-guide" style={{
-            background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%)',
-            color: 'white',
-            padding: '1rem 2rem',
-            borderRadius: '2rem',
-            textDecoration: 'none',
-            fontWeight: '600',
-            fontSize: '1.1rem',
-            display: 'inline-block',
-            transition: 'all 0.3s ease',
-            boxShadow: '0 4px 15px rgba(124, 58, 237, 0.3)',
-            fontFamily: "'Inter', sans-serif"
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.05)';
-            e.currentTarget.style.boxShadow = '0 8px 25px rgba(124, 58, 237, 0.4)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 15px rgba(124, 58, 237, 0.3)';
-          }}>
-            📖 View Complete Setup Guide
+          <Link 
+            href="/blog-virtual-background-guide"
+            style={{
+              background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+              color: 'white',
+              padding: '1rem 2rem',
+              borderRadius: '2rem',
+              textDecoration: 'none',
+              fontWeight: '600',
+              fontSize: '1rem',
+              display: 'inline-block'
+            }}
+          >
+            📘 View Complete Setup Guide
           </Link>
-        </div>
+        </section>
 
-        <Footer />
+        {/* Footer */}
+        <footer style={{
+          background: '#1f2937',
+          color: 'white',
+          padding: '2rem 0',
+          marginTop: '3rem'
+        }}>
+          <div style={{
+            maxWidth: '1200px',
+            margin: '0 auto',
+            padding: '0 2rem',
+            textAlign: 'center'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap' }}>
+              <Link href="/about" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
+                About
+              </Link>
+              <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
+              <Link href="/license" style={{ color: '#fbbf24', textDecoration: 'none', margin: '0 15px', fontWeight: '600' }}>
+                📋 License & Usage
+              </Link>
+              <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
+              <Link href="/contact" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
+                Contact
+              </Link>
+              <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
+              <Link href="/blog" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
+                Blog
+              </Link>
+              <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
+              <Link href="/privacy" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
+                Privacy Policy
+              </Link>
+              <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
+              <Link href="/terms" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
+                Terms of Service
+              </Link>
+            </div>
+            <p style={{ color: '#d1d5db', margin: 0 }}>
+              © 2025 StreamBackdrops. All rights reserved.
+            </p>
+          </div>
+        </footer>
       </div>
     </>
   );
