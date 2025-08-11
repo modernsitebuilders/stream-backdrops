@@ -180,8 +180,7 @@ export default function Home() {
                 overflow: 'hidden'
               }}>
                 <Image
-                  src="/images/well-lit/home-lifestyle-minimalist-home-office-10.webp"
-                  alt="Well Lit"
+                 src="/images/well-lit/well-lit-minimalist-office-1.webp"
                   fill
                   style={{ objectFit: 'cover' }}
                   quality={75}
@@ -222,7 +221,7 @@ export default function Home() {
                 overflow: 'hidden'
               }}>
                 <Image
-                  src="/images/ambient-lighting/professional-shelves-industrial-professional-shelves-21.webp"
+                 src="/images/ambient-lighting/ambient-industrial-shelves-1.webp"
                   alt="Ambient-Lighting"
                   fill
                   style={{ objectFit: 'cover' }}
@@ -263,7 +262,7 @@ export default function Home() {
                 overflow: 'hidden'
               }}>
                 <Image
-                  src="/images/office-spaces/minimalist-executive-office-1.webp"
+                 src="/images/office-spaces/office-spaces-minimalist-executive-1.webp"
                   alt="Office Spaces"
                   fill
                   style={{ objectFit: 'cover' }}
