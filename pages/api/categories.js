@@ -6,15 +6,20 @@ export default function handler(req, res) {
   res.setHeader('Expires', '0');
   
   const categories = {
-    'professional-shelves': {
-      name: 'Professional Shelves',
-      count: 42,
+    'ambient-lighting': {
+      name: 'Ambient Lighting',
+      count: 49,
       description: 'Professional office shelves with books and plants - perfect for business video calls'
     },
-    'home-lifestyle': {
-      name: 'Home & Lifestyle',
-      count: 55, 
+    'well-lit': {
+      name: 'Well Lit',
+      count: 48, 
       description: 'Stylish home offices and casual lifestyle spaces - from polished to relaxed'
+    },
+    'office spaces': {
+      name: 'Office Spaces',
+      count: 15, 
+      description: 'Stylish offices spaces'
     }
   };
   
