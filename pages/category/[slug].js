@@ -83,7 +83,7 @@ function SocialShare({ image, title, size = "large", showLabels = false, vertica
 
 // Categories with all your actual images
 const categoryInfo = {
-  'light': {
+  'well-lit': {
     name: 'Well Lit',
     description: 'Well-lit, bright backgrounds perfect for professional video calls',
     seoDescription: 'Download free well-lit virtual backgrounds for video calls. Bright, professional backgrounds.',
@@ -138,7 +138,7 @@ const categoryInfo = {
       { filename: 'professional-shelves-stone-professional-shelves-8.webp', title: 'Stone Professional Shelves' }
     ]
   },
-  'dark': {
+  'ambiant': {
     name: 'Ambient',
     description: 'Atmospheric backgrounds with ambient lighting for sophisticated video calls',
     seoDescription: 'Download free ambient virtual backgrounds for video calls. Atmospheric, sophisticated backgrounds.',
@@ -305,11 +305,11 @@ function CategoryContent({ slug }) {
               alignItems: 'center',
               flexWrap: 'wrap'
             }}>
-              <Link href="/category/light" style={{
+              <Link href="/category/well-lit" style={{
                 padding: '0.5rem 1rem',
                 borderRadius: '0.5rem',
                 textDecoration: 'none',
-                color: slug === 'light' ? '#2563eb' : '#374151',
+                color: slug === 'well-lit' ? '#2563eb' : '#374151',
                 fontWeight: '500',
                 fontSize: '0.9rem',
                 background: '#f9fafb',
@@ -319,11 +319,11 @@ function CategoryContent({ slug }) {
                 Well Lit
               </Link>
               
-              <Link href="/category/dark" style={{
+              <Link href="/category/ambiant" style={{
                 padding: '0.5rem 1rem',
                 borderRadius: '0.5rem',
                 textDecoration: 'none',
-                color: slug === 'dark' ? '#2563eb' : '#374151',
+                color: slug === 'ambiant' ? '#2563eb' : '#374151',
                 fontWeight: '500',
                 fontSize: '0.9rem',
                 background: '#f9fafb',
@@ -687,7 +687,7 @@ export default function CategoryPage({ slug }) {
 }
 
 export async function getStaticPaths() {
-  const paths = ['light', 'dark', 'office-spaces'].map((slug) => ({
+  const paths = ['well-lit', 'ambiant', 'office-spaces'].map((slug) => ({
     params: { slug }
   }));
 

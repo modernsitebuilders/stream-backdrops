@@ -43,7 +43,7 @@ export default function Home() {
                 gap: '1.5rem',
                 alignItems: 'center'
               }}>
-                <Link href="/category/light" style={{
+                <Link href="/category/well-lit" style={{
                   padding: '0.5rem 1rem',
                   borderRadius: '0.5rem',
                   textDecoration: 'none',
@@ -57,7 +57,7 @@ export default function Home() {
                   Well Lit
                 </Link>
                 
-                <Link href="/category/dark" style={{
+                <Link href="/category/ambiant" style={{
                   padding: '0.5rem 1rem',
                   borderRadius: '0.5rem',
                   textDecoration: 'none',
@@ -164,7 +164,7 @@ export default function Home() {
         }}>
           
           {/* Well Lit - with REAL IMAGE */}
-          <Link href="/category/light" style={{ textDecoration: 'none' }}>
+          <Link href="/category/well-lit" style={{ textDecoration: 'none' }}>
             <div style={{
               background: 'white',
               borderRadius: '1rem',
@@ -203,7 +203,7 @@ export default function Home() {
           </Link>
 
           {/* Ambient - with REAL IMAGE */}
-          <Link href="/category/dark" style={{ textDecoration: 'none' }}>
+          <Link href="/category/ambiant" style={{ textDecoration: 'none' }}>
             <div style={{
               background: 'white',
               borderRadius: '1rem',
