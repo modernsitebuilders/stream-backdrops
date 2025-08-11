@@ -57,7 +57,7 @@ export default function Home() {
                   Well Lit
                 </Link>
                 
-                <Link href="/category/ambiant" style={{
+                <Link href="/category/ambient" style={{
                   padding: '0.5rem 1rem',
                   borderRadius: '0.5rem',
                   textDecoration: 'none',
@@ -205,7 +205,7 @@ export default function Home() {
           </Link>
 
           {/* Ambient - with REAL IMAGE */}
-          <Link href="/category/ambiant" style={{ textDecoration: 'none' }}>
+          <Link href="/category/ambient" style={{ textDecoration: 'none' }}>
             <div style={{
               background: 'white',
               borderRadius: '1rem',
@@ -220,7 +220,7 @@ export default function Home() {
                 overflow: 'hidden'
               }}>
                 <Image
-                  src="/images/ambiant/professional-shelves-industrial-professional-shelves-21.webp"
+                  src="/images/ambient/professional-shelves-industrial-professional-shelves-21.webp"
                   alt="Ambient"
                   fill
                   style={{ objectFit: 'cover' }}

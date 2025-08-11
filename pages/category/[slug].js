@@ -138,7 +138,7 @@ const categoryInfo = {
       { filename: 'professional-shelves-stone-professional-shelves-8.webp', title: 'Stone Professional Shelves' }
     ]
   },
-  'ambiant': {
+  'ambient': {
     name: 'Ambient',
     description: 'Atmospheric backgrounds with ambient lighting for sophisticated video calls',
     seoDescription: 'Download free ambient virtual backgrounds for video calls. Atmospheric, sophisticated backgrounds.',
@@ -222,7 +222,7 @@ function CategoryContent({ slug }) {
   const [previewImage, setPreviewImage] = useState(null);
     const folderMap = {
     'well-lit': 'well-lit',
-    'ambiant': 'ambiant', 
+    'ambient': 'ambient', 
     'office-spaces': 'office-spaces'
   };
   const category = categoryInfo[slug];
@@ -324,11 +324,11 @@ function CategoryContent({ slug }) {
                 Well Lit
               </Link>
               
-              <Link href="/category/ambiant" style={{
+              <Link href="/category/ambient" style={{
                 padding: '0.5rem 1rem',
                 borderRadius: '0.5rem',
                 textDecoration: 'none',
-                color: slug === 'ambiant' ? '#2563eb' : '#374151',
+                color: slug === 'ambient' ? '#2563eb' : '#374151',
                 fontWeight: '500',
                 fontSize: '0.9rem',
                 background: '#f9fafb',
@@ -692,7 +692,7 @@ export default function CategoryPage({ slug }) {
 }
 
 export async function getStaticPaths() {
-  const paths = ['well-lit', 'ambiant', 'office-spaces'].map((slug) => ({
+  const paths = ['well-lit', 'ambient', 'office-spaces'].map((slug) => ({
     params: { slug }
   }));
 
