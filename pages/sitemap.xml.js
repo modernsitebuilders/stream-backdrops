@@ -30,12 +30,6 @@ function generateSiteMap() {
        <priority>0.8</priority>
      </url>
      <url>
-       <loc>https://streambackdrops.com/blog-virtual-background-guide</loc>
-       <lastmod>${new Date().toISOString()}</lastmod>
-       <changefreq>monthly</changefreq>
-       <priority>0.7</priority>
-     </url>
-     <url>
        <loc>https://streambackdrops.com/license</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>monthly</changefreq>
@@ -60,24 +54,52 @@ function generateSiteMap() {
        <priority>0.6</priority>
      </url>
      
-     <!-- Category Pages -->
+     <!-- Blog Posts -->
      <url>
-       <loc>https://streambackdrops.com/category/well-lit</loc>
+       <loc>https://streambackdrops.com/blog-virtual-background-guide</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+     </url>
+     <url>
+       <loc>https://streambackdrops.com/blog-remote-work-productivity</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+     </url>
+     
+     <!-- Current Category Pages -->
+     <url>
+       <loc>https://streambackdrops.com/category/home-lifestyle</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.9</priority>
      </url>
      <url>
-       <loc>https://streambackdrops.com/category/ambiant-lighting</loc>
+       <loc>https://streambackdrops.com/category/professional-shelves</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>weekly</changefreq>
        <priority>0.9</priority>
+     </url>
+     
+     <!-- Legacy/Redirect Category Pages (if they still exist) -->
+     <url>
+       <loc>https://streambackdrops.com/category/well-lit</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.8</priority>
+     </url>
+     <url>
+       <loc>https://streambackdrops.com/category/ambient-lighting</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.8</priority>
      </url>
      <url>
        <loc>https://streambackdrops.com/category/office-spaces</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>weekly</changefreq>
-       <priority>0.9</priority>
+       <priority>0.8</priority>
      </url>
    </urlset>`;
 }
