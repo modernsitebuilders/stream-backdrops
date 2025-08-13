@@ -67,21 +67,6 @@ function generateSiteMap() {
        <changefreq>monthly</changefreq>
        <priority>0.7</priority>
      </url>
-     
-     <!-- Current Category Pages -->
-     <url>
-       <loc>https://streambackdrops.com/category/home-lifestyle</loc>
-       <lastmod>${new Date().toISOString()}</lastmod>
-       <changefreq>weekly</changefreq>
-       <priority>0.9</priority>
-     </url>
-     <url>
-       <loc>https://streambackdrops.com/category/professional-shelves</loc>
-       <lastmod>${new Date().toISOString()}</lastmod>
-       <changefreq>weekly</changefreq>
-       <priority>0.9</priority>
-     </url>
-     
      <!-- Legacy/Redirect Category Pages (if they still exist) -->
      <url>
        <loc>https://streambackdrops.com/category/well-lit</loc>
