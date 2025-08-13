@@ -232,12 +232,12 @@ function CategoryContent({ slug }) {
   const handleDownload = async (image) => {
     try {
       // Track the download event in Google Analytics
-      event({
-        action: 'download',
-        category: 'Background Download',
-        label: image.filename,
-        value: 1
-      });
+      event('download', {
+  event_category: 'Background Download',
+  event_label: image.filename,
+  file_name: image.filename,  // Extra parameter for clarity
+  value: 1
+});
       const response = await fetch(`/images/${folderMap[slug]}/${image.filename}`);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
