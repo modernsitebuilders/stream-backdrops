@@ -1,13 +1,23 @@
-// next.config.js - Disable Fast Refresh to stop the loop
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true, // ✅ Enable for better development experience
+  swcMinify: true,       // ✅ Faster builds
   
-  webpack: (config) => {
-    config.watchOptions = {
-      poll: 1000,
-      aggregateTimeout: 300
-    };
+  // Image optimization
+  images: {
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 31536000, // 1 year cache for your virtual backgrounds
+  },
+  
+  // Only add webpack config if you're having file watching issues
+  webpack: (config, { dev, isServer }) => {
+    // Only enable polling in specific environments where needed
+    if (dev && !isServer && process.env.ENABLE_POLLING) {
+      config.watchOptions = {
+        poll: 1000,
+        aggregateTimeout: 300
+      };
+    }
     return config;
   }
 };
