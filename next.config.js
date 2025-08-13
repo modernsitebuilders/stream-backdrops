@@ -3,7 +3,7 @@ const nextConfig = {
   // ✅ Enable React strict mode for better development
   reactStrictMode: true,
   
-  // ✅ Image optimization settings
+  // ✅ Image optimization settings (compatible version)
   images: {
     // Support modern image formats
     formats: ['image/webp', 'image/avif'],
@@ -14,13 +14,6 @@ const nextConfig = {
     // Responsive image sizes
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    
-    // ✅ NEW: Image optimization quality
-    quality: 80,
-    
-    // ✅ NEW: Enable image placeholder for better loading
-    placeholder: 'blur',
-    blurDataURL: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k='
   },
   
   // ✅ Enable compression
@@ -33,9 +26,6 @@ const nextConfig = {
     
     // Better scroll restoration
     scrollRestoration: true,
-    
-    // ✅ NEW: Enable newer JavaScript features
-    esmExternals: true,
   },
   
   // ✅ Security and performance headers
@@ -142,9 +132,6 @@ const nextConfig = {
       ? `https://${process.env.VERCEL_URL}` 
       : 'http://localhost:3000',
   },
-  
-  // ✅ Better development experience
-  swcMinify: true,
   
   // ✅ Enable static optimization
   trailingSlash: false,
