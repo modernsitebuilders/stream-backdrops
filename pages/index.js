@@ -10,9 +10,25 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>StreamBackdrops - Professional Virtual Backgrounds for Video Calls</title>
-        <meta name="description" content="Download free professional virtual backgrounds for Zoom, Teams, and video calls. HD quality backgrounds for home offices, executive offices, and more." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Free Professional Virtual Backgrounds - StreamBackdrops</title>
+  <meta name="description" content="Download 90+ free professional virtual backgrounds for Zoom, Teams & Google Meet. HD home offices, executive offices, lobbies & more. Instant download, no signup required." />
+  <meta name="keywords" content="virtual backgrounds, Zoom backgrounds, Teams backgrounds, professional video calls, home office backgrounds, free download" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  {/* Open Graph for social sharing */}
+  <meta property="og:title" content="Free Professional Virtual Backgrounds - StreamBackdrops" />
+  <meta property="og:description" content="Download 90+ free professional virtual backgrounds for video calls. HD quality, instant download." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://streambackdrops.com" />
+  <meta property="og:image" content="https://streambackdrops.com/og-image.png" />
+  
+  {/* Twitter Card */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Free Professional Virtual Backgrounds" />
+  <meta name="twitter:description" content="90+ free HD virtual backgrounds for Zoom, Teams & Google Meet" />
+  
+  {/* Canonical URL */}
+  <link rel="canonical" href="https://streambackdrops.com" />
       </Head>
 
       <div style={{minHeight: '100vh', background: '#f9fafb'}}>

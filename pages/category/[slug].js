@@ -278,9 +278,15 @@ function CategoryContent({ slug }) {
     return (
       <>
         <Head>
-          <title>Category Not Found - StreamBackdrops</title>
-          <meta name="description" content="Category not found" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
+         <title>{category ? `${category.name} Virtual Backgrounds - Free HD Downloads | StreamBackdrops` : 'Category Not Found - StreamBackdrops'}</title>
+  <meta name="description" content={category ? `Download free ${category.name.toLowerCase()} virtual backgrounds in HD quality. Perfect for Zoom, Teams & Google Meet video calls. ${category.description}` : 'Category not found'} />
+  <meta name="keywords" content={category ? `${category.name.toLowerCase()}, virtual backgrounds, video calls, ${slug}, professional backgrounds, HD download` : ''} />
+  <link rel="canonical" href={`https://streambackdrops.com/category/${slug}`} />
+  
+  {/* Open Graph */}
+  <meta property="og:title" content={category ? `${category.name} Virtual Backgrounds - StreamBackdrops` : 'Not Found'} />
+  <meta property="og:description" content={category ? category.description : 'Category not found'} />
+  <meta property="og:url" content={`https://streambackdrops.com/category/${slug}`} />
         </Head>
         <div style={{ padding: '2rem', textAlign: 'center' }}>
           <h1>Category Not Found</h1>
