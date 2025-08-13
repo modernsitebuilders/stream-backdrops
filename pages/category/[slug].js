@@ -273,43 +273,107 @@ function CategoryContent({ slug }) {
     }
   };
 
-  // Early return if no category with proper Head tags
-  if (!category) {
-    return (
-      <>
-        <Head>
-         <title>{category ? `${category.name} Virtual Backgrounds - Free HD Downloads | StreamBackdrops` : 'Category Not Found - StreamBackdrops'}</title>
-  <meta name="description" content={category ? `Download free ${category.name.toLowerCase()} virtual backgrounds in HD quality. Perfect for Zoom, Teams & Google Meet video calls. ${category.description}` : 'Category not found'} />
-  <meta name="keywords" content={category ? `${category.name.toLowerCase()}, virtual backgrounds, video calls, ${slug}, professional backgrounds, HD download` : ''} />
-  <link rel="canonical" href={`https://streambackdrops.com/category/${slug}`} />
-  
-  {/* Open Graph */}
-  <meta property="og:title" content={category ? `${category.name} Virtual Backgrounds - StreamBackdrops` : 'Not Found'} />
-  <meta property="og:description" content={category ? category.description : 'Category not found'} />
-  <meta property="og:url" content={`https://streambackdrops.com/category/${slug}`} />
-        </Head>
+  return (
+    <>
+      <Head>
+        {/* ✅ NEW: Conditional title that works for both found/not found */}
+        <title>
+          {category 
+            ? `${category.name} Virtual Backgrounds - Free HD Downloads | StreamBackdrops`
+            : 'Category Not Found - StreamBackdrops'
+          }
+        </title>
+        
+        {/* ✅ NEW: Conditional description */}
+        <meta name="description" content={
+          category 
+            ? `Download free ${category.name.toLowerCase()} virtual backgrounds in HD quality. Perfect for Zoom, Teams & Google Meet video calls. ${category.description}`
+            : 'The requested category was not found. Browse our collection of free HD virtual backgrounds.'
+        } />
+        
+        {/* ✅ KEEPING: Basic viewport (you already had this) */}
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        {/* ✅ NEW: Only add SEO meta tags if category exists */}
+        {category ? (
+          <>
+            {/* ✅ NEW: Enhanced SEO keywords */}
+            <meta name="keywords" content={`${category.name.toLowerCase()}, virtual backgrounds, video calls, ${slug}, professional backgrounds, HD download, Zoom backgrounds, Teams backgrounds`} />
+            
+            {/* ✅ NEW: Better robots directive */}
+            <meta name="robots" content="index, follow, max-image-preview:large" />
+            
+            {/* ✅ NEW: Author meta tag */}
+            <meta name="author" content="StreamBackdrops" />
+            
+            {/* ✅ NEW: Canonical URL for SEO */}
+            <link rel="canonical" href={`https://streambackdrops.com/category/${slug}`} />
+            
+            {/* ✅ NEW: Enhanced Open Graph tags */}
+            <meta property="og:title" content={`${category.name} Virtual Backgrounds - StreamBackdrops`} />
+            <meta property="og:description" content={`Download free ${category.name.toLowerCase()} virtual backgrounds in HD quality. Perfect for professional video calls.`} />
+            <meta property="og:url" content={`https://streambackdrops.com/category/${slug}`} />
+            <meta property="og:type" content="website" />
+            <meta property="og:site_name" content="StreamBackdrops" />
+            
+            {/* ✅ NEW: Twitter Card tags */}
+            <meta property="twitter:card" content="summary_large_image" />
+            <meta property="twitter:title" content={`${category.name} Virtual Backgrounds`} />
+            <meta property="twitter:description" content={`Free HD ${category.name.toLowerCase()} backgrounds for video calls`} />
+            
+            {/* ✅ NEW: Structured Data for better Google results */}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "ImageGallery",
+                  "name": `${category.name} Virtual Backgrounds`,
+                  "description": category.description,
+                  "url": `https://streambackdrops.com/category/${slug}`,
+                  "breadcrumb": {
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                      {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://streambackdrops.com"
+                      },
+                      {
+                        "@type": "ListItem", 
+                        "position": 2,
+                        "name": category.name,
+                        "item": `https://streambackdrops.com/category/${slug}`
+                      }
+                    ]
+                  }
+                })
+              }}
+            />
+          </>
+        ) : (
+          /* ✅ NEW: For not-found pages, tell search engines not to index */
+          <meta name="robots" content="noindex" />
+        )}
+      </Head>
+
+      {/* ✅ NEW: Single conditional content section (replaces early return) */}
+      {!category ? (
+        /* ✅ NEW: Not found content (replaces the early return block) */
         <div style={{ padding: '2rem', textAlign: 'center' }}>
           <h1>Category Not Found</h1>
           <Link href="/">Back to Home</Link>
         </div>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <Head>
-        <title>{`${category.name} Virtual Backgrounds - StreamBackdrops`}</title>
-        <meta name="description" content={category.seoDescription} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-
-      {/* Clean Header */}
-      <header style={{
-        background: 'white',
-        borderBottom: '1px solid #e5e7eb',
-        padding: '1rem 0'
-      }}>
+      ) : (
+        /* ✅ KEEPING: All your existing content stays exactly the same */
+        <>
+          {/* Clean Header */}
+          <header style={{
+            background: 'white',
+            borderBottom: '1px solid #e5e7eb',
+            padding: '1rem 0'
+          }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
           <nav style={{
             display: 'flex',
@@ -643,7 +707,9 @@ function CategoryContent({ slug }) {
         }
       `}</style>
     </>
-  );
+  )}
+</>
+);
 }
 
 const DynamicCategoryContent = dynamic(() => Promise.resolve(CategoryContent), {
