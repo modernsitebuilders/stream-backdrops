@@ -14,7 +14,9 @@ export default function Home() {
   <meta name="description" content="Download 90+ free professional virtual backgrounds for Zoom, Teams & Google Meet. HD home offices, executive offices, lobbies & more. Instant download, no signup required." />
   <meta name="keywords" content="virtual backgrounds, Zoom backgrounds, Teams backgrounds, professional video calls, home office backgrounds, free download" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="StreamBackdrops" />
+  <meta name="theme-color" content="#2563eb" />
   {/* Open Graph for social sharing */}
   <meta property="og:title" content="Free Professional Virtual Backgrounds - StreamBackdrops" />
   <meta property="og:description" content="Download 90+ free professional virtual backgrounds for video calls. HD quality, instant download." />
@@ -29,6 +31,23 @@ export default function Home() {
   
   {/* Canonical URL */}
   <link rel="canonical" href="https://streambackdrops.com" />
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "StreamBackdrops",
+        "description": "Free professional virtual backgrounds for video calls",
+        "url": "https://streambackdrops.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://streambackdrops.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      })
+    }}
+  />
       </Head>
 
       <div style={{minHeight: '100vh', background: '#f9fafb'}}>
@@ -197,6 +216,7 @@ export default function Home() {
               }}>
                 <Image
                  src="/images/well-lit/well-lit-minimalist-office-1.webp"
+                  alt="Well-lit professional office background for video calls"
                   fill
                   style={{ objectFit: 'cover' }}
                   quality={75}
@@ -238,7 +258,7 @@ export default function Home() {
               }}>
                 <Image
                  src="/images/ambient-lighting/ambient-industrial-shelves-1.webp"
-                  alt="Ambient-Lighting"
+                 alt="Ambient lighting office background for video meetings"
                   fill
                   style={{ objectFit: 'cover' }}
                   quality={75}
@@ -279,7 +299,7 @@ export default function Home() {
               }}>
                 <Image
                  src="/images/office-spaces/office-spaces-minimalist-executive-1.webp"
-                  alt="Office Spaces"
+                  alt="Professional office space background for business calls"
                   fill
                   style={{ objectFit: 'cover' }}
                   quality={75}
