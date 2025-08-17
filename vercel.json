@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.streambackdrops.com"
+        }
+      ],
+      "destination": "https://streambackdrops.com/$1",
+      "permanent": true
+    }
+  ]
+}
