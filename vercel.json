@@ -29,6 +29,26 @@
       "source": "/category/open-offices",
       "destination": "/category/office-spaces",
       "permanent": true
+    },
+    {
+      "source": "/category/lounges",
+      "destination": "/category/office-spaces",
+      "permanent": true
+    },
+    {
+      "source": "/category/home-lifestyle",
+      "destination": "/category/well-lit",
+      "permanent": true
+    },
+    {
+      "source": "/category/professional-shelves",
+      "destination": "/category/ambient-lighting",
+      "permanent": true
+    },
+    {
+      "source": "/search",
+      "destination": "/",
+      "permanent": true
     }
   ],
   "headers": [
