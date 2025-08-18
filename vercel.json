@@ -4,6 +4,13 @@
       "maxDuration": 10
     }
   },
+  "redirects": [
+    {
+      "source": "/premium",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/images/(.*)",
