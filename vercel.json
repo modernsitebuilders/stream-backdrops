@@ -4,53 +4,6 @@
       "maxDuration": 10
     }
   },
-  "redirects": [
-    {
-      "source": "/category/lounges",
-      "destination": "/category/office-spaces",
-      "permanent": true
-    },
-    {
-      "source": "/premium",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/search",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/category/home-lifestyle",
-      "destination": "/category/well-lit",
-      "permanent": true
-    },
-    {
-      "source": "/category/lobbies",
-      "destination": "/category/office-spaces",
-      "permanent": true
-    },
-    {
-      "source": "/category/executive-offices",
-      "destination": "/category/office-spaces",
-      "permanent": true
-    },
-    {
-      "source": "/category/home-offices",
-      "destination": "/category/well-lit",
-      "permanent": true
-    },
-    {
-      "source": "/category/professional-shelves",
-      "destination": "/category/ambient-lighting",
-      "permanent": true
-    },
-    {
-      "source": "/category/open-offices",
-      "destination": "/category/office-spaces",
-      "permanent": true
-    }
-  ],
   "headers": [
     {
       "source": "/images/(.*)",
