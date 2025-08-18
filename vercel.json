@@ -1,16 +1,10 @@
 {
+  "functions": {
+    "pages/api/sitemap.js": {
+      "maxDuration": 10
+    }
+  },
   "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.streambackdrops.com"
-        }
-      ],
-      "destination": "https://streambackdrops.com/:path*",
-      "permanent": true
-    },
     {
       "source": "/category/lounges",
       "destination": "/category/office-spaces",
@@ -55,6 +49,17 @@
       "source": "/category/open-offices",
       "destination": "/category/office-spaces",
       "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     }
   ]
 }
