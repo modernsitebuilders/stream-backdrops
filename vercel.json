@@ -9,6 +9,11 @@
       "source": "/premium",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/category/home-offices",
+      "destination": "/category/well-lit",
+      "permanent": true
     }
   ],
   "headers": [
