@@ -14,6 +14,21 @@
       "source": "/category/home-offices",
       "destination": "/category/well-lit",
       "permanent": true
+    },
+    {
+      "source": "/category/executive-offices",
+      "destination": "/category/office-spaces",
+      "permanent": true
+    },
+    {
+      "source": "/category/lobbies",
+      "destination": "/category/office-spaces",
+      "permanent": true
+    },
+    {
+      "source": "/category/open-offices",
+      "destination": "/category/office-spaces",
+      "permanent": true
     }
   ],
   "headers": [
