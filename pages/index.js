@@ -186,6 +186,108 @@ export default function Home() {
             Free high-quality backgrounds • No signup • No watermarks • Instant download
           </p>
         </section>
+        <section style={{
+  padding: '3rem 2rem',
+  background: '#f8fafc',
+  maxWidth: '1200px',
+  margin: '0 auto'
+}}>
+  <h2 style={{
+    textAlign: 'center',
+    fontSize: '2rem',
+    fontWeight: 'bold',
+    marginBottom: '1rem',
+    color: '#1e293b'
+  }}>
+    📚 Expert Tips for Video Call Success
+  </h2>
+  
+  <p style={{
+    textAlign: 'center',
+    color: '#64748b',
+    marginBottom: '3rem'
+  }}>
+    Avoid common mistakes and look professional on every call
+  </p>
+
+  <div style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+    gap: '1.5rem'
+  }}>
+    {/* Card 1 */}
+    <div style={{
+      background: 'white',
+      padding: '1.5rem',
+      borderRadius: '0.5rem',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+      cursor: 'pointer',
+      transition: 'transform 0.2s'
+    }}
+    onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
+    onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
+    >
+      <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🚫</div>
+      <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+        10 Background Mistakes
+      </h3>
+      <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
+        Common errors that kill your professional image
+      </p>
+    </div>
+
+    {/* Card 2 */}
+    <div style={{
+      background: 'white',
+      padding: '1.5rem',
+      borderRadius: '0.5rem',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+      cursor: 'pointer'
+    }}>
+      <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>💡</div>
+      <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+        Perfect Lighting Setup
+      </h3>
+      <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
+        Look professional with proper lighting
+      </p>
+    </div>
+
+    {/* Card 3 */}
+    <div style={{
+      background: 'white',
+      padding: '1.5rem',
+      borderRadius: '0.5rem',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+      cursor: 'pointer'
+    }}>
+      <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>⚡</div>
+      <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+        5-Minute Setup Guide
+      </h3>
+      <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
+        Quick steps for perfect video calls
+      </p>
+    </div>
+
+    {/* Card 4 */}
+    <div style={{
+      background: 'white',
+      padding: '1.5rem',
+      borderRadius: '0.5rem',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+      cursor: 'pointer'
+    }}>
+      <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🎯</div>
+      <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+        Choose the Right Style
+      </h3>
+      <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
+        Match your background to your industry
+      </p>
+    </div>
+  </div>
+</section>
 
         {/* 3-Column Grid with REAL IMAGES like Image 2 */}
         <div style={{
