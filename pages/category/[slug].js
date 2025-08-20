@@ -238,6 +238,15 @@ function CategoryContent({ slug }) {
   file_name: image.filename,  // Extra parameter for clarity
   value: 1
 });
+        if (typeof window !== 'undefined' && window.pintrk) {
+      window.pintrk('track', 'custom', {
+        event_id: 'download',
+        value: 1,
+        currency: 'USD',
+        content_name: image.filename,
+        content_category: 'Virtual Background'
+      });
+    }
       const response = await fetch(`/images/${folderMap[slug]}/${image.filename}`);
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
