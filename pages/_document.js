@@ -9,7 +9,15 @@ export default function Document() {
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
-        
+        {/* Google Tag Manager */}
+        <script dangerouslySetInnerHTML={{
+          __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-TS54MCGR');`
+        }} />
+        {/* End Google Tag Manager */}
         {/* Favicon and app icons */}
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/png" href="/favicon.png" />
@@ -47,6 +55,12 @@ export default function Document() {
         <meta name="format-detection" content="telephone=no" />
       </Head>
       <body>
+        {/* Google Tag Manager (noscript) */}
+        <noscript dangerouslySetInnerHTML={{
+          __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TS54MCGR"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe>`
+        }} />
+        {/* End Google Tag Manager (noscript) */}
         <Main />
         <NextScript />
       </body>
