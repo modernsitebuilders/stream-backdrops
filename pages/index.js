@@ -474,7 +474,7 @@ export default function Home() {
                   marginBottom: '0.5rem',
                   color: '#111827'
                 }}>
-                  Living Room (more coming soon!!)
+                  Living Room
                 </h3>
                 <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
                   Comfortable living room virtual backgrounds for casual video calls and personal meetings. Cozy home settings for relaxed conversations.
