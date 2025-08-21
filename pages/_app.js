@@ -40,7 +40,7 @@ export default function App({ Component, pageProps }) {
       </Script>
       
       <Component {...pageProps} />
-      <Analytics />
+{typeof window !== 'undefined' && !window.location.hostname.includes('localhost') && <Analytics />}
     </>
   );
 }
