@@ -260,9 +260,9 @@ function CategoryContent({ slug }) {
     try {
       // Track the download event in Google Analytics
       event('download', {
-  event_category: 'Background Download',
-  event_label: image.filename,
-  file_name: image.filename,  // Extra parameter for clarity
+  item_name: image.filename,           // GA4 recognizes this automatically
+  item_category: 'Virtual Background',  // GA4 recognizes this automatically  
+  content_name: image.filename,        // Alternative that GA4 recognizes
   value: 1
 });
         if (typeof window !== 'undefined' && window.pintrk) {

@@ -229,7 +229,7 @@ export default function Home() {
     gap: '1.5rem'
   }}>
     {/* Card 1 - 10 Background Mistakes */}
-<Link href="/blog-background-mistakes" style={{ textDecoration: 'none' }}>
+{/*<Link href="/blog-background-mistakes" style={{ textDecoration: 'none' }}>
   <div style={{
     background: 'white',
     padding: '1.5rem',
@@ -237,10 +237,7 @@ export default function Home() {
     boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
     cursor: 'pointer',
     transition: 'transform 0.2s'
-  }}
-  onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
-  onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
-  >
+  }}>
     <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🚫</div>
     <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
       10 Background Mistakes
@@ -250,7 +247,7 @@ export default function Home() {
     </p>
   </div>
 </Link>
-
+/}
 {/* Card 2 - Perfect Lighting Setup */}
 <Link href="/blog-lighting-tips" style={{ textDecoration: 'none' }}>
   <div style={{
@@ -462,7 +459,7 @@ export default function Home() {
                 overflow: 'hidden'
               }}>
                 <Image
-                 src="/images/living-room/living-room-2.webp"
+                 src="/images/well-lit/well-lit-minimalist-office-1.webp"
                   alt="Comfortable living room backgrounds for casual meetings and personal video calls"
                   fill
                   style={{ objectFit: 'cover' }}
