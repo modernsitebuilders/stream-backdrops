@@ -5,6 +5,7 @@ export default function Layout({
   children, 
   title = 'StreamBackdrops - Free HD Virtual Backgrounds',
   description = 'Download free HD virtual backgrounds for Zoom, Teams, and Google Meet. Professional quality backgrounds for video calls.',
+  currentPage = null,
   canonical,
   keywords = 'virtual backgrounds, Zoom backgrounds, Teams backgrounds, professional video calls, free download',
   image = '/og-image.png',
@@ -98,54 +99,68 @@ export default function Layout({
             </Link>
             
             {/* ✅ Navigation */}
-            <nav style={{ 
-              display: 'flex',
-              gap: '1.5rem',
-              alignItems: 'center',
-              flexWrap: 'wrap'
-            }}>
-              <Link href="/category/well-lit" style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '0.5rem',
-                textDecoration: 'none',
-                color: '#374151',
-                fontWeight: '500',
-                fontSize: '0.9rem',
-                background: '#f9fafb',
-                border: '1px solid #d1d5db',
-                transition: 'all 0.3s ease'
-              }}>
-                Well Lit
-              </Link>
-              
-              <Link href="/category/ambient-lighting" style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '0.5rem',
-                textDecoration: 'none',
-                color: '#374151',
-                fontWeight: '500',
-                fontSize: '0.9rem',
-                background: '#f9fafb',
-                border: '1px solid #d1d5db',
-                transition: 'all 0.3s ease'
-              }}>
-                Ambient Lighting
-              </Link>
-              
-              <Link href="/category/office-spaces" style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '0.5rem',
-                textDecoration: 'none',
-                color: '#374151',
-                fontWeight: '500',
-                fontSize: '0.9rem',
-                background: '#f9fafb',
-                border: '1px solid #d1d5db',
-                transition: 'all 0.3s ease'
-              }}>
-                Office Spaces
-              </Link>
-            </nav>
+           <nav style={{ 
+  display: 'flex',
+  gap: '1.5rem',
+  alignItems: 'center',
+  flexWrap: 'wrap'
+}}>
+  <Link href="/category/well-lit" style={{
+    padding: '0.5rem 1rem',
+    borderRadius: '0.5rem',
+    textDecoration: 'none',
+    color: currentPage === 'well-lit' ? '#2563eb' : '#374151',
+    fontWeight: '500',
+    fontSize: '0.9rem',
+    background: '#f9fafb',
+    border: currentPage === 'well-lit' ? '2px solid #2563eb' : '1px solid #d1d5db',
+    transition: 'all 0.3s ease'
+  }}>
+    Well Lit
+  </Link>
+  
+  <Link href="/category/ambient-lighting" style={{
+    padding: '0.5rem 1rem',
+    borderRadius: '0.5rem',
+    textDecoration: 'none',
+    color: currentPage === 'ambient-lighting' ? '#2563eb' : '#374151',
+    fontWeight: '500',
+    fontSize: '0.9rem',
+    background: '#f9fafb',
+    border: currentPage === 'ambient-lighting' ? '2px solid #2563eb' : '1px solid #d1d5db',
+    transition: 'all 0.3s ease'
+  }}>
+    Ambient Lighting
+  </Link>
+  
+  <Link href="/category/office-spaces" style={{
+    padding: '0.5rem 1rem',
+    borderRadius: '0.5rem',
+    textDecoration: 'none',
+    color: currentPage === 'office-spaces' ? '#2563eb' : '#374151',
+    fontWeight: '500',
+    fontSize: '0.9rem',
+    background: '#f9fafb',
+    border: currentPage === 'office-spaces' ? '2px solid #2563eb' : '1px solid #d1d5db',
+    transition: 'all 0.3s ease'
+  }}>
+    Office Spaces
+  </Link>
+  
+  <Link href="/category/living-room" style={{
+    padding: '0.5rem 1rem',
+    borderRadius: '0.5rem',
+    textDecoration: 'none',
+    color: currentPage === 'living-room' ? '#2563eb' : '#374151',
+    fontWeight: '500',
+    fontSize: '0.9rem',
+    background: '#f9fafb',
+    border: currentPage === 'living-room' ? '2px solid #2563eb' : '1px solid #d1d5db',
+    transition: 'all 0.3s ease'
+  }}>
+    Living Room
+  </Link>
+</nav>
           </div>
         </header>
 

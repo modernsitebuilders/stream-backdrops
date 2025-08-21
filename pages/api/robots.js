@@ -50,6 +50,7 @@ User-agent: *
 Allow: /category/well-lit
 Allow: /category/ambient-lighting
 Allow: /category/office-spaces
+Allow: /category/living-room
 
 # ✅ Block any development or testing URLs
 Disallow: /test/

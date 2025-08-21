@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { event } from '../../lib/gtag';
+import Layout from '../../components/Layout';
 
 // Simple SocialShare component
 function SocialShare({ image, title, size = "large", showLabels = false, vertical = true }) {
@@ -217,6 +218,17 @@ const categoryInfo = {
       { filename: 'office-spaces-wood-accent-wall-1.webp', title: 'Wood Accent Wall Office' },
       { filename: 'office-spaces-wood-accent-wall-2.webp', title: 'Wood Accent Wall Office' }
     ]
+  },
+  
+  'living-room': {
+    name: 'Living Room (more coming soon!!)',
+    description: 'Comfortable living room backgrounds for casual meetings and personal video calls',
+    seoDescription: 'Download free living room virtual backgrounds for video calls. Comfortable home settings for casual meetings.',
+    images: [
+      { filename: 'living-room-1.webp', title: 'living-room-1' },
+      { filename: 'living-room-2.webp', title: 'living-room-2' },
+      { filename: 'living-room-3.webp', title: 'living-room-3' }
+    ]
   }
 };
 
@@ -225,7 +237,8 @@ function CategoryContent({ slug }) {
   const folderMap = {
     'well-lit': 'well-lit',
     'ambient-lighting': 'ambient-lighting', 
-    'office-spaces': 'office-spaces'
+    'office-spaces': 'office-spaces',
+    'living-room': 'living-room'
   };
   const category = categoryInfo[slug];
 
@@ -377,80 +390,6 @@ function CategoryContent({ slug }) {
       ) : (
         /* ✅ KEEPING: All your existing content stays exactly the same */
         <>
-          {/* Clean Header */}
-          <header style={{
-            background: 'white',
-            borderBottom: '1px solid #e5e7eb',
-            padding: '1rem 0'
-          }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-          <nav style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
-            <Link href="/" style={{
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-              color: '#2563eb',
-              textDecoration: 'none'
-            }}>
-              🎥 StreamBackdrops
-            </Link>
-            
-            {/* Category Navigation - Matching original styling */}
-            <div style={{
-              display: 'flex',
-              gap: '1.5rem',
-              alignItems: 'center',
-              flexWrap: 'wrap'
-            }}>
-              <Link href="/category/well-lit" style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '0.5rem',
-                textDecoration: 'none',
-                color: slug === 'well-lit' ? '#2563eb' : '#374151',
-                fontWeight: '500',
-                fontSize: '0.9rem',
-                background: '#f9fafb',
-                border: '1px solid #d1d5db',
-                transition: 'all 0.3s ease'
-              }}>
-                Well Lit
-              </Link>
-              
-              <Link href="/category/ambient-lighting" style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '0.5rem',
-                textDecoration: 'none',
-                color: slug === 'ambient-lighting' ? '#2563eb' : '#374151',
-                fontWeight: '500',
-                fontSize: '0.9rem',
-                background: '#f9fafb',
-                border: '1px solid #d1d5db',
-                transition: 'all 0.3s ease'
-              }}>
-                Ambient Lighting
-              </Link>
-              
-              <Link href="/category/office-spaces" style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '0.5rem',
-                textDecoration: 'none',
-                color: slug === 'office-spaces' ? '#2563eb' : '#374151',
-                fontWeight: '500',
-                fontSize: '0.9rem',
-                background: '#f9fafb',
-                border: '1px solid #d1d5db',
-                transition: 'all 0.3s ease'
-              }}>
-                Office Spaces
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </header>
-
       {/* Page Content */}
       <div style={{
         padding: '2rem',
@@ -728,59 +667,22 @@ const DynamicCategoryContent = dynamic(() => Promise.resolve(CategoryContent), {
 export default function CategoryPage({ slug }) {
   const router = useRouter();
   const currentSlug = slug || router.query.slug;
+  const category = categoryInfo[currentSlug];
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f9fafb' }}>
-      <DynamicCategoryContent slug={currentSlug} />
-      {/* Footer */}
-      <footer style={{
-        background: '#1f2937',
-        color: 'white',
-        padding: '2rem 0',
-        marginTop: '3rem'
-      }}>
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '0 2rem',
-          textAlign: 'center'
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap' }}>
-            <Link href="/about" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
-              About
-            </Link>
-            <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
-            <Link href="/license" style={{ color: '#fbbf24', textDecoration: 'none', margin: '0 15px', fontWeight: '600' }}>
-              📋 License & Usage
-            </Link>
-            <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
-            <Link href="/contact" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
-              Contact
-            </Link>
-            <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
-            <Link href="/blog" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
-              Blog
-            </Link>
-            <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
-            <Link href="/privacy" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
-              Privacy Policy
-            </Link>
-            <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
-            <Link href="/terms" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
-              Terms of Service
-            </Link>
-          </div>
-          <p style={{ color: '#d1d5db', margin: 0 }}>
-            © 2025 StreamBackdrops. All rights reserved.
-          </p>
-        </div>
-      </footer>
-    </div>
-  );
+  <Layout
+    title={category ? `${category.name} Virtual Backgrounds - StreamBackdrops` : 'Category Not Found'}
+    description={category ? category.seoDescription : 'Category not found'}
+    canonical={`https://streambackdrops.com/category/${currentSlug}`}
+    currentPage={currentSlug} // Add this line
+  >
+    <DynamicCategoryContent slug={currentSlug} />
+  </Layout>
+);
 }
 
 export async function getStaticPaths() {
-  const paths = ['well-lit', 'ambient-lighting', 'office-spaces'].map((slug) => ({
+  const paths = ['well-lit', 'ambient-lighting', 'office-spaces', 'living-room'].map((slug) => ({
     params: { slug }
   }));
 

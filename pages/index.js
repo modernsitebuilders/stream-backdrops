@@ -119,6 +119,19 @@ export default function Home() {
                 }}>
                   Office Spaces
                 </Link>
+                <Link href="/category/living-room" style={{
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  color: '#374151',
+                  fontWeight: '500',
+                  fontSize: '0.9rem',
+                  background: '#f9fafb',
+                  border: '1px solid #d1d5db',
+                  transition: 'all 0.3s ease'
+                }}>
+                  Living Room
+                </Link>
               </div>
             </nav>
           </div>
@@ -215,78 +228,86 @@ export default function Home() {
     gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
     gap: '1.5rem'
   }}>
-    {/* Card 1 */}
-    <div style={{
-      background: 'white',
-      padding: '1.5rem',
-      borderRadius: '0.5rem',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-      cursor: 'pointer',
-      transition: 'transform 0.2s'
-    }}
-    onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
-    onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
-    >
-      <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🚫</div>
-      <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
-        10 Background Mistakes
-      </h3>
-      <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-        Common errors that kill your professional image
-      </p>
-    </div>
-
-    {/* Card 2 */}
-    <div style={{
-      background: 'white',
-      padding: '1.5rem',
-      borderRadius: '0.5rem',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-      cursor: 'pointer'
-    }}>
-      <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>💡</div>
-      <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
-        Perfect Lighting Setup
-      </h3>
-      <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-        Look professional with proper lighting
-      </p>
-    </div>
-
-    {/* Card 3 */}
-    <div style={{
-      background: 'white',
-      padding: '1.5rem',
-      borderRadius: '0.5rem',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-      cursor: 'pointer'
-    }}>
-      <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>⚡</div>
-      <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
-        5-Minute Setup Guide
-      </h3>
-      <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-        Quick steps for perfect video calls
-      </p>
-    </div>
-
-    {/* Card 4 */}
-    <div style={{
-      background: 'white',
-      padding: '1.5rem',
-      borderRadius: '0.5rem',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-      cursor: 'pointer'
-    }}>
-      <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🎯</div>
-      <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
-        Choose the Right Style
-      </h3>
-      <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-        Match your background to your industry
-      </p>
-    </div>
+    {/* Card 1 - 10 Background Mistakes */}
+<Link href="/blog-background-mistakes" style={{ textDecoration: 'none' }}>
+  <div style={{
+    background: 'white',
+    padding: '1.5rem',
+    borderRadius: '0.5rem',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    cursor: 'pointer',
+    transition: 'transform 0.2s'
+  }}
+  onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
+  onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
+  >
+    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🚫</div>
+    <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+      10 Background Mistakes
+    </h3>
+    <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
+      Common errors that kill your professional image
+    </p>
   </div>
+</Link>
+
+{/* Card 2 - Perfect Lighting Setup */}
+<Link href="/blog-lighting-tips" style={{ textDecoration: 'none' }}>
+  <div style={{
+    background: 'white',
+    padding: '1.5rem',
+    borderRadius: '0.5rem',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    cursor: 'pointer'
+  }}>
+    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>💡</div>
+    <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+      Perfect Lighting Setup
+    </h3>
+    <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
+      Look professional with proper lighting
+    </p>
+  </div>
+</Link>
+
+{/* Card 3 - 5-Minute Setup Guide */}
+<Link href="/blog-virtual-background-guide" style={{ textDecoration: 'none' }}>
+  <div style={{
+    background: 'white',
+    padding: '1.5rem',
+    borderRadius: '0.5rem',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    cursor: 'pointer'
+  }}>
+    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>⚡</div>
+    <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+      5-Minute Setup Guide
+    </h3>
+    <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
+      Quick steps for perfect video calls
+    </p>
+  </div>
+</Link>
+
+{/* Card 4 - Choose the Right Style */}
+<Link href="/blog-backgrounds-by-industry" style={{ textDecoration: 'none' }}>
+  <div style={{
+    background: 'white',
+    padding: '1.5rem',
+    borderRadius: '0.5rem',
+    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+    cursor: 'pointer'
+  }}>
+    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🎯</div>
+    <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
+      Choose the Right Style
+    </h3>
+    <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
+      Match your background to your industry
+    </p>
+  </div>
+</Link>
+</div>
 </section>
 
         {/* 3-Column Grid with REAL IMAGES like Image 2 */}
@@ -419,6 +440,47 @@ export default function Home() {
                 </h3>
                 <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
                   Professional office environments and workspace backgrounds for business video calls
+                </p>
+              </div>
+            </div>
+          </Link>
+
+          {/* Living Room - with REAL IMAGE */}
+          <Link href="/category/living-room" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'white',
+                borderRadius: '1rem',
+                overflow: 'hidden',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                cursor: 'pointer'
+              }}>
+              {/* Real Background Image */}
+              <div style={{
+                position: 'relative',
+                height: '200px',
+                overflow: 'hidden'
+              }}>
+                <Image
+                 src="/images/living-room/living-room-2.webp"
+                  alt="Comfortable living room backgrounds for casual meetings and personal video calls"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  quality={75}
+                  sizes="(max-width: 768px) 100vw, 300px"
+                />
+              </div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+                  fontSize: '1.25rem',
+                  fontWeight: '600',
+                  marginBottom: '0.5rem',
+                  color: '#111827'
+                }}>
+                  Living Room (more coming soon!!)
+                </h3>
+                <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
+                  Comfortable living room virtual backgrounds for casual video calls and personal meetings. Cozy home settings for relaxed conversations.
                 </p>
               </div>
             </div>
