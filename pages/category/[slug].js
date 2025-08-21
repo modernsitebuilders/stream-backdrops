@@ -279,7 +279,28 @@ const categoryInfo = {
       { filename: 'living-room-14.webp', title: 'Living Room 14' },
       { filename: 'living-room-15.webp', title: 'Living Room 15' },
       { filename: 'living-room-16.webp', title: 'Living Room 16' },
-      { filename: 'living-room-17.webp', title: 'Living Room 17' }
+      { filename: 'living-room-17.webp', title: 'Living Room 17' },
+      { filename: 'living-room-18.webp', title: 'Living Room 18' },
+      { filename: 'living-room-19.webp', title: 'Living Room 19' },
+      { filename: 'living-room-20.webp', title: 'Living Room 20' },
+      { filename: 'living-room-21.webp', title: 'Living Room 21' },
+      { filename: 'living-room-22.webp', title: 'Living Room 22' },
+      { filename: 'living-room-23.webp', title: 'Living Room 23' },
+      { filename: 'living-room-24.webp', title: 'Living Room 24' },
+      { filename: 'living-room-25.webp', title: 'Living Room 25' },
+      { filename: 'living-room-26.webp', title: 'Living Room 26' },
+      { filename: 'living-room-27.webp', title: 'Living Room 27' },
+      { filename: 'living-room-28.webp', title: 'Living Room 28' },
+      { filename: 'living-room-29.webp', title: 'Living Room 29' },
+      { filename: 'living-room-30.webp', title: 'Living Room 30' },
+      { filename: 'living-room-31.webp', title: 'Living Room 31' },
+      { filename: 'living-room-32.webp', title: 'Living Room 32' },
+      { filename: 'living-room-33.webp', title: 'Living Room 33' },
+      { filename: 'living-room-34.webp', title: 'Living Room 34' },
+      { filename: 'living-room-35.webp', title: 'Living Room 35' },
+      { filename: 'living-room-36.webp', title: 'Living Room 36' },
+      { filename: 'living-room-37.webp', title: 'Living Room 37' },
+      { filename: 'living-room-38.webp', title: 'Living Room 38' }
     ]
   }
 };
