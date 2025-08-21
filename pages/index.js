@@ -459,7 +459,7 @@ export default function Home() {
                 overflow: 'hidden'
               }}>
                 <Image
-                 src="/images/category/living-room/living-room.29.webp"
+                 src="/images/category/living-room/living-room-29.webp"
                   alt="Comfortable living room backgrounds for casual meetings and personal video calls"
                   fill
                   style={{ objectFit: 'cover' }}

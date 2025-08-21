@@ -14,39 +14,39 @@ function SocialShare({ image, title, size = "large", showLabels = false, vertica
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
 
-  const shareLinks = [
-    {
-      name: 'Twitter',
-      url: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
-      icon: '𝕏',
-      hoverColor: '#1DA1F2'
-    },
-    {
-      name: 'Facebook',
-      url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-      icon: '📘',
-      hoverColor: '#4267B2'
-    },
-    {
-      name: 'LinkedIn',
-      url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-      icon: '💼',
-      hoverColor: '#0077B5'
-    },
-    {
-      name: 'Pinterest',
-      url: `https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedTitle}`,
-      icon: '📌',
-      hoverColor: '#BD081C'
-    },
-    {
-      name: 'Copy Link',
-      url: '#',
-      icon: '🔗',
-      hoverColor: '#10B981',
-      action: 'copy'
-    }
-  ];
+const shareLinks = [
+  {
+    name: 'Twitter',
+    url: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
+    icon: 'X',  // ✅ Simple X for Twitter/X
+    hoverColor: '#1DA1F2'
+  },
+  {
+    name: 'Facebook',
+    url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+    icon: 'f',  // ✅ Simple f for Facebook
+    hoverColor: '#4267B2'
+  },
+  {
+    name: 'LinkedIn',
+    url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+    icon: 'in', // ✅ Simple in for LinkedIn
+    hoverColor: '#0077B5'
+  },
+  {
+    name: 'Pinterest',
+    url: `https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedTitle}`,
+    icon: 'P',  // ✅ Simple P for Pinterest
+    hoverColor: '#BD081C'
+  },
+  {
+    name: 'Copy Link',
+    url: '#',
+    icon: '🔗', // ✅ Keep link icon - this one is clear
+    hoverColor: '#10B981',
+    action: 'copy'
+  }
+];
 
   return (
     <div style={{
