@@ -220,14 +220,28 @@ const categoryInfo = {
     ]
   },
   
-  'living-room': {
+    'living-room': {
     name: 'Living Room (more coming soon!!)',
     description: 'Comfortable living room backgrounds for casual meetings and personal video calls',
     seoDescription: 'Download free living room virtual backgrounds for video calls. Comfortable home settings for casual meetings.',
     images: [
-      { filename: 'living-room-1.webp', title: 'living-room-1' },
-      { filename: 'living-room-2.webp', title: 'living-room-2' },
-      { filename: 'living-room-3.webp', title: 'living-room-3' }
+      { filename: 'living-room-1.webp', title: 'Living Room 1' },
+      { filename: 'living-room-2.webp', title: 'Living Room 2' },
+      { filename: 'living-room-3.webp', title: 'Living Room 3' },
+      { filename: 'living-room-4.webp', title: 'Living Room 4' },
+      { filename: 'living-room-5.webp', title: 'Living Room 5' },
+      { filename: 'living-room-6.webp', title: 'Living Room 6' },
+      { filename: 'living-room-7.webp', title: 'Living Room 7' },
+      { filename: 'living-room-8.webp', title: 'Living Room 8' },
+      { filename: 'living-room-9.webp', title: 'Living Room 9' },
+      { filename: 'living-room-10.webp', title: 'Living Room 10' },
+      { filename: 'living-room-11.webp', title: 'Living Room 11' },
+      { filename: 'living-room-12.webp', title: 'Living Room 12' },
+      { filename: 'living-room-13.webp', title: 'Living Room 13' },
+      { filename: 'living-room-14.webp', title: 'Living Room 14' },
+      { filename: 'living-room-15.webp', title: 'Living Room 15' },
+      { filename: 'living-room-16.webp', title: 'Living Room 16' },
+      { filename: 'living-room-17.webp', title: 'Living Room 17' }
     ]
   }
 };
