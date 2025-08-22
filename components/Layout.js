@@ -95,7 +95,7 @@ export default function Layout({
               color: '#2563eb',
               textDecoration: 'none'
             }}>
-              🎥 StreamBackdrops
+              StreamBackdrops
             </Link>
             
             {/* ✅ Navigation */}
@@ -203,7 +203,7 @@ export default function Layout({
                 margin: '0 15px', 
                 fontWeight: '600' 
               }}>
-                📋 License & Usage
+                License & Usage
               </Link>
               <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
               <Link href="/contact" style={{ 
