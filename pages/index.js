@@ -226,19 +226,21 @@ export default function Home() {
   <div style={{
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+    gridAutoRows: '1fr',
     gap: '1.5rem'
   }}>
-    {/* Card 1 - 10 Background Mistakes */}
-{/*<Link href="/blog-background-mistakes" style={{ textDecoration: 'none' }}>
-  <div style={{
-    background: 'white',
-    padding: '1.5rem',
-    borderRadius: '0.5rem',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    cursor: 'pointer',
-    transition: 'transform 0.2s'
-  }}>
-    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🚫</div>
+{/* Card 1 - 10 Background Mistakes */}
+<Link href="/blog-background-mistakes" style={{ 
+  textDecoration: 'none'
+}}>
+<div style={{
+  background: 'white',
+  padding: '1rem',
+  borderRadius: '0.5rem',
+  boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+  cursor: 'pointer',
+  height: '100%'
+}}>
     <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
       10 Background Mistakes
     </h3>
@@ -247,17 +249,19 @@ export default function Home() {
     </p>
   </div>
 </Link>
-/}
+
 {/* Card 2 - Perfect Lighting Setup */}
-<Link href="/blog-lighting-tips" style={{ textDecoration: 'none' }}>
-  <div style={{
-    background: 'white',
-    padding: '1.5rem',
-    borderRadius: '0.5rem',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    cursor: 'pointer'
-  }}>
-    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>💡</div>
+<Link href="/blog-background-mistakes" style={{ 
+  textDecoration: 'none'
+}}>
+<div style={{
+  background: 'white',
+  padding: '1rem',
+  borderRadius: '0.5rem',
+  boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+  cursor: 'pointer',
+  height: '100%'
+}}>
     <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
       Perfect Lighting Setup
     </h3>
@@ -268,15 +272,17 @@ export default function Home() {
 </Link>
 
 {/* Card 3 - 5-Minute Setup Guide */}
-<Link href="/blog-virtual-background-guide" style={{ textDecoration: 'none' }}>
-  <div style={{
-    background: 'white',
-    padding: '1.5rem',
-    borderRadius: '0.5rem',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    cursor: 'pointer'
-  }}>
-    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>⚡</div>
+<Link href="/blog-background-mistakes" style={{ 
+  textDecoration: 'none'
+}}>
+<div style={{
+  background: 'white',
+  padding: '1rem',
+  borderRadius: '0.5rem',
+  boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+  cursor: 'pointer',
+  height: '100%'
+}}>
     <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
       5-Minute Setup Guide
     </h3>
@@ -287,15 +293,17 @@ export default function Home() {
 </Link>
 
 {/* Card 4 - Choose the Right Style */}
-<Link href="/blog-backgrounds-by-industry" style={{ textDecoration: 'none' }}>
-  <div style={{
-    background: 'white',
-    padding: '1.5rem',
-    borderRadius: '0.5rem',
-    boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-    cursor: 'pointer'
-  }}>
-    <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🎯</div>
+<Link href="/blog-background-mistakes" style={{ 
+  textDecoration: 'none'
+}}>
+<div style={{
+  background: 'white',
+  padding: '1rem',
+  borderRadius: '0.5rem',
+  boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+  cursor: 'pointer',
+  height: '100%'
+}}>
     <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
       Choose the Right Style
     </h3>
