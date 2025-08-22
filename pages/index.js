@@ -69,7 +69,7 @@ export default function Home() {
                 fontWeight: 'bold',
                 color: '#2563eb'
               }}>
-                🎥 StreamBackdrops
+                StreamBackdrops
               </div>
               
               {/* Navigation Tabs - ORIGINAL STYLING */}
@@ -212,7 +212,7 @@ export default function Home() {
     marginBottom: '1rem',
     color: '#1e293b'
   }}>
-    📚 Expert Tips for Video Call Success
+    Expert Tips for Video Call Success
   </h2>
   
   <p style={{
@@ -521,7 +521,7 @@ export default function Home() {
               display: 'inline-block'
             }}
           >
-            📘 View Complete Setup Guide
+            View Complete Setup Guide
           </Link>
         </section>
 
@@ -544,7 +544,7 @@ export default function Home() {
               </Link>
               <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
               <Link href="/license" style={{ color: '#fbbf24', textDecoration: 'none', margin: '0 15px', fontWeight: '600' }}>
-                📋 License & Usage
+                License & Usage
               </Link>
               <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
               <Link href="/contact" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
