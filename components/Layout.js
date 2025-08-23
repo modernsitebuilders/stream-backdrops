@@ -23,9 +23,12 @@ export default function Layout({
   return (
     <>
       <Head>
-        {/* ✅ Enhanced SEO Title */}
-        <title>{title}</title>
-        
+  <title>{title}</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         {/* ✅ SEO Meta Tags */}
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
