@@ -42,6 +42,88 @@ const nextConfig = {
   generateBuildId: async () => {
     return 'streambackdrops-' + Date.now();
   },
+
+  // ✅ ADD THIS: Handle redirects for old URLs (fixes 404s and redirects)
+  async redirects() {
+    return [
+      // Redirect old premium URLs to main categories
+      {
+        source: '/premium',
+        destination: '/category/office-spaces',
+        permanent: true,
+      },
+      {
+        source: '/category/premium-4k',
+        destination: '/category/office-spaces', 
+        permanent: true,
+      },
+      // Redirect old category names that might be causing 404s
+      {
+        source: '/category/home-offices',
+        destination: '/category/office-spaces',
+        permanent: true,
+      },
+      {
+        source: '/category/executive-offices',
+        destination: '/category/office-spaces',
+        permanent: true,
+      },
+      {
+        source: '/category/lobbies',
+        destination: '/category/ambient-lighting',
+        permanent: true,
+      },
+      {
+        source: '/category/private-offices',
+        destination: '/category/office-spaces',
+        permanent: true,
+      },
+      // Redirect any old blog URLs
+      {
+        source: '/blog-virtual-background-guide',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/blog-remote-work-productivity',
+        destination: '/blog',
+        permanent: true,
+      },
+    ];
+  },
+
+  // ✅ ADD THIS: Handle headers for better SEO (prevents some server errors)
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
+        ],
+      },
+      // Cache control for static assets
+      {
+        source: '/images/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
