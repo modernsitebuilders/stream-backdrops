@@ -7,12 +7,12 @@
   "redirects": [
     {
       "source": "/premium",
-      "destination": "/",
+      "destination": "/category/office-spaces",
       "permanent": true
     },
     {
       "source": "/category/home-offices",
-      "destination": "/category/well-lit",
+      "destination": "/category/office-spaces",
       "permanent": true
     },
     {
@@ -22,6 +22,11 @@
     },
     {
       "source": "/category/lobbies",
+      "destination": "/category/ambient-lighting",
+      "permanent": true
+    },
+    {
+      "source": "/category/private-offices",
       "destination": "/category/office-spaces",
       "permanent": true
     },
