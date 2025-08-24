@@ -21,12 +21,36 @@ export default function Blog() {
       category: "Industry Guide"
     },
     {
+      title: "15 Virtual Background Mistakes That Ruin Your Professional Image",
+      slug: "blog-background-mistakes",
+      excerpt: "Avoid these common virtual background mistakes that make you look unprofessional. Expert tips to fix technical issues and choose the right backgrounds.",
+      date: "August 6, 2025",
+      readTime: "10 min read",
+      category: "Common Mistakes"
+    },
+    {
+      title: "Perfect Lighting Setup for Virtual Backgrounds",
+      slug: "blog-lighting-tips",
+      excerpt: "Master video call lighting with our complete guide. Learn how to set up professional lighting for virtual backgrounds, avoid common mistakes, and look great on camera.",
+      date: "August 2, 2025", 
+      readTime: "10 min read",
+      category: "Technical Setup"
+    },
+    {
       title: "The Complete Technical Guide to Virtual Backgrounds",
       slug: "blog-virtual-background-guide",
-      excerpt: "Master virtual background technology with our complete technical guide covering setup, troubleshooting, optimization, and platform-specific instructions.",
+      excerpt: "Master virtual background technology with our complete technical guide covering setup, troubleshooting, optimization, and platform-specific instructions for Zoom, Teams, and more.",
       date: "August 2, 2025",
       readTime: "15 min read", 
       category: "Technical Guide"
+    },
+    {
+      title: "Zoom vs Teams vs Google Meet: Virtual Background Setup & Best Practices",
+      slug: "blog-zoom-teams-google",
+      excerpt: "Complete comparison of virtual backgrounds on Zoom, Microsoft Teams, and Google Meet. Setup guides, troubleshooting tips, and platform-specific best practices.",
+      date: "August 6, 2025",
+      readTime: "12 min read",
+      category: "Platform Comparison"
     },
     {
       title: "Remote Work Productivity: Creating Your Perfect Home Office Environment",
