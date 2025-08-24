@@ -2,3 +2,5 @@ node_modules/
 .next/ 
 .env.local 
 .vercel
+pinterest_pins/
+pinterest_generator.py
