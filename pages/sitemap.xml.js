@@ -1,110 +1,115 @@
-export default function handler(req, res) {
-  // Only allow GET requests
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+// pages/sitemap.xml.js
+function generateSiteMap() {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+     <!-- Homepage -->
+     <url>
+       <loc>https://streambackdrops.com</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>1.0</priority>
+     </url>
+     
+     <!-- Static Pages -->
+     <url>
+       <loc>https://streambackdrops.com/about</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.8</priority>
+     </url>
+     <url>
+       <loc>https://streambackdrops.com/contact</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.8</priority>
+     </url>
+     <url>
+       <loc>https://streambackdrops.com/blog</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.8</priority>
+     </url>
+     <url>
+       <loc>https://streambackdrops.com/license</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+     </url>
+     <url>
+       <loc>https://streambackdrops.com/privacy</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>yearly</changefreq>
+       <priority>0.6</priority>
+     </url>
+     <url>
+       <loc>https://streambackdrops.com/terms</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>yearly</changefreq>
+       <priority>0.6</priority>
+     </url>
+     
+     <!-- Blog Posts -->
+     <url>
+       <loc>https://streambackdrops.com/blog-virtual-background-guide</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+     </url>
+     <url>
+       <loc>https://streambackdrops.com/blog-remote-work-productivity</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>monthly</changefreq>
+       <priority>0.7</priority>
+     </url>
+     
+     <!-- Category Pages -->
+     <url>
+       <loc>https://streambackdrops.com/category/well-lit</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.8</priority>
+     </url>
+     <url>
+       <loc>https://streambackdrops.com/category/ambient-lighting</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.8</priority>
+     </url>
+     <url>
+       <loc>https://streambackdrops.com/category/office-spaces</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.8</priority>
+     </url>
+     <url>
+       <loc>https://streambackdrops.com/category/living-room</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.8</priority>
+     </url>
+   </urlset>`;
+}
 
-  try {
-    // Get the base URL (works for both local and production)
-    const baseUrl = 'https://streambackdrops.com';
+function SiteMap() {
+  // getServerSideProps will do the heavy lifting
+}
 
-    // Your site's current categories
-    const categories = ['well-lit', 'ambient-lighting', 'office-spaces', 'living-room'];
-    
-    // Blog post slugs
-    const blogPosts = [
-      'blog-professional-video-calls',
-      'blog-backgrounds-by-industry',
-      'blog-background-mistakes',
-      'blog-lighting-tips',
-      'blog-virtual-background-guide',
-      'blog-zoom-teams-google',
-      'blog-remote-work-productivity'
-    ];
-    
-    // Static pages with priority and update frequency
-    const staticPages = [
-      {
-        url: baseUrl,
-        lastmod: new Date().toISOString(),
-        changefreq: 'weekly',
-        priority: '1.0'  // Homepage is most important
-      },
-      {
-        url: `${baseUrl}/blog`,
-        lastmod: new Date().toISOString(),
-        changefreq: 'weekly',
-        priority: '0.8'
-      },
-      {
-        url: `${baseUrl}/about`,
-        lastmod: new Date().toISOString(),
-        changefreq: 'monthly',
-        priority: '0.6'
-      },
-      {
-        url: `${baseUrl}/contact`,
-        lastmod: new Date().toISOString(),
-        changefreq: 'monthly',
-        priority: '0.5'
-      },
-      {
-        url: `${baseUrl}/license`,
-        lastmod: new Date().toISOString(),
-        changefreq: 'yearly',
-        priority: '0.4'
-      },
-      {
-        url: `${baseUrl}/privacy`,
-        lastmod: new Date().toISOString(),
-        changefreq: 'yearly',
-        priority: '0.3'
-      },
-      {
-        url: `${baseUrl}/terms`,
-        lastmod: new Date().toISOString(),
-        changefreq: 'yearly',
-        priority: '0.3'
-      }
-    ];
+export async function getServerSideProps({ res }) {
+  // Generate the XML sitemap with the posts data
+  const sitemap = generateSiteMap();
 
-    // Category pages (high priority for SEO)
-    const categoryPages = categories.map(category => ({
-      url: `${baseUrl}/category/${category}`,
-      lastmod: new Date().toISOString(),
-      changefreq: 'weekly',  // Categories updated weekly
-      priority: '0.8'        // High priority for main content
-    }));
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=86400, stale-while-revalidate'
+  )
+  res.setHeader('Content-Type', 'text/xml')
+  // Send the XML to the browser
+  res.write(sitemap)
+  res.end()
 
-    // Blog post pages
-    const blogPages = blogPosts.map(slug => ({
-      url: `${baseUrl}/${slug}`,
-      lastmod: new Date().toISOString(),
-      changefreq: 'monthly',
-      priority: '0.7'
-    }));
-
-    // Combine all pages
-    const allPages = [...staticPages, ...categoryPages, ...blogPages];
-
-    // Generate XML sitemap
-    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-${allPages.map(page => `  <url>
-    <loc>${page.url}</loc>
-    <lastmod>${page.lastmod}</lastmod>
-    <changefreq>${page.changefreq}</changefreq>
-    <priority>${page.priority}</priority>
-  </url>`).join('\n')}
-</urlset>`;
-
-    // Set proper headers for XML response
-    res.setHeader('Content-Type', 'text/xml; charset=utf-8');
-    res.setHeader('Cache-Control', 'public, max-age=86400'); // Cache for 24 hours
-    res.status(200).send(sitemap);
-  } catch (error) {
-    console.error('Sitemap generation error:', error);
-    res.status(500).send('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>');
+  return {
+    props: {},
   }
 }
+
+export default SiteMap
