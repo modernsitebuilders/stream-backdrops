@@ -313,9 +313,9 @@ function CategoryContent({ slug }) {
     'living-room': 'living-room'
   };
   const category = categoryInfo[slug];
-  // Track page view when component loads
+// Track page view when component loads
   useEffect(() => {
-    if (category) {
+    if (category && typeof window !== 'undefined') {
       fetch('/api/track-page-view', {
         method: 'POST',
         headers: {
@@ -323,8 +323,8 @@ function CategoryContent({ slug }) {
         },
         body: JSON.stringify({
           page: window.location.pathname,
-          category: slug,
-          referrer: document.referrer
+          category: category.name,  // Use category.name instead of slug
+          referrer: document.referrer || 'direct'
         })
       }).catch(err => console.log('Page tracking failed:', err));
     }
@@ -406,7 +406,7 @@ function CategoryContent({ slug }) {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
     filename: image.filename,
-    category: slug,
+    category: category.name,  // Use category.name instead of slug
     timestamp: new Date().toISOString()
   })
 }).catch(err => console.log('Tracking failed:', err));
