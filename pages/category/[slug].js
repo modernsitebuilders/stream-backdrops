@@ -315,15 +315,42 @@ function CategoryContent({ slug }) {
   const category = categoryInfo[slug];
 
   const handleDownload = async (image) => {
-    try {
-      // Track the download event in Google Analytics
-      event('download', {
-  item_name: image.filename,           // GA4 recognizes this automatically
-  item_category: 'Virtual Background',  // GA4 recognizes this automatically  
-  content_name: image.filename,        // Alternative that GA4 recognizes
-  value: 1
-});
-        if (typeof window !== 'undefined' && window.pintrk) {
+  try {
+    // Better download tracking with retry logic
+    const trackDownload = () => {
+      // Try the event function first (your preferred method)
+      if (typeof event === 'function') {
+        event('download', {
+          item_name: image.filename,
+          item_category: 'Virtual Background',  
+          content_name: image.filename,
+          value: 1
+        });
+        console.log('✅ Download tracked (event function):', image.filename);
+        return true;
+      }
+      // Fallback to direct gtag if event function not available
+      else if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'download', {
+          item_name: image.filename,
+          item_category: 'Virtual Background',
+          content_name: image.filename,
+          value: 1
+        });
+        console.log('✅ Download tracked (direct gtag):', image.filename);
+        return true;
+      }
+      console.log('❌ Analytics not ready yet');
+      return false;
+    };
+
+    // Try tracking immediately, then retry if needed
+    if (!trackDownload()) {
+      setTimeout(trackDownload, 3000); // Wait for analytics to fully load
+    }
+
+    // Pinterest tracking (keep this as-is)
+    if (typeof window !== 'undefined' && window.pintrk) {
       window.pintrk('track', 'custom', {
         event_id: 'download',
         value: 1,
@@ -332,15 +359,18 @@ function CategoryContent({ slug }) {
         content_category: 'Virtual Background'
       });
     }
-      const response = await fetch(`/images/${folderMap[slug]}/${image.filename}`);
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-      const blob = await response.blob();
-      
-      const img = new window.Image();
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+
+    const response = await fetch(`/images/${folderMap[slug]}/${image.filename}`);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const blob = await response.blob();
+    
+    const img = new window.Image();
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // ... rest of your existing code stays exactly the same
       
       img.onload = () => {
         canvas.width = img.width;
