@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { event } from '../../lib/gtag';
 import Layout from '../../components/Layout';
@@ -313,6 +313,22 @@ function CategoryContent({ slug }) {
     'living-room': 'living-room'
   };
   const category = categoryInfo[slug];
+  // Track page view when component loads
+  useEffect(() => {
+    if (category) {
+      fetch('/api/track-page-view', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          page: window.location.pathname,
+          category: slug,
+          referrer: document.referrer
+        })
+      }).catch(err => console.log('Page tracking failed:', err));
+    }
+  }, [slug, category]);
 
   const handleDownload = async (image) => {
   try {
