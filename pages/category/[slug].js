@@ -314,60 +314,24 @@ function CategoryContent({ slug }) {
   };
   const category = categoryInfo[slug];
 
+// Replace your ENTIRE handleDownload function with this clean version:
+
 const handleDownload = async (image) => {
   try {
-    // Better download tracking with retry logic
-    const trackDownload = () => {
-      // Try the event function first (your preferred method)
-      if (typeof event === 'function') {
-        event('select_item', {
-          item_id: image.filename,
-          item_name: image.filename,
-          item_category: 'Virtual Background',  
-          content_type: 'download',
-          value: 1
-        });
-        console.log('✅ Download tracked (event function):', image.filename);
-        return true;
-      }
-      // Fallback to direct gtag if event function not available
-      else if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'select_item', {
-          item_id: image.filename,
-          item_name: image.filename,
-          item_category: 'Virtual Background',
-          content_type: 'download',
-          value: 1
-        });
-        console.log('✅ Download tracked (direct gtag):', image.filename);
-        return true;
-      }
-      console.log('❌ Analytics not ready yet');
-      return false;
-    };
+    // Track download with our reliable API
+    fetch('/api/track-download', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        filename: image.filename,
+        category: slug,
+        timestamp: new Date().toISOString()
+      })
+    }).catch(err => console.log('Tracking failed:', err));
 
-    // Try tracking immediately, then retry if needed
-    if (!trackDownload()) {
-      setTimeout(trackDownload, 3000); // Wait for analytics to fully load
-    }
-
-    // Pinterest tracking (keep this as-is)
-    if (typeof window !== 'undefined' && window.pintrk) {
-      window.pintrk('track', 'custom', {
-        event_id: 'download',
-        value: 1,
-        currency: 'USD',
-        content_name: image.filename,
-        content_category: 'Virtual Background'
-      });
-    }
-
-    // ... rest of your existing download code stays the same
-
-    // Try tracking immediately, then retry if needed
-    if (!trackDownload()) {
-      setTimeout(trackDownload, 3000); // Wait for analytics to fully load
-    }
+    console.log('Download tracked locally:', image.filename);
 
     // Pinterest tracking (keep this as-is)
     if (typeof window !== 'undefined' && window.pintrk) {
@@ -390,32 +354,30 @@ const handleDownload = async (image) => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     
-    // ... rest of your existing code stays exactly the same
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
       
-      img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        
-        canvas.toBlob((pngBlob) => {
-          const url = window.URL.createObjectURL(pngBlob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = `StreamBackdrops-${image.title.replace(/\s+/g, '-')}.png`;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          window.URL.revokeObjectURL(url);
-        }, 'image/png', 1.0);
-      };
-      
-      const imageUrl = window.URL.createObjectURL(blob);
-      img.src = imageUrl;
-      
-    } catch (error) {
-      console.error('Download failed:', error);
-    }
-  };
+      canvas.toBlob((pngBlob) => {
+        const url = window.URL.createObjectURL(pngBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `StreamBackdrops-${image.title.replace(/\s+/g, '-')}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }, 'image/png', 1.0);
+    };
+    
+    const imageUrl = window.URL.createObjectURL(blob);
+    img.src = imageUrl;
+    
+  } catch (error) {
+    console.error('Download failed:', error);
+  }
+};
 
   return (
     <>
