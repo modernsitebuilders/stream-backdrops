@@ -314,16 +314,17 @@ function CategoryContent({ slug }) {
   };
   const category = categoryInfo[slug];
 
-  const handleDownload = async (image) => {
+const handleDownload = async (image) => {
   try {
     // Better download tracking with retry logic
     const trackDownload = () => {
       // Try the event function first (your preferred method)
       if (typeof event === 'function') {
-        event('download', {
+        event('select_item', {
+          item_id: image.filename,
           item_name: image.filename,
           item_category: 'Virtual Background',  
-          content_name: image.filename,
+          content_type: 'download',
           value: 1
         });
         console.log('✅ Download tracked (event function):', image.filename);
@@ -331,10 +332,11 @@ function CategoryContent({ slug }) {
       }
       // Fallback to direct gtag if event function not available
       else if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'download', {
+        window.gtag('event', 'select_item', {
+          item_id: image.filename,
           item_name: image.filename,
           item_category: 'Virtual Background',
-          content_name: image.filename,
+          content_type: 'download',
           value: 1
         });
         console.log('✅ Download tracked (direct gtag):', image.filename);
@@ -343,6 +345,24 @@ function CategoryContent({ slug }) {
       console.log('❌ Analytics not ready yet');
       return false;
     };
+
+    // Try tracking immediately, then retry if needed
+    if (!trackDownload()) {
+      setTimeout(trackDownload, 3000); // Wait for analytics to fully load
+    }
+
+    // Pinterest tracking (keep this as-is)
+    if (typeof window !== 'undefined' && window.pintrk) {
+      window.pintrk('track', 'custom', {
+        event_id: 'download',
+        value: 1,
+        currency: 'USD',
+        content_name: image.filename,
+        content_category: 'Virtual Background'
+      });
+    }
+
+    // ... rest of your existing download code stays the same
 
     // Try tracking immediately, then retry if needed
     if (!trackDownload()) {
