@@ -4,10 +4,16 @@ import path from 'path';
 
 export default function handler(req, res) {
   try {
-    // Prevent all caching
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
-    res.setHeader('Pragma', 'no-cache');
-    res.setHeader('Expires', '0');
+    
+   // Smart caching - no cache in development, cache in production
+    if (process.env.NODE_ENV === 'production') {
+      res.setHeader('Cache-Control', 'public, max-age=3600, stale-while-revalidate=86400');
+    } else {
+      // Prevent caching in development
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+    }
     res.setHeader('Last-Modified', new Date().toUTCString());
     
     console.log('🔍 API called at:', new Date().toISOString());
