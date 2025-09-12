@@ -14,41 +14,49 @@ export default function Home() {
     currentPage="home"
   >
 
-        {/* Hero Section - VIDEO ONLY */}
-        <section style={{
-          position: 'relative',
-          height: '80vh',
-          overflow: 'hidden',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}>
-          <video 
-            autoPlay 
-            muted 
-            playsInline 
-            preload="auto"
-            onTimeUpdate={(e) => {
-              if (e.target.currentTime >= e.target.duration - 0.1) {
-                e.target.pause();
-                e.target.currentTime = e.target.duration - 0.1;
-              }
-            }}
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '55%',
-              height: 'auto',
-              aspectRatio: '16/9',
-              transform: 'translate(-50%, -50%)',
-              objectFit: 'cover',
-              zIndex: 1
-            }}
-          >
-            <source src="https://stream-backdrops-videos.s3.amazonaws.com/u9972584128_Subtle_floating_light_particles_drifting_through__b01c2a5c-5dc6-410a-bbdb-704fa53bf572_0.mp4" type="video/mp4" />
-          </video>
-        </section>
+        {/* Hero Section - OPTIMIZED VIDEO */}
+<section style={{
+  position: 'relative',
+  height: '80vh',
+  overflow: 'hidden',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: '#1e293b'
+}}>
+  <video 
+    autoPlay 
+    muted 
+    playsInline 
+    preload="metadata"
+    poster="/video-poster.jpg"
+    loading="eager"
+    onTimeUpdate={(e) => {
+      if (e.target.currentTime >= e.target.duration - 0.1) {
+        e.target.pause();
+        e.target.currentTime = e.target.duration - 0.1;
+      }
+    }}
+    onCanPlay={(e) => {
+      e.target.style.opacity = '1';
+    }}
+    style={{
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      width: '55%',
+      height: 'auto',
+      aspectRatio: '16/9',
+      transform: 'translate(-50%, -50%)',
+      objectFit: 'cover',
+      zIndex: 1,
+      opacity: 0,
+      transition: 'opacity 0.5s ease'
+    }}
+  >
+    <source src="https://stream-backdrops-videos.s3.amazonaws.com/u9972584128_Subtle_floating_light_particles_drifting_through__b01c2a5c-5dc6-410a-bbdb-704fa53bf572_0.mp4" type="video/mp4" />
+  </video>
+</section>
 
         {/* Text Section - SEPARATE */}
         <section style={{
