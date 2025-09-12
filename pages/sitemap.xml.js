@@ -93,6 +93,12 @@ function generateSiteMap() {
        <changefreq>weekly</changefreq>
        <priority>0.8</priority>
      </url>
+     <url>
+       <loc>https://streambackdrops.com/category/living-room</loc>
+       <lastmod>${new Date().toISOString()}</lastmod>
+       <changefreq>weekly</changefreq>
+       <priority>0.8</priority>
+     </url>
    </urlset>`;
 }
 

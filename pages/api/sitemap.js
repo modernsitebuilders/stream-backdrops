@@ -8,7 +8,7 @@ export default function handler(req, res) {
     : process.env.SITE_URL || 'https://streambackdrops.com';
 
   // ✅ Your site's categories
-  const categories = ['well-lit', 'ambient-lighting', 'office-spaces', 'living-room'];
+  const categories = ['well-lit', 'ambient-lighting', 'office-spaces', 'living-room', 'kitchen'];
   
   // ✅ Static pages with priority and update frequency
   const staticPages = [
