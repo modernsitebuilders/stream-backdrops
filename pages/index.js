@@ -21,25 +21,15 @@ export default function Home() {
   overflow: 'hidden',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
-  background: 'transparent'
+  justifyContent: 'center'
 }}>
   <video 
     autoPlay 
     muted 
     playsInline 
+    loop
     preload="metadata"
     poster="/video-poster.jpg"
-    loading="eager"
-    onTimeUpdate={(e) => {
-      if (e.target.currentTime >= e.target.duration - 0.1) {
-        e.target.pause();
-        e.target.currentTime = e.target.duration - 0.1;
-      }
-    }}
-    onCanPlay={(e) => {
-      e.target.style.opacity = '1';
-    }}
     style={{
       position: 'absolute',
       top: '50%',
@@ -49,9 +39,7 @@ export default function Home() {
       aspectRatio: '16/9',
       transform: 'translate(-50%, -50%)',
       objectFit: 'cover',
-      zIndex: 1,
-      opacity: 0,
-      transition: 'opacity 0.5s ease'
+      zIndex: 1
     }}
   >
     <source src="https://stream-backdrops-videos.s3.amazonaws.com/u9972584128_Subtle_floating_light_particles_drifting_through__b01c2a5c-5dc6-410a-bbdb-704fa53bf572_0.mp4" type="video/mp4" />
