@@ -1,14 +1,5 @@
 import { google } from 'googleapis';
 
-const auth = new google.auth.JWT(
-  process.env.GOOGLE_SERVICE_EMAIL,
-  null,
-  process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-  ['https://www.googleapis.com/auth/spreadsheets']
-);
-
-const sheets = google.sheets({ version: 'v4', auth });
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
@@ -17,12 +8,27 @@ export default async function handler(req, res) {
   const { filename, category, timestamp } = req.body;
   
   try {
+    // Fix private key format (same as working test-sheets endpoint)
+    let privateKey = process.env.GOOGLE_PRIVATE_KEY;
+    if (privateKey.startsWith('"') && privateKey.endsWith('"')) {
+      privateKey = privateKey.slice(1, -1);
+    }
+    privateKey = privateKey.replace(/\\n/g, '\n');
+
+    const auth = new google.auth.JWT({
+      email: process.env.GOOGLE_SERVICE_EMAIL,
+      key: privateKey,
+      scopes: ['https://www.googleapis.com/auth/spreadsheets']
+    });
+
+    const sheets = google.sheets({ version: 'v4', auth });
+
     const downloadData = [
       new Date().toISOString(),
-      'download',                               // Event type
-      filename,                                 // Filename downloaded
-      category,                                 // Category
-      req.headers['referer'] || 'direct',       // Current page
+      'download',
+      filename,
+      category,
+      req.headers['referer'] || 'direct',
       req.headers['x-forwarded-for'] || 'unknown',
       req.headers['user-agent'] || 'unknown',
       new Date().toLocaleDateString(),
@@ -31,7 +37,7 @@ export default async function handler(req, res) {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'Analytics!A:I', // Same sheet as page views
+      range: 'Analytics!A:I',
       valueInputOption: 'RAW',
       insertDataOption: 'INSERT_ROWS',
       resource: {
