@@ -1,13 +1,17 @@
 export default async function handler(req, res) {
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY;
+  
   res.status(200).json({
     hasServiceEmail: !!process.env.GOOGLE_SERVICE_EMAIL,
-    hasPrivateKey: !!process.env.GOOGLE_PRIVATE_KEY,
+    hasPrivateKey: !!privateKey,
     hasSheetId: !!process.env.GOOGLE_SHEET_ID,
-    serviceEmailLength: process.env.GOOGLE_SERVICE_EMAIL?.length || 0,
-    privateKeyLength: process.env.GOOGLE_PRIVATE_KEY?.length || 0,
-    sheetIdLength: process.env.GOOGLE_SHEET_ID?.length || 0,
-    // Show first few characters to verify they're being read
-    serviceEmailStart: process.env.GOOGLE_SERVICE_EMAIL?.substring(0, 20) || 'missing',
-    privateKeyStart: process.env.GOOGLE_PRIVATE_KEY?.substring(0, 20) || 'missing'
+    privateKeyLength: privateKey?.length || 0,
+    // Check if it has actual line breaks or \n characters
+    hasActualLineBreaks: privateKey?.includes('\n') || false,
+    hasEscapedLineBreaks: privateKey?.includes('\\n') || false,
+    // Show the first line to see the format
+    firstLine: privateKey?.split(/\r?\n/)[0] || 'missing',
+    // Count lines
+    lineCount: privateKey?.split(/\r?\n/).length || 0
   });
 }
