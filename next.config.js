@@ -53,6 +53,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/sitemap.xml',
+        destination: '/api/sitemap',
+        permanent: true,
+      },
+      {
         source: '/category/premium-4k',
         destination: '/category/office-spaces', 
         permanent: true,

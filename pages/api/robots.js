@@ -11,7 +11,7 @@ Disallow: /api/
 Disallow: /_next/
 Disallow: /admin/
 
-Sitemap: https://streambackdrops.com/sitemap.xml
+Sitemap: https://streambackdrops.com/api/sitemap
 
 Crawl-delay: 1`;
 
