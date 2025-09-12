@@ -50,6 +50,12 @@ function generateSiteMap() {
      
      <!-- Blog Posts -->
      <url>
+  <loc>https://streambackdrops.com/blog-best-virtual-background-sites-2025</loc>
+  <lastmod>${new Date().toISOString()}</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+     <url>
        <loc>https://streambackdrops.com/blog-virtual-background-guide</loc>
        <lastmod>${new Date().toISOString()}</lastmod>
        <changefreq>monthly</changefreq>

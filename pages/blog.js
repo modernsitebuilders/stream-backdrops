@@ -4,6 +4,14 @@ import Footer from '../components/Footer';
 
 export default function Blog() {
   const blogPosts = [
+     {
+    title: "Best Free Virtual Background Sites in 2025: Complete Comparison",
+    slug: "blog-best-virtual-background-sites-2025",
+    excerpt: "Comprehensive comparison of the best free virtual background sites in 2025. Find out why StreamBackdrops beats stock photo sites for professional video calls.",
+    date: "January 2025",
+    readTime: "15 min read",
+    category: "Platform Comparison"
+  },
     {
       title: "10 Essential Tips for Professional Video Calls",
       slug: "blog-professional-video-calls",

@@ -229,8 +229,8 @@ export default function Home() {
     gridAutoRows: '1fr',
     gap: '1.5rem'
   }}>
-{/* Card 1 - 10 Background Mistakes */}
-<Link href="/blog-background-mistakes" style={{ 
+{/* Card 1 - Best Virtual Background Sites 2025 */}
+<Link href="/blog-best-virtual-background-sites-2025" style={{ 
   textDecoration: 'none'
 }}>
 <div style={{
@@ -242,10 +242,10 @@ export default function Home() {
   height: '100%'
 }}>
     <h3 style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
-      10 Background Mistakes
+      Best Free Background Sites 2025
     </h3>
     <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-      Common errors that kill your professional image
+      Complete comparison: StreamBackdrops vs competitors
     </p>
   </div>
 </Link>
