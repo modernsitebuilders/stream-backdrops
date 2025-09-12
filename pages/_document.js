@@ -53,6 +53,14 @@ export default function Document() {
 
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="format-detection" content="telephone=no" />
+           {/* Enhanced performance hints */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        
+        {/* Performance optimizations */}
+        <meta name="referrer" content="origin-when-cross-origin" />
+        <meta name="color-scheme" content="light" />
       </Head>
       <body>
         {/* Google Tag Manager (noscript) */}
