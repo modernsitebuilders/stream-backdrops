@@ -3,139 +3,16 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-
+import Layout from '../components/Layout';
 export default function Home() {
   const router = useRouter();
 
   return (
-    <>
-      <Head>
-  <title>Free Professional Virtual Backgrounds - StreamBackdrops</title>
-  <meta name="description" content="Download 90+ free professional virtual backgrounds for Zoom, Teams & Google Meet. HD home offices, executive offices, lobbies & more. Instant download, no signup required." />
-  <meta name="keywords" content="virtual backgrounds, Zoom backgrounds, Teams backgrounds, professional video calls, home office backgrounds, free download" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-  <meta name="author" content="StreamBackdrops" />
-  <meta name="theme-color" content="#2563eb" />
-  {/* Open Graph for social sharing */}
-  <meta property="og:title" content="Free Professional Virtual Backgrounds - StreamBackdrops" />
-  <meta property="og:description" content="Download 90+ free professional virtual backgrounds for video calls. HD quality, instant download." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://streambackdrops.com" />
-  <meta property="og:image" content="https://streambackdrops.com/og-image.png" />
-  
-  {/* Twitter Card */}
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Free Professional Virtual Backgrounds" />
-  <meta name="twitter:description" content="90+ free HD virtual backgrounds for Zoom, Teams & Google Meet" />
-  
-  {/* Canonical URL */}
-  <link rel="canonical" href="https://streambackdrops.com" />
-  <script
-    type="application/ld+json"
-    dangerouslySetInnerHTML={{
-      __html: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": "StreamBackdrops",
-        "description": "Free professional virtual backgrounds for video calls",
-        "url": "https://streambackdrops.com",
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://streambackdrops.com/search?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      })
-    }}
-  />
-      </Head>
-
-      <div style={{minHeight: '100vh', background: '#f9fafb'}}>
-        {/* Clean White Header - ORIGINAL STYLING */}
-        <header style={{
-          background: 'white',
-          borderBottom: '1px solid #e5e7eb',
-          padding: '1rem 0'
-        }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
-            <nav style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}>
-              {/* Logo */}
-              <div style={{
-                fontSize: '1.5rem',
-                fontWeight: 'bold',
-                color: '#2563eb'
-              }}>
-                StreamBackdrops
-              </div>
-              
-              {/* Navigation Tabs - ORIGINAL STYLING */}
-              <div style={{
-                display: 'flex',
-                gap: '1.5rem',
-                alignItems: 'center'
-              }}>
-                <Link href="/category/well-lit" style={{
-                  padding: '0.5rem 1rem',
-                  borderRadius: '0.5rem',
-                  textDecoration: 'none',
-                  color: '#374151',
-                  fontWeight: '500',
-                  fontSize: '0.9rem',
-                  background: '#f9fafb',
-                  border: '1px solid #d1d5db',
-                  transition: 'all 0.3s ease'
-                }}>
-                  Well Lit
-                </Link>
-                
-                <Link href="/category/ambient-lighting" style={{
-                  padding: '0.5rem 1rem',
-                  borderRadius: '0.5rem',
-                  textDecoration: 'none',
-                  color: '#374151',
-                  fontWeight: '500',
-                  fontSize: '0.9rem',
-                  background: '#f9fafb',
-                  border: '1px solid #d1d5db',
-                  transition: 'all 0.3s ease'
-                }}>
-                  Ambient Lighting
-                </Link>
-                
-                <Link href="/category/office-spaces" style={{
-                  padding: '0.5rem 1rem',
-                  borderRadius: '0.5rem',
-                  textDecoration: 'none',
-                  color: '#374151',
-                  fontWeight: '500',
-                  fontSize: '0.9rem',
-                  background: '#f9fafb',
-                  border: '1px solid #d1d5db',
-                  transition: 'all 0.3s ease'
-                }}>
-                  Office Spaces
-                </Link>
-                <Link href="/category/living-room" style={{
-                  padding: '0.5rem 1rem',
-                  borderRadius: '0.5rem',
-                  textDecoration: 'none',
-                  color: '#374151',
-                  fontWeight: '500',
-                  fontSize: '0.9rem',
-                  background: '#f9fafb',
-                  border: '1px solid #d1d5db',
-                  transition: 'all 0.3s ease'
-                }}>
-                  Living Room
-                </Link>
-              </div>
-            </nav>
-          </div>
-        </header>
+  <Layout
+    title="Free Professional Virtual Backgrounds - StreamBackdrops"
+    description="Download 167+ free professional virtual backgrounds for Zoom, Teams & Google Meet..."
+    currentPage="home"
+  >
 
         {/* Hero Section - VIDEO ONLY */}
         <section style={{
@@ -362,7 +239,7 @@ export default function Home() {
                   Well Lit
                 </h3>
                 <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-                  Well-lit, bright backgrounds perfect for professional video calls
+                  Bright, professional backgrounds perfect for video calls and meetings
                 </p>
               </div>
             </div>
@@ -403,7 +280,7 @@ export default function Home() {
                   Ambient Lighting
                 </h3>
                 <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-                  Atmospheric backgrounds with ambient lighting for sophisticated video calls
+                  Soft lighting backgrounds for a warm, professional appearance
                 </p>
               </div>
             </div>
@@ -444,7 +321,7 @@ export default function Home() {
                   Office Spaces
                 </h3>
                 <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-                  Professional office environments and workspace backgrounds for business video calls
+                  Modern office settings that convey professionalism and focus
                 </p>
               </div>
             </div>
@@ -485,7 +362,51 @@ export default function Home() {
                   Living Room
                 </h3>
                 <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-                  Comfortable living room virtual backgrounds for casual video calls and personal meetings. Cozy home settings for relaxed conversations.
+                  Comfortable home settings that feel welcoming and professional
+                </p>
+              </div>
+            </div>
+          </Link>
+          {/* Kitchen Backgrounds */}
+          <Link href="/category/kitchen" style={{ textDecoration: 'none' }}>
+            <div style={{
+              background: 'white',
+              borderRadius: '1rem',
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              overflow: 'hidden',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              cursor: 'pointer'
+            }}>
+              <div style={{
+                height: '200px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <img
+                  src="/images/kitchen/kitchen9.webp"
+                  alt="Kitchen virtual background"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                  loading="eager"
+                />
+              </div>
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{
+  fontSize: '1.25rem',
+  fontWeight: '600',
+  marginBottom: '0.5rem',
+  color: '#111827'
+}}>
+                  Kitchen Backgrounds
+                </h3>
+                <p style={{ 
+  color: '#6b7280', 
+  marginBottom: '1rem' 
+}}>
+                  Warm kitchen spaces that create a friendly, approachable atmosphere
                 </p>
               </div>
             </div>
@@ -532,51 +453,6 @@ export default function Home() {
             View Complete Setup Guide
           </Link>
         </section>
-
-        {/* Footer */}
-        <footer style={{
-          background: '#1f2937',
-          color: 'white',
-          padding: '2rem 0',
-          marginTop: '3rem'
-        }}>
-          <div style={{
-            maxWidth: '1200px',
-            margin: '0 auto',
-            padding: '0 2rem',
-            textAlign: 'center'
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap' }}>
-              <Link href="/about" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
-                About
-              </Link>
-              <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
-              <Link href="/license" style={{ color: '#fbbf24', textDecoration: 'none', margin: '0 15px', fontWeight: '600' }}>
-                License & Usage
-              </Link>
-              <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
-              <Link href="/contact" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
-                Contact
-              </Link>
-              <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
-              <Link href="/blog" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
-                Blog
-              </Link>
-              <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
-              <Link href="/privacy" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
-                Privacy Policy
-              </Link>
-              <span style={{ color: '#9ca3af', margin: '0 10px' }}>•</span>
-              <Link href="/terms" style={{ color: 'white', textDecoration: 'none', margin: '0 15px' }}>
-                Terms of Service
-              </Link>
-            </div>
-            <p style={{ color: '#d1d5db', margin: 0 }}>
-              © 2025 StreamBackdrops. All rights reserved.
-            </p>
-          </div>
-        </footer>
-      </div>
-    </>
-  );
+      </Layout>
+);
 }

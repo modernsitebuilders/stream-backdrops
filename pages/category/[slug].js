@@ -301,16 +301,42 @@ const categoryInfo = {
       { filename: 'living-room-37.webp', title: 'Living Room 37' },
       { filename: 'living-room-38.webp', title: 'Living Room 38' }
     ]
+  },
+
+  
+  'kitchen': {
+    name: 'Kitchen Backgrounds',
+    description: 'Professional kitchen backgrounds for cooking shows, food blogs, and culinary video calls',
+    seoDescription: 'Download free kitchen virtual backgrounds for video calls. Professional kitchen environments for cooking content.',
+    images: [
+      { filename: 'kitchen1.webp', title: 'Minimalist Kitchen Background' },
+      { filename: 'kitchen2.webp', title: 'Scandinavian Kitchen Background' },
+      { filename: 'kitchen3.webp', title: 'Scandinavian Kitchen Background' },
+      { filename: 'kitchen4.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen5.webp', title: 'Luxury Kitchen Background' },
+      { filename: 'kitchen6.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen7.webp', title: 'Minimalist Kitchen Background' },
+      { filename: 'kitchen8.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen9.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen10.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen11.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen12.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen13.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen14.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen15.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen16.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen17.webp', title: 'Kitchen Virtual Background' },
+      { filename: 'kitchen18.webp', title: 'Kitchen Virtual Background' }
+    ]
   }
 };
-
 function CategoryContent({ slug }) {
   const [previewImage, setPreviewImage] = useState(null);
-  const folderMap = {
-    'well-lit': 'well-lit',
+  const folderMap = {'well-lit': 'well-lit',
     'ambient-lighting': 'ambient-lighting', 
     'office-spaces': 'office-spaces',
-    'living-room': 'living-room'
+    'living-room': 'living-room',
+    'kitchen': 'kitchen'
   };
   const category = categoryInfo[slug];
 // Track page view when component loads
@@ -810,7 +836,7 @@ export default function CategoryPage({ slug }) {
 }
 
 export async function getStaticPaths() {
-  const paths = ['well-lit', 'ambient-lighting', 'office-spaces', 'living-room'].map((slug) => ({
+  const paths = ['well-lit', 'ambient-lighting', 'office-spaces', 'living-room', 'kitchen'].map((slug) => ({
     params: { slug }
   }));
 

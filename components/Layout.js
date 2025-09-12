@@ -163,6 +163,20 @@ export default function Layout({
   }}>
     Living Room
   </Link>
+  
+  <Link href="/category/kitchen" style={{
+    padding: '0.5rem 1rem',
+    borderRadius: '0.5rem',
+    textDecoration: 'none',
+    color: currentPage === 'kitchen' ? '#2563eb' : '#374151',
+    fontWeight: '500',
+    fontSize: '0.9rem',
+    background: '#f9fafb',
+    border: currentPage === 'kitchen' ? '2px solid #2563eb' : '1px solid #d1d5db',
+    transition: 'all 0.3s ease'
+  }}>
+    Kitchen
+  </Link>
 </nav>
           </div>
         </header>
