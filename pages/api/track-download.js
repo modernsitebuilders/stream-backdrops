@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       filename,
       category,
       req.headers['referer'] || 'direct',
-      req.headers['x-forwarded-for'] || 'unknown',
+      'not-collected',
       req.headers['user-agent'] || 'unknown',
       new Date().toLocaleDateString(),
       new Date().toLocaleTimeString()
