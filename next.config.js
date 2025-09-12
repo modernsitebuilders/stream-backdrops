@@ -43,10 +43,8 @@ const nextConfig = {
     return 'streambackdrops-' + Date.now();
   },
 
-  // ✅ ADD THIS: Handle redirects for old URLs (fixes 404s and redirects)
   async redirects() {
     return [
-      // Redirect old premium URLs to main categories
       {
         source: '/premium',
         destination: '/category/office-spaces',
@@ -62,7 +60,6 @@ const nextConfig = {
         destination: '/category/office-spaces', 
         permanent: true,
       },
-      // Redirect old category names that might be causing 404s
       {
         source: '/category/home-offices',
         destination: '/category/office-spaces',
@@ -83,7 +80,6 @@ const nextConfig = {
         destination: '/category/office-spaces',
         permanent: true,
       },
-      // Redirect any old blog URLs
       {
         source: '/blog-virtual-background-guide',
         destination: '/blog',
@@ -97,7 +93,6 @@ const nextConfig = {
     ];
   },
 
-  // ✅ ADD THIS: Handle headers for better SEO (prevents some server errors)
   async headers() {
     return [
       {
@@ -117,9 +112,26 @@ const nextConfig = {
           },
         ],
       },
-      // Cache control for static assets
       {
         source: '/images/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/(.*)\\.mp4$',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/_next/static/(.*)',
         headers: [
           {
             key: 'Cache-Control',

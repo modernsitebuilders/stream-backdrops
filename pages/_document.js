@@ -17,6 +17,14 @@ export default function Document() {
             .loading { opacity: 0.6; }
           `
         }} />
+        {/* ADD THIS: Video performance hints */}
+<link rel="preload" as="image" href="/video-poster.jpg" />
+<link 
+  rel="preload" 
+  as="video" 
+  href="https://stream-backdrops-videos.s3.amazonaws.com/u9972584128_Subtle_floating_light_particles_drifting_through__b01c2a5c-5dc6-410a-bbdb-704fa53bf572_0.mp4"
+  media="(min-width: 769px)"
+/>
         
         {/* Preconnect to external domains for faster loading */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
