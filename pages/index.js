@@ -22,7 +22,7 @@ export default function Home() {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: '#1e293b'
+  background: 'transparent'
 }}>
   <video 
     autoPlay 
