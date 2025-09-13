@@ -4,8 +4,32 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
+import { useEffect } from 'react';
 export default function Home() {
   const router = useRouter();
+
+  // ADD THIS: Track homepage visits
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Enhanced referrer tracking for homepage
+      let referrer = document.referrer || 'direct';
+      
+      // Store original referrer for session
+      if (!sessionStorage.getItem('entry_referrer') && document.referrer) {
+        sessionStorage.setItem('entry_referrer', document.referrer);
+      }
+      
+      fetch('/api/track-page-view', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          page: '/',
+          category: 'homepage',
+          referrer: referrer
+        })
+      }).catch(err => console.log('Homepage tracking failed:', err));
+    }
+  }, []);
 
   return (
   <Layout
