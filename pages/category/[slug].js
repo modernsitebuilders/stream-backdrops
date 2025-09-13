@@ -368,38 +368,15 @@ useEffect(() => {
 
   const handleDownload = async (image) => {
   try {
-    // Better download tracking with retry logic
-    const trackDownload = () => {
-      // Try the event function first (your preferred method)
-      if (typeof event === 'function') {
-        event('select_item', {
-          item_id: image.filename,
-          item_name: image.filename,
-          item_category: 'Virtual Background',  
-          content_type: 'download',
-          value: 1
-        });
-        console.log('✅ Download tracked (event function):', image.filename);
-        return true;
-      }
-      // Fallback to direct gtag if event function not available
-      else if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'select_item', {
-          item_id: image.filename,
-          item_name: image.filename,
-          item_category: 'Virtual Background',
-          content_type: 'download',
-          value: 1
-        });
-        console.log('✅ Download tracked (direct gtag):', image.filename);
-        return true;
-      }
-      console.log('❌ Analytics not ready yet');
-      return false;
-    };
-    // Try tracking immediately, then retry if needed
-    if (!trackDownload()) {
-      setTimeout(trackDownload, 3000); // Wait for analytics to fully load
+    // Simplified, reliable tracking
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'download', {
+        file_name: image.filename,
+        file_extension: 'png',
+        file_category: category.name,
+        value: 1
+      });
+      console.log('✅ Download tracked:', image.filename);
     }
 
     // Pinterest tracking (keep this as-is)
