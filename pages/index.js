@@ -27,7 +27,6 @@ export default function Home() {
     autoPlay 
     muted 
     playsInline 
-    loop
     preload="metadata"
     poster="/video-poster.jpg"
     style={{
