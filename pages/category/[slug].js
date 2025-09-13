@@ -340,21 +340,31 @@ function CategoryContent({ slug }) {
   };
   const category = categoryInfo[slug];
 // Track page view when component loads
-  useEffect(() => {
-    if (category && typeof window !== 'undefined') {
-      fetch('/api/track-page-view', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          page: window.location.pathname,
-          category: category.name,  // Use category.name instead of slug
-          referrer: document.referrer || 'direct'
-        })
-      }).catch(err => console.log('Page tracking failed:', err));
-    }
-  }, [slug, category]);
+useEffect(() => {
+  // Enhanced referrer tracking
+  let referrer = document.referrer || 'direct';
+  
+  // Store original referrer for session
+  if (!sessionStorage.getItem('entry_referrer') && document.referrer) {
+    sessionStorage.setItem('entry_referrer', document.referrer);
+  }
+  
+  // Use session referrer if current page referrer is your own site
+  const sessionReferrer = sessionStorage.getItem('entry_referrer');
+  if (sessionReferrer && (referrer === 'direct' || referrer.includes('streambackdrops.com'))) {
+    referrer = sessionReferrer;
+  }
+
+  fetch('/api/track-page-view', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      page: `/category/${slug}`,
+      category: category?.name || slug,
+      referrer: referrer
+    })
+  });
+}, [slug, category]);
 
   const handleDownload = async (image) => {
   try {

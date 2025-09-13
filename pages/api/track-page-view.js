@@ -36,7 +36,7 @@ export default async function handler(req, res) {
       'page_view',
       page,
       category,
-      referrer || 'direct',
+      referrer: body.referrer || req.headers.referer || req.headers.referrer || 'direct',
       'not-collected',
       req.headers['user-agent'] || 'unknown',
       new Date().toLocaleDateString(),
