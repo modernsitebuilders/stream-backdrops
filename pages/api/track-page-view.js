@@ -24,24 +24,29 @@ export default async function handler(req, res) {
     const sheets = google.sheets({ version: 'v4', auth });
 
     const pageViewData = [
-      new Date().toLocaleString('en-US', {
-  timeZone: 'America/New_York',
-  year: 'numeric',
-  month: '2-digit', 
-  day: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
-  second: '2-digit'
-}),
-      'page_view',
-      page,
-      category,
-      referrer: body.referrer || req.headers.referer || req.headers.referrer || 'direct',
-      'not-collected',
-      req.headers['user-agent'] || 'unknown',
-      new Date().toLocaleDateString(),
-      new Date().toLocaleTimeString()
-    ];
+  new Date().toLocaleString('en-US', {
+    timeZone: 'America/New_York',
+    year: 'numeric',
+    month: '2-digit', 
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  }),
+  'page_view',
+  page,
+  category,
+  referrer || req.headers.referer || req.headers.referrer || 'direct',
+  'not-collected',
+  req.headers['user-agent'] || 'unknown',
+  new Date().toLocaleDateString('en-US', { timeZone: 'America/New_York' }),
+  new Date().toLocaleTimeString('en-US', {
+    timeZone: 'America/New_York',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  })
+];
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,

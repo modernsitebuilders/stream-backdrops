@@ -25,22 +25,27 @@ export default async function handler(req, res) {
 
     const downloadData = [
       new Date().toLocaleString('en-US', {
-  timeZone: 'America/New_York',
-  year: 'numeric',
-  month: '2-digit', 
-  day: '2-digit',
-  hour: '2-digit',
-  minute: '2-digit',
-  second: '2-digit'
-}),
+        timeZone: 'America/New_York',
+        year: 'numeric',
+        month: '2-digit', 
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }),
       'download',
       filename,
       category,
       req.headers['referer'] || 'direct',
       'not-collected',
       req.headers['user-agent'] || 'unknown',
-      new Date().toLocaleDateString(),
-      new Date().toLocaleTimeString()
+      new Date().toLocaleDateString('en-US', { timeZone: 'America/New_York' }),
+      new Date().toLocaleTimeString('en-US', {
+        timeZone: 'America/New_York',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      })
     ];
 
     await sheets.spreadsheets.values.append({
