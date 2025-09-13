@@ -7,7 +7,14 @@ import Layout from '../components/Layout';
 import { useEffect } from 'react';
 export default function Home() {
   const router = useRouter();
-
+  const navigate = (path) => {
+    if (process.env.NODE_ENV === 'development') {
+      window.location.href = path;
+    } else {
+      // In production, let the normal Link behavior work
+      return;
+    }
+  };
   // ADD THIS: Track homepage visits
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -224,7 +231,15 @@ export default function Home() {
           
           {/* Well Lit - with REAL IMAGE */}
            <Link href="/category/well-lit" style={{ textDecoration: 'none' }}>
-              <div style={{
+              <div 
+               onClick={(e) => {
+    if (process.env.NODE_ENV === 'development') {
+      e.preventDefault();
+      e.stopPropagation();
+      navigate('/category/well-lit');
+    }
+  }}
+                style={{
                 background: 'white',
                 borderRadius: '1rem',
                 overflow: 'hidden',
@@ -266,7 +281,15 @@ export default function Home() {
 
           {/* Ambient Lighting - with REAL IMAGE */}
           <Link href="/category/ambient-lighting" style={{ textDecoration: 'none' }}>
-              <div style={{
+              <div 
+              onClick={(e) => {
+    if (process.env.NODE_ENV === 'development') {
+      e.preventDefault();
+      e.stopPropagation();
+      navigate('/category/ambient-lighting');
+    }
+  }}
+                style={{
                 background: 'white',
                 borderRadius: '1rem',
                 overflow: 'hidden',
@@ -307,7 +330,15 @@ export default function Home() {
 
           {/* Office Spaces - with REAL IMAGE */}
           <Link href="/category/office-spaces" style={{ textDecoration: 'none' }}>
-              <div style={{
+              <div 
+            onClick={(e) => {
+    if (process.env.NODE_ENV === 'development') {
+      e.preventDefault();
+      e.stopPropagation();
+      navigate('/category/office-spaces');
+    }
+  }}            
+                style={{
                 background: 'white',
                 borderRadius: '1rem',
                 overflow: 'hidden',
@@ -348,7 +379,15 @@ export default function Home() {
 
           {/* Living Room - with REAL IMAGE */}
           <Link href="/category/living-room" style={{ textDecoration: 'none' }}>
-              <div style={{
+              <div 
+               onClick={(e) => {
+    if (process.env.NODE_ENV === 'development') {
+      e.preventDefault();
+      e.stopPropagation();
+      navigate('/category/living-room');
+    }
+  }} 
+                style={{
                 background: 'white',
                 borderRadius: '1rem',
                 overflow: 'hidden',
@@ -388,7 +427,15 @@ export default function Home() {
           </Link>
           {/* Kitchen Backgrounds */}
           <Link href="/category/kitchen" style={{ textDecoration: 'none' }}>
-            <div style={{
+            <div 
+            onClick={(e) => {
+    if (process.env.NODE_ENV === 'development') {
+      e.preventDefault();
+      e.stopPropagation();
+      navigate('/category/kitchen');
+    }
+  }} 
+              style={{
               background: 'white',
               borderRadius: '1rem',
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
