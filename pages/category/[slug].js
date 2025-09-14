@@ -370,14 +370,14 @@ useEffect(() => {
   try {
     // Simplified, reliable tracking
     if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'file_download', {
-        file_name: image.filename,
-        file_extension: 'png',
-        file_category: category.name,
-        value: 1
-      });
-      console.log('✅ Download tracked:', image.filename);
-    }
+  window.gtag('event', 'click', {
+    'event_category': 'outbound',
+    'event_label': image.filename,
+    'transport_type': 'beacon',
+    'value': 1
+  });
+  console.log('✅ Download tracked as click:', image.filename);
+}
 
     // Pinterest tracking (keep this as-is)
     if (typeof window !== 'undefined' && window.pintrk) {
