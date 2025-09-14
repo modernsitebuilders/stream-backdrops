@@ -59,7 +59,6 @@ export default function Home() {
     muted 
     playsInline 
     preload="metadata"
-    poster="/video-poster.jpg"
     style={{
       position: 'absolute',
       top: '50%',
