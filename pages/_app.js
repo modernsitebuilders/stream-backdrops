@@ -34,8 +34,7 @@ export default function App({ Component, pageProps }) {
           // Enable GA after short delay
           // CookieYes will manage consent when banner appears
           setTimeout(() => {
-            gtag('config', 'G-D46PWVN8XF', {
-  'debug_mode': true
+            gtag('config', 'G-D46PWVN8XF'
 });
             console.log('✅ Analytics enabled');
           }, 2000);
