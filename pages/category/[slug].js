@@ -370,7 +370,7 @@ useEffect(() => {
   try {
     // Simplified, reliable tracking
     if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'download', {
+      window.gtag('event', 'file_download', {
         file_name: image.filename,
         file_extension: 'png',
         file_category: category.name,
