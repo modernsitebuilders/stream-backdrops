@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }) {
           
           // CookieYes will manage consent when banner appears
           setTimeout(() => {
-            gtag('config', 'G-D46PWVN8XF');
+            gtag('config', 'G-QMD6NEPFWR');
           }, 2000);
         `}
       </Script>
