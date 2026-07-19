@@ -1,3 +1,8 @@
+> ⚠️ **This script was rejected. Do NOT re-shoot as-is.** It proves "pin created"
+> with a self-printed log / an image on our own site, and never shows the pin ON
+> Pinterest. Read `PINTEREST-APP-REVIEW-NOTES.md` (same folder) first — the fix is
+> to end on the real pin at `https://www.pinterest.com/pin/<id>/`.
+
 # Pinterest API — Standard Access Demo Video
 
 Script + shot list for the app-review video. Goal: get **Standard access** so the
