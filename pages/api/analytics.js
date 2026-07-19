@@ -1,6 +1,6 @@
 // analytics.js - queues events to Redis for batch flush to Sheets + live mirror to Neon
 import { Redis } from '@upstash/redis';
-import { shouldSkipAnalytics } from '../../lib/botFilter';
+import { shouldSkipAnalytics, isFloodingClient } from '../../lib/botFilter';
 import { insertAnalyticsEventSafe } from '../../lib/neonEvents.mjs';
 
 const redis = new Redis({
@@ -31,6 +31,13 @@ export default async function handler(req, res) {
     visitorType,
     landingPage
   } = req.body;
+
+  // Behavioral layer: drop a single client flooding the same surface past any
+  // human rate (see lib/botFilter.js). Keyed on landingPage for this endpoint's
+  // widget/usage events. Safe no-op without Redis.
+  if (await isFloodingClient(redis, req, landingPage)) {
+    return res.status(200).json({ success: true, skipped: 'flood' });
+  }
 
   const now = new Date();
   const row = [

@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis';
-import { shouldSkipAnalytics } from '../../lib/botFilter';
+import { shouldSkipAnalytics, isFloodingClient } from '../../lib/botFilter';
 import { insertAnalyticsEventSafe } from '../../lib/neonEvents.mjs';
 
 const redis = new Redis({
@@ -36,6 +36,13 @@ export default async function handler(req, res) {
     visitorId,
     visitorType
   } = req.body;
+
+  // Behavioral layer: drop a single client machine-gunning the same URL past
+  // any human rate (catches real-Chromium bots the header layers can't — e.g.
+  // the spoofed-google-referrer single-page flood). Safe no-op without Redis.
+  if (await isFloodingClient(redis, req, page)) {
+    return res.status(200).json({ success: true, skipped: 'flood' });
+  }
 
   let currentSource = 'direct';
   if (utm_source) {
