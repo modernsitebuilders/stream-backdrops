@@ -69,6 +69,7 @@ const LAYOUT_PAGES = [
   'pages/hd.js',
   'pages/hd-download.js',
   'pages/image-lookup.js',
+  'pages/interview-backgrounds.js',
   'pages/most-popular.js',
   'pages/category/recently-added.js',
 ];
