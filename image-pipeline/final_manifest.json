@@ -12110,7 +12110,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 100
+    "index": 100,
+    "hd": true
   },
   {
     "id": "home-offices-:11",
@@ -12649,7 +12650,8 @@
       "workspace"
     ],
     "hdOnly": false,
-    "index": 33
+    "index": 33,
+    "hd": true
   },
   {
     "id": "home-offices-:34",
@@ -12718,7 +12720,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 36
+    "index": 36,
+    "hd": true
   },
   {
     "id": "home-offices-:37",
@@ -13645,7 +13648,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 76
+    "index": 76,
+    "hd": true
   },
   {
     "id": "home-offices-:77",
@@ -13737,7 +13741,8 @@
       "cozy"
     ],
     "hdOnly": false,
-    "index": 80
+    "index": 80,
+    "hd": true
   },
   {
     "id": "home-offices-:81",
@@ -14013,7 +14018,8 @@
       "professional video calls"
     ],
     "hdOnly": false,
-    "index": 92
+    "index": 92,
+    "hd": true
   },
   {
     "id": "home-offices-:93",
@@ -15311,7 +15317,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 23
+    "index": 23,
+    "hd": true
   },
   {
     "id": "library-:24",
@@ -17453,7 +17460,8 @@
       "executive video calls"
     ],
     "hdOnly": false,
-    "index": 75
+    "index": 75,
+    "hd": true
   },
   {
     "id": "nature-landscape-:8",
@@ -21598,7 +21606,8 @@
       "workspace"
     ],
     "hdOnly": false,
-    "index": 18
+    "index": 18,
+    "hd": true
   },
   {
     "id": "summer-background-:19",
@@ -21991,7 +22000,8 @@
       "remote work"
     ],
     "hdOnly": false,
-    "index": 35
+    "index": 35,
+    "hd": true
   },
   {
     "id": "summer-background-:36",
@@ -22061,7 +22071,8 @@
       "virtual meetings"
     ],
     "hdOnly": false,
-    "index": 38
+    "index": 38,
+    "hd": true
   },
   {
     "id": "urban-loft-:1",
@@ -22945,7 +22956,8 @@
       "warm palette"
     ],
     "hdOnly": false,
-    "index": 38
+    "index": 38,
+    "hd": true
   },
   {
     "id": "urban-loft-:39",
@@ -26691,7 +26703,9 @@
       "professional",
       "video call background"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "index": 101,
+    "hd": true
   },
   {
     "id": "summer-backgrounds:54",
@@ -27458,7 +27472,9 @@
       "texture",
       "team standups"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "index": 1,
+    "hd": true
   },
   {
     "id": "neutral-backgrounds:empty-minimalist-room-single-long-table-6ee15f55",
