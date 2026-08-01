@@ -1,350 +1,2314 @@
 [
   {
+    "id": "office-spaces:bright-office-space-plant-shelf-greenery-designed-2b32133d",
+    "slug": "bright-office-space-plant-shelf-greenery-designed-2b32133d",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "bright-office-space-plant-shelf-greenery-designed-2b32133d.webp",
+    "download_png": "bright-office-space-plant-shelf-greenery-designed-2b32133d.png",
+    "title": "Modern Office Space with Greenery | MeetBackdrops",
+    "description": "Bright and airy office space featuring a stylish plant shelf, ideal for online presentations and professional meetings in a corporate setting.",
+    "alt": "Bright office space with a plant shelf and greenery, designed for professional use.",
+    "tags": [
+      "office",
+      "greenery",
+      "modern",
+      "professional",
+      "bright",
+      "workspace",
+      "online presentations",
+      "stylish"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "living-rooms:neutral-living-room-sofa-wooden-shelves-decor-lamp-designed-f8dd1fe3",
+    "slug": "neutral-living-room-sofa-wooden-shelves-decor-lamp-designed-f8dd1fe3",
     "category": "living-rooms",
-    "slug": "bright-living-room-soft-seating-round-coffee-table-greenery-97d17ad0"
+    "folder": "living-rooms",
+    "image_webp": "neutral-living-room-sofa-wooden-shelves-decor-lamp-designed-f8dd1fe3.webp",
+    "download_png": "neutral-living-room-sofa-wooden-shelves-decor-lamp-designed-f8dd1fe3.png",
+    "title": "Cozy Neutral Living Room with Shelves | MeetBackdrops",
+    "description": "Soft textures and warm tones create a welcoming atmosphere, ideal for remote work settings that inspire comfort and professionalism.",
+    "alt": "Neutral living room featuring a sofa, wooden shelves with decor, and a lamp, designed for a cozy and professional atmosphere.",
+    "tags": [
+      "neutral",
+      "cozy",
+      "living room",
+      "shelves",
+      "warm tones",
+      "professional",
+      "soft textures",
+      "remote work"
+    ],
+    "hdOnly": false
   },
   {
-    "category": "christmas-backgrounds",
-    "slug": "bright-living-room-white-sofas-christmas-tree-modern-9f7f806e"
+    "id": "libraries:spacious-library-wooden-bookshelves-large-windows-allowing-16e52634",
+    "slug": "spacious-library-wooden-bookshelves-large-windows-allowing-16e52634",
+    "category": "libraries",
+    "folder": "libraries",
+    "image_webp": "spacious-library-wooden-bookshelves-large-windows-allowing-16e52634.webp",
+    "download_png": "spacious-library-wooden-bookshelves-large-windows-allowing-16e52634.png",
+    "title": "Modern Library Interior with Wooden Bookshelves | MeetBackdrops",
+    "description": "Bright and spacious library featuring wooden bookshelves, perfect for virtual meetings in a professional setting. Natural light enhances the ambiance.",
+    "alt": "Spacious library with wooden bookshelves and large windows allowing natural light to fill the room.",
+    "tags": [
+      "library",
+      "bookshelves",
+      "wooden",
+      "natural light",
+      "professional",
+      "interior",
+      "neutral",
+      "virtual meetings"
+    ],
+    "hdOnly": false
   },
   {
+    "id": "fall-backgrounds:cozy-home-office-stone-fireplace-wooden-furniture-autumn-a7fc8775",
+    "slug": "cozy-home-office-stone-fireplace-wooden-furniture-autumn-a7fc8775",
     "category": "fall-backgrounds",
-    "slug": "bright-modern-office-large-windows-overlooking-colorful-fall-13d39b02"
+    "folder": "fall-backgrounds",
+    "image_webp": "cozy-home-office-stone-fireplace-wooden-furniture-autumn-a7fc8775.webp",
+    "download_png": "cozy-home-office-stone-fireplace-wooden-furniture-autumn-a7fc8775.png",
+    "title": "Cozy Autumn Home Office Setting | MeetBackdrops",
+    "description": "Rich wooden tones and warm autumn colors create a welcoming space for online presentations, featuring a stone fireplace and stylish decor.",
+    "alt": "A cozy home office with a stone fireplace, wooden furniture, and autumn-themed decor, including orange accents and large windows.",
+    "tags": [
+      "home-office",
+      "autumn",
+      "cozy",
+      "wooden",
+      "fireplace",
+      "decor",
+      "warm",
+      "online presentations"
+    ],
+    "hdOnly": false
   },
   {
-    "category": "fall-backgrounds",
-    "slug": "bright-office-interior-large-windows-displaying-colorful-eed5a4b0"
+    "id": "libraries:cozy-library-wooden-bookshelves-leather-sofas-large-window-2905be8d",
+    "slug": "cozy-library-wooden-bookshelves-leather-sofas-large-window-2905be8d",
+    "category": "libraries",
+    "folder": "libraries",
+    "image_webp": "cozy-library-wooden-bookshelves-leather-sofas-large-window-2905be8d.webp",
+    "download_png": "cozy-library-wooden-bookshelves-leather-sofas-large-window-2905be8d.png",
+    "title": "Elegant Library Setting for Professional Video Calls | MeetBackdrops",
+    "description": "Rich wooden shelves filled with books create a sophisticated backdrop, ideal for professional video calls in a refined library setting.",
+    "alt": "A cozy library with wooden bookshelves, leather sofas, and a large window letting in natural light.",
+    "tags": [
+      "library",
+      "bookshelves",
+      "wooden",
+      "cozy",
+      "natural light",
+      "elegant",
+      "sophisticated",
+      "professional video calls"
+    ],
+    "hdOnly": false
   },
   {
-    "category": "office-spaces",
-    "slug": "bright-office-space-large-glass-windows-modern-chair-sofa-370c7ad4"
+    "id": "libraries:library-wooden-shelves-filled-books-central-desk-large-0632e2fb",
+    "slug": "library-wooden-shelves-filled-books-central-desk-large-0632e2fb",
+    "category": "libraries",
+    "folder": "libraries",
+    "image_webp": "library-wooden-shelves-filled-books-central-desk-large-0632e2fb.webp",
+    "download_png": "library-wooden-shelves-filled-books-central-desk-large-0632e2fb.png",
+    "title": "Elegant Library Setting for Professional Meetings | MeetBackdrops",
+    "description": "Rich wooden shelves filled with books create a sophisticated atmosphere ideal for executive video calls, complemented by a classic desk and warm lighting.",
+    "alt": "A library with wooden shelves filled with books, a central desk, and a large window allowing natural light.",
+    "tags": [
+      "library",
+      "wooden shelves",
+      "sophisticated",
+      "natural light",
+      "executive video calls",
+      "classic desk",
+      "warm lighting",
+      "professional"
+    ],
+    "hdOnly": false
   },
   {
-    "category": "fall-backgrounds",
-    "slug": "bright-office-space-large-windows-displaying-colorful-autumn-80dc2456"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "bright-office-space-large-windows-modern-furniture-city-e4614823"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "bright-office-space-large-windows-planters-filled-autumn-cf59be65"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "bright-office-space-large-windows-showcasing-city-view-soft-f117d85c"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "bright-office-space-wooden-chairs-round-window-showcasing-ef4ca5f3"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "bright-sunroom-large-windows-autumn-decor-comfortable-62f6212d"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "contemporary-office-interior-plants-artwork-desk-setup-19677ffa"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "contemporary-office-reception-area-gray-stone-desk-potted-62f6fae6"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "contemporary-office-space-modern-desk-ergonomic-chair-91b81580"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-autumn-themed-setting-pumpkins-dried-plants-soft-a411c23f"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-home-office-bench-pillows-pumpkins-wreath-illuminated-9d907727"
-  },
-  {
-    "category": "home-office",
-    "slug": "cozy-home-office-bookshelf-filled-books-chair-coffee-table-6f0a5005"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-home-office-desk-chair-bookshelves-autumn-leaves-406d580e"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-home-office-large-windows-views-colorful-autumn-foliage-a7830948"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-home-office-sectional-sofa-autumn-themed-decor-d4c1c608"
-  },
-  {
-    "category": "home-office",
-    "slug": "cozy-home-office-stylish-chair-wooden-cabinet-large-windows-d4c27959"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-home-office-table-autumn-gourds-candles-bookshelf-dbed7040"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-home-office-wooden-bookshelves-desk-fall-decorations-50336caa"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-home-office-wooden-desk-bookshelves-skylight-displaying-f1a78f22"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-home-office-wooden-desk-computer-autumn-trees-visible-1005cd21"
-  },
-  {
-    "category": "home-office",
-    "slug": "cozy-home-office-wooden-furniture-large-windows-natural-45ce8eb4"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-kitchen-terracotta-walls-window-autumn-leaves-coffee-7a56b764"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-kitchen-warm-tones-seasonal-decor-workspace-chair-desk-9464c9be"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-library-wooden-shelves-filled-books-large-window-583948c5"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-living-room-autumn-decor-pumpkins-warm-textiles-6b331b43"
-  },
-  {
-    "category": "christmas-backgrounds",
-    "slug": "cozy-living-room-christmas-tree-fireplace-elegant-seating-a66e9cb6"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-living-room-fireplace-autumn-decorations-comfortable-d40c2590"
-  },
-  {
-    "category": "living-rooms",
-    "slug": "cozy-living-room-fireplace-comfortable-seating-elegant-decor-34f35d2b"
-  },
-  {
-    "category": "living-rooms",
-    "slug": "cozy-living-room-nook-plush-seating-large-bookshelf-filled-35201fa3"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-living-room-soft-seating-coffee-table-large-windows-3687ea0e"
-  },
-  {
-    "category": "christmas-backgrounds",
-    "slug": "cozy-living-room-white-sectional-sofa-festive-pink-gold-38594914"
-  },
-  {
-    "category": "living-rooms",
-    "slug": "cozy-living-room-white-sofa-soft-pillows-natural-light-77c73bad"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-living-room-wooden-shelves-plush-seating-large-arched-9671f611"
-  },
-  {
+    "id": "bookshelves:sophisticated-setting-rich-green-bookshelves-filled-books-76a7f63f",
+    "slug": "sophisticated-setting-rich-green-bookshelves-filled-books-76a7f63f",
     "category": "bookshelves",
-    "slug": "cozy-nook-bookshelf-filled-books-soft-lighting-decorative-cb35e9ec"
+    "folder": "bookshelves-bright",
+    "image_webp": "sophisticated-setting-rich-green-bookshelves-filled-books-76a7f63f.webp",
+    "download_png": "sophisticated-setting-rich-green-bookshelves-filled-books-76a7f63f.png",
+    "title": "Elegant Bookshelf Setting for Professional Calls | MeetBackdrops",
+    "description": "Rich green bookshelves filled with books create a sophisticated backdrop for executive video calls, complemented by cozy leather seating.",
+    "alt": "A sophisticated setting featuring rich green bookshelves filled with books and cozy leather armchairs, ideal for professional environments.",
+    "tags": [
+      "bookshelves",
+      "executive video calls",
+      "sophisticated",
+      "leather seating",
+      "green tones",
+      "professional",
+      "cozy",
+      "interior design"
+    ],
+    "hdOnly": false
   },
   {
-    "category": "christmas-backgrounds",
-    "slug": "cozy-office-space-decorated-fireplace-bookshelves-wooden-313c2bb5"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "cozy-room-large-windows-draped-sheer-curtains-showcasing-debb709f"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "dark-paneled-office-space-bowl-pumpkins-view-red-autumn-3063c323"
-  },
-  {
-    "category": "christmas-backgrounds",
-    "slug": "decorated-fireplace-stockings-christmas-tree-creating-32726f73"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "elegant-living-room-fireplace-neutral-furniture-autumn-2e7b33c5"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "executive-office-large-wooden-desk-plush-chair-floor-ceiling-c28abea7"
-  },
-  {
-    "category": "halloween-backgrounds",
-    "slug": "home-office-desk-halloween-decorations-warm-lighting-63bf7ee3"
-  },
-  {
-    "category": "home-office",
-    "slug": "home-office-setup-wooden-desk-ergonomic-chair-large-windows-9ae415b7"
-  },
-  {
-    "category": "christmas-backgrounds",
-    "slug": "industrial-loft-large-windows-showcasing-city-view-decorated-d6c022eb"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "library-interior-wooden-shelves-filled-books-autumn-543130d4"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "luxurious-living-room-purple-sofa-large-windows-showcasing-f3748c09"
-  },
-  {
-    "category": "home-office",
-    "slug": "minimalist-home-office-desk-computer-decorative-shelves-64c5c1a4"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "modern-boardroom-large-wooden-table-leather-chairs-34bb9677"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "modern-executive-lounge-leather-seating-warm-lighting-85e1553f"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "modern-executive-office-warm-wood-furniture-desk-shelves-99225fce"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "modern-executive-office-wooden-desk-leather-chair-large-b5dffbc7"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "modern-executive-office-wooden-furniture-large-desk-stylish-a0d60747"
-  },
-  {
-    "category": "home-office",
-    "slug": "modern-home-office-desk-bookshelves-large-windows-allowing-9880caf9"
-  },
-  {
-    "category": "home-office",
-    "slug": "modern-home-office-desk-comfortable-seating-large-windows-38042f5f"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "modern-kitchen-dining-table-set-meal-adorned-autumn-12beb69b"
-  },
-  {
-    "category": "living-rooms",
-    "slug": "modern-living-room-soft-pink-sofas-coffee-table-large-d7da9a5f"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "modern-office-space-gray-marble-walls-two-stylish-chairs-b34b6998"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "modern-office-space-round-table-four-chairs-minimalist-decor-cbdba308"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "modern-office-waiting-area-gray-walls-couch-striped-cushions-cbdb8c9f"
-  },
-  {
-    "category": "neutral-backgrounds",
-    "slug": "neutral-wall-console-table-lamp-creating-professional-19e2353a"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "neutral-wall-soft-shadows-modern-chair-side-table-plant-d6fd99c9"
-  },
-  {
-    "category": "christmas-backgrounds",
-    "slug": "neutral-wall-soft-shadows-small-christmas-tree-wooden-table-ba087f82"
-  },
-  {
-    "category": "neutral-backgrounds",
-    "slug": "neutral-wall-wooden-cabinet-potted-plant-designed-corporate-9b046d19"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "office-space-orange-walls-minimalist-desk-chair-small-plant-f56822a1"
-  },
-  {
-    "category": "christmas-backgrounds",
-    "slug": "rustic-cabin-interior-wooden-beams-small-tree-warm-fireplace-6f20afc4"
-  },
-  {
-    "category": "living-rooms",
-    "slug": "rustic-living-room-large-window-scenic-view-comfortable-d8f16a17"
-  },
-  {
-    "category": "halloween-backgrounds",
-    "slug": "rustic-living-room-leather-sofas-stone-fireplace-halloween-f5fe050b"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "serene-display-white-pumpkins-candles-dried-flowers-e188798a"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "serene-lake-surrounded-vibrant-autumn-trees-reflecting-their-723b9fe3"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "sophisticated-office-corner-floor-lamp-large-window-2bdc04e7"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "sophisticated-office-space-green-walls-warm-lighting-cozy-1ad6bafd"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "sophisticated-office-space-rich-wood-paneling-soft-lighting-ef4a4fe5"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "spacious-conference-room-large-table-ergonomic-chairs-glass-85308f94"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "spacious-corporate-office-large-windows-soft-curtains-light-8b01ec3b"
-  },
-  {
-    "category": "christmas-backgrounds",
-    "slug": "spacious-living-room-white-sofas-christmas-tree-festive-5230ebdd"
-  },
-  {
-    "category": "christmas-backgrounds",
-    "slug": "stylish-dining-area-large-table-neutral-decor-christmas-tree-1fb90bed"
-  },
-  {
-    "category": "office-spaces",
-    "slug": "stylish-executive-office-sofa-desk-modern-decor-designed-b8650cbb"
-  },
-  {
-    "category": "home-office",
-    "slug": "stylish-home-office-wooden-desk-bookshelves-large-windows-83699c7d"
-  },
-  {
-    "category": "home-office",
-    "slug": "stylish-home-office-wooden-desk-ergonomic-chair-large-263749d8"
-  },
-  {
-    "category": "fall-backgrounds",
-    "slug": "sunroom-decorated-colorful-fall-flowers-pumpkins-large-ae9bffd5"
-  },
-  {
-    "category": "neutral-backgrounds",
-    "slug": "textured-gray-wall-stylish-lamp-table-creating-professional-9033bb76"
-  },
-  {
+    "id": "urban-lofts:stylish-kitchen-exposed-brick-walls-large-windows-wooden-4884ebaf",
+    "slug": "stylish-kitchen-exposed-brick-walls-large-windows-wooden-4884ebaf",
     "category": "urban-lofts",
-    "slug": "urban-loft-exposed-brick-walls-large-windows-warm-lighting-91b8b6b2"
+    "folder": "urban-lofts",
+    "image_webp": "stylish-kitchen-exposed-brick-walls-large-windows-wooden-4884ebaf.webp",
+    "download_png": "stylish-kitchen-exposed-brick-walls-large-windows-wooden-4884ebaf.png",
+    "title": "Modern Industrial Kitchen Space | MeetBackdrops",
+    "description": "Exposed brick walls and large windows create a stylish setting for executive video calls, featuring a sleek wooden kitchen island and minimalist design.",
+    "alt": "Stylish kitchen with exposed brick walls, large windows, and a wooden island, designed for a modern industrial look.",
+    "tags": [
+      "urban",
+      "industrial",
+      "kitchen",
+      "exposed brick",
+      "minimalist",
+      "natural light",
+      "modern",
+      "executive video calls"
+    ],
+    "hdOnly": false
   },
   {
+    "id": "bookshelves:wooden-bookshelves-filled-various-books-decorative-objects-83efe99b",
+    "slug": "wooden-bookshelves-filled-various-books-decorative-objects-83efe99b",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "wooden-bookshelves-filled-various-books-decorative-objects-83efe99b.webp",
+    "download_png": "wooden-bookshelves-filled-various-books-decorative-objects-83efe99b.png",
+    "title": "Elegant Bookshelf Display for Professional Video Calls | MeetBackdrops",
+    "description": "Rich wooden bookshelves filled with books create a sophisticated backdrop, ideal for professional video calls in a corporate setting.",
+    "alt": "Wooden bookshelves filled with various books and decorative objects, providing a warm and inviting atmosphere.",
+    "tags": [
+      "bookshelves",
+      "wooden",
+      "sophisticated",
+      "warm",
+      "decorative",
+      "professional video calls",
+      "corporate",
+      "elegant"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "historic-spaces:art-deco-wall-geometric-patterns-warm-lighting-designed-995cc649",
+    "slug": "art-deco-wall-geometric-patterns-warm-lighting-designed-995cc649",
+    "category": "historic-spaces",
+    "folder": "historic-spaces",
+    "image_webp": "art-deco-wall-geometric-patterns-warm-lighting-designed-995cc649.webp",
+    "download_png": "art-deco-wall-geometric-patterns-warm-lighting-designed-995cc649.png",
+    "title": "Elegant Art Deco Wall Design for Virtual Meetings | MeetBackdrops",
+    "description": "Featuring a sophisticated Art Deco wall with geometric patterns, this setting enhances virtual meetings with its rich textures and warm lighting.",
+    "alt": "Art Deco wall with geometric patterns and warm lighting, designed for corporate settings.",
+    "tags": [
+      "art deco",
+      "geometric",
+      "warm lighting",
+      "elegant",
+      "historic",
+      "textures",
+      "corporate",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "kitchens:modern-kitchen-wooden-cabinetry-stone-countertop-decorative-8082c7df",
+    "slug": "modern-kitchen-wooden-cabinetry-stone-countertop-decorative-8082c7df",
+    "category": "kitchens",
+    "folder": "kitchens",
+    "image_webp": "modern-kitchen-wooden-cabinetry-stone-countertop-decorative-8082c7df.webp",
+    "download_png": "modern-kitchen-wooden-cabinetry-stone-countertop-decorative-8082c7df.png",
+    "title": "Modern Kitchen Design for Virtual Meetings | MeetBackdrops",
+    "description": "Warm wood tones and sleek lines create a sophisticated kitchen, ideal for virtual meetings with a professional touch and inviting atmosphere.",
+    "alt": "A modern kitchen featuring wooden cabinetry, a stone countertop, and decorative elements like fruits and pumpkins.",
+    "tags": [
+      "kitchen",
+      "modern",
+      "wood",
+      "professional",
+      "decorative",
+      "lighting",
+      "virtual meetings",
+      "sophisticated"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "fall-backgrounds:cozy-library-wooden-bookshelves-plaid-armchair-autumn-44cdd1e3",
+    "slug": "cozy-library-wooden-bookshelves-plaid-armchair-autumn-44cdd1e3",
     "category": "fall-backgrounds",
-    "slug": "warm-home-office-wooden-desk-leather-chair-large-window-650a5e28"
+    "folder": "fall-backgrounds",
+    "image_webp": "cozy-library-wooden-bookshelves-plaid-armchair-autumn-44cdd1e3.webp",
+    "download_png": "cozy-library-wooden-bookshelves-plaid-armchair-autumn-44cdd1e3.png",
+    "title": "Cozy Library Setting with Autumn Accents | MeetBackdrops",
+    "description": "Rich wooden bookshelves filled with books create a warm atmosphere, ideal for executive video calls during the fall season.",
+    "alt": "A cozy library with wooden bookshelves, a plaid armchair, and autumn decorations including pumpkins.",
+    "tags": [
+      "bookshelves",
+      "autumn",
+      "cozy",
+      "warm",
+      "wood",
+      "executive video calls",
+      "library",
+      "interior"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "wall-shelves:wall-shelves-various-potted-plants-against-textured-brick-557b91e6",
+    "slug": "wall-shelves-various-potted-plants-against-textured-brick-557b91e6",
+    "category": "wall-shelves",
+    "folder": "wall-shelves-bright",
+    "image_webp": "wall-shelves-various-potted-plants-against-textured-brick-557b91e6.webp",
+    "download_png": "wall-shelves-various-potted-plants-against-textured-brick-557b91e6.png",
+    "title": "Stylish Wall Shelves with Plants | MeetBackdrops",
+    "description": "Featuring elegant wall shelves adorned with potted plants, this setting is ideal for executive video calls, providing a professional yet inviting atmosphere.",
+    "alt": "Wall shelves with various potted plants against a textured brick wall, creating a warm and inviting backdrop.",
+    "tags": [
+      "shelves",
+      "plants",
+      "brick",
+      "warm",
+      "inviting",
+      "professional",
+      "interior",
+      "executive video calls"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:bright-office-space-central-tree-large-windows-modern-ba6fb0aa",
+    "slug": "bright-office-space-central-tree-large-windows-modern-ba6fb0aa",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "bright-office-space-central-tree-large-windows-modern-ba6fb0aa.webp",
+    "download_png": "bright-office-space-central-tree-large-windows-modern-ba6fb0aa.png",
+    "title": "Modern Executive Office Space with Natural Elements | MeetBackdrops",
+    "description": "Bright and airy office space featuring a central tree, perfect for team standups and professional meetings, with large windows and modern furnishings.",
+    "alt": "Bright office space with a central tree, large windows, and modern seating arrangements, ideal for corporate meetings.",
+    "tags": [
+      "office",
+      "modern",
+      "natural",
+      "bright",
+      "professional",
+      "team standups",
+      "furniture",
+      "spacious"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "coffee-shops:bright-coffee-shop-interior-wooden-tables-stools-plants-552a7228",
+    "slug": "bright-coffee-shop-interior-wooden-tables-stools-plants-552a7228",
+    "category": "coffee-shops",
+    "folder": "coffee-shops",
+    "image_webp": "bright-coffee-shop-interior-wooden-tables-stools-plants-552a7228.webp",
+    "download_png": "bright-coffee-shop-interior-wooden-tables-stools-plants-552a7228.png",
+    "title": "Modern Coffee Shop Interior with Natural Light | MeetBackdrops",
+    "description": "Bright and airy coffee shop features wooden tables and greenery, ideal for online presentations in a relaxed setting.",
+    "alt": "Bright coffee shop interior with wooden tables, stools, and plants, featuring large windows for natural light.",
+    "tags": [
+      "coffee shop",
+      "modern",
+      "natural light",
+      "wooden furniture",
+      "greenery",
+      "relaxed",
+      "interior design",
+      "online presentations"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "home-office:cozy-home-office-desk-chair-bookshelf-plants-illuminated-599a38fe",
+    "slug": "cozy-home-office-desk-chair-bookshelf-plants-illuminated-599a38fe",
+    "category": "home-office",
+    "folder": "home-office",
+    "image_webp": "cozy-home-office-desk-chair-bookshelf-plants-illuminated-599a38fe.webp",
+    "download_png": "cozy-home-office-desk-chair-bookshelf-plants-illuminated-599a38fe.png",
+    "title": "Cozy Home Office with Natural Light | MeetBackdrops",
+    "description": "Soft neutral tones and natural light create a serene setting, ideal for executive video calls in a home office environment.",
+    "alt": "A cozy home office featuring a desk, chair, and bookshelf with plants, illuminated by natural light from a large window.",
+    "tags": [
+      "home office",
+      "natural light",
+      "neutral tones",
+      "serene",
+      "executive video calls",
+      "workspace",
+      "modern",
+      "minimalist"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "home-office:bright-home-office-wooden-desk-stylish-shelving-natural-1f5cda09",
+    "slug": "bright-home-office-wooden-desk-stylish-shelving-natural-1f5cda09",
+    "category": "home-office",
+    "folder": "home-office",
+    "image_webp": "bright-home-office-wooden-desk-stylish-shelving-natural-1f5cda09.webp",
+    "download_png": "bright-home-office-wooden-desk-stylish-shelving-natural-1f5cda09.png",
+    "title": "Modern Home Office with Stylish Shelving | MeetBackdrops",
+    "description": "Bright and airy home office features a sleek wooden desk and stylish shelving, ideal for remote work and professional video calls.",
+    "alt": "Bright home office with a wooden desk, stylish shelving, and natural light from a large window.",
+    "tags": [
+      "home office",
+      "shelving",
+      "wooden desk",
+      "natural light",
+      "professional",
+      "minimalist",
+      "remote work",
+      "bright"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:stylish-bookshelves-filled-books-large-window-overlooking-80fbc27a",
+    "slug": "stylish-bookshelves-filled-books-large-window-overlooking-80fbc27a",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "stylish-bookshelves-filled-books-large-window-overlooking-80fbc27a.webp",
+    "download_png": "stylish-bookshelves-filled-books-large-window-overlooking-80fbc27a.png",
+    "title": "Modern Bookshelves with Scenic View | MeetBackdrops",
+    "description": "Elegant bookshelves frame a serene view, ideal for professional video calls that require a sophisticated backdrop.",
+    "alt": "Stylish bookshelves filled with books, featuring a large window overlooking greenery and water.",
+    "tags": [
+      "bookshelves",
+      "modern",
+      "professional video calls",
+      "interior",
+      "natural light",
+      "elegant",
+      "scenic",
+      "minimalist"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:colorful-bookshelf-filled-books-various-shades-complemented-3011a513",
+    "slug": "colorful-bookshelf-filled-books-various-shades-complemented-3011a513",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "colorful-bookshelf-filled-books-various-shades-complemented-3011a513.webp",
+    "download_png": "colorful-bookshelf-filled-books-various-shades-complemented-3011a513.png",
+    "title": "Colorful Bookshelf Display for Professional Settings | MeetBackdrops",
+    "description": "Vibrant bookshelves filled with neatly arranged books create an inviting atmosphere, ideal for team standups and professional discussions.",
+    "alt": "A colorful bookshelf filled with books in various shades, complemented by potted plants on either side, creating a warm and inviting setting.",
+    "tags": [
+      "bookshelves",
+      "colorful",
+      "professional",
+      "inviting",
+      "team standups",
+      "home office",
+      "shelves",
+      "plants"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:spacious-office-interior-elegant-arches-minimalist-furniture-61d2a33c",
+    "slug": "spacious-office-interior-elegant-arches-minimalist-furniture-61d2a33c",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "spacious-office-interior-elegant-arches-minimalist-furniture-61d2a33c.webp",
+    "download_png": "spacious-office-interior-elegant-arches-minimalist-furniture-61d2a33c.png",
+    "title": "Modern Executive Office Space | MeetBackdrops",
+    "description": "Bright and spacious office space featuring elegant arches, ideal for team standups and professional meetings, with a minimalist design aesthetic.",
+    "alt": "Spacious office interior with elegant arches, minimalist furniture, and a neutral color palette, designed for corporate settings.",
+    "tags": [
+      "office",
+      "minimalist",
+      "spacious",
+      "neutral",
+      "professional",
+      "elegant",
+      "team standups",
+      "modern"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "libraries:cozy-library-green-walls-wooden-bookshelves-filled-books-c9b2c2fb",
+    "slug": "cozy-library-green-walls-wooden-bookshelves-filled-books-c9b2c2fb",
+    "category": "libraries",
+    "folder": "libraries",
+    "image_webp": "cozy-library-green-walls-wooden-bookshelves-filled-books-c9b2c2fb.webp",
+    "download_png": "cozy-library-green-walls-wooden-bookshelves-filled-books-c9b2c2fb.png",
+    "title": "Elegant Library Setting for Professional Calls | MeetBackdrops",
+    "description": "Rich green walls and wooden accents create a sophisticated library setting, ideal for team standups and executive meetings.",
+    "alt": "A cozy library with green walls, wooden bookshelves filled with books, and leather seating, designed for professional video calls.",
+    "tags": [
+      "library",
+      "green walls",
+      "wood accents",
+      "leather seating",
+      "professional",
+      "elegant",
+      "team standups",
+      "sophisticated"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:colorful-bookshelf-filled-books-arranged-color-cozy-chair-43243d23",
+    "slug": "colorful-bookshelf-filled-books-arranged-color-cozy-chair-43243d23",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "colorful-bookshelf-filled-books-arranged-color-cozy-chair-43243d23.webp",
+    "download_png": "colorful-bookshelf-filled-books-arranged-color-cozy-chair-43243d23.png",
+    "title": "Colorful Bookshelf Display for Remote Work | MeetBackdrops",
+    "description": "Vibrant bookshelves arranged by color create an inviting atmosphere, ideal for remote work and professional video calls. A cozy chair complements the scene.",
+    "alt": "A colorful bookshelf filled with books arranged by color, featuring a cozy chair and decorative items, creating a warm and inviting atmosphere.",
+    "tags": [
+      "bookshelves",
+      "colorful",
+      "cozy",
+      "remote work",
+      "decorative",
+      "professional",
+      "inviting",
+      "home office"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:stylish-bookshelf-various-books-decorative-items-designed-54670dcd",
+    "slug": "stylish-bookshelf-various-books-decorative-items-designed-54670dcd",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "stylish-bookshelf-various-books-decorative-items-designed-54670dcd.webp",
+    "download_png": "stylish-bookshelf-various-books-decorative-items-designed-54670dcd.png",
+    "title": "Elegant Bookshelf Display for Professional Settings | MeetBackdrops",
+    "description": "A sophisticated bookshelf filled with curated books and decorative objects, ideal for remote work settings that require a polished look.",
+    "alt": "A stylish bookshelf with various books and decorative items, designed for a professional environment.",
+    "tags": [
+      "bookshelf",
+      "sophisticated",
+      "professional",
+      "decorative",
+      "remote work",
+      "interior design",
+      "neutral tones",
+      "workspace"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "libraries:curved-bookshelves-filled-books-modern-library-overlooking-ab1883a9",
+    "slug": "curved-bookshelves-filled-books-modern-library-overlooking-ab1883a9",
+    "category": "libraries",
+    "folder": "libraries",
+    "image_webp": "curved-bookshelves-filled-books-modern-library-overlooking-ab1883a9.webp",
+    "download_png": "curved-bookshelves-filled-books-modern-library-overlooking-ab1883a9.png",
+    "title": "Modern Library with Scenic View | MeetBackdrops",
+    "description": "Bright and airy library space features curved bookshelves and a scenic view, ideal for team standups and professional meetings.",
+    "alt": "Curved bookshelves filled with books in a modern library overlooking a scenic outdoor view.",
+    "tags": [
+      "library",
+      "bookshelves",
+      "modern",
+      "scenic",
+      "professional",
+      "bright",
+      "airy",
+      "team standups"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:modern-office-space-wooden-desk-two-chairs-abstract-art-e73f6416",
+    "slug": "modern-office-space-wooden-desk-two-chairs-abstract-art-e73f6416",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "modern-office-space-wooden-desk-two-chairs-abstract-art-e73f6416.webp",
+    "download_png": "modern-office-space-wooden-desk-two-chairs-abstract-art-e73f6416.png",
+    "title": "Modern Executive Office Space | MeetBackdrops",
+    "description": "Featuring a sleek desk and stylish chairs, this office space is ideal for executive video calls, providing a professional and polished look.",
+    "alt": "A modern office space with a wooden desk, two chairs, and abstract art on the walls, designed for professional settings.",
+    "tags": [
+      "office",
+      "executive video calls",
+      "modern",
+      "professional",
+      "interior",
+      "design",
+      "workspace",
+      "minimalist"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "urban-lofts:industrial-loft-space-exposed-brick-walls-large-windows-cozy-e6007be5",
+    "slug": "industrial-loft-space-exposed-brick-walls-large-windows-cozy-e6007be5",
+    "category": "urban-lofts",
+    "folder": "urban-lofts",
+    "image_webp": "industrial-loft-space-exposed-brick-walls-large-windows-cozy-e6007be5.webp",
+    "download_png": "industrial-loft-space-exposed-brick-walls-large-windows-cozy-e6007be5.png",
+    "title": "Industrial Loft Space with Large Windows | MeetBackdrops",
+    "description": "Exposed brick walls and large windows create a bright atmosphere, ideal for online presentations in a modern setting.",
+    "alt": "An industrial loft space featuring exposed brick walls and large windows, with a cozy seating area and a coffee table.",
+    "tags": [
+      "urban",
+      "loft",
+      "brick",
+      "windows",
+      "modern",
+      "cozy",
+      "lighting",
+      "online presentations"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "kitchens:warm-wooden-kitchen-marble-countertop-shelves-filled-jars-48d79420",
+    "slug": "warm-wooden-kitchen-marble-countertop-shelves-filled-jars-48d79420",
+    "category": "kitchens",
+    "folder": "kitchens",
+    "image_webp": "warm-wooden-kitchen-marble-countertop-shelves-filled-jars-48d79420.webp",
+    "download_png": "warm-wooden-kitchen-marble-countertop-shelves-filled-jars-48d79420.png",
+    "title": "Elegant Wooden Kitchen Space | MeetBackdrops",
+    "description": "Rich wooden cabinetry and a marble countertop create a warm atmosphere, ideal for online presentations in a sophisticated setting.",
+    "alt": "Warm wooden kitchen with marble countertop and shelves filled with jars and decor, designed for professional use.",
+    "tags": [
+      "kitchen",
+      "wood",
+      "marble",
+      "shelves",
+      "elegant",
+      "professional",
+      "interior",
+      "online presentations"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "living-rooms:rustic-living-room-wooden-beams-stone-fireplace-comfortable-686c6a54",
+    "slug": "rustic-living-room-wooden-beams-stone-fireplace-comfortable-686c6a54",
+    "category": "living-rooms",
+    "folder": "living-rooms",
+    "image_webp": "rustic-living-room-wooden-beams-stone-fireplace-comfortable-686c6a54.webp",
+    "download_png": "rustic-living-room-wooden-beams-stone-fireplace-comfortable-686c6a54.png",
+    "title": "Cozy Rustic Living Room Setting | MeetBackdrops",
+    "description": "Rich wooden textures and warm tones create a cozy rustic living room, ideal for professional video calls in a relaxed atmosphere.",
+    "alt": "A rustic living room featuring wooden beams, a stone fireplace, and comfortable seating, designed for a warm and inviting ambiance.",
+    "tags": [
+      "rustic",
+      "cozy",
+      "wooden",
+      "warm tones",
+      "comfortable",
+      "interior design",
+      "relaxed atmosphere",
+      "professional video calls"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "libraries:warm-library-interior-wooden-bookshelves-fireplace-6015c56a",
+    "slug": "warm-library-interior-wooden-bookshelves-fireplace-6015c56a",
+    "category": "libraries",
+    "folder": "libraries",
+    "image_webp": "warm-library-interior-wooden-bookshelves-fireplace-6015c56a.webp",
+    "download_png": "warm-library-interior-wooden-bookshelves-fireplace-6015c56a.png",
+    "title": "Cozy Library Setting with Warm Lighting | MeetBackdrops",
+    "description": "Rich wooden shelves filled with books create a warm atmosphere, ideal for remote work, complemented by a cozy fireplace and inviting seating.",
+    "alt": "Warm library interior featuring wooden bookshelves, a fireplace, and comfortable seating with an orange throw blanket.",
+    "tags": [
+      "library",
+      "warm lighting",
+      "cozy",
+      "wooden shelves",
+      "remote work",
+      "comfortable seating",
+      "fireplace",
+      "inviting atmosphere"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "living-rooms:cozy-living-room-comfortable-seating-fireplace-bookshelves-f00fcb3c",
+    "slug": "cozy-living-room-comfortable-seating-fireplace-bookshelves-f00fcb3c",
+    "category": "living-rooms",
+    "folder": "living-rooms",
+    "image_webp": "cozy-living-room-comfortable-seating-fireplace-bookshelves-f00fcb3c.webp",
+    "download_png": "cozy-living-room-comfortable-seating-fireplace-bookshelves-f00fcb3c.png",
+    "title": "Cozy Living Room with Bookshelves and Fireplace | MeetBackdrops",
+    "description": "Warm tones and inviting seating create a perfect setting for remote work, featuring a fireplace and bookshelves filled with books.",
+    "alt": "A cozy living room with comfortable seating, a fireplace, and bookshelves filled with books, creating a warm atmosphere.",
+    "tags": [
+      "cozy",
+      "living room",
+      "bookshelves",
+      "fireplace",
+      "warm tones",
+      "interior",
+      "remote work",
+      "inviting"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:cozy-room-fireplace-filled-bookshelves-designed-professional-b31f30e0",
+    "slug": "cozy-room-fireplace-filled-bookshelves-designed-professional-b31f30e0",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "cozy-room-fireplace-filled-bookshelves-designed-professional-b31f30e0.webp",
+    "download_png": "cozy-room-fireplace-filled-bookshelves-designed-professional-b31f30e0.png",
+    "title": "Elegant Bookshelf Setting for Virtual Meetings | MeetBackdrops",
+    "description": "Richly filled bookshelves frame a cozy fireplace, creating an inviting atmosphere ideal for virtual meetings and professional discussions.",
+    "alt": "Cozy room with a fireplace and filled bookshelves, designed for a professional setting.",
+    "tags": [
+      "bookshelves",
+      "fireplace",
+      "cozy",
+      "professional",
+      "warmth",
+      "interior",
+      "lighting",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "living-rooms:cozy-living-room-two-armchairs-coffee-table-bookshelves-0b80c439",
+    "slug": "cozy-living-room-two-armchairs-coffee-table-bookshelves-0b80c439",
+    "category": "living-rooms",
+    "folder": "living-rooms",
+    "image_webp": "cozy-living-room-two-armchairs-coffee-table-bookshelves-0b80c439.webp",
+    "download_png": "cozy-living-room-two-armchairs-coffee-table-bookshelves-0b80c439.png",
+    "title": "Cozy Living Room with Bookshelves | MeetBackdrops",
+    "description": "Warm tones and inviting seating create a perfect setting for team standups, featuring stylish bookshelves and a cozy fireplace ambiance.",
+    "alt": "A cozy living room featuring two armchairs, a coffee table, and bookshelves filled with books, complemented by a fireplace.",
+    "tags": [
+      "cozy",
+      "living room",
+      "bookshelves",
+      "fireplace",
+      "warm tones",
+      "inviting",
+      "interior design",
+      "team standups"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "living-rooms:cozy-living-room-comfortable-sofa-wooden-coffee-table-c74800bb",
+    "slug": "cozy-living-room-comfortable-sofa-wooden-coffee-table-c74800bb",
+    "category": "living-rooms",
+    "folder": "living-rooms",
+    "image_webp": "cozy-living-room-comfortable-sofa-wooden-coffee-table-c74800bb.webp",
+    "download_png": "cozy-living-room-comfortable-sofa-wooden-coffee-table-c74800bb.png",
+    "title": "Cozy Living Room with Bookshelves | MeetBackdrops",
+    "description": "Warm tones and soft textures create an inviting space, ideal for virtual meetings. The bookshelves add a touch of sophistication to the setting.",
+    "alt": "A cozy living room featuring a comfortable sofa, wooden coffee table, and bookshelves filled with books and plants.",
+    "tags": [
+      "cozy",
+      "living room",
+      "bookshelves",
+      "warm tones",
+      "soft textures",
+      "inviting",
+      "sophisticated",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "home-office:home-office-wooden-shelves-plants-desk-computer-cozy-seating-0cdc991e",
+    "slug": "home-office-wooden-shelves-plants-desk-computer-cozy-seating-0cdc991e",
+    "category": "home-office",
+    "folder": "home-office",
+    "image_webp": "home-office-wooden-shelves-plants-desk-computer-cozy-seating-0cdc991e.webp",
+    "download_png": "home-office-wooden-shelves-plants-desk-computer-cozy-seating-0cdc991e.png",
+    "title": "Cozy Home Office with Greenery | MeetBackdrops",
+    "description": "Rich wooden shelves filled with plants and books create a warm atmosphere, ideal for virtual meetings in a home office setting.",
+    "alt": "Home office featuring wooden shelves with plants, a desk with a computer, and a cozy seating area.",
+    "tags": [
+      "home office",
+      "greenery",
+      "wooden shelves",
+      "cozy",
+      "workspace",
+      "plants",
+      "natural light",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:bookshelves-filled-vintage-books-decorative-objects-4529218b",
+    "slug": "bookshelves-filled-vintage-books-decorative-objects-4529218b",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "bookshelves-filled-vintage-books-decorative-objects-4529218b.webp",
+    "download_png": "bookshelves-filled-vintage-books-decorative-objects-4529218b.png",
+    "title": "Elegant Bookshelves with Warm Lighting | MeetBackdrops",
+    "description": "Richly detailed bookshelves filled with vintage books create a sophisticated backdrop for team standups, enhancing your professional video calls.",
+    "alt": "Bookshelves filled with vintage books and decorative objects, illuminated by warm lighting, creating a cozy and professional atmosphere.",
+    "tags": [
+      "bookshelves",
+      "vintage",
+      "warm lighting",
+      "sophisticated",
+      "professional",
+      "cozy",
+      "interior",
+      "team standups"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:large-bookshelf-filled-variety-books-rich-colors-providing-034c3175",
+    "slug": "large-bookshelf-filled-variety-books-rich-colors-providing-034c3175",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "large-bookshelf-filled-variety-books-rich-colors-providing-034c3175.webp",
+    "download_png": "large-bookshelf-filled-variety-books-rich-colors-providing-034c3175.png",
+    "title": "Elegant Bookshelf Display for Professional Settings | MeetBackdrops",
+    "description": "Richly colored bookshelves create a sophisticated backdrop, ideal for virtual meetings that require a touch of elegance and professionalism.",
+    "alt": "A large bookshelf filled with a variety of books in rich colors, providing a professional and elegant setting.",
+    "tags": [
+      "bookshelves",
+      "elegant",
+      "professional",
+      "interior",
+      "colorful",
+      "virtual meetings",
+      "sophisticated",
+      "home office"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "living-rooms:modern-living-room-red-sofa-decorative-wall-art-stylish-236421fb",
+    "slug": "modern-living-room-red-sofa-decorative-wall-art-stylish-236421fb",
+    "category": "living-rooms",
+    "folder": "living-rooms",
+    "image_webp": "modern-living-room-red-sofa-decorative-wall-art-stylish-236421fb.webp",
+    "download_png": "modern-living-room-red-sofa-decorative-wall-art-stylish-236421fb.png",
+    "title": "Modern Cozy Living Room with Stylish Sofa | MeetBackdrops",
+    "description": "Richly textured walls complement the vibrant sofa, creating an inviting space ideal for online presentations and professional meetings.",
+    "alt": "A modern living room featuring a red sofa, decorative wall art, and stylish lighting fixtures.",
+    "tags": [
+      "living room",
+      "modern",
+      "cozy",
+      "textured walls",
+      "professional",
+      "stylish",
+      "interior design",
+      "online presentations"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:modern-office-space-textured-stone-wall-two-olive-trees-aa35686c",
+    "slug": "modern-office-space-textured-stone-wall-two-olive-trees-aa35686c",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "modern-office-space-textured-stone-wall-two-olive-trees-aa35686c.webp",
+    "download_png": "modern-office-space-textured-stone-wall-two-olive-trees-aa35686c.png",
+    "title": "Modern Stone Wall with Olive Trees | MeetBackdrops",
+    "description": "A sleek stone wall with olive trees creates a serene setting, ideal for team standups and professional video calls.",
+    "alt": "A modern office space featuring a textured stone wall and two olive trees in planters, providing a calming atmosphere.",
+    "tags": [
+      "office",
+      "stone",
+      "trees",
+      "modern",
+      "professional",
+      "lighting",
+      "neutral",
+      "team standups"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "home-office:stylish-home-office-wooden-desk-elegant-chair-built-shelves-1039c488",
+    "slug": "stylish-home-office-wooden-desk-elegant-chair-built-shelves-1039c488",
+    "category": "home-office",
+    "folder": "home-office",
+    "image_webp": "stylish-home-office-wooden-desk-elegant-chair-built-shelves-1039c488.webp",
+    "download_png": "stylish-home-office-wooden-desk-elegant-chair-built-shelves-1039c488.png",
+    "title": "Elegant Home Office Design for Virtual Meetings | MeetBackdrops",
+    "description": "Soft neutral tones and stylish decor create an inviting home office, ideal for virtual meetings and professional video calls. Perfectly composed for camera.",
+    "alt": "A stylish home office featuring a wooden desk, elegant chair, and built-in shelves with books and decor.",
+    "tags": [
+      "home office",
+      "neutral tones",
+      "professional",
+      "stylish decor",
+      "virtual meetings",
+      "inviting space",
+      "desk setup",
+      "natural light"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:well-organized-bookshelf-filled-books-decorative-objects-set-96f6332e",
+    "slug": "well-organized-bookshelf-filled-books-decorative-objects-set-96f6332e",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "well-organized-bookshelf-filled-books-decorative-objects-set-96f6332e.webp",
+    "download_png": "well-organized-bookshelf-filled-books-decorative-objects-set-96f6332e.png",
+    "title": "Elegant Bookshelf Display for Professional Settings | MeetBackdrops",
+    "description": "Richly colored bookshelves filled with a variety of books create a sophisticated backdrop for executive video calls, enhancing your professional image.",
+    "alt": "A well-organized bookshelf filled with books and decorative objects, set against a dark blue wall.",
+    "tags": [
+      "bookshelves",
+      "sophisticated",
+      "dark blue",
+      "decorative objects",
+      "professional",
+      "executive video calls",
+      "home office",
+      "study"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:sleek-executive-office-large-desk-modern-chair-floor-ceiling-e02a1788",
+    "slug": "sleek-executive-office-large-desk-modern-chair-floor-ceiling-e02a1788",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "sleek-executive-office-large-desk-modern-chair-floor-ceiling-e02a1788.webp",
+    "download_png": "sleek-executive-office-large-desk-modern-chair-floor-ceiling-e02a1788.png",
+    "title": "Modern Executive Office with City View | MeetBackdrops",
+    "description": "A sleek executive office featuring a large desk and panoramic city views, ideal for virtual meetings and professional settings. Perfect for video calls.",
+    "alt": "Sleek executive office with a large desk, modern chair, and floor-to-ceiling windows showcasing a city skyline.",
+    "tags": [
+      "office",
+      "executive",
+      "city view",
+      "modern",
+      "professional",
+      "lighting",
+      "virtual meetings",
+      "workspace"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:sophisticated-executive-office-wooden-desk-leather-chair-301726e5",
+    "slug": "sophisticated-executive-office-wooden-desk-leather-chair-301726e5",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "sophisticated-executive-office-wooden-desk-leather-chair-301726e5.webp",
+    "download_png": "sophisticated-executive-office-wooden-desk-leather-chair-301726e5.png",
+    "title": "Elegant Executive Office Space | MeetBackdrops",
+    "description": "Rich wood tones and classic decor create an inviting atmosphere for professional video calls, featuring a large desk and bookshelves filled with books.",
+    "alt": "A sophisticated executive office with a wooden desk, leather chair, and bookshelves, designed for a professional setting.",
+    "tags": [
+      "executive",
+      "office",
+      "wood",
+      "bookshelves",
+      "professional video calls",
+      "classic",
+      "decor",
+      "inviting"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:modern-executive-office-wooden-desk-leather-seating-textured-3bd6d966",
+    "slug": "modern-executive-office-wooden-desk-leather-seating-textured-3bd6d966",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "modern-executive-office-wooden-desk-leather-seating-textured-3bd6d966.webp",
+    "download_png": "modern-executive-office-wooden-desk-leather-seating-textured-3bd6d966.png",
+    "title": "Modern Executive Office Space | MeetBackdrops",
+    "description": "Rich wood tones and a sleek design create a sophisticated setting for executive video calls, featuring stylish furniture and ambient lighting.",
+    "alt": "A modern executive office with a wooden desk, leather seating, and a textured wall, designed for professional settings.",
+    "tags": [
+      "office",
+      "executive video calls",
+      "modern",
+      "furniture",
+      "lighting",
+      "professional",
+      "design",
+      "workspace"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "fall-backgrounds:home-office-wooden-desk-laptop-large-windows-showcasing-640c14b4",
+    "slug": "home-office-wooden-desk-laptop-large-windows-showcasing-640c14b4",
+    "category": "fall-backgrounds",
+    "folder": "fall-backgrounds",
+    "image_webp": "home-office-wooden-desk-laptop-large-windows-showcasing-640c14b4.webp",
+    "download_png": "home-office-wooden-desk-laptop-large-windows-showcasing-640c14b4.png",
+    "title": "Cozy Home Office with Autumn View | MeetBackdrops",
+    "description": "Rich orange walls and a view of vibrant fall foliage create a warm setting for executive video calls, enhancing professionalism and comfort.",
+    "alt": "Home office featuring a wooden desk, laptop, and large windows showcasing colorful autumn trees outside.",
+    "tags": [
+      "home-office",
+      "autumn",
+      "warm-tones",
+      "professional",
+      "cozy",
+      "executive video calls",
+      "interior",
+      "workspace"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "fall-backgrounds:inviting-patio-autumn-decor-pumpkins-cozy-seating-vibrant-9167bd27",
+    "slug": "inviting-patio-autumn-decor-pumpkins-cozy-seating-vibrant-9167bd27",
+    "category": "fall-backgrounds",
+    "folder": "fall-backgrounds",
+    "image_webp": "inviting-patio-autumn-decor-pumpkins-cozy-seating-vibrant-9167bd27.webp",
+    "download_png": "inviting-patio-autumn-decor-pumpkins-cozy-seating-vibrant-9167bd27.png",
+    "title": "Cozy Autumn Patio with Seasonal Decor | MeetBackdrops",
+    "description": "Rich autumn colors and cozy seating create an inviting space for virtual meetings, perfect for a professional yet warm atmosphere.",
+    "alt": "An inviting patio with autumn decor, featuring pumpkins, cozy seating, and vibrant fall foliage.",
+    "tags": [
+      "autumn",
+      "patio",
+      "cozy",
+      "seasonal",
+      "outdoor",
+      "decor",
+      "warmth",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "fall-backgrounds:cozy-living-room-large-windows-showcasing-fall-foliage-2efc0169",
+    "slug": "cozy-living-room-large-windows-showcasing-fall-foliage-2efc0169",
+    "category": "fall-backgrounds",
+    "folder": "fall-backgrounds",
+    "image_webp": "cozy-living-room-large-windows-showcasing-fall-foliage-2efc0169.webp",
+    "download_png": "cozy-living-room-large-windows-showcasing-fall-foliage-2efc0169.png",
+    "title": "Cozy Autumn Living Room | MeetBackdrops",
+    "description": "Warm tones and natural light create a cozy atmosphere, ideal for executive video calls in a stylish autumn setting.",
+    "alt": "A cozy living room with large windows showcasing fall foliage, featuring comfortable seating and a wooden coffee table.",
+    "tags": [
+      "cozy",
+      "autumn",
+      "natural light",
+      "living room",
+      "comfortable seating",
+      "wooden furniture",
+      "executive video calls",
+      "warm tones"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:wooden-bookshelves-filled-books-decorative-objects-creating-7cad11eb",
+    "slug": "wooden-bookshelves-filled-books-decorative-objects-creating-7cad11eb",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "wooden-bookshelves-filled-books-decorative-objects-creating-7cad11eb.webp",
+    "download_png": "wooden-bookshelves-filled-books-decorative-objects-creating-7cad11eb.png",
+    "title": "Elegant Bookshelf Display for Professional Settings | MeetBackdrops",
+    "description": "Rich wooden bookshelves filled with a variety of books create a sophisticated backdrop for virtual meetings, enhancing your professional image.",
+    "alt": "Wooden bookshelves filled with books and decorative objects, creating a warm and inviting atmosphere.",
+    "tags": [
+      "bookshelves",
+      "wooden",
+      "sophisticated",
+      "warm",
+      "inviting",
+      "decorative",
+      "professional",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "libraries:luxurious-library-wooden-shelves-spiral-staircase-globe-ced6a7d4",
+    "slug": "luxurious-library-wooden-shelves-spiral-staircase-globe-ced6a7d4",
+    "category": "libraries",
+    "folder": "libraries",
+    "image_webp": "luxurious-library-wooden-shelves-spiral-staircase-globe-ced6a7d4.webp",
+    "download_png": "luxurious-library-wooden-shelves-spiral-staircase-globe-ced6a7d4.png",
+    "title": "Elegant Library Setting for Professional Meetings | MeetBackdrops",
+    "description": "Rich wooden shelves filled with books create a sophisticated atmosphere ideal for executive video calls, complemented by a grand staircase and globe.",
+    "alt": "A luxurious library with wooden shelves, a spiral staircase, and a globe, designed for a professional setting.",
+    "tags": [
+      "library",
+      "wooden",
+      "sophisticated",
+      "elegant",
+      "lighting",
+      "executive video calls",
+      "professional",
+      "interior"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "home-office:cozy-home-office-green-walls-wooden-furniture-decorative-2ec1f200",
+    "slug": "cozy-home-office-green-walls-wooden-furniture-decorative-2ec1f200",
+    "category": "home-office",
+    "folder": "home-office",
+    "image_webp": "cozy-home-office-green-walls-wooden-furniture-decorative-2ec1f200.webp",
+    "download_png": "cozy-home-office-green-walls-wooden-furniture-decorative-2ec1f200.png",
+    "title": "Cozy Home Office with Green Accents | MeetBackdrops",
+    "description": "Rich green walls and warm wooden accents create a cozy home office, perfect for team standups and focused work sessions.",
+    "alt": "A cozy home office featuring green walls, wooden furniture, and decorative shelves with books and plants.",
+    "tags": [
+      "home office",
+      "green accents",
+      "wooden furniture",
+      "decorative shelves",
+      "cozy atmosphere",
+      "team standups",
+      "warm lighting",
+      "modern design"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:well-organized-bookshelf-filled-various-colored-books-a6b6523d",
+    "slug": "well-organized-bookshelf-filled-various-colored-books-a6b6523d",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "well-organized-bookshelf-filled-various-colored-books-a6b6523d.webp",
+    "download_png": "well-organized-bookshelf-filled-various-colored-books-a6b6523d.png",
+    "title": "Elegant Bookshelf Display for Professional Settings | MeetBackdrops",
+    "description": "Richly colored books fill the shelves, creating a warm atmosphere ideal for remote work and professional video calls. Soft lighting enhances the scene.",
+    "alt": "A well-organized bookshelf filled with various colored books, illuminated by pendant lights, creating a cozy and professional ambiance.",
+    "tags": [
+      "bookshelf",
+      "warm lighting",
+      "professional",
+      "cozy",
+      "remote work",
+      "interior design",
+      "home office",
+      "study"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "coffee-shops:decorative-brick-wall-framed-lights-coffee-mugs-creating-c696f443",
+    "slug": "decorative-brick-wall-framed-lights-coffee-mugs-creating-c696f443",
+    "category": "coffee-shops",
+    "folder": "coffee-shops",
+    "image_webp": "decorative-brick-wall-framed-lights-coffee-mugs-creating-c696f443.webp",
+    "download_png": "decorative-brick-wall-framed-lights-coffee-mugs-creating-c696f443.png",
+    "title": "Stylish Coffee Shop Wall with Decorative Lighting | MeetBackdrops",
+    "description": "Rich brick wall adorned with framed lights and coffee mugs, ideal for professional video calls that require a warm, inviting atmosphere.",
+    "alt": "Decorative brick wall featuring framed lights and coffee mugs, creating a cozy coffee shop ambiance.",
+    "tags": [
+      "coffee shop",
+      "brick wall",
+      "decorative lighting",
+      "warm atmosphere",
+      "cozy",
+      "interior design",
+      "professional video calls",
+      "stylish"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:spacious-office-space-wooden-desks-shelves-filled-books-64a6497e",
+    "slug": "spacious-office-space-wooden-desks-shelves-filled-books-64a6497e",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "spacious-office-space-wooden-desks-shelves-filled-books-64a6497e.webp",
+    "download_png": "spacious-office-space-wooden-desks-shelves-filled-books-64a6497e.png",
+    "title": "Modern Executive Office Space | MeetBackdrops",
+    "description": "Featuring a spacious layout with wooden desks and shelves, this virtual set is ideal for virtual meetings and professional interactions.",
+    "alt": "Spacious office space with wooden desks, shelves filled with books, and industrial lighting, designed for corporate settings.",
+    "tags": [
+      "office",
+      "executive",
+      "workspace",
+      "professional",
+      "modern",
+      "lighting",
+      "furniture",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "wall-shelves:wooden-wall-shelves-decorative-vases-books-creating-refined-8a4bbf23",
+    "slug": "wooden-wall-shelves-decorative-vases-books-creating-refined-8a4bbf23",
+    "category": "wall-shelves",
+    "folder": "wall-shelves-bright",
+    "image_webp": "wooden-wall-shelves-decorative-vases-books-creating-refined-8a4bbf23.webp",
+    "download_png": "wooden-wall-shelves-decorative-vases-books-creating-refined-8a4bbf23.png",
+    "title": "Stylish Wall Shelves with Decorative Vases | MeetBackdrops",
+    "description": "Decorative wooden shelves display elegant vases, ideal for online presentations that require a sophisticated touch in a professional setting.",
+    "alt": "Wooden wall shelves with decorative vases and books, creating a refined and professional atmosphere.",
+    "tags": [
+      "shelves",
+      "decorative",
+      "professional",
+      "elegant",
+      "neutral",
+      "interior",
+      "lighting",
+      "online presentations"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "gardens-patios:outdoor-patio-modern-sectional-sofa-wooden-tables-lush-72e9ce40",
+    "slug": "outdoor-patio-modern-sectional-sofa-wooden-tables-lush-72e9ce40",
+    "category": "gardens-patios",
+    "folder": "gardens-patios",
+    "image_webp": "outdoor-patio-modern-sectional-sofa-wooden-tables-lush-72e9ce40.webp",
+    "download_png": "outdoor-patio-modern-sectional-sofa-wooden-tables-lush-72e9ce40.png",
+    "title": "Serene Outdoor Patio with Lush Greenery | MeetBackdrops",
+    "description": "A tranquil patio setting featuring a modern sectional sofa and natural wood accents, ideal for remote work in a refreshing environment.",
+    "alt": "Outdoor patio with a modern sectional sofa, wooden tables, and lush greenery surrounding the area.",
+    "tags": [
+      "outdoor",
+      "patio",
+      "greenery",
+      "modern",
+      "relaxing",
+      "natural",
+      "remote work",
+      "sofa"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:modern-bookshelf-filled-colorful-books-decorative-objects-f6e75765",
+    "slug": "modern-bookshelf-filled-colorful-books-decorative-objects-f6e75765",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "modern-bookshelf-filled-colorful-books-decorative-objects-f6e75765.webp",
+    "download_png": "modern-bookshelf-filled-colorful-books-decorative-objects-f6e75765.png",
+    "title": "Stylish Bookshelf Arrangement | MeetBackdrops",
+    "description": "Richly colored books fill the shelves, creating a warm atmosphere ideal for remote work. Soft lighting enhances the inviting feel of the space.",
+    "alt": "A modern bookshelf filled with colorful books and decorative objects, illuminated by soft lighting.",
+    "tags": [
+      "bookshelves",
+      "warm lighting",
+      "colorful books",
+      "decorative objects",
+      "home office",
+      "inviting atmosphere",
+      "remote work",
+      "modern design"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "wall-shelves:wooden-wall-shelves-displaying-variety-books-small-potted-dced434f",
+    "slug": "wooden-wall-shelves-displaying-variety-books-small-potted-dced434f",
+    "category": "wall-shelves",
+    "folder": "wall-shelves-bright",
+    "image_webp": "wooden-wall-shelves-displaying-variety-books-small-potted-dced434f.webp",
+    "download_png": "wooden-wall-shelves-displaying-variety-books-small-potted-dced434f.png",
+    "title": "Stylish Wall Shelves with Books | MeetBackdrops",
+    "description": "Richly arranged wooden shelves filled with books create a sophisticated setting for professional video calls, enhancing your virtual presence.",
+    "alt": "Wooden wall shelves displaying a variety of books with a small potted plant on top.",
+    "tags": [
+      "wall shelves",
+      "books",
+      "neutral tones",
+      "sophisticated",
+      "professional video calls",
+      "home office",
+      "minimalist",
+      "decor"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "neutral-backgrounds:bright-white-wall-subtle-texture-providing-clean-8cec7111",
+    "slug": "bright-white-wall-subtle-texture-providing-clean-8cec7111",
+    "category": "neutral-backgrounds",
+    "folder": "neutral-backgrounds",
+    "image_webp": "bright-white-wall-subtle-texture-providing-clean-8cec7111.webp",
+    "download_png": "bright-white-wall-subtle-texture-providing-clean-8cec7111.png",
+    "title": "Clean White Wall for Professional Video Calls | MeetBackdrops",
+    "description": "Bright white wall with subtle texture creates a clean, professional setting ideal for professional video calls, enhancing focus on the speaker.",
+    "alt": "Bright white wall with subtle texture, providing a clean and professional backdrop for video calls.",
+    "tags": [
+      "neutral",
+      "professional",
+      "clean",
+      "minimalist",
+      "bright",
+      "textured",
+      "studio",
+      "corporate",
+      "high-fidelity",
+      "professional video calls"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "wall-shelves:decorative-wall-shelves-various-objects-including-vases-423d18c8",
+    "slug": "decorative-wall-shelves-various-objects-including-vases-423d18c8",
+    "category": "wall-shelves",
+    "folder": "wall-shelves-bright",
+    "image_webp": "decorative-wall-shelves-various-objects-including-vases-423d18c8.webp",
+    "download_png": "decorative-wall-shelves-various-objects-including-vases-423d18c8.png",
+    "title": "Stylish Wall Shelves with Decorative Objects | MeetBackdrops",
+    "description": "Soft green wall shelves display a curated selection of decorative items, ideal for team standups and professional video calls.",
+    "alt": "Decorative wall shelves featuring various objects including vases, books, and sculptures against a soft green background.",
+    "tags": [
+      "decorative",
+      "shelves",
+      "green",
+      "professional",
+      "minimalist",
+      "team standups",
+      "objects",
+      "curated"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "art-galleries:art-gallery-interior-multiple-wooden-frames-white-wall-4b61578d",
+    "slug": "art-gallery-interior-multiple-wooden-frames-white-wall-4b61578d",
+    "category": "art-galleries",
+    "folder": "art-galleries",
+    "image_webp": "art-gallery-interior-multiple-wooden-frames-white-wall-4b61578d.webp",
+    "download_png": "art-gallery-interior-multiple-wooden-frames-white-wall-4b61578d.png",
+    "title": "Elegant Art Gallery with Framed Spaces | MeetBackdrops",
+    "description": "A spacious art gallery featuring multiple empty wooden frames, ideal for team standups and professional video calls in a refined setting.",
+    "alt": "Art gallery interior with multiple wooden frames on a white wall, designed for corporate video calls.",
+    "tags": [
+      "art gallery",
+      "empty frames",
+      "professional",
+      "corporate",
+      "neutral colors",
+      "spacious",
+      "clean design",
+      "team standups"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:modern-boardroom-large-wooden-table-surrounded-leather-e7c2933f",
+    "slug": "modern-boardroom-large-wooden-table-surrounded-leather-e7c2933f",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "modern-boardroom-large-wooden-table-surrounded-leather-e7c2933f.webp",
+    "download_png": "modern-boardroom-large-wooden-table-surrounded-leather-e7c2933f.png",
+    "title": "Modern Executive Boardroom | MeetBackdrops",
+    "description": "Featuring a sleek wooden table and leather chairs, this boardroom is ideal for online presentations and professional meetings in a corporate setting.",
+    "alt": "A modern boardroom with a large wooden table surrounded by leather chairs, framed artwork on the walls, and bright overhead lighting.",
+    "tags": [
+      "boardroom",
+      "corporate",
+      "professional",
+      "modern",
+      "lighting",
+      "interior",
+      "workspace",
+      "online presentations"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "wall-shelves:wall-shelves-books-decorative-vase-small-plant-against-05c4f716",
+    "slug": "wall-shelves-books-decorative-vase-small-plant-against-05c4f716",
+    "category": "wall-shelves",
+    "folder": "wall-shelves-bright",
+    "image_webp": "wall-shelves-books-decorative-vase-small-plant-against-05c4f716.webp",
+    "download_png": "wall-shelves-books-decorative-vase-small-plant-against-05c4f716.png",
+    "title": "Stylish Wall Shelves with Books and Decor | MeetBackdrops",
+    "description": "Elegant wall shelves display books and decorative items, creating a refined setting ideal for virtual meetings and professional interactions.",
+    "alt": "Wall shelves featuring books, a decorative vase, and a small plant against a neutral background.",
+    "tags": [
+      "shelves",
+      "books",
+      "decor",
+      "neutral",
+      "professional",
+      "lighting",
+      "minimalist",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "urban-lofts:stylish-urban-loft-living-room-leather-sofas-wooden-229921e9",
+    "slug": "stylish-urban-loft-living-room-leather-sofas-wooden-229921e9",
+    "category": "urban-lofts",
+    "folder": "urban-lofts",
+    "image_webp": "stylish-urban-loft-living-room-leather-sofas-wooden-229921e9.webp",
+    "download_png": "stylish-urban-loft-living-room-leather-sofas-wooden-229921e9.png",
+    "title": "Stylish Urban Loft Living Room | MeetBackdrops",
+    "description": "Rich leather seating and warm wood accents create a welcoming space for team standups, featuring industrial lighting and a cozy atmosphere.",
+    "alt": "A stylish urban loft living room with leather sofas, wooden furniture, and industrial lighting, designed for a professional setting.",
+    "tags": [
+      "urban",
+      "loft",
+      "living room",
+      "industrial",
+      "cozy",
+      "warm tones",
+      "professional",
+      "team standups"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:stylish-office-space-leather-sofa-wooden-table-warm-pendant-2fcdf8fb",
+    "slug": "stylish-office-space-leather-sofa-wooden-table-warm-pendant-2fcdf8fb",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "stylish-office-space-leather-sofa-wooden-table-warm-pendant-2fcdf8fb.webp",
+    "download_png": "stylish-office-space-leather-sofa-wooden-table-warm-pendant-2fcdf8fb.png",
+    "title": "Modern Executive Office Space | MeetBackdrops",
+    "description": "Featuring a stylish leather sofa and warm lighting, this image is ideal for remote work settings, creating a professional yet inviting atmosphere.",
+    "alt": "Stylish office space with leather sofa, wooden table, and warm pendant lights, designed for corporate video calls.",
+    "tags": [
+      "office",
+      "executive",
+      "remote work",
+      "lighting",
+      "modern",
+      "professional",
+      "interior",
+      "workspace"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "wall-shelves:wall-mounted-wooden-shelves-books-bowls-plant-against-4d73eafa",
+    "slug": "wall-mounted-wooden-shelves-books-bowls-plant-against-4d73eafa",
+    "category": "wall-shelves",
+    "folder": "wall-shelves-bright",
+    "image_webp": "wall-mounted-wooden-shelves-books-bowls-plant-against-4d73eafa.webp",
+    "download_png": "wall-mounted-wooden-shelves-books-bowls-plant-against-4d73eafa.png",
+    "title": "Stylish Wall Shelves with Natural Accents | MeetBackdrops",
+    "description": "Softly lit wall shelves display books and decorative items, ideal for professional video calls that require a touch of elegance.",
+    "alt": "Wall-mounted wooden shelves with books, bowls, and a plant against a neutral background.",
+    "tags": [
+      "shelves",
+      "neutral",
+      "decorative",
+      "elegant",
+      "lighting",
+      "professional video calls",
+      "minimalist",
+      "home office"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "home-office:home-office-warm-orange-wall-modern-desk-computer-decorative-eeacd1d9",
+    "slug": "home-office-warm-orange-wall-modern-desk-computer-decorative-eeacd1d9",
+    "category": "home-office",
+    "folder": "home-office",
+    "image_webp": "home-office-warm-orange-wall-modern-desk-computer-decorative-eeacd1d9.webp",
+    "download_png": "home-office-warm-orange-wall-modern-desk-computer-decorative-eeacd1d9.png",
+    "title": "Warm Home Office with Stylish Decor | MeetBackdrops",
+    "description": "Bright orange wall complements a modern desk setup, ideal for virtual meetings. Stylish decor adds a professional touch to any workspace.",
+    "alt": "Home office featuring a warm orange wall, modern desk with computer, and decorative elements like plants and framed art.",
+    "tags": [
+      "home office",
+      "orange wall",
+      "modern decor",
+      "workspace",
+      "stylish",
+      "virtual meetings",
+      "desk setup",
+      "professional"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:modern-executive-office-large-wooden-desk-stylish-shelving-6ef3b2f1",
+    "slug": "modern-executive-office-large-wooden-desk-stylish-shelving-6ef3b2f1",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "modern-executive-office-large-wooden-desk-stylish-shelving-6ef3b2f1.webp",
+    "download_png": "modern-executive-office-large-wooden-desk-stylish-shelving-6ef3b2f1.png",
+    "title": "Modern Executive Office with Stylish Shelving | MeetBackdrops",
+    "description": "Rich wood tones and sleek design create a sophisticated office space, ideal for team standups and professional meetings.",
+    "alt": "A modern executive office featuring a large wooden desk, stylish shelving, and a comfortable chair, designed for corporate settings.",
+    "tags": [
+      "office",
+      "executive",
+      "shelving",
+      "wood",
+      "professional",
+      "lighting",
+      "team standups",
+      "modern"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "kitchens:bright-kitchen-wooden-shelves-plants-natural-wood-table-640fdb4b",
+    "slug": "bright-kitchen-wooden-shelves-plants-natural-wood-table-640fdb4b",
+    "category": "kitchens",
+    "folder": "kitchens",
+    "image_webp": "bright-kitchen-wooden-shelves-plants-natural-wood-table-640fdb4b.webp",
+    "download_png": "bright-kitchen-wooden-shelves-plants-natural-wood-table-640fdb4b.png",
+    "title": "Modern Kitchen with Natural Elements | MeetBackdrops",
+    "description": "Bright and airy kitchen featuring wooden shelves and greenery, ideal for virtual meetings that require a fresh, inviting atmosphere.",
+    "alt": "Bright kitchen with wooden shelves, plants, and a natural wood table, creating a warm and inviting space.",
+    "tags": [
+      "kitchen",
+      "wood",
+      "plants",
+      "natural",
+      "bright",
+      "inviting",
+      "modern",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "urban-lofts:industrial-loft-space-concrete-wall-large-windows-single-a966be88",
+    "slug": "industrial-loft-space-concrete-wall-large-windows-single-a966be88",
+    "category": "urban-lofts",
+    "folder": "urban-lofts",
+    "image_webp": "industrial-loft-space-concrete-wall-large-windows-single-a966be88.webp",
+    "download_png": "industrial-loft-space-concrete-wall-large-windows-single-a966be88.png",
+    "title": "Modern Industrial Loft Space | MeetBackdrops",
+    "description": "Concrete walls and large windows create a spacious feel, ideal for professional video calls in a modern setting.",
+    "alt": "An industrial loft space featuring a concrete wall and large windows, with a single brown chair in the corner.",
+    "tags": [
+      "industrial",
+      "concrete",
+      "modern",
+      "spacious",
+      "natural light",
+      "minimalist",
+      "professional video calls",
+      "loft"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:wooden-bookshelves-filled-books-cozy-armchair-window-natural-4ace8e79",
+    "slug": "wooden-bookshelves-filled-books-cozy-armchair-window-natural-4ace8e79",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "wooden-bookshelves-filled-books-cozy-armchair-window-natural-4ace8e79.webp",
+    "download_png": "wooden-bookshelves-filled-books-cozy-armchair-window-natural-4ace8e79.png",
+    "title": "Cozy Bookshelves with Natural Light | MeetBackdrops",
+    "description": "Rich wooden bookshelves frame a cozy reading nook, perfect for online presentations with natural light streaming through the window.",
+    "alt": "Wooden bookshelves filled with books, a cozy armchair, and a window with natural light in a warm setting.",
+    "tags": [
+      "bookshelves",
+      "cozy",
+      "natural light",
+      "reading nook",
+      "wood tones",
+      "interior design",
+      "home office",
+      "online presentations"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "living-rooms:cozy-living-room-soft-seating-wooden-coffee-table-large-abc33079",
+    "slug": "cozy-living-room-soft-seating-wooden-coffee-table-large-abc33079",
+    "category": "living-rooms",
+    "folder": "living-rooms",
+    "image_webp": "cozy-living-room-soft-seating-wooden-coffee-table-large-abc33079.webp",
+    "download_png": "cozy-living-room-soft-seating-wooden-coffee-table-large-abc33079.png",
+    "title": "Cozy Living Room with Natural Light | MeetBackdrops",
+    "description": "Soft neutral tones and natural light create a warm atmosphere, ideal for online presentations in a relaxed setting.",
+    "alt": "A cozy living room featuring soft seating, a wooden coffee table, and large windows allowing natural light.",
+    "tags": [
+      "cozy",
+      "neutral tones",
+      "natural light",
+      "soft seating",
+      "relaxed",
+      "living room",
+      "interior design",
+      "online presentations"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "wall-shelves:rustic-wooden-wall-shelves-potted-plants-decorative-pottery-c555237d",
+    "slug": "rustic-wooden-wall-shelves-potted-plants-decorative-pottery-c555237d",
+    "category": "wall-shelves",
+    "folder": "wall-shelves-bright",
+    "image_webp": "rustic-wooden-wall-shelves-potted-plants-decorative-pottery-c555237d.webp",
+    "download_png": "rustic-wooden-wall-shelves-potted-plants-decorative-pottery-c555237d.png",
+    "title": "Stylish Wall Shelves with Potted Plants | MeetBackdrops",
+    "description": "Featuring rustic wooden shelves adorned with potted plants, this setting is ideal for executive video calls, providing a warm and inviting atmosphere.",
+    "alt": "Rustic wooden wall shelves with potted plants and decorative pottery, creating a cozy and professional setting.",
+    "tags": [
+      "wall shelves",
+      "potted plants",
+      "rustic decor",
+      "cozy atmosphere",
+      "neutral colors",
+      "executive video calls",
+      "home office",
+      "professional setting"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:bookshelves-filled-books-decorative-items-framed-art-plants-62d27928",
+    "slug": "bookshelves-filled-books-decorative-items-framed-art-plants-62d27928",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "bookshelves-filled-books-decorative-items-framed-art-plants-62d27928.webp",
+    "download_png": "bookshelves-filled-books-decorative-items-framed-art-plants-62d27928.png",
+    "title": "Elegant Bookshelf Display for Professional Settings | MeetBackdrops",
+    "description": "Richly colored bookshelves create a sophisticated backdrop for virtual meetings, featuring art and greenery that enhance the professional atmosphere.",
+    "alt": "Bookshelves filled with books and decorative items, framed art, and plants in a stylish setting.",
+    "tags": [
+      "bookshelves",
+      "decorative",
+      "professional",
+      "greenery",
+      "art",
+      "neutral",
+      "elegant",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:bright-office-space-large-windows-greenery-outside-wooden-f624848a",
+    "slug": "bright-office-space-large-windows-greenery-outside-wooden-f624848a",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "bright-office-space-large-windows-greenery-outside-wooden-f624848a.webp",
+    "download_png": "bright-office-space-large-windows-greenery-outside-wooden-f624848a.png",
+    "title": "Bright Executive Office Space with Large Windows | MeetBackdrops",
+    "description": "Natural light streams through large windows, creating a bright atmosphere ideal for team standups and professional meetings.",
+    "alt": "Bright office space featuring large windows with greenery outside and wooden flooring, designed for corporate video calls.",
+    "tags": [
+      "office",
+      "natural light",
+      "professional",
+      "bright",
+      "minimalist",
+      "team standups",
+      "greenery",
+      "windows"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "home-office:bright-home-office-wooden-desk-plants-white-chairs-designed-66813626",
+    "slug": "bright-home-office-wooden-desk-plants-white-chairs-designed-66813626",
+    "category": "home-office",
+    "folder": "home-office",
+    "image_webp": "bright-home-office-wooden-desk-plants-white-chairs-designed-66813626.webp",
+    "download_png": "bright-home-office-wooden-desk-plants-white-chairs-designed-66813626.png",
+    "title": "Modern Home Office with Natural Elements | MeetBackdrops",
+    "description": "Bright and airy home office featuring a wooden desk, plants, and a clean aesthetic, ideal for virtual meetings and professional settings.",
+    "alt": "Bright home office with a wooden desk, plants, and white chairs, designed for a professional atmosphere.",
+    "tags": [
+      "home office",
+      "natural elements",
+      "bright",
+      "clean aesthetic",
+      "professional",
+      "virtual meetings",
+      "wooden desk",
+      "plants"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "libraries:spacious-library-floor-ceiling-bookshelves-filled-books-adae9b9d",
+    "slug": "spacious-library-floor-ceiling-bookshelves-filled-books-adae9b9d",
+    "category": "libraries",
+    "folder": "libraries",
+    "image_webp": "spacious-library-floor-ceiling-bookshelves-filled-books-adae9b9d.webp",
+    "download_png": "spacious-library-floor-ceiling-bookshelves-filled-books-adae9b9d.png",
+    "title": "Elegant Library Setting for Team Standups | MeetBackdrops",
+    "description": "Richly filled bookshelves create a sophisticated atmosphere, ideal for team standups and professional discussions in a library setting.",
+    "alt": "A spacious library with floor-to-ceiling bookshelves filled with books and a pendant light hanging from the ceiling.",
+    "tags": [
+      "library",
+      "bookshelves",
+      "professional",
+      "neutral",
+      "bright",
+      "wooden",
+      "elegant",
+      "team standups"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:stylish-office-space-modern-display-unit-showcasing-art-832fe4cd",
+    "slug": "stylish-office-space-modern-display-unit-showcasing-art-832fe4cd",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "stylish-office-space-modern-display-unit-showcasing-art-832fe4cd.webp",
+    "download_png": "stylish-office-space-modern-display-unit-showcasing-art-832fe4cd.png",
+    "title": "Modern Executive Office Display | MeetBackdrops",
+    "description": "A sleek office space featuring a stylish display unit, ideal for professional video calls with a contemporary aesthetic and warm lighting.",
+    "alt": "Stylish office space with a modern display unit showcasing art and decor, complemented by greenery and warm lighting.",
+    "tags": [
+      "office",
+      "executive",
+      "modern",
+      "decor",
+      "lighting",
+      "greenery",
+      "professional video calls",
+      "contemporary"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:stylish-coffee-bar-wooden-cabinetry-marble-countertop-modern-4ba9d4dc",
+    "slug": "stylish-coffee-bar-wooden-cabinetry-marble-countertop-modern-4ba9d4dc",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "stylish-coffee-bar-wooden-cabinetry-marble-countertop-modern-4ba9d4dc.webp",
+    "download_png": "stylish-coffee-bar-wooden-cabinetry-marble-countertop-modern-4ba9d4dc.png",
+    "title": "Modern Executive Coffee Bar | MeetBackdrops",
+    "description": "Sleek coffee bar with elegant lighting and rich wood tones, ideal for professional video calls in a corporate setting.",
+    "alt": "Stylish coffee bar featuring wooden cabinetry, marble countertop, and modern pendant lights in a corporate environment.",
+    "tags": [
+      "office",
+      "modern",
+      "elegant",
+      "lighting",
+      "wood",
+      "marble",
+      "corporate",
+      "professional video calls"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "urban-lofts:bright-urban-loft-large-arched-windows-concrete-walls-b0040296",
+    "slug": "bright-urban-loft-large-arched-windows-concrete-walls-b0040296",
+    "category": "urban-lofts",
+    "folder": "urban-lofts",
+    "image_webp": "bright-urban-loft-large-arched-windows-concrete-walls-b0040296.webp",
+    "download_png": "bright-urban-loft-large-arched-windows-concrete-walls-b0040296.png",
+    "title": "Spacious Urban Loft with Large Windows | MeetBackdrops",
+    "description": "Concrete walls and expansive windows create a bright setting, ideal for professional video calls in a modern urban loft style.",
+    "alt": "Bright urban loft featuring large arched windows and concrete walls, providing a spacious and modern atmosphere.",
+    "tags": [
+      "urban",
+      "loft",
+      "concrete",
+      "windows",
+      "bright",
+      "modern",
+      "professional video calls",
+      "spacious"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:bright-office-space-large-arched-windows-potted-plants-62d1e335",
+    "slug": "bright-office-space-large-arched-windows-potted-plants-62d1e335",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "bright-office-space-large-arched-windows-potted-plants-62d1e335.webp",
+    "download_png": "bright-office-space-large-arched-windows-potted-plants-62d1e335.png",
+    "title": "Elegant Executive Office Space | MeetBackdrops",
+    "description": "Bright and airy office space featuring large arched windows, ideal for remote work, with a minimalist design and natural light flooding the room.",
+    "alt": "Bright office space with large arched windows and potted plants, designed for professional settings.",
+    "tags": [
+      "office",
+      "executive",
+      "minimalist",
+      "natural light",
+      "remote work",
+      "professional",
+      "airy",
+      "modern"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "wall-shelves:wall-shelves-various-potted-plants-ceramic-mugs-well-lit-00891670",
+    "slug": "wall-shelves-various-potted-plants-ceramic-mugs-well-lit-00891670",
+    "category": "wall-shelves",
+    "folder": "wall-shelves-bright",
+    "image_webp": "wall-shelves-various-potted-plants-ceramic-mugs-well-lit-00891670.webp",
+    "download_png": "wall-shelves-various-potted-plants-ceramic-mugs-well-lit-00891670.png",
+    "title": "Stylish Wall Shelves with Plants and Mugs | MeetBackdrops",
+    "description": "Brightly lit wall shelves display an array of potted plants and mugs, ideal for team standups in a professional setting.",
+    "alt": "Wall shelves featuring various potted plants and ceramic mugs in a well-lit environment.",
+    "tags": [
+      "shelves",
+      "plants",
+      "mugs",
+      "bright",
+      "professional",
+      "interior",
+      "modern",
+      "team standups"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "urban-lofts:spacious-urban-loft-large-windows-wooden-floors-plants-2eac6b5c",
+    "slug": "spacious-urban-loft-large-windows-wooden-floors-plants-2eac6b5c",
+    "category": "urban-lofts",
+    "folder": "urban-lofts",
+    "image_webp": "spacious-urban-loft-large-windows-wooden-floors-plants-2eac6b5c.webp",
+    "download_png": "spacious-urban-loft-large-windows-wooden-floors-plants-2eac6b5c.png",
+    "title": "Bright Urban Loft Space with Natural Light | MeetBackdrops",
+    "description": "Large windows fill the urban loft with natural light, perfect for team standups in a relaxed yet professional setting.",
+    "alt": "Spacious urban loft with large windows, wooden floors, and plants, creating a bright and inviting atmosphere.",
+    "tags": [
+      "urban",
+      "loft",
+      "natural light",
+      "plants",
+      "relaxed",
+      "professional",
+      "bright",
+      "team standups"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "home-office:cozy-home-office-setup-desk-bookshelves-plants-illuminated-57c19828",
+    "slug": "cozy-home-office-setup-desk-bookshelves-plants-illuminated-57c19828",
+    "category": "home-office",
+    "folder": "home-office",
+    "image_webp": "cozy-home-office-setup-desk-bookshelves-plants-illuminated-57c19828.webp",
+    "download_png": "cozy-home-office-setup-desk-bookshelves-plants-illuminated-57c19828.png",
+    "title": "Bright Home Office with Natural Light | MeetBackdrops",
+    "description": "A cozy home office featuring a desk, bookshelves, and plants, ideal for remote work in a bright, inviting space filled with natural light.",
+    "alt": "Cozy home office setup with a desk, bookshelves, and plants, illuminated by natural light from a large window.",
+    "tags": [
+      "home office",
+      "natural light",
+      "plants",
+      "bookshelves",
+      "remote work",
+      "cozy",
+      "bright",
+      "workspace"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:modern-dining-space-wooden-table-elegant-chairs-decorative-b76e51bf",
+    "slug": "modern-dining-space-wooden-table-elegant-chairs-decorative-b76e51bf",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "modern-dining-space-wooden-table-elegant-chairs-decorative-b76e51bf.webp",
+    "download_png": "modern-dining-space-wooden-table-elegant-chairs-decorative-b76e51bf.png",
+    "title": "Modern Executive Dining Space | MeetBackdrops",
+    "description": "Featuring a stylish wooden table and elegant chairs, this setting is ideal for executive video calls, providing a professional yet inviting atmosphere.",
+    "alt": "A modern dining space with a wooden table, elegant chairs, and decorative elements, suitable for corporate settings.",
+    "tags": [
+      "office",
+      "executive video calls",
+      "modern",
+      "professional",
+      "interior",
+      "stylish",
+      "lighting",
+      "furniture"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "libraries:cozy-library-wooden-shelves-filled-books-two-leather-8c18399b",
+    "slug": "cozy-library-wooden-shelves-filled-books-two-leather-8c18399b",
+    "category": "libraries",
+    "folder": "libraries",
+    "image_webp": "cozy-library-wooden-shelves-filled-books-two-leather-8c18399b.webp",
+    "download_png": "cozy-library-wooden-shelves-filled-books-two-leather-8c18399b.png",
+    "title": "Elegant Library Setting for Professional Calls | MeetBackdrops",
+    "description": "Rich wooden shelves filled with books create a sophisticated backdrop, ideal for team standups and executive meetings in a refined atmosphere.",
+    "alt": "A cozy library with wooden shelves filled with books, two leather armchairs, and a small table, creating a warm and inviting setting.",
+    "tags": [
+      "library",
+      "books",
+      "wooden",
+      "cozy",
+      "elegant",
+      "professional",
+      "lighting",
+      "team standups"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:wooden-bookshelves-filled-green-brown-books-green-lamp-427f6af8",
+    "slug": "wooden-bookshelves-filled-green-brown-books-green-lamp-427f6af8",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "wooden-bookshelves-filled-green-brown-books-green-lamp-427f6af8.webp",
+    "download_png": "wooden-bookshelves-filled-green-brown-books-green-lamp-427f6af8.png",
+    "title": "Elegant Bookshelf Setting for Professional Calls | MeetBackdrops",
+    "description": "Rich wooden bookshelves filled with green and brown books create a sophisticated backdrop for executive video calls, enhancing professionalism and focus.",
+    "alt": "Wooden bookshelves filled with green and brown books, featuring a green lamp, suitable for professional settings.",
+    "tags": [
+      "bookshelves",
+      "wooden",
+      "sophisticated",
+      "professional",
+      "green",
+      "executive video calls",
+      "interior",
+      "study"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "libraries:spacious-library-wooden-paneling-large-windows-green-desk-89c5babe",
+    "slug": "spacious-library-wooden-paneling-large-windows-green-desk-89c5babe",
+    "category": "libraries",
+    "folder": "libraries",
+    "image_webp": "spacious-library-wooden-paneling-large-windows-green-desk-89c5babe.webp",
+    "download_png": "spacious-library-wooden-paneling-large-windows-green-desk-89c5babe.png",
+    "title": "Elegant Library Setting for Professional Meetings | MeetBackdrops",
+    "description": "Rich wooden paneling and classic chandeliers create a sophisticated atmosphere, ideal for team standups and executive discussions.",
+    "alt": "A spacious library with wooden paneling, large windows, and green desk lamps, featuring multiple tables for meetings.",
+    "tags": [
+      "library",
+      "wooden paneling",
+      "chandeliers",
+      "professional",
+      "elegant",
+      "lighting",
+      "team standups",
+      "meeting space"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "urban-lofts:urban-loft-large-windows-exposed-brick-walls-wooden-beams-28f12ab3",
+    "slug": "urban-loft-large-windows-exposed-brick-walls-wooden-beams-28f12ab3",
+    "category": "urban-lofts",
+    "folder": "urban-lofts",
+    "image_webp": "urban-loft-large-windows-exposed-brick-walls-wooden-beams-28f12ab3.webp",
+    "download_png": "urban-loft-large-windows-exposed-brick-walls-wooden-beams-28f12ab3.png",
+    "title": "Spacious Urban Loft with Natural Light | MeetBackdrops",
+    "description": "Featuring large windows and warm wood accents, this urban loft is ideal for remote work, providing a stylish and inviting atmosphere for video calls.",
+    "alt": "An urban loft with large windows, exposed brick walls, and wooden beams, furnished with leather sofas and a coffee table.",
+    "tags": [
+      "urban",
+      "loft",
+      "natural light",
+      "exposed brick",
+      "remote work",
+      "stylish",
+      "inviting",
+      "furniture"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "libraries:library-wooden-shelves-filled-books-large-window-wooden-ac6e5440",
+    "slug": "library-wooden-shelves-filled-books-large-window-wooden-ac6e5440",
+    "category": "libraries",
+    "folder": "libraries",
+    "image_webp": "library-wooden-shelves-filled-books-large-window-wooden-ac6e5440.webp",
+    "download_png": "library-wooden-shelves-filled-books-large-window-wooden-ac6e5440.png",
+    "title": "Elegant Library Setting for Online Meetings | MeetBackdrops",
+    "description": "Rich wooden shelves filled with books create a sophisticated atmosphere, ideal for online presentations in a professional setting.",
+    "alt": "A library with wooden shelves filled with books, a large window, and a wooden table, creating a warm and inviting atmosphere.",
+    "tags": [
+      "library",
+      "bookshelves",
+      "wooden",
+      "elegant",
+      "professional",
+      "natural-light",
+      "cozy",
+      "online presentations"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "coffee-shops:bright-coffee-shop-interior-wooden-counters-shelves-decor-99c3113c",
+    "slug": "bright-coffee-shop-interior-wooden-counters-shelves-decor-99c3113c",
+    "category": "coffee-shops",
+    "folder": "coffee-shops",
+    "image_webp": "bright-coffee-shop-interior-wooden-counters-shelves-decor-99c3113c.webp",
+    "download_png": "bright-coffee-shop-interior-wooden-counters-shelves-decor-99c3113c.png",
+    "title": "Modern Coffee Shop Interior | MeetBackdrops",
+    "description": "Bright and airy coffee shop with wooden counters and greenery, ideal for executive video calls in a relaxed yet professional setting.",
+    "alt": "Bright coffee shop interior featuring wooden counters, shelves with decor, and plants, creating a welcoming atmosphere.",
+    "tags": [
+      "coffee shop",
+      "interior",
+      "wooden decor",
+      "greenery",
+      "relaxed",
+      "professional",
+      "lighting",
+      "executive video calls"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "coffee-shops:stylish-coffee-shop-interior-wooden-seating-counter-coffee-dfa15279",
+    "slug": "stylish-coffee-shop-interior-wooden-seating-counter-coffee-dfa15279",
+    "category": "coffee-shops",
+    "folder": "coffee-shops",
+    "image_webp": "stylish-coffee-shop-interior-wooden-seating-counter-coffee-dfa15279.webp",
+    "download_png": "stylish-coffee-shop-interior-wooden-seating-counter-coffee-dfa15279.png",
+    "title": "Modern Coffee Shop Interior | MeetBackdrops",
+    "description": "Bright wooden seating and a stylish counter create an inviting space, ideal for remote work or casual meetings with colleagues.",
+    "alt": "Stylish coffee shop interior featuring wooden seating, a counter with coffee equipment, and large windows for natural light.",
+    "tags": [
+      "coffee shop",
+      "modern design",
+      "wooden seating",
+      "natural light",
+      "casual atmosphere",
+      "remote work",
+      "inviting space",
+      "stylish decor"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:modern-rustic-office-space-wooden-shelves-large-table-239bc87a",
+    "slug": "modern-rustic-office-space-wooden-shelves-large-table-239bc87a",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "modern-rustic-office-space-wooden-shelves-large-table-239bc87a.webp",
+    "download_png": "modern-rustic-office-space-wooden-shelves-large-table-239bc87a.png",
+    "title": "Modern Rustic Office Space | MeetBackdrops",
+    "description": "Natural light floods this modern rustic office space, ideal for remote work, featuring wooden shelves filled with books and plants.",
+    "alt": "A modern rustic office space with wooden shelves, a large table, and natural light from a large window.",
+    "tags": [
+      "office",
+      "workspace",
+      "natural light",
+      "wooden shelves",
+      "remote work",
+      "modern",
+      "rustic",
+      "plants"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "fall-backgrounds:cozy-home-office-wooden-furniture-computer-large-windows-7225e99a",
+    "slug": "cozy-home-office-wooden-furniture-computer-large-windows-7225e99a",
+    "category": "fall-backgrounds",
+    "folder": "fall-backgrounds",
+    "image_webp": "cozy-home-office-wooden-furniture-computer-large-windows-7225e99a.webp",
+    "download_png": "cozy-home-office-wooden-furniture-computer-large-windows-7225e99a.png",
+    "title": "Cozy Home Office with Autumn Views | MeetBackdrops",
+    "description": "Rich wooden furniture complements the warm autumn colors outside, ideal for executive video calls in a comfortable setting.",
+    "alt": "A cozy home office featuring wooden furniture, a computer, and large windows showcasing vibrant autumn foliage.",
+    "tags": [
+      "home-office",
+      "autumn",
+      "wooden-furniture",
+      "cozy",
+      "natural-light",
+      "executive video calls",
+      "workspace",
+      "warm-tones"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "fall-backgrounds:home-office-terracotta-walls-large-windows-showing-autumn-fc6b94ed",
+    "slug": "home-office-terracotta-walls-large-windows-showing-autumn-fc6b94ed",
+    "category": "fall-backgrounds",
+    "folder": "fall-backgrounds",
+    "image_webp": "home-office-terracotta-walls-large-windows-showing-autumn-fc6b94ed.webp",
+    "download_png": "home-office-terracotta-walls-large-windows-showing-autumn-fc6b94ed.png",
+    "title": "Warm Autumn Home Office Setting | MeetBackdrops",
+    "description": "Rich terracotta walls and large windows create a cozy atmosphere, ideal for professional video calls in a warm autumn setting.",
+    "alt": "Home office with terracotta walls, large windows showing autumn foliage, and a wooden table with decor.",
+    "tags": [
+      "home office",
+      "autumn",
+      "warm colors",
+      "cozy",
+      "natural light",
+      "wooden furniture",
+      "professional video calls",
+      "interior design"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "living-rooms:rustic-living-room-stone-fireplace-wooden-beams-cozy-seating-63394e51",
+    "slug": "rustic-living-room-stone-fireplace-wooden-beams-cozy-seating-63394e51",
+    "category": "living-rooms",
+    "folder": "living-rooms",
+    "image_webp": "rustic-living-room-stone-fireplace-wooden-beams-cozy-seating-63394e51.webp",
+    "download_png": "rustic-living-room-stone-fireplace-wooden-beams-cozy-seating-63394e51.png",
+    "title": "Cozy Rustic Living Room with Stone Fireplace | MeetBackdrops",
+    "description": "Rich wooden tones and a stone fireplace create a warm atmosphere, ideal for executive video calls in a relaxed setting.",
+    "alt": "A rustic living room featuring a stone fireplace, wooden beams, and cozy seating arrangements.",
+    "tags": [
+      "cozy",
+      "rustic",
+      "living-room",
+      "wood-tones",
+      "fireplace",
+      "comfortable",
+      "interior",
+      "executive video calls"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "neutral-backgrounds:neutral-wall-three-textured-panels-light-rug-designed-f7ad02ec",
+    "slug": "neutral-wall-three-textured-panels-light-rug-designed-f7ad02ec",
+    "category": "neutral-backgrounds",
+    "folder": "neutral-backgrounds",
+    "image_webp": "neutral-wall-three-textured-panels-light-rug-designed-f7ad02ec.webp",
+    "download_png": "neutral-wall-three-textured-panels-light-rug-designed-f7ad02ec.png",
+    "title": "Elegant Neutral Wall Art | MeetBackdrops",
+    "description": "Softly textured wall panels create a serene atmosphere, ideal for virtual meetings and professional settings. Perfect for enhancing your video calls.",
+    "alt": "Neutral wall with three textured panels and a light rug, designed for a professional setting.",
+    "tags": [
+      "neutral",
+      "textured",
+      "professional",
+      "minimalist",
+      "virtual meetings",
+      "calm",
+      "light",
+      "elegant"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:wooden-table-front-large-bookshelf-filled-books-illuminated-f71525fc",
+    "slug": "wooden-table-front-large-bookshelf-filled-books-illuminated-f71525fc",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "wooden-table-front-large-bookshelf-filled-books-illuminated-f71525fc.webp",
+    "download_png": "wooden-table-front-large-bookshelf-filled-books-illuminated-f71525fc.png",
+    "title": "Cozy Bookshelf Setting for Professional Video Calls | MeetBackdrops",
+    "description": "Richly filled bookshelves create a warm atmosphere, ideal for professional video calls, enhancing your corporate presence with a scholarly touch.",
+    "alt": "A wooden table in front of a large bookshelf filled with books, illuminated by a lamp, creating a cozy study environment.",
+    "tags": [
+      "bookshelves",
+      "cozy",
+      "study",
+      "warm lighting",
+      "wooden table",
+      "scholarly",
+      "neutral tones",
+      "professional video calls"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:wooden-bookshelf-filled-books-accompanied-desk-lamp-creating-69e4345c",
+    "slug": "wooden-bookshelf-filled-books-accompanied-desk-lamp-creating-69e4345c",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "wooden-bookshelf-filled-books-accompanied-desk-lamp-creating-69e4345c.webp",
+    "download_png": "wooden-bookshelf-filled-books-accompanied-desk-lamp-creating-69e4345c.png",
+    "title": "Elegant Bookshelf Setting for Professional Calls | MeetBackdrops",
+    "description": "Rich wooden bookshelves create a warm atmosphere, ideal for team standups and professional discussions in a refined setting.",
+    "alt": "A wooden bookshelf filled with books, accompanied by a desk and a lamp, creating a sophisticated office environment.",
+    "tags": [
+      "bookshelves",
+      "wooden",
+      "office",
+      "professional",
+      "warm",
+      "lighting",
+      "elegant",
+      "team standups"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "fall-backgrounds:cozy-living-room-wooden-bookshelves-seating-area-autumn-f93ddc90",
+    "slug": "cozy-living-room-wooden-bookshelves-seating-area-autumn-f93ddc90",
+    "category": "fall-backgrounds",
+    "folder": "fall-backgrounds",
+    "image_webp": "cozy-living-room-wooden-bookshelves-seating-area-autumn-f93ddc90.webp",
+    "download_png": "cozy-living-room-wooden-bookshelves-seating-area-autumn-f93ddc90.png",
+    "title": "Cozy Living Room with Bookshelves and Autumn Decor | MeetBackdrops",
+    "description": "Rich wooden bookshelves frame a cozy seating area, perfect for virtual meetings, with autumn hues visible through the window.",
+    "alt": "A cozy living room featuring wooden bookshelves, a seating area, and autumn foliage visible through a large window.",
+    "tags": [
+      "cozy",
+      "autumn",
+      "bookshelves",
+      "seating area",
+      "natural light",
+      "warm tones",
+      "interior design",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "living-rooms:cozy-living-room-leather-sofa-large-bookshelf-filled-books-3e0423e6",
+    "slug": "cozy-living-room-leather-sofa-large-bookshelf-filled-books-3e0423e6",
+    "category": "living-rooms",
+    "folder": "living-rooms",
+    "image_webp": "cozy-living-room-leather-sofa-large-bookshelf-filled-books-3e0423e6.webp",
+    "download_png": "cozy-living-room-leather-sofa-large-bookshelf-filled-books-3e0423e6.png",
+    "title": "Cozy Leather Sofa with Bookshelf | MeetBackdrops",
+    "description": "Rich wooden tones and a leather sofa create a warm atmosphere, ideal for online presentations in a relaxed setting.",
+    "alt": "A cozy living room featuring a leather sofa and a large bookshelf filled with books against a wooden wall.",
+    "tags": [
+      "living room",
+      "bookshelf",
+      "leather sofa",
+      "warm tones",
+      "cozy",
+      "interior design",
+      "home decor",
+      "online presentations"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "home-office:bright-home-office-wooden-desk-minimalist-decor-natural-e637cada",
+    "slug": "bright-home-office-wooden-desk-minimalist-decor-natural-e637cada",
+    "category": "home-office",
+    "folder": "home-office",
+    "image_webp": "bright-home-office-wooden-desk-minimalist-decor-natural-e637cada.webp",
+    "download_png": "bright-home-office-wooden-desk-minimalist-decor-natural-e637cada.png",
+    "title": "Minimalist Home Office with Natural Light | MeetBackdrops",
+    "description": "Bright and airy home office featuring a wooden desk and minimalist decor, ideal for virtual meetings in a professional setting.",
+    "alt": "Bright home office with a wooden desk, minimalist decor, and natural light from large windows.",
+    "tags": [
+      "home office",
+      "minimalist",
+      "natural light",
+      "wooden desk",
+      "professional",
+      "neutral colors",
+      "virtual meetings",
+      "clean design"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "office-spaces:modern-office-lounge-area-wooden-features-plants-comfortable-5e3022e9",
+    "slug": "modern-office-lounge-area-wooden-features-plants-comfortable-5e3022e9",
+    "category": "office-spaces",
+    "folder": "office-spaces",
+    "image_webp": "modern-office-lounge-area-wooden-features-plants-comfortable-5e3022e9.webp",
+    "download_png": "modern-office-lounge-area-wooden-features-plants-comfortable-5e3022e9.png",
+    "title": "Modern Office Lounge Area for Team Standups | MeetBackdrops",
+    "description": "Featuring a stylish lounge area with wooden accents, this space is ideal for team standups and collaborative meetings in a corporate setting.",
+    "alt": "A modern office lounge area with wooden features, plants, and comfortable seating, designed for professional meetings.",
+    "tags": [
+      "office",
+      "lounge",
+      "modern",
+      "collaboration",
+      "workspace",
+      "team standups",
+      "plants",
+      "wooden accents"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "coffee-shops:cozy-coffee-shop-interior-wooden-counter-shelves-coffee-2426e368",
+    "slug": "cozy-coffee-shop-interior-wooden-counter-shelves-coffee-2426e368",
+    "category": "coffee-shops",
+    "folder": "coffee-shops",
+    "image_webp": "cozy-coffee-shop-interior-wooden-counter-shelves-coffee-2426e368.webp",
+    "download_png": "cozy-coffee-shop-interior-wooden-counter-shelves-coffee-2426e368.png",
+    "title": "Rustic Coffee Shop Interior | MeetBackdrops",
+    "description": "Warm wooden textures and ambient lighting create a cozy atmosphere, ideal for online presentations in a professional setting.",
+    "alt": "Cozy coffee shop interior featuring a wooden counter, shelves with coffee supplies, and warm lighting.",
+    "tags": [
+      "coffee shop",
+      "rustic",
+      "wooden textures",
+      "ambient lighting",
+      "cozy atmosphere",
+      "professional",
+      "interior design",
+      "online presentations"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "bookshelves:wooden-bookshelves-filled-books-decorative-objects-creating-9cc07104",
+    "slug": "wooden-bookshelves-filled-books-decorative-objects-creating-9cc07104",
+    "category": "bookshelves",
+    "folder": "bookshelves-bright",
+    "image_webp": "wooden-bookshelves-filled-books-decorative-objects-creating-9cc07104.webp",
+    "download_png": "wooden-bookshelves-filled-books-decorative-objects-creating-9cc07104.png",
+    "title": "Elegant Bookshelves with Warm Wood Accents | MeetBackdrops",
+    "description": "Rich wooden bookshelves filled with books and decorative items create a warm atmosphere, ideal for remote work settings and professional video calls.",
+    "alt": "Wooden bookshelves filled with books and decorative objects, creating a warm and inviting atmosphere.",
+    "tags": [
+      "bookshelves",
+      "wood",
+      "decorative",
+      "warm",
+      "inviting",
+      "remote work",
+      "professional",
+      "interior"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "wall-shelves:wall-shelves-framed-art-books-small-plant-designed-909a5daa",
+    "slug": "wall-shelves-framed-art-books-small-plant-designed-909a5daa",
+    "category": "wall-shelves",
+    "folder": "wall-shelves-bright",
+    "image_webp": "wall-shelves-framed-art-books-small-plant-designed-909a5daa.webp",
+    "download_png": "wall-shelves-framed-art-books-small-plant-designed-909a5daa.png",
+    "title": "Stylish Wall Shelves with Art | MeetBackdrops",
+    "description": "Elegant wall shelves display framed art and books, creating a refined setting for virtual meetings. Perfect for a professional atmosphere.",
+    "alt": "Wall shelves featuring framed art, books, and a small plant, designed for a sophisticated look.",
+    "tags": [
+      "shelves",
+      "art",
+      "books",
+      "neutral",
+      "professional",
+      "lighting",
+      "interior",
+      "virtual meetings"
+    ],
+    "hdOnly": false
+  },
+  {
+    "id": "nature-landscapes:peaceful-meadow-tall-grass-distant-hills-under-soft-morning-180bb0d4",
+    "slug": "peaceful-meadow-tall-grass-distant-hills-under-soft-morning-180bb0d4",
+    "category": "nature-landscapes",
+    "folder": "nature-landscapes",
+    "image_webp": "peaceful-meadow-tall-grass-distant-hills-under-soft-morning-180bb0d4.webp",
+    "download_png": "peaceful-meadow-tall-grass-distant-hills-under-soft-morning-180bb0d4.png",
+    "title": "Serene Meadow at Dawn | MeetBackdrops",
+    "description": "Soft morning light illuminates a tranquil meadow, perfect for team standups and professional video calls, enhancing focus and clarity.",
+    "alt": "A peaceful meadow with tall grass and distant hills under a soft morning sky, ideal for corporate video calls.",
+    "tags": [
+      "meadow",
+      "nature",
+      "morning",
+      "tranquil",
+      "landscape",
+      "professional",
+      "focus",
+      "team standups"
+    ],
+    "hdOnly": false
   }
 ]
