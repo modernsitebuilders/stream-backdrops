@@ -3288,7 +3288,8 @@
       "neutral palette"
     ],
     "hdOnly": false,
-    "index": 70
+    "index": 70,
+    "hd": true
   },
   {
     "id": "bookshelves-bright-:71",
@@ -7091,7 +7092,8 @@
       "wooden furniture"
     ],
     "hdOnly": false,
-    "index": 22
+    "index": 22,
+    "hd": true
   },
   {
     "id": "coffee-shop-:23",
@@ -12157,7 +12159,8 @@
       "professional video calls"
     ],
     "hdOnly": false,
-    "index": 12
+    "index": 12,
+    "hd": true
   },
   {
     "id": "home-offices-:13",
@@ -12674,7 +12677,8 @@
       "remote work"
     ],
     "hdOnly": false,
-    "index": 34
+    "index": 34,
+    "hd": true
   },
   {
     "id": "home-offices-:35",
@@ -13972,7 +13976,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 90
+    "index": 90,
+    "hd": true
   },
   {
     "id": "home-offices-:91",
@@ -14879,7 +14884,8 @@
       "virtual meetings"
     ],
     "hdOnly": false,
-    "index": 4
+    "index": 89,
+    "hd": true
   },
   {
     "id": "library-:5",
@@ -15202,7 +15208,8 @@
       "professional video calls"
     ],
     "hdOnly": false,
-    "index": 18
+    "index": 18,
+    "hd": true
   },
   {
     "id": "library-:19",
@@ -16759,7 +16766,8 @@
       "virtual meetings"
     ],
     "hdOnly": false,
-    "index": 13
+    "index": 13,
+    "hd": true
   },
   {
     "id": "nature-landscape-:15",
@@ -17134,7 +17142,8 @@
       "natural light"
     ],
     "hdOnly": false,
-    "index": 36
+    "index": 36,
+    "hd": true
   },
   {
     "id": "nature-landscape-:37",
@@ -21261,7 +21270,8 @@
       "spacious"
     ],
     "hdOnly": false,
-    "index": 3
+    "index": 125,
+    "hd": true
   },
   {
     "id": "summer-background-:4",
@@ -21284,7 +21294,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 4
+    "index": 4,
+    "hd": true
   },
   {
     "id": "summer-background-:5",
@@ -21560,7 +21571,8 @@
       "online presentations"
     ],
     "hdOnly": false,
-    "index": 16
+    "index": 126,
+    "hd": true
   },
   {
     "id": "summer-background-:17",
@@ -21630,7 +21642,8 @@
       "bright"
     ],
     "hdOnly": false,
-    "index": 19
+    "index": 127,
+    "hd": true
   },
   {
     "id": "summer-background-:20",
@@ -21931,7 +21944,8 @@
       "virtual meetings"
     ],
     "hdOnly": false,
-    "index": 32
+    "index": 32,
+    "hd": true
   },
   {
     "id": "summer-background-:33",
@@ -22795,7 +22809,8 @@
       "indoor"
     ],
     "hdOnly": false,
-    "index": 31
+    "index": 31,
+    "hd": true
   },
   {
     "id": "urban-loft-:32",
@@ -26831,7 +26846,9 @@
       "professional",
       "video call background"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "hd": true,
+    "index": 102
   },
   {
     "id": "summer-backgrounds:61",
@@ -27584,7 +27601,9 @@
       "corporate",
       "professional video calls"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "hd": true,
+    "index": 2
   },
   {
     "id": "neutral-backgrounds:empty-minimalist-japandi-home-office-sin-2d1a60a0",
@@ -27738,7 +27757,9 @@
       "composition",
       "studio"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "hd": true,
+    "index": 101
   },
   {
     "id": "home-office:calming-therapy-office-virtual-background-c7794f51",
@@ -27760,7 +27781,9 @@
       "minimalist",
       "virtual meetings"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "hd": true,
+    "index": 100
   },
   {
     "id": "home-office:dslr-photograph-modern-home-office-simple-3b2a6aba",
