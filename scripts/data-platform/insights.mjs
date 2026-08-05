@@ -19,6 +19,15 @@ import pg from 'pg';
 
 const ET = `event_at AT TIME ZONE 'America/New_York'`;
 const NOW_ET = `(now() AT TIME ZONE 'America/New_York')`;
+// Every rollup reads HUMAN traffic only — bot-flagged rows (see flag-bots.mjs /
+// migration 006) are excluded at the source so no downstream query can forget to.
+// Inlined subquery keeps the partial index (… WHERE is_bot = false) in play.
+const AE = `(SELECT * FROM analytics_events WHERE is_bot = false) AS analytics_events`;
+// "Engaged" session = did more than bounce: ≥2 events OR ≥1 download. This is the
+// UA-agnostic quality metric — it excludes single-hit crawlers (and human
+// bounces) no matter how a future bot's UA evolves, unlike the is_bot flag which
+// targets the one known offender.
+const ENGAGED = `(n_ev >= 2 OR n_dl >= 1)`;
 // Mirror of DOWNLOAD_EVENTS (lib/analyticsNormalize.js).
 const DL = `('download','cat_image_download','modal_download','zoom_apply','meet_download','email_bonus_download','free_sample_download')`;
 // Mirror of REVENUE_EVENTS (lib/analyticsNormalize.js).
@@ -54,30 +63,47 @@ async function main() {
   await client.connect();
   console.log(`\nMeetBackdrops analytics — ET-bucketed. Recent window: ${WINDOW}d. Generated ${new Date().toISOString()}`);
 
-  await run('Coverage & date range (ET)', `
-    SELECT count(*) AS events,
-      to_char(min(${ET}), 'YYYY-MM-DD') AS first_day,
-      to_char(max(${ET}), 'YYYY-MM-DD') AS last_day,
-      count(DISTINCT session_id) AS sessions,
-      count(DISTINCT visitor_id) AS visitors
-    FROM analytics_events`);
-
-  await run(`Daily pulse — ET (last ${DAILY_DAYS} days; newest may be partial)`, `
-    SELECT to_char(date_trunc('day', ${ET}), 'YYYY-MM-DD') AS day,
-      count(*) AS events,
-      count(DISTINCT session_id) AS sessions,
+  await run('Coverage & date range (ET) — human traffic, bots excluded', `
+    WITH sess AS (
+      SELECT session_id, visitor_id,
+        count(*) AS n_ev,
+        count(*) FILTER (WHERE event_type IN ${DL}) AS n_dl
+      FROM ${AE}
+      GROUP BY session_id, visitor_id)
+    SELECT sum(n_ev)::bigint AS events,
+      count(*) AS sessions,
       count(DISTINCT visitor_id) AS visitors,
-      count(*) FILTER (WHERE event_type IN ${DL}) AS downloads
-    FROM analytics_events
-    WHERE ${ET} >= ${NOW_ET} - interval '${DAILY_DAYS} days'
-    GROUP BY 1 ORDER BY 1 DESC`);
+      count(*) FILTER (WHERE ${ENGAGED}) AS engaged_sessions,
+      count(DISTINCT visitor_id) FILTER (WHERE ${ENGAGED}) AS engaged_visitors
+    FROM sess`);
+
+  // Daily pulse reports BOTH raw (bot-excluded) and engaged. Engaged = sessions
+  // with ≥2 events or a download — the number that doesn't move when a single-hit
+  // crawler wave lands, so it's the honest "did we turn a corner" signal.
+  await run(`Daily pulse — ET (last ${DAILY_DAYS} days; newest may be partial)`, `
+    WITH sess AS (
+      SELECT date_trunc('day', ${ET}) AS d, session_id, visitor_id,
+        count(*) AS n_ev,
+        count(*) FILTER (WHERE event_type IN ${DL}) AS n_dl
+      FROM ${AE}
+      WHERE ${ET} >= ${NOW_ET} - interval '${DAILY_DAYS} days'
+      GROUP BY 1, session_id, visitor_id)
+    SELECT to_char(d, 'YYYY-MM-DD') AS day,
+      sum(n_ev)::bigint AS events,
+      count(*) AS sessions,
+      count(*) FILTER (WHERE ${ENGAGED}) AS engaged_sessions,
+      count(DISTINCT visitor_id) AS visitors,
+      count(DISTINCT visitor_id) FILTER (WHERE ${ENGAGED}) AS engaged_visitors,
+      sum(n_dl)::bigint AS downloads
+    FROM sess
+    GROUP BY d ORDER BY d DESC`);
 
   await run('Weekly trend — ET (12 weeks, Monday-start; newest partial)', `
     SELECT to_char(date_trunc('week', ${ET}), 'YYYY-MM-DD') AS week_of,
       count(*) AS events,
       count(DISTINCT session_id) AS sessions,
       count(*) FILTER (WHERE event_type IN ${DL}) AS downloads
-    FROM analytics_events
+    FROM ${AE}
     WHERE ${ET} >= ${NOW_ET} - interval '84 days'
     GROUP BY 1 ORDER BY 1 DESC`);
 
@@ -85,12 +111,12 @@ async function main() {
     SELECT extract(hour FROM ${ET})::int AS hr_et,
       count(*) AS events,
       count(*) FILTER (WHERE event_type IN ${DL}) AS downloads
-    FROM analytics_events
+    FROM ${AE}
     WHERE ${ET} >= ${NOW_ET} - interval '${WINDOW} days'
     GROUP BY 1 ORDER BY 1`);
 
   await run(`Funnel: view → preview → download (last ${WINDOW}d)`, `
-    WITH e AS (SELECT event_type FROM analytics_events
+    WITH e AS (SELECT event_type FROM ${AE}
                WHERE ${ET} >= ${NOW_ET} - interval '${WINDOW} days')
     SELECT count(*) FILTER (WHERE event_type='page_view') AS page_views,
       count(*) FILTER (WHERE event_type IN ('cat_image_preview','image_preview')) AS previews,
@@ -106,7 +132,7 @@ async function main() {
     SELECT event_type AS surface,
       count(*) AS uses,
       count(DISTINCT visitor_id) AS uniq_visitors
-    FROM analytics_events
+    FROM ${AE}
     WHERE event_type IN ${DL} AND ${ET} >= ${NOW_ET} - interval '${WINDOW} days'
     GROUP BY 1 ORDER BY uses DESC`);
 
@@ -117,7 +143,7 @@ async function main() {
       count(DISTINCT visitor_id) AS uniq_buyers,
       to_char(min(${ET}), 'YYYY-MM-DD') AS first_seen,
       to_char(max(${ET}), 'YYYY-MM-DD') AS last_seen
-    FROM analytics_events
+    FROM ${AE}
     WHERE event_type IN ${REV} AND ${ET} >= ${NOW_ET} - interval '${WINDOW} days'
     GROUP BY 1 ORDER BY events DESC`);
 
@@ -127,7 +153,7 @@ async function main() {
       count(*) FILTER (WHERE event_type='hd_subscription') AS hd_subscription,
       count(*) FILTER (WHERE event_type='license_purchase') AS license,
       count(*) AS total_revenue_events
-    FROM analytics_events
+    FROM ${AE}
     WHERE event_type IN ${REV} AND ${ET} >= ${NOW_ET} - interval '${DAILY_DAYS} days'
     GROUP BY 1 ORDER BY 1 DESC`);
 
@@ -138,7 +164,7 @@ async function main() {
       count(*) FILTER (WHERE event_type IN ${REV}) AS revenue_events,
       round(100.0*count(DISTINCT session_id) FILTER (WHERE event_type IN ${REV})
         / nullif(count(DISTINCT session_id),0),3) AS pct_sessions_converting
-    FROM analytics_events
+    FROM ${AE}
     WHERE ${ET} >= ${NOW_ET} - interval '${WINDOW} days'`);
 
   await run(`Category conversion (last ${WINDOW}d, >50 views)`, `
@@ -147,14 +173,14 @@ async function main() {
       count(*) FILTER (WHERE event_type IN ${DL}) AS downloads,
       round(100.0*count(*) FILTER (WHERE event_type IN ${DL})
         / nullif(count(*) FILTER (WHERE event_type='page_view'),0),1) AS dl_per_100_views
-    FROM analytics_events
+    FROM ${AE}
     WHERE category IS NOT NULL AND ${ET} >= ${NOW_ET} - interval '${WINDOW} days'
     GROUP BY 1 HAVING count(*) FILTER (WHERE event_type='page_view') > 50
     ORDER BY dl_per_100_views DESC NULLS LAST`);
 
   await run(`Top 20 images by downloads (last ${WINDOW}d)`, `
     SELECT filename, category, count(*) AS downloads, count(DISTINCT visitor_id) AS uniq
-    FROM analytics_events
+    FROM ${AE}
     WHERE event_type IN ${DL} AND filename IS NOT NULL
       AND ${ET} >= ${NOW_ET} - interval '${WINDOW} days'
     GROUP BY 1,2 ORDER BY 3 DESC LIMIT 20`);
@@ -165,7 +191,7 @@ async function main() {
       count(*) FILTER (WHERE event_type IN ${DL}) AS downloads,
       round(count(*) FILTER (WHERE event_type IN ${DL})::numeric
         / nullif(count(DISTINCT session_id),0),2) AS dl_per_session
-    FROM analytics_events
+    FROM ${AE}
     WHERE ${ET} >= ${NOW_ET} - interval '${WINDOW} days'
     GROUP BY 1 ORDER BY downloads DESC LIMIT 20`);
 
@@ -173,7 +199,7 @@ async function main() {
     SELECT coalesce(nullif(original_source,''),'(none)') AS source,
       count(DISTINCT session_id) AS sessions,
       count(*) FILTER (WHERE event_type IN ${DL}) AS downloads
-    FROM analytics_events
+    FROM ${AE}
     WHERE ${ET} >= ${NOW_ET} - interval '${WINDOW} days'
       AND (original_source ILIKE '%chatgpt%' OR original_source ILIKE '%openai%'
         OR original_source ILIKE '%claude%' OR original_source ILIKE '%perplexity%'

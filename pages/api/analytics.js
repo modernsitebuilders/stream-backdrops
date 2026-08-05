@@ -1,6 +1,6 @@
 // analytics.js - queues events to Redis for batch flush to Sheets + live mirror to Neon
 import { Redis } from '@upstash/redis';
-import { shouldSkipAnalytics, isFloodingClient } from '../../lib/botFilter';
+import { shouldSkipAnalytics, isFloodingClient, isSuspectedBehavioralBot } from '../../lib/botFilter';
 import { insertAnalyticsEventSafe } from '../../lib/neonEvents.mjs';
 
 const redis = new Redis({
@@ -58,9 +58,11 @@ export default async function handler(req, res) {
     req.headers['referer'] || 'direct',
   ];
 
+  // Header-level behavioral-bot PRE-tag (Neon-only; never dropped — see botFilter.js).
+  const isBot = isSuspectedBehavioralBot({ userAgent: row[13], referer: row[14] });
   try {
     await redis.rpush('analytics:queue', JSON.stringify(row));
-    await insertAnalyticsEventSafe(row); // live mirror to Neon (safe no-op without DATABASE_URL)
+    await insertAnalyticsEventSafe(row, { isBot }); // live mirror to Neon (safe no-op without DATABASE_URL)
     res.status(200).json({ success: true });
   } catch (error) {
     console.error('Analytics queueing failed:', error.message);
