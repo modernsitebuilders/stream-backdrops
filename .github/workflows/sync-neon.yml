@@ -10,6 +10,13 @@ name: Sync analytics sheet to Neon
 # The sync is idempotent (ON CONFLICT (row_hash) DO NOTHING), so a re-run only adds
 # genuinely new rows — running it daily is safe and cheap.
 #
+# After the sync it also runs `npm run flag:bots`, the authoritative session-level
+# behavioral-bot classifier (scripts/data-platform/flag-bots.mjs). The tracking
+# endpoints only set a header-level is_bot PRE-tag at ingest; the single-event-
+# session fingerprint that actually identifies the crawler is an aggregate signal,
+# so it has to be applied by this daily pass. It's monotonic (false→true only) and
+# idempotent, so re-running it daily just flags any newly-arrived bot rows.
+#
 # NOT a Vercel cron (Hobby plan caps those) — GitHub Actions, same as submit-indexnow.
 
 on:
@@ -46,3 +53,10 @@ jobs:
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
           GOOGLE_SERVICE_EMAIL: ${{ secrets.GOOGLE_SERVICE_EMAIL }}
           GOOGLE_PRIVATE_KEY: ${{ secrets.GOOGLE_PRIVATE_KEY }}
+
+      - name: Flag behavioral-bot rows (is_bot)
+        # Runs after the sync so any rows the reconcile just added get classified in
+        # the same pass. Only needs Neon — it reads/writes analytics_events in place.
+        run: npm run flag:bots
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}

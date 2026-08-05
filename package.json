@@ -24,6 +24,7 @@
     "migrate": "node --env-file-if-exists=.env.local scripts/migrate.js",
     "data:sync": "node --env-file-if-exists=.env.local scripts/data-platform/sync-sheets.mjs",
     "insights": "node --env-file-if-exists=.env.local scripts/data-platform/insights.mjs",
+    "flag:bots": "node --env-file-if-exists=.env.local scripts/data-platform/flag-bots.mjs",
     "gaps": "node --env-file-if-exists=.env.local scripts/data-platform/gaps.mjs"
   },
   "dependencies": {

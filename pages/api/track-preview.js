@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis';
-import { shouldSkipAnalytics } from '../../lib/botFilter';
+import { shouldSkipAnalytics, isFloodingClient, isSuspectedBehavioralBot } from '../../lib/botFilter';
 import { insertAnalyticsEventSafe } from '../../lib/neonEvents.mjs';
 
 const redis = new Redis({
@@ -38,6 +38,12 @@ export default async function handler(req, res) {
     return res.status(200).json({ success: true, skipped: 'admin' });
   }
 
+  // Behavioral velocity cap — now on all 5 tracking endpoints, not just
+  // analytics/page-view. Keyed on the previewed asset. Safe no-op without Redis.
+  if (await isFloodingClient(redis, req, filename)) {
+    return res.status(200).json({ success: true, skipped: 'flood' });
+  }
+
   let originalSource = originalReferrer || 'direct';
   if (originalUtmSource) {
     originalSource = originalUtmSource;
@@ -64,9 +70,10 @@ export default async function handler(req, res) {
     page || req.headers['referer'] || 'direct',
   ];
 
+  const isBot = isSuspectedBehavioralBot({ userAgent: row[13], referer: row[14] });
   try {
     await redis.rpush('analytics:queue', JSON.stringify(row));
-    await insertAnalyticsEventSafe(row); // live mirror to Neon (safe no-op without DATABASE_URL)
+    await insertAnalyticsEventSafe(row, { isBot }); // live mirror to Neon (safe no-op without DATABASE_URL)
     res.status(200).json({ success: true });
   } catch (error) {
     console.error('Preview tracking queueing failed:', error.message);

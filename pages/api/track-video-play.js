@@ -1,5 +1,5 @@
 import { Redis } from '@upstash/redis';
-import { shouldSkipAnalytics } from '../../lib/botFilter';
+import { shouldSkipAnalytics, isFloodingClient, isSuspectedBehavioralBot } from '../../lib/botFilter';
 import { insertAnalyticsEventSafe } from '../../lib/neonEvents.mjs';
 
 const redis = new Redis({
@@ -33,6 +33,11 @@ export default async function handler(req, res) {
     visitorType,
   } = req.body;
 
+  // Behavioral velocity cap — keyed on the played video. Safe no-op without Redis.
+  if (await isFloodingClient(redis, req, videoId || videoTitle)) {
+    return res.status(200).json({ success: true, skipped: 'flood' });
+  }
+
   let source = originalReferrer || 'direct';
   if (originalUtmSource) {
     source = originalUtmSource;
@@ -59,9 +64,10 @@ export default async function handler(req, res) {
     req.headers['referer'] || 'direct',
   ];
 
+  const isBot = isSuspectedBehavioralBot({ userAgent: row[13], referer: row[14] });
   try {
     await redis.rpush('analytics:queue', JSON.stringify(row));
-    await insertAnalyticsEventSafe(row); // live mirror to Neon (safe no-op without DATABASE_URL)
+    await insertAnalyticsEventSafe(row, { isBot }); // live mirror to Neon (safe no-op without DATABASE_URL)
     res.status(200).json({ success: true });
   } catch (error) {
     console.error('Video play tracking failed:', error.message);
