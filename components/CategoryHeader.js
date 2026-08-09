@@ -27,7 +27,7 @@ export default function CategoryHeader({ h1, eyebrow, description, featuredImage
         {description && <p className={styles.description}>{description}</p>}
         <div className={styles.linkRow}>
           <Link href="/hd" className={styles.hdLink}>
-            HD Editions for crisper compression →
+            HD Editions for big screens &amp; recordings →
           </Link>
           <Link href="/branded-backgrounds" className={styles.licensingLink}>
             Branded Backgrounds for Brands →
