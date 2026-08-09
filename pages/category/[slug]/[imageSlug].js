@@ -91,6 +91,35 @@ export default function ImagePage({ image, related, categoryName, personaCollect
               acquireLicensePage: 'https://meetbackdrops.com/license',
             }) }}
           />
+          {/* Product + Offer only when a real HD edition backs this page — this is
+              the one-product-per-page surface that can earn a price rich result.
+              No aggregateRating/review: we have no per-image reviews, and the
+              site-wide rating must not be mis-attributed to a single product. */}
+          {hasHd && (
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'Product',
+                name: `${image.title} — HD Edition`,
+                description: `HD Edition (2912×1632) of ${image.title}, a studio-designed virtual background for Zoom, Microsoft Teams, and Google Meet.`,
+                image: webpUrl,
+                brand: { '@type': 'Brand', name: 'MeetBackdrops' },
+                offers: {
+                  '@type': 'Offer',
+                  price: '4.99',
+                  priceCurrency: 'USD',
+                  priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
+                  availability: 'https://schema.org/InStock',
+                  url: `https://meetbackdrops.com${hdHref}`,
+                  hasMerchantReturnPolicy: {
+                    '@type': 'MerchantReturnPolicy',
+                    returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted',
+                  },
+                },
+              }) }}
+            />
+          )}
         </Head>
 
         <div style={{ padding: '2rem', background: '#f9fafb', minHeight: '100vh' }}>

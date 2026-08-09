@@ -1507,7 +1507,7 @@ export default function Premium({ reviewsData }) {
           { name: "Home", url: "https://meetbackdrops.com" },
           { name: "HD Editions", url: "https://meetbackdrops.com/hd" }
         ]} />
-        <ProductSchema products={products} reviewsData={reviewsData} />
+        <ProductSchema products={products} />
         <ComparisonWidgetSchema />
         <HdFaqSchema />
       </Head>

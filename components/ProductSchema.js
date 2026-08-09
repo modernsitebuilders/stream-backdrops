@@ -1,4 +1,10 @@
-export default function ProductSchema({ products, reviewsData }) {
+export default function ProductSchema({ products }) {
+  // Per-product reviews are intentionally NOT emitted here. The only reviews we
+  // have are site-wide (about the studio, not any single image), and Google's
+  // review-snippet guidelines prohibit attaching the same rating to every
+  // product — doing so risks a spammy-structured-data manual action. The site
+  // rating belongs on Organization/service markup, not on 265 individual items.
+  const priceValidUntil = `${new Date().getFullYear() + 1}-12-31`;
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -10,39 +16,13 @@ export default function ProductSchema({ products, reviewsData }) {
         "name": product.name,
         "description": `Premium HD virtual background in 2912×1632 resolution. ${product.name} for Zoom, Teams, and Google Meet.`,
         "image": `https://assets.streambackdrops.com/webp/${product.category}/${product.id.replace('-hd', '')}.webp`,
-        ...(reviewsData && reviewsData.totalReviews > 0 && {
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": reviewsData.averageRating.toString(),
-            "reviewCount": reviewsData.totalReviews.toString(),
-            "bestRating": "5",
-            "worstRating": "1"
-          }
-        }),
-        ...(reviewsData && reviewsData.reviewsWithComments && reviewsData.reviewsWithComments.length > 0 && {
-          "review": reviewsData.reviewsWithComments.map(review => ({
-            "@type": "Review",
-            "reviewRating": {
-              "@type": "Rating",
-              "ratingValue": review.rating.toString(),
-              "bestRating": "5",
-              "worstRating": "1"
-            },
-            "author": {
-              "@type": "Person",
-              "name": review.name
-            },
-            "datePublished": review.date,
-            "reviewBody": review.comment
-          }))
-        }),
         "offers": {
           "@type": "Offer",
           "price": "4.99",
           "priceCurrency": "USD",
-          "priceValidUntil": "2027-12-31",
+          "priceValidUntil": priceValidUntil,
           "availability": "https://schema.org/InStock",
-          "url": "https://meetbackdrops.com/hd",
+          "url": `https://meetbackdrops.com/hd?product=${product.id}`,
           "shippingDetails": {
             "@type": "OfferShippingDetails",
             "shippingRate": {
