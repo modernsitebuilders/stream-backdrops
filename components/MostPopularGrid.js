@@ -8,6 +8,7 @@ import { useShowFilenames } from '../lib/useShowFilenames';
 import ReviewModal from './ReviewModal';
 import RateLimitModal from './RateLimitModal';
 import ImagePreviewModal from './ImagePreviewModal';
+import { HD_BASE_IDS } from '../lib/hdProducts';
 
 const trackAnalytics = (eventType, filename, category, extra) => trackEvent(eventType, filename, category, extra);
 
@@ -46,11 +47,11 @@ export default function MostPopularGrid() {
       setLoading(true);
       const response = await fetch('/api/popular/images');
       const data = await response.json();
-      
+
       if (!response.ok) {
         throw new Error(data.error || 'Failed to load popular images');
       }
-      
+
       setPopularData(data);
       setError(null);
     } catch (err) {
@@ -100,7 +101,11 @@ export default function MostPopularGrid() {
         gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
         gap: '1.5rem'
       }}>
-        {popularData.images.map((image, index) => (
+        {popularData.images.map((image, index) => {
+          const baseId = image.filename.replace(/\.(webp|png|jpg|jpeg)$/i, '');
+          const hasHd = HD_BASE_IDS.has(baseId);
+          const hdHref = `/hd?product=${baseId}-hd`;
+          return (
           <div
             key={image.filename}
             style={{
@@ -139,6 +144,8 @@ export default function MostPopularGrid() {
                 inset: 0,
                 background: 'rgba(0, 0, 0, 0.7)',
                 display: 'flex',
+                flexDirection: 'column',
+                gap: '0.6rem',
                 alignItems: 'center',
                 justifyContent: 'center',
                 opacity: (hoveredIndex === index || downloadingImage === image.filename) ? 1 : 0,
@@ -168,9 +175,56 @@ export default function MostPopularGrid() {
                     minWidth: '140px'
                   }}
                 >
-                  {downloadingImage === image.filename ? 'Downloading...' : 'Download'}
+                  {downloadingImage === image.filename ? 'Downloading...' : 'Download Free'}
                 </button>
+                {hasHd && (
+                  <a
+                    href={hdHref}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      trackAnalytics('popular_hd_click', image.filename, image.category);
+                    }}
+                    style={{
+                      color: '#E0A82E',
+                      fontSize: '0.85rem',
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                      letterSpacing: '0.02em',
+                    }}
+                  >
+                    Get HD — $4.99 →
+                  </a>
+                )}
               </div>
+
+              {/* Always-visible HD badge on cards backed by a real HD edition —
+                  makes the popular list double as an HD buying guide. */}
+              {hasHd && (
+                <a
+                  href={hdHref}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    trackAnalytics('popular_hd_badge_click', image.filename, image.category);
+                  }}
+                  style={{
+                    position: 'absolute',
+                    top: '0.6rem',
+                    right: '0.6rem',
+                    zIndex: 3,
+                    background: '#111827',
+                    color: '#E0A82E',
+                    fontSize: '0.7rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.08em',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '0.35rem',
+                    textDecoration: 'none',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
+                  }}
+                >
+                  ✦ HD
+                </a>
+              )}
             </div>
             {showFilenames && (
               <div
@@ -192,9 +246,10 @@ export default function MostPopularGrid() {
               </div>
             )}
           </div>
-        ))}
+          );
+        })}
       </div>
-      
+
       {selectedImage && (
         <ImagePreviewModal
           image={selectedImage}

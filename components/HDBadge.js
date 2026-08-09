@@ -44,7 +44,7 @@ export default function HDBadge() {
         }}
       >
         <span style={{ color: '#9a6a3a', fontSize: '0.7rem' }}>✦</span>
-        HD Editions — 2912×1632, crisp after compression
+        HD Editions — 2912×1632, sharp on big screens &amp; recordings
         <span style={{ fontSize: '0.85rem' }}>→</span>
       </Link>
     </div>

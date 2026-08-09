@@ -67,9 +67,14 @@ export default function MostPopularPage() {
             </span>
           </nav>
           
-          <h1 style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '1.5rem', color: '#111827' }}>
+          <h1 style={{ fontSize: '2rem', fontWeight: '700', marginBottom: '0.5rem', color: '#111827' }}>
             Most Popular Virtual Backgrounds
           </h1>
+          <p style={{ fontSize: '1rem', color: '#475569', marginBottom: '1.5rem', lineHeight: 1.5, maxWidth: '640px' }}>
+            The most-downloaded backgrounds across the catalog, ranked by real download data.
+            Cards marked <span style={{ color: '#9a6a3a', fontWeight: 700 }}>✦ HD</span> are also available
+            as full-resolution HD Editions from $4.99 — sharp on large monitors and in recorded calls.
+          </p>
 
           <MostPopularGrid />
           
