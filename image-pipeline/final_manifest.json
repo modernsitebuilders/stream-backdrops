@@ -1864,7 +1864,8 @@
       "calm atmosphere"
     ],
     "hdOnly": false,
-    "index": 3
+    "index": 3,
+    "hd": true
   },
   {
     "id": "bookshelves-bright-:4",
@@ -2893,7 +2894,8 @@
       "virtual meetings"
     ],
     "hdOnly": false,
-    "index": 50
+    "index": 50,
+    "hd": true
   },
   {
     "id": "bookshelves-bright-:51",
@@ -3124,7 +3126,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 62
+    "index": 62,
+    "hd": true
   },
   {
     "id": "bookshelves-bright-:63",
@@ -4036,7 +4039,8 @@
       "composition"
     ],
     "hdOnly": false,
-    "index": 33
+    "index": 33,
+    "hd": true
   },
   {
     "id": "bookshelves-dark-:34",
@@ -7416,7 +7420,8 @@
       "studio design"
     ],
     "hdOnly": false,
-    "index": 36
+    "index": 36,
+    "hd": true
   },
   {
     "id": "coffee-shop-:38",
@@ -12909,7 +12914,8 @@
       "virtual meetings"
     ],
     "hdOnly": false,
-    "index": 44
+    "index": 44,
+    "hd": true
   },
   {
     "id": "home-offices-:45",
@@ -13025,7 +13031,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 49
+    "index": 49,
+    "hd": true
   },
   {
     "id": "home-offices-:50",
@@ -13072,7 +13079,8 @@
       "virtual meetings"
     ],
     "hdOnly": false,
-    "index": 51
+    "index": 51,
+    "hd": true
   },
   {
     "id": "home-offices-:52",
@@ -13141,7 +13149,8 @@
       "interior design"
     ],
     "hdOnly": false,
-    "index": 54
+    "index": 54,
+    "hd": true
   },
   {
     "id": "home-offices-:55",
@@ -13884,7 +13893,8 @@
       "executive video calls"
     ],
     "hdOnly": false,
-    "index": 86
+    "index": 86,
+    "hd": true
   },
   {
     "id": "home-offices-:87",
@@ -13953,7 +13963,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 89
+    "index": 89,
+    "hd": true
   },
   {
     "id": "home-offices-:90",
@@ -14815,7 +14826,8 @@
       "remote work"
     ],
     "hdOnly": false,
-    "index": 1
+    "index": 1,
+    "hd": true
   },
   {
     "id": "library-:2",
@@ -17867,7 +17879,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 101
+    "index": 101,
+    "hd": true
   },
   {
     "id": "office-spaces-:102",
@@ -18544,7 +18557,8 @@
       "online presentations"
     ],
     "hdOnly": false,
-    "index": 25
+    "index": 25,
+    "hd": true
   },
   {
     "id": "office-spaces-:26",
@@ -20066,7 +20080,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 6
+    "index": 2,
+    "hd": true
   },
   {
     "id": "spring-background-:7",
@@ -22226,7 +22241,8 @@
       "composition"
     ],
     "hdOnly": false,
-    "index": 6
+    "index": 6,
+    "hd": true
   },
   {
     "id": "urban-loft-:7",
@@ -22295,7 +22311,8 @@
       "virtual meetings"
     ],
     "hdOnly": false,
-    "index": 9
+    "index": 9,
+    "hd": true
   },
   {
     "id": "urban-loft-:10",
@@ -22365,7 +22382,8 @@
       "executive video calls"
     ],
     "hdOnly": false,
-    "index": 12
+    "index": 12,
+    "hd": true
   },
   {
     "id": "urban-loft-:13",
@@ -22856,7 +22874,8 @@
       "interior design"
     ],
     "hdOnly": false,
-    "index": 33
+    "index": 33,
+    "hd": true
   },
   {
     "id": "urban-loft-:34",
@@ -23159,7 +23178,8 @@
       "urban"
     ],
     "hdOnly": false,
-    "index": 46
+    "index": 46,
+    "hd": true
   },
   {
     "id": "urban-loft-:47",
@@ -25929,7 +25949,8 @@
       "online presentations"
     ],
     "hdOnly": false,
-    "index": 69
+    "index": 69,
+    "hd": true
   },
   {
     "id": "wall-shelves-dark-:71",
@@ -26090,7 +26111,8 @@
       "team standups"
     ],
     "hdOnly": false,
-    "index": 77
+    "index": 77,
+    "hd": true
   },
   {
     "id": "coffee-shop-:13",
@@ -27467,7 +27489,9 @@
       "floor",
       "professional video calls"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "hd": true,
+    "index": 3
   },
   {
     "id": "neutral-backgrounds:professional-virtual-backdrop-c-bc46b971",
@@ -27981,7 +28005,9 @@
       "indoor plants",
       "natural elements"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "hd": true,
+    "index": 11
   },
   {
     "id": "home-office:serene-counseling-office-backdrop-clean-5f4585ce",
@@ -28003,7 +28029,9 @@
       "color palette",
       "online presentations"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "hd": true,
+    "index": 21
   },
   {
     "id": "home-office:wellness-practitioner-private-office-tre-35ed360d",
@@ -28289,7 +28317,9 @@
       "collaboration",
       "remote work"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "hd": true,
+    "index": 60
   },
   {
     "id": "office-spaces:professional-medical-office-clean-white-251559ff",
@@ -28597,7 +28627,9 @@
       "high-fidelity",
       "virtual meetings"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "hd": true,
+    "index": 57
   },
   {
     "id": "office-spaces:media-company-open-workspace-editing-sta-8c7b59e4",
@@ -30864,7 +30896,9 @@
       "soft",
       "team standups"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "hd": true,
+    "index": 4
   },
   {
     "id": "neutral-backgrounds:softly-textured-wall-neutral-tones-providing-clean-a94f402b",
