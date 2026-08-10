@@ -220,7 +220,7 @@ export async function getStaticProps({ params }) {
     console.error('Platform landing scores unavailable, using fallback:', e.message);
   }
 
-  const { images, scores } = featuredForPlatform(rawScores, 24);
+  const { images, scores } = featuredForPlatform(rawScores, 24, undefined, platform.featuredCategories || []);
 
   const metadata = {};
   images.forEach((img) => {

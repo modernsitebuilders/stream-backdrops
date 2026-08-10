@@ -159,6 +159,16 @@ const nextConfig = {
         permanent: true,
       },
       
+      // Interview landing page consolidated into the winning blog post (Aug 2026).
+      // GSC: /interview-backgrounds was dead (pos ~34, 0 clicks) while
+      // /blog/job-interview-backgrounds carried ~44% of site impressions — so
+      // redirect loser → winner to stop the two competing for the same intent.
+      {
+        source: '/interview-backgrounds',
+        destination: '/blog/job-interview-backgrounds',
+        permanent: true,
+      },
+
       // Conference Rooms merged into Office Spaces (May 2026)
       {
         source: '/category/conference-rooms/:path*',

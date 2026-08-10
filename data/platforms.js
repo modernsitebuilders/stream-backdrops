@@ -81,7 +81,7 @@ const PLATFORMS = [
     shortName: 'Meet',
     queryWord: 'Google Meet',
     eyebrow: 'For Google Meet',
-    title: 'Google Meet Virtual Backgrounds | MeetBackdrops',
+    title: 'Free Google Meet Virtual Backgrounds | MeetBackdrops',
     description:
       'Studio-designed virtual backgrounds for Google Meet, composed for camera so they stay crisp on calls. Free samples, no signup, instant PNG download.',
     h1: 'Virtual Backgrounds for Google Meet',
@@ -119,7 +119,7 @@ const PLATFORMS = [
           'Yes — the whole library is free, with no signup and no watermark. Optional HD editions add resolution for large monitors and recordings, but the free PNGs are ready to upload to Meet as-is.',
       },
     ],
-    featuredCategories: ['office-spaces', 'home-office', 'neutral-backgrounds', 'bookshelves'],
+    featuredCategories: ['home-office', 'living-rooms', 'neutral-backgrounds', 'coffee-shops'],
   },
   {
     slug: 'microsoft-teams-backgrounds',
@@ -165,7 +165,7 @@ const PLATFORMS = [
           'Yes. Every background is free to download and use with no signup or watermark. HD editions are available for large displays, recordings, and Teams Premium scenarios, but the free PNGs are ready for standard Teams calls.',
       },
     ],
-    featuredCategories: ['office-spaces', 'bookshelves', 'home-office', 'conference-room'],
+    featuredCategories: ['office-spaces', 'bookshelves', 'home-office', 'libraries'],
   },
   {
     slug: 'webex-backgrounds',
@@ -211,7 +211,7 @@ const PLATFORMS = [
           'Yes. The full library is free to download and use, with no signup and no watermark. HD editions add resolution for large monitors and recordings, but the free PNGs are ready for everyday Webex meetings.',
       },
     ],
-    featuredCategories: ['office-spaces', 'bookshelves', 'home-office', 'neutral-backgrounds'],
+    featuredCategories: ['office-spaces', 'libraries', 'urban-lofts', 'home-office'],
   },
 ];
 

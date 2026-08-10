@@ -36,7 +36,7 @@ export default function Footer() {
                 Recently Added
               </Link>
               <span style={{ color: '#9ca3af', margin: '0 0.5rem' }}>•</span>
-              <Link prefetch={false} href="/interview-backgrounds" style={{ color: '#fbbf24', textDecoration: 'none', fontSize: '0.9rem', fontWeight: '600' }}>
+              <Link prefetch={false} href="/blog/job-interview-backgrounds" style={{ color: '#fbbf24', textDecoration: 'none', fontSize: '0.9rem', fontWeight: '600' }}>
                 Interview Backgrounds
               </Link>
             </div>
