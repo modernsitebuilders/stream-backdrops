@@ -9,7 +9,35 @@ export const jobInterviewBackgroundsContent = (categoryInfo) => {
   const conferenceRoomsCount = categoryInfo['office-spaces']?.images?.length || 0;
   const bookshelvesCount = categoryInfo['bookshelves']?.images?.length || 0;
   const livingRoomsCount = categoryInfo['living-rooms']?.images?.length || 0;
-  
+
+  // Curated interview-ready backgrounds shown as a gallery high in the post.
+  // The page ranks for interview queries but had no images, so it never
+  // surfaced in Google Images / the image pack. These give interview-intent
+  // images (alt text + captions) on the ranking page, each linking to its
+  // image page (a convertible surface with the HD upsell). folder ≠ category
+  // for merged categories — folder is the R2 path, category is the page URL.
+  const CDN = 'https://assets.streambackdrops.com/webp';
+  const interviewPicks = [
+    { category: 'bookshelves', folder: 'bookshelves-bright', slug: 'well-lit-modern-boardroom-wooden-floor-framed-artwork-wall-cadb4573',
+      alt: 'Bright bookshelf virtual background for a Teams or Zoom job interview',
+      caption: 'Bright bookshelf — reads as credible and prepared' },
+    { category: 'bookshelves', folder: 'bookshelves-bright', slug: 'cozy-room-white-bookcase-filled-books-lamp-floral-decor-9f1f1030',
+      alt: 'Warm white bookcase background — a professional interview backdrop for video calls',
+      caption: 'Warm bookcase — approachable yet professional' },
+    { category: 'office-spaces', folder: 'conference-rooms', slug: 'modern-boardroom-geometric-wall-designs-warm-lighting-large-0832df1f',
+      alt: 'Executive office virtual background for a professional video interview',
+      caption: 'Executive office — for senior and client-facing roles' },
+    { category: 'home-office', folder: 'home-office', slug: 'cozy-home-office-wooden-desk-computer-displaying-landscape-d79a8759',
+      alt: 'Tidy home-office background for a remote job interview on Zoom or Teams',
+      caption: 'Home office — a polished remote-work setup' },
+    { category: 'home-office', folder: 'home-office', slug: 'cozy-home-office-dual-monitors-wooden-desk-bookshelf-filled-7f901487',
+      alt: 'Home-office study background for a video interview — clean and distraction-free',
+      caption: 'Home study — clean, focused, distraction-free' },
+    { category: 'neutral-backgrounds', folder: 'neutral-backgrounds', slug: 'high-end-zoom-backdrop-premium-matte-c-5db34340',
+      alt: 'Neutral gray wall virtual background for a formal interview on Microsoft Teams',
+      caption: 'Neutral wall — safe, formal, zero distractions' },
+  ];
+
   return (
     <article style={{ 
       background: '#f8fafc', 
@@ -91,12 +119,60 @@ export const jobInterviewBackgroundsContent = (categoryInfo) => {
                 paddingBottom: '1.5rem',
                 borderBottom: '1px solid #e5e7eb'
               }}>
-                Published February 17, 2026 · 12 min read
+                Updated August 2026 · 12 min read
               </div>
 
               <p style={{ fontSize: '1.1rem', color: '#374151', marginBottom: '2rem' }}>
                 Virtual interviews are no longer temporary—they're the permanent standard. Remote hiring has become the default across most industries, and your interview background has become a critical professional asset. In 2026, AI-powered interview platforms evaluate everything from your lighting to background clutter, making proper setup more important than ever.
               </p>
+
+              {/* Interview-ready background gallery — see IMAGE-SEO note above interviewPicks */}
+              <section aria-labelledby="interview-picks-heading" style={{ margin: '0 0 2.5rem' }}>
+                <h2 id="interview-picks-heading" style={{
+                  fontSize: '1.875rem',
+                  fontWeight: 'bold',
+                  color: '#111827',
+                  marginTop: '0',
+                  marginBottom: '0.75rem'
+                }}>
+                  Interview-Ready Backgrounds to Download
+                </h2>
+                <p style={{ marginBottom: '1.5rem', color: '#374151' }}>
+                  Studio-designed backgrounds that read as professional on a Teams, Zoom, or Google Meet
+                  interview — free to download, or in HD for large monitors and recorded calls. Tap any
+                  one to preview and download.
+                </p>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                  gap: '1rem'
+                }}>
+                  {interviewPicks.map((p) => (
+                    <figure key={p.slug} style={{ margin: 0 }}>
+                      <Link href={`/category/${p.category}/${p.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <img
+                          src={`${CDN}/${p.folder}/${p.slug}.webp`}
+                          alt={p.alt}
+                          loading="lazy"
+                          width={1456}
+                          height={816}
+                          style={{
+                            width: '100%',
+                            aspectRatio: '16 / 9',
+                            objectFit: 'cover',
+                            borderRadius: '0.5rem',
+                            display: 'block',
+                            boxShadow: '0 1px 6px rgba(0,0,0,0.12)'
+                          }}
+                        />
+                        <figcaption style={{ fontSize: '0.85rem', color: '#6b7280', marginTop: '0.4rem', lineHeight: 1.4 }}>
+                          {p.caption}
+                        </figcaption>
+                      </Link>
+                    </figure>
+                  ))}
+                </div>
+              </section>
 
               <h2 style={{
                 fontSize: '1.875rem',
