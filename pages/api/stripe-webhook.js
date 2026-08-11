@@ -14,6 +14,24 @@ export const config = {
   },
 };
 
+// Reassemble the full product-id list from the numbered metadata keys written
+// by create-checkout.js (product_ids, product_ids_2, product_ids_3, …). The
+// chunks are contiguous, so stop at the first missing key.
+function reassembleProductIds(metadata) {
+  const parts = [];
+  for (let i = 1; ; i++) {
+    const key = i === 1 ? 'product_ids' : `product_ids_${i}`;
+    const value = metadata[key];
+    if (value == null) break;
+    parts.push(value);
+  }
+  return parts
+    .join(',')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
 function getRawBody(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
@@ -101,11 +119,12 @@ export default async function handler(req, res) {
     return res.status(200).json({ received: true, ignored: true });
   }
 
-  // product_ids is a comma-joined string set by create-checkout.js
-  const productIds = metadata.product_ids
-    .split(',')
-    .map((s) => s.trim())
-    .filter(Boolean);
+  // product_ids is a comma-joined string set by create-checkout.js. Large
+  // bundles (10-/20-packs) exceed Stripe's 500-char metadata-value cap, so the
+  // list is split across contiguous numbered keys: product_ids, product_ids_2,
+  // product_ids_3, … Reassemble them in order before parsing (must stay in sync
+  // with productIdMetadata() in create-checkout.js).
+  const productIds = reassembleProductIds(metadata);
 
   if (productIds.length === 0) {
     console.error('[stripe-webhook] Empty product_ids after parse:', metadata.product_ids);

@@ -20,6 +20,39 @@ function resolvePriceId(count) {
   return PRICE_IDS[tier];
 }
 
+// Stripe caps each metadata VALUE at 500 chars. HD product ids are long
+// descriptive slugs (~42-72 chars each), so a 10- or 20-pack comfortably
+// overflows a single joined product_ids string (a 20-pack is ~1,460 chars) and
+// stripe.checkout.sessions.create() would throw, failing checkout for large
+// bundles. Split the id list across numbered keys — product_ids, product_ids_2,
+// product_ids_3, … — each kept under 500 chars and never splitting an
+// individual id, so the full list is recovered verbatim server-side.
+// stripe-webhook.js reassembles them (must stay in sync with this encoding).
+const MAX_METADATA_VALUE = 500;
+
+function productIdMetadata(ids) {
+  const meta = {};
+  let chunkIndex = 0;
+  let current = "";
+  const flush = () => {
+    const key = chunkIndex === 0 ? "product_ids" : `product_ids_${chunkIndex + 1}`;
+    meta[key] = current;
+    chunkIndex += 1;
+    current = "";
+  };
+  for (const id of ids) {
+    const next = current ? `${current},${id}` : id;
+    if (next.length > MAX_METADATA_VALUE && current) {
+      flush();
+      current = id;
+    } else {
+      current = next;
+    }
+  }
+  if (current) flush();
+  return meta;
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -61,7 +94,7 @@ export default async function handler(req, res) {
           metadata: {
             site: "streambackdrops",
             product_type: "hd_image",
-            product_ids: ids.join(","),
+            ...productIdMetadata(ids),
           },
           footer: "Thanks for your purchase. Questions? info@meetbackdrops.com",
         },
@@ -69,7 +102,7 @@ export default async function handler(req, res) {
       metadata: {
         site: "streambackdrops",
         product_type: "hd_image",
-        product_ids: ids.join(","),
+        ...productIdMetadata(ids),
         // Keep product_id singular for single-item backwards compat
         ...(ids.length === 1 ? { product_id: ids[0] } : {}),
       },
