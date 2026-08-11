@@ -20,7 +20,8 @@
       "online presentations"
     ],
     "hdOnly": false,
-    "index": 1
+    "index": 1,
+    "hd": true
   },
   {
     "id": "art-gallery-:2",
@@ -6700,7 +6701,8 @@
       "professional video calls"
     ],
     "hdOnly": false,
-    "index": 1
+    "index": 1,
+    "hd": true
   },
   {
     "id": "coffee-shop-:2",
@@ -12516,7 +12518,8 @@
       "professional"
     ],
     "hdOnly": false,
-    "index": 27
+    "index": 27,
+    "hd": true
   },
   {
     "id": "home-offices-:28",
@@ -12938,7 +12941,8 @@
       "professional video calls"
     ],
     "hdOnly": false,
-    "index": 45
+    "index": 45,
+    "hd": true
   },
   {
     "id": "home-offices-:46",
@@ -14850,7 +14854,8 @@
       "online presentations"
     ],
     "hdOnly": false,
-    "index": 2
+    "index": 2,
+    "hd": true
   },
   {
     "id": "library-:3",
@@ -14966,7 +14971,8 @@
       "remote work"
     ],
     "hdOnly": false,
-    "index": 7
+    "index": 7,
+    "hd": true
   },
   {
     "id": "library-:8",
@@ -15521,7 +15527,8 @@
       "virtual meetings"
     ],
     "hdOnly": false,
-    "index": 31
+    "index": 31,
+    "hd": true
   },
   {
     "id": "library-:32",
@@ -17016,7 +17023,8 @@
       "professional video calls"
     ],
     "hdOnly": false,
-    "index": 27
+    "index": 27,
+    "hd": true
   },
   {
     "id": "nature-landscape-:29",
@@ -28893,7 +28901,9 @@
       "textured wall",
       "corporate"
     ],
-    "hdOnly": false
+    "hdOnly": false,
+    "index": 5,
+    "hd": true
   },
   {
     "id": "neutral-backgrounds:textured-beige-wall-subtle-patterns-providing-warm-neutral-46256fad",
