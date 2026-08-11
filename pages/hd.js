@@ -1,4 +1,4 @@
-import { trackEvent } from '../lib/trackEvent';
+import { trackEvent, getAttribution } from '../lib/trackEvent';
 import Head from 'next/head';
 import BreadcrumbSchema from '../components/BreadcrumbSchema';
 import ComparisonWidgetSchema from '../components/ComparisonWidgetSchema';
@@ -1438,7 +1438,11 @@ export default function Premium({ reviewsData }) {
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productIds: ids }),
+        body: JSON.stringify({
+          productIds: ids,
+          // Attribution for the webhook's server-side hd_purchase record.
+          analytics: getAttribution(),
+        }),
       });
       const data = await res.json();
       if (!data.url) {

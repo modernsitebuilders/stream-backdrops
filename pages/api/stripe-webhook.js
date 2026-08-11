@@ -1,6 +1,62 @@
 import Stripe from 'stripe';
+import { Redis } from '@upstash/redis';
+import { insertAnalyticsEventSafe } from '../../lib/neonEvents.mjs';
 
 const isTest = process.env.STRIPE_MODE === 'test';
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
+});
+
+// Record a completed HD purchase as an `hd_purchase` analytics event — the same
+// 15-column row shape pages/api/analytics.js writes — straight from the webhook.
+//
+// WHY here and not only on the /hd-download success page: the client-side write
+// fires only if the buyer returns to /hd-download AND their browser lets the
+// /api/analytics beacon through. Ad/privacy blockers (which block paths named
+// "analytics") and closed tabs silently drop it, so real, paid sales went
+// unrecorded (e.g. the 2026-08-11 sale). Stripe retries this webhook until it gets
+// a 200, server-side, so it's the reliable, ad-blocker-proof record.
+//
+// Dedup: the row timestamp is derived from the Stripe session's `created` time (not
+// wall-clock now), so a webhook redelivery produces a byte-identical row → identical
+// row_hash → ON CONFLICT (row_hash) DO NOTHING no-ops it. The buyer's attribution
+// rides in on session.metadata (a_sid/a_vid/a_src/... set by create-checkout.js).
+async function recordHdPurchase(session, productIds) {
+  try {
+    const m = session?.metadata || {};
+    // ET wall-clock string matching the format pages/api/analytics.js writes, built
+    // from the Stripe session creation instant so it's stable across redeliveries.
+    const created = session?.created ? new Date(session.created * 1000) : new Date();
+    const et = (opts) => created.toLocaleString('en-US', { timeZone: 'America/New_York', ...opts });
+    const row = [
+      et({ year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      'hd_purchase',
+      m.a_src || 'direct',
+      productIds.join(','),
+      'hd',
+      m.a_pv != null ? parseInt(m.a_pv, 10) || 0 : 0,
+      0,
+      m.a_vtype || 'new',
+      m.a_land || '',
+      m.a_sid || '',
+      m.a_vid || 'unknown',
+      created.toLocaleDateString('en-US', { timeZone: 'America/New_York' }),
+      created.toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      'stripe-webhook',
+      'stripe-webhook',
+    ];
+    // Queue for the Sheet (system of record) + live-mirror to Neon, exactly like
+    // pages/api/analytics.js. Both dedup on the shared cell-hash, so the daily
+    // sheet→Neon reconciliation won't double-insert.
+    await redis.rpush('analytics:queue', JSON.stringify(row));
+    await insertAnalyticsEventSafe(row);
+  } catch (e) {
+    // Never let analytics recording break the 200 we owe Stripe.
+    console.error('[stripe-webhook] hd_purchase recording failed:', e?.message);
+  }
+}
 
 const stripe = new Stripe(
   isTest
@@ -135,6 +191,10 @@ export default async function handler(req, res) {
     session_id: session.id,
     product_ids: productIds,
   });
+
+  // 📊 Record the sale server-side (reliable; not dependent on the buyer returning
+  // to /hd-download or their browser allowing the analytics beacon through).
+  await recordHdPurchase(session, productIds);
 
   // 🔓 Unlock each purchased HD image
   for (const id of productIds) {

@@ -1,4 +1,4 @@
-import { trackEvent } from '../lib/trackEvent';
+import { trackEvent, getAttribution } from '../lib/trackEvent';
 import { useEffect, useState } from 'react';
 import { useWishlist } from '../lib/WishlistContext';
 
@@ -47,7 +47,7 @@ export default function WishlistDrawer() {
       const res = await fetch('/api/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productIds }),
+        body: JSON.stringify({ productIds, analytics: getAttribution() }),
       });
       const data = await res.json();
       if (!data.url) {

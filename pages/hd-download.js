@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
-import { getSessionData, getVisitorType } from '../lib/sessionTracking';
 
 export default function HDDownload() {
   const [status, setStatus] = useState('verifying');
@@ -35,14 +34,15 @@ export default function HDDownload() {
           setImages(downloads);
           setStatus('success');
 
-          // Single idempotency guard for both the internal analytics row
-          // (writes to Google Sheets) AND the GA4 purchase event. Keyed by
-          // the Stripe session ID and stored in localStorage so reopening
-          // /hd-download?session_id=... in a new tab/window — which gives the
-          // visitor a fresh session cookie — still won't double-record.
-          // See pages/api/analytics.js for the sheet row shape: `filename`
-          // is the comma-joined image IDs, so item count = ids.length and
-          // which images were purchased = ids themselves.
+          // GA4 purchase event only. The INTERNAL hd_purchase record (Sheet +
+          // Neon) is now written server-side by the Stripe webhook
+          // (pages/api/stripe-webhook.js) — it fires on Stripe's server, so it
+          // survives ad/privacy blockers and buyers who never return to this
+          // page, which the old client-side write to /api/analytics did not.
+          // gtag stays here because GA4 needs the browser; it's inherently
+          // best-effort (also blocked by the same blockers) and that's fine.
+          // localStorage guard keyed by Stripe session id so reopening this URL
+          // in a fresh tab won't double-fire the GA4 event.
           try {
             const trackedKey = `hd_purchase_tracked_${sessionId}`;
             const alreadyTracked =
@@ -51,24 +51,6 @@ export default function HDDownload() {
               window.localStorage.getItem(trackedKey) === '1';
 
             if (!alreadyTracked) {
-              const session = getSessionData();
-              fetch('/api/analytics', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  eventType: 'hd_purchase',
-                  filename: ids.join(','),
-                  category: 'hd',
-                  originalSource: session?.originalReferrer || (typeof document !== 'undefined' ? (document.referrer || 'direct') : 'direct'),
-                  sessionId: session?.id || '',
-                  visitorId: session?.visitorId || '',
-                  pageViewsInSession: session?.pageViews || 0,
-                  downloadsInSession: session?.downloads || 0,
-                  visitorType: getVisitorType(),
-                  landingPage: session?.landingPage || ''
-                })
-              }).catch(() => {});
-
               if (typeof window !== 'undefined' && window.gtag && data.amount_total != null) {
                 const value = data.amount_total / 100;
                 const currency = (data.currency || 'usd').toUpperCase();
