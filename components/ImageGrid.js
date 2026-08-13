@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import PopularBadge from './PopularBadge';
 import { useRouter } from 'next/router';
 import { isHdOnlyFilename } from '../lib/hdOnly';
+import { HD_BASE_IDS } from '../lib/hdProducts';
 import { useWishlist } from '../lib/WishlistContext';
 import { webpUrl } from '../lib/cloudinaryUrl';
 import { useShowFilenames } from '../lib/useShowFilenames';
@@ -137,6 +138,9 @@ export default function ImageGrid({ images, slug, onImageClick, onDownload = [],
         {sortedImages.map((image, index) => {
           const hdOnly = isHdOnlyFilename(image.filename);
           const imageSlug = image.filename.replace(/\.webp$/i, '');
+          // Free image that ALSO has a paid HD edition — mark it so the free
+          // download stays the primary action while the HD upgrade is discoverable.
+          const hasHd = !hdOnly && HD_BASE_IDS.has(imageSlug);
           // Collections pass cross-category images each carrying their own
           // `category`; canonical image page lives under the real category,
           // not the collection slug. Category pages omit `image.category`,
@@ -190,6 +194,38 @@ export default function ImageGrid({ images, slug, onImageClick, onDownload = [],
                 aria-hidden="true"
                 tabIndex={-1}
               />
+
+              {/* "HD available" corner badge — free image that also has a paid HD
+                  edition. Same badge as the Most Popular grid (MostPopularGrid.js)
+                  so the marker reads as one system across the site. The image is
+                  still a free download; this only advertises the optional HD upgrade. */}
+              {hasHd && (
+                <a
+                  href={`/hd?highlight=${imageSlug}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    trackAnalytics('cat_hd_badge_click', image.filename, slug);
+                  }}
+                  aria-label="Also available as a full-resolution HD Edition"
+                  style={{
+                    position: 'absolute',
+                    top: '0.6rem',
+                    right: '0.6rem',
+                    zIndex: 3,
+                    background: '#111827',
+                    color: '#E0A82E',
+                    fontSize: '0.7rem',
+                    fontWeight: 700,
+                    letterSpacing: '0.08em',
+                    padding: '0.25rem 0.5rem',
+                    borderRadius: '0.35rem',
+                    textDecoration: 'none',
+                    boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
+                  }}
+                >
+                  ✦ HD available
+                </a>
+              )}
 
               {/* HD-only corner badge */}
               {hdOnly && (

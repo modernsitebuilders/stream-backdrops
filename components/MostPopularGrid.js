@@ -104,7 +104,7 @@ export default function MostPopularGrid() {
         {popularData.images.map((image, index) => {
           const baseId = image.filename.replace(/\.(webp|png|jpg|jpeg)$/i, '');
           const hasHd = HD_BASE_IDS.has(baseId);
-          const hdHref = `/hd?product=${baseId}-hd`;
+          const hdHref = `/hd?highlight=${baseId}`;
           return (
           <div
             key={image.filename}
@@ -222,7 +222,7 @@ export default function MostPopularGrid() {
                     boxShadow: '0 1px 4px rgba(0,0,0,0.3)',
                   }}
                 >
-                  ✦ HD
+                  ✦ HD available
                 </a>
               )}
             </div>

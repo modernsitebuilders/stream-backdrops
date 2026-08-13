@@ -196,7 +196,7 @@ This is [scripts/submit-indexnow.js](scripts/submit-indexnow.js). Targeted forms
 - `pages/api/hd-s3-download.js` — serves HD PNG download.
 
 ### How HD products are defined (consolidated — single source)
-HD products are the manifest entries with `hd: true` (currently 204). `scripts/generate-hd-products.js` reads those and writes `lib/hdProducts.js`, which is the one source for both the `/hd` catalog and the `HD_BASE_IDS` upsell set — so `products` and `HD_BASE_IDS` can no longer drift.
+HD products are the manifest entries with `hd: true` (currently 274). `scripts/generate-hd-products.js` reads those and writes `lib/hdProducts.js`, which is the one source for both the `/hd` catalog and the `HD_BASE_IDS` upsell set — so `products` and `HD_BASE_IDS` can no longer drift.
 
 > **To add/remove an HD product:** flip the `hd` flag on the manifest entry and run `node scripts/generate-hd-products.js` (or just `npm run build`, which regenerates it in prebuild). Do NOT edit `lib/hdProducts.js`, `pages/hd.js`, or `lib/hdImages.js` by hand.
 >
