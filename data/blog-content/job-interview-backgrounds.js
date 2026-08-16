@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import { wolfresumeUrl } from '../../lib/wolfresumeUrl';
 import BlogHDUpsellCard from '../../components/BlogHDUpsellCard';
@@ -38,12 +39,42 @@ export const jobInterviewBackgroundsContent = (categoryInfo) => {
       caption: 'Neutral wall — safe, formal, zero distractions' },
   ];
 
+  // ImageObject schema for the interview-picks gallery. The gallery images were
+  // added Aug 2026 but carried no structured data, so they couldn't surface in
+  // Google's image pack for visual queries like "best teams backgrounds for
+  // interviews" (huge impressions, ~0% CTR on the blue link — the intent is
+  // visual). Marking each as a licensable ImageObject makes them eligible for
+  // the image pack + the "Licensable" badge, each linking to its convertible
+  // image page. Built from interviewPicks so it can never drift from the render.
+  const SITE = 'https://meetbackdrops.com';
+  const interviewGallerySchema = {
+    '@context': 'https://schema.org',
+    '@graph': interviewPicks.map((p) => ({
+      '@type': 'ImageObject',
+      contentUrl: `${CDN}/${p.folder}/${p.slug}.webp`,
+      url: `${CDN}/${p.folder}/${p.slug}.webp`,
+      name: p.alt,
+      caption: p.caption,
+      creditText: 'MeetBackdrops',
+      creator: { '@type': 'Organization', name: 'MeetBackdrops' },
+      copyrightNotice: 'MeetBackdrops',
+      license: `${SITE}/license`,
+      acquireLicensePage: `${SITE}/category/${p.category}/${p.slug}`,
+    })),
+  };
+
   return (
-    <article style={{ 
-      background: '#f8fafc', 
+    <article style={{
+      background: '#f8fafc',
       minHeight: '100vh'
     }}>
-      
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(interviewGallerySchema) }}
+        />
+      </Head>
+
       {/* PADDING WRAPPER */}
       <div style={{
         paddingLeft: '2rem',
