@@ -1,14 +1,20 @@
 name: Sync analytics sheet to Neon
 
-# Reconciliation backstop for the live Sheets→Neon mirror.
+# PRIMARY Sheets→Neon mirror (runs 4x/day, every 6 hours).
 #
-# Analytics/email/review events are written to Neon LIVE at request time (the
-# tracking + form endpoints dual-write via lib/neonEvents.mjs), so Neon is normally
-# already current. This daily job re-runs the full `npm run data:sync` to:
-#   - catch any event whose live write failed (transient Neon blip, cold deploy, etc.)
-#   - refresh the low-volume tables (licensing_inquiries has no live-write endpoint)
-# The sync is idempotent (ON CONFLICT (row_hash) DO NOTHING), so a re-run only adds
-# genuinely new rows — running it daily is safe and cheap.
+# The per-event live dual-write (lib/neonEvents.mjs) is now DISABLED by default
+# (gated behind NEON_LIVE_WRITE, off) because writing to Neon on every tracked event
+# kept the serverless compute awake continuously and never let it auto-suspend. So
+# this scheduled `npm run data:sync` is now the main way Neon stays current, not just
+# a backstop. Running every 6 hours matches the Google Sheet's own 6-hour Redis flush
+# cadence — the Sheet can't be fresher than that anyway — so batching here loses no
+# data the live writes would have captured, while letting Neon scale to zero between runs.
+# Each run:
+#   - pulls all new Analytics/Email/Review rows from the Sheet into Neon
+#   - refreshes the low-volume tables (licensing_inquiries has no live-write endpoint)
+# The sync is idempotent (ON CONFLICT (row_hash) DO NOTHING), so re-runs only add
+# genuinely new rows — safe and cheap. (Flip NEON_LIVE_WRITE=1 in Vercel to also
+# restore live per-event writes on top of this.)
 #
 # After the sync it also runs `npm run flag:bots`, the authoritative session-level
 # behavioral-bot classifier (scripts/data-platform/flag-bots.mjs). The tracking
@@ -21,7 +27,7 @@ name: Sync analytics sheet to Neon
 
 on:
   schedule:
-    - cron: '17 8 * * *'   # daily ~08:17 UTC (~03–04 ET). Off-peak; exact minute avoids the top-of-hour stampede.
+    - cron: '17 */6 * * *'   # every 6h (4x/day) at :17 past 00/06/12/18 UTC. Matches the Sheet's 6h Redis flush; :17 avoids the top-of-hour stampede.
   workflow_dispatch: {}     # manual "Run workflow" for an on-demand reconcile
 
 concurrency:

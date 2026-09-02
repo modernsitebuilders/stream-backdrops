@@ -256,20 +256,26 @@ querying/joins we mirror it into **Neon Postgres** (same pattern as the sister s
 rightdumpster / remodelcalculators: numbered SQL migrations tracked in a `_migrations`
 table, idempotent upsert-by-hash that keeps a verbatim `source_data jsonb` per row).
 
-**Neon is kept current two ways:**
-1. **Live dual-write (primary).** The tracking + form endpoints write each event
-   straight to Neon the instant it happens, via `lib/neonEvents.mjs` (the
-   `@neondatabase/serverless` HTTP driver — no pooling, safe on Vercel functions).
-   Wired into: the 5 analytics endpoints (`analytics`, `track-page-view`,
-   `track-preview`, `track-video-play`, `track-download`), plus `save-email` and
-   `submit-review`. Each live-write is a **safe no-op when `DATABASE_URL` is unset**
-   (local dev / preview) and never throws or blocks the response. So Neon is *live*,
-   not on the 6-hour flush lag. (`branded-inquiry.js` is intentionally not wired yet —
-   its own tab bug is being fixed separately.)
-2. **Daily reconciliation (backstop).** `.github/workflows/sync-neon.yml` runs
-   `npm run data:sync` once a day to catch any event whose live write failed and to
-   refresh tables with no live-write endpoint (`licensing_inquiries`). GitHub Actions,
-   not a Vercel cron (Hobby plan caps those).
+**Neon is kept current by a scheduled batch sync (4x/day):**
+1. **Scheduled reconciliation (primary).** `.github/workflows/sync-neon.yml` runs
+   `npm run data:sync` **every 6 hours (4x/day)** to pull all new Analytics/Email/Review
+   rows from the Sheet into Neon and refresh tables with no live-write endpoint
+   (`licensing_inquiries`). GitHub Actions, not a Vercel cron (Hobby plan caps those).
+   Every-6h matches the Sheet's own 6-hour Redis flush cadence, so this loses no data
+   a faster path would have captured — and it lets Neon **auto-suspend (scale to zero)
+   between runs** instead of being kept awake.
+2. **Live dual-write (OPT-IN, off by default).** The tracking + form endpoints *can*
+   write each event straight to Neon at request time via `lib/neonEvents.mjs` (the
+   `@neondatabase/serverless` HTTP driver). Wired into the 5 analytics endpoints
+   (`analytics`, `track-page-view`, `track-preview`, `track-video-play`,
+   `track-download`) plus `save-email`, `submit-review`, and `stripe-webhook`. **This
+   path is DISABLED unless `NEON_LIVE_WRITE=1`** — it was pinging Neon on every event
+   and keeping the serverless compute perpetually awake. `getSql()` returns null when
+   the flag is off (or `DATABASE_URL` is unset), so every call site is a safe no-op
+   that never throws or blocks the response. Flip `NEON_LIVE_WRITE=1` in Vercel env to
+   restore live mode (it dedups against the scheduled sync via `row_hash`, no
+   double-count). (`branded-inquiry.js` is intentionally not wired yet — its own tab
+   bug is being fixed separately.)
 
 The live-write and the sync compute the **same `row_hash`** (shared recipe in
 `lib/sheetRowUtils.mjs`) from byte-identical row arrays, so when a live event is later
@@ -298,9 +304,10 @@ read from the Sheet, `ON CONFLICT (row_hash) DO NOTHING` dedups it — **no doub
   the raw row is always preserved in `source_data`, so a parse miss loses nothing.
 
 **Setup / usage.** `DATABASE_URL` (Neon pooled connection string) is loaded by the
-npm scripts via `--env-file-if-exists=.env.local`. For the **live dual-write** to work
-in production, `DATABASE_URL` must also be set in **Vercel env** (Production); without
-it the live writes safely no-op. For the **daily reconciliation** Action, add
+npm scripts via `--env-file-if-exists=.env.local`. The optional **live dual-write** is
+off by default; to turn it on in production set BOTH `NEON_LIVE_WRITE=1` and
+`DATABASE_URL` in **Vercel env** (Production) — without either, the live writes safely
+no-op and Neon stays current via the scheduled sync alone. For the **4x/day reconciliation** Action, add
 `DATABASE_URL`, `GOOGLE_SHEET_ID`, `GOOGLE_SERVICE_EMAIL`, `GOOGLE_PRIVATE_KEY` as
 **GitHub repo secrets**.
 
